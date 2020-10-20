@@ -3,8 +3,6 @@ package com.ttradvisor.app.classes;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ttradvisor.app.Colors;
-
 public class Player {
 
 	private ArrayList<DestinationTicket> destTicketHand;

@@ -1,4 +1,4 @@
-package com.ttradvisor.app;
+package com.ttradvisor.app.classes;
 
 public class TestBoard {
 
