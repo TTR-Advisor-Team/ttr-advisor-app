@@ -3,16 +3,18 @@ package com.ttradvisor.app.classes;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ttradvisor.app.Colors;
+
 public class Player {
 
 	private ArrayList<DestinationTicket> destTicketHand;
 	private ArrayList<TrainCard> trainCardHand;
-	private Color color;
+	private Colors color;
 	private int score;
 	private int numTrains;
 	
-	public Player(ArrayList<DestintationTicket> dts, ArrayList<TrainCard> hand,
-			Color color, int score, int numTrains) {
+	public Player(ArrayList<DestinationTicket> dts, ArrayList<TrainCard> hand,
+			Colors color, int score, int numTrains) {
 		destTicketHand = dts;
 		trainCardHand = hand;
 		this.color = color;
@@ -50,10 +52,10 @@ public class Player {
 	public void setTCS(ArrayList<TrainCard> hand) {
 		trainCardHand = hand;
 	}
-	public Color getColor(){
+	public Colors getColor(){
 		return color;
 	}
-	public void setColor(Color color) {
+	public void setColor(Colors color) {
 		this.color = color;
 	}
 	public int getScore(){
