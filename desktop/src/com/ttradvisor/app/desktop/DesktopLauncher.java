@@ -7,6 +7,10 @@ import com.ttradvisor.app.TTRAdvisorApp;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+		
+		config.resizable = false;
+		config.title = "Ticket to Ride Advisor";
+		
 		new LwjglApplication(new TTRAdvisorApp(), config);
 	}
 }
