@@ -50,7 +50,7 @@ public class TitleScreen implements Screen {
         title.setWidth(Gdx.graphics.getWidth());
         stage.addActor(title);
         
-        SelectBox<Integer> numPlayers = new SelectBox<Integer>(TTRAdvisorApp.skin);
+        final SelectBox<Integer> numPlayers = new SelectBox<Integer>(TTRAdvisorApp.skin);
         numPlayers.setWidth(Gdx.graphics.getWidth() / 4);
         numPlayers.setPosition(Gdx.graphics.getWidth()/2- numPlayers.getWidth()*9/5,
 				Gdx.graphics.getHeight() - numPlayers.getHeight()*4);
@@ -61,7 +61,6 @@ public class TitleScreen implements Screen {
 				
 			}
         });
-        numPlayers.setSelected(2);
 		stage.addActor(numPlayers);
 		
 		Label numTitle = new Label("# of Players", TTRAdvisorApp.skin,"black");
@@ -333,15 +332,9 @@ public class TitleScreen implements Screen {
         
         Label used = new Label("Used:", TTRAdvisorApp.skin,"black");
         used.setWidth(Gdx.graphics.getWidth()/28);
-        used.setPosition(bkUsedBox.getX() - used.getWidth()/2, colorSel.getY());
+        used.setPosition(bkUsedBox.getX(), colorSel.getY());
         used.setHeight(title.getHeight()/6);
         stage.addActor(used);
-        
-        Label notUsed = new Label("Unused:", TTRAdvisorApp.skin,"black");
-        notUsed.setWidth(Gdx.graphics.getWidth()/28);
-        notUsed.setPosition(bkNotUsedBox.getX() - used.getWidth()/2, colorSel.getY());
-        notUsed.setHeight(title.getHeight()/6);
-        stage.addActor(notUsed);
 
         TextButton playButton = new TextButton("Play!", TTRAdvisorApp.skin, "small");
         playButton.setWidth(Gdx.graphics.getWidth()/4);
