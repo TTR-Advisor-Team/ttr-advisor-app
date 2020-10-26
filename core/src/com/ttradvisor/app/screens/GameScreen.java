@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.ttradvisor.app.TTRAdvisorApp;
@@ -46,6 +47,24 @@ public class GameScreen implements Screen {
         guiStage = new Stage(new ScreenViewport());
         mapStage = new Stage(new ScreenViewport());
         inputMult = new InputMultiplexer(guiStage, mapStage);
+        
+        // Button to draw Destination tickets
+        TextButton destButton = new TextButton("Draw DT", TTRAdvisorApp.skin, "small");
+        destButton.setWidth(Gdx.graphics.getWidth()/5);
+        destButton.setPosition(Gdx.graphics.getWidth()-destButton.getWidth(),destButton.getHeight()/8);
+        //Jake: Still need to add way to choose DTs within this screen
+//        destButton.addListener(new InputListener(){
+//            @Override
+//            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+//        	 	  
+//            }
+//            @Override
+//            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+//                return true;
+//            }
+//        });
+        guiStage.addActor(destButton);
+        
         
         setupMapInputHandling();
 

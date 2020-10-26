@@ -44,12 +44,14 @@ public class TitleScreen implements Screen {
         mainApp = main;
         stage = new Stage(new ScreenViewport());
 
+        // Title Screen label
         Label title = new Label("Ticket to Ride Advisor", TTRAdvisorApp.skin,"big-black");
         title.setAlignment(Align.center);
         title.setY(Gdx.graphics.getHeight() - title.getHeight());
         title.setWidth(Gdx.graphics.getWidth());
         stage.addActor(title);
         
+        // Box to select number of players (2-5)
         final SelectBox<Integer> numPlayers = new SelectBox<Integer>(TTRAdvisorApp.skin);
         numPlayers.setWidth(Gdx.graphics.getWidth() / 4);
         numPlayers.setPosition(Gdx.graphics.getWidth()/2- numPlayers.getWidth()*9/5,
@@ -63,6 +65,7 @@ public class TitleScreen implements Screen {
         });
 		stage.addActor(numPlayers);
 		
+		// Label for the above selection box
 		Label numTitle = new Label("# of Players", TTRAdvisorApp.skin,"black");
         numTitle.setPosition(Gdx.graphics.getWidth()/2 - numPlayers.getWidth()*9/5,
 				numPlayers.getY() + numTitle.getHeight()*2);
@@ -70,6 +73,7 @@ public class TitleScreen implements Screen {
         numTitle.setHeight(title.getHeight()/6);
         stage.addActor(numTitle);
         
+        // Label for selection of colors
         Label colorSel = new Label("Player Colors:", TTRAdvisorApp.skin,"black");
         colorSel.setPosition(numPlayers.getX() , numPlayers.getY() - numPlayers.getHeight());
         colorSel.setWidth(Gdx.graphics.getWidth()/4);
@@ -336,6 +340,7 @@ public class TitleScreen implements Screen {
         used.setHeight(title.getHeight()/6);
         stage.addActor(used);
 
+        // Button to access GameScreen
         TextButton playButton = new TextButton("Play!", TTRAdvisorApp.skin, "small");
         playButton.setWidth(Gdx.graphics.getWidth()/4);
         playButton.setPosition(Gdx.graphics.getWidth()-playButton.getWidth(),playButton.getHeight()/8);
@@ -351,6 +356,7 @@ public class TitleScreen implements Screen {
         });
         stage.addActor(playButton);
         
+        // Button to access TutorialScreen
         TextButton tutorialButton = new TextButton("Tutorial", TTRAdvisorApp.skin, "small");
         tutorialButton.setWidth(Gdx.graphics.getWidth()/4);
         tutorialButton.setPosition(0,tutorialButton.getHeight()/8);
