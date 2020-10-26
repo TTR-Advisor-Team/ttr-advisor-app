@@ -57,13 +57,6 @@ public class TitleScreen implements Screen {
         numPlayers.setPosition(Gdx.graphics.getWidth()/2- numPlayers.getWidth()*9/5,
 				Gdx.graphics.getHeight() - numPlayers.getHeight()*4);
         numPlayers.setItems(2,3,4,5);
-        numPlayers.addListener(new ChangeListener(){
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				
-			}
-        });
-		stage.addActor(numPlayers);
 		
 		// Label for the above selection box
 		Label numTitle = new Label("# of Players", TTRAdvisorApp.skin,"black");
@@ -97,7 +90,7 @@ public class TitleScreen implements Screen {
         final CheckBox bkNotUsedBox = new CheckBox("No", TTRAdvisorApp.skin);
         bkNotUsedBox.setPosition(bkUsedBox.getX() + corX/2, black.getY() - corY);
         // Check whether tmax players is selected
-        if(numPlayers.getSelected() == 5){
+        if(numPlayers.getSelected().equals(5)){
         	bkUsedBox.setChecked(true);
         }
         else {
@@ -333,6 +326,40 @@ public class TitleScreen implements Screen {
         stage.addActor(yellow);
         stage.addActor(ywUsedBox);
         stage.addActor(ywNotUsedBox);
+        
+        numPlayers.addListener(new ChangeListener(){
+            @Override
+            public void changed (ChangeEvent event, Actor actor){
+            	// if 5 players is selected then all the colors must be used
+            	if(numPlayers.getSelected() == 5) {
+            		bkUsedBox.setChecked(true);
+            		blUsedBox.setChecked(true);
+            		grUsedBox.setChecked(true);
+            		rdUsedBox.setChecked(true);
+            		ywUsedBox.setChecked(true);
+            		
+            		bkNotUsedBox.setChecked(false);
+            		blNotUsedBox.setChecked(false);
+            		grNotUsedBox.setChecked(false);
+            		rdNotUsedBox.setChecked(false);
+            		ywNotUsedBox.setChecked(false);
+            	}
+            	else {
+            		bkNotUsedBox.setChecked(true);
+            		blNotUsedBox.setChecked(true);
+            		grNotUsedBox.setChecked(true);
+            		rdNotUsedBox.setChecked(true);
+            		ywNotUsedBox.setChecked(true);
+            		
+            		bkUsedBox.setChecked(false);
+            		blUsedBox.setChecked(false);
+            		grUsedBox.setChecked(false);
+            		rdUsedBox.setChecked(false);
+            		ywUsedBox.setChecked(false);
+            	}
+            }
+        });
+		stage.addActor(numPlayers);
         
         Label used = new Label("Used:", TTRAdvisorApp.skin,"black");
         used.setWidth(Gdx.graphics.getWidth()/28);
