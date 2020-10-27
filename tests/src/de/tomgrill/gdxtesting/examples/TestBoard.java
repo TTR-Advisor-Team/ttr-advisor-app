@@ -29,7 +29,6 @@ public class TestBoard {
 	public void handleNotNull() {
 		FileHandle handle = Gdx.files.internal("cities.txt");
 		assertNotNull(handle);
-		assertTrue(handle.exists());
 	}
 
 	@Test
@@ -38,11 +37,13 @@ public class TestBoard {
 		File file = handle.file();
 		assertNotNull(file);
 	}
+	
 	@Test
 	public void notHere() {
 		Board b = new Board("NotHere.txt");
 		assertNull(b.getBoard());
 	}
+	
 	@Test
 	public void goodRoute() {
 		Route r = new Route("a","b",Colors.route.ANY,2);
