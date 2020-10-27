@@ -5,13 +5,15 @@ package com.ttradvisor.app.classes;
  *	Determines whether the new turn created is valid and updates the View
  */
 public class InputTurnController {
-
+	
+	private boolean isInitialTurnActive;
+	
 	/**
 	 * Manage and validate the input of the initial turn
 	 * (drawing 4 Train Cards and 2-3 Destination Tickets)
 	 */
-	public void initialTurn() {
-		
+	public void startInitialTurn() {
+		isInitialTurnActive = false;
 	}
 	
 	/**
@@ -19,7 +21,13 @@ public class InputTurnController {
 	 * @param thisTurn the Action taken for the current player's turn
 	 */
 	public void takeAction(Action thisTurn) {
-		
+		if (isInitialTurnActive) {
+			// process with context of initial turn
+			
+		}
+		else {
+			// process with context of normal round turn
+		}
 	}
 
 }
