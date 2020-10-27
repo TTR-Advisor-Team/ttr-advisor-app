@@ -6,16 +6,16 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.ttradvisor.app.TTRAdvisorApp;
-
-import java.time.Instant;
 
 /**
  * Created by julienvillegas on 17/01/2017.
@@ -33,19 +33,29 @@ public class GameScreen implements Screen {
     private float mapWidth;
     private float mapHeight;
 
-//
-//    private float minAltitude = 0.5f;
-//    private float maxAltitude = 2.5f;
-//
-//    private float percent;
-//    private long startTime;
-//    private final float animation_duration = 15000;
-
     public GameScreen(TTRAdvisorApp main) {
         mainApp = main;
         guiStage = new Stage(new ScreenViewport());
         mapStage = new Stage(new ScreenViewport());
         inputMult = new InputMultiplexer(guiStage, mapStage);
+        
+        // Button to draw Destination tickets
+        TextButton destButton = new TextButton("Draw DT", TTRAdvisorApp.skin, "small");
+        destButton.setWidth(Gdx.graphics.getWidth()/5);
+        destButton.setPosition(Gdx.graphics.getWidth()-destButton.getWidth(),destButton.getHeight()/8);
+        //Jake: Still need to add way to choose DTs within this screen
+//        destButton.addListener(new InputListener(){
+//            @Override
+//            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+//        	 	  
+//            }
+//            @Override
+//            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+//                return true;
+//            }
+//        });
+        guiStage.addActor(destButton);
+        
         
         setupMapInputHandling();
 
@@ -78,6 +88,7 @@ public class GameScreen implements Screen {
     		@Override
     		public boolean scrolled(InputEvent event, float x, float y, int amount) {
     			camera.zoom += (float) amount / 10f;
+    			clampCamera();
     		    Gdx.app.log("Camera", "Zoomed to: " + camera.zoom);
     			return super.scrolled(event, x, y, amount);
     		}
@@ -113,20 +124,7 @@ public class GameScreen implements Screen {
     		
     		@Override
     		public void panStop(InputEvent event, float x, float y, int pointer, int button) {
-    			if (camera.position.x < 0) {
-    				camera.position.x = 0;
-    			}
-    			else if (camera.position.x > mapWidth) {
-    				camera.position.x = mapWidth;
-    			}
-    			if (camera.position.y < 0) {
-    				camera.position.y = 0;
-    			}
-    			else if (camera.position.y > mapHeight) {
-    				camera.position.y = mapHeight;
-    			}
-    			camera.position.set(camera.position.x, camera.position.y, camera.position.z);
-    		    Gdx.app.log("Camera", "Snapped to coords: " + camera.position.x + ", " + camera.position.y);
+    			clampCamera();
     		    panOriginScreen = null;
     			super.panStop(event, x, y, pointer, button);
     		}
@@ -135,11 +133,27 @@ public class GameScreen implements Screen {
     		public void zoom(InputEvent event, float initialDistance, float distance) {
     		    float ratio = (initialDistance / distance) * camera.zoom;
     		    camera.zoom = ratio;
+    		    clampCamera();
     		    Gdx.app.log("Camera", "Zoomed to: " + camera.zoom);
     			super.zoom(event, initialDistance, distance);
     		}
     	});
 
+    }
+
+    private void clampCamera() {
+		
+		// TODO review zoom bounds (dependent on map size?)
+		
+        camera.zoom = MathUtils.clamp(camera.zoom, 0.2f, 1.4f);
+
+        float effectiveViewportWidth = camera.viewportWidth * camera.zoom;
+        float effectiveViewportHeight = camera.viewportHeight * camera.zoom;
+
+        camera.position.x = MathUtils.clamp(camera.position.x, effectiveViewportWidth / 2f, mapWidth - effectiveViewportWidth / 2f);
+        camera.position.y = MathUtils.clamp(camera.position.y, effectiveViewportHeight / 2f, mapHeight - effectiveViewportHeight / 2f);
+		
+	    Gdx.app.log("Camera", "Snapped to coords: " + camera.position.x + ", " + camera.position.y);
     }
 
     @Override
@@ -151,35 +165,16 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-//        //java 8
-//        long secondFromStart = Instant.now().toEpochMilli()-startTime;
-//        percent = (secondFromStart%animation_duration)/animation_duration;
-//        percent = (float)Math.cos(percent*Math.PI*2)/2+0.5f;
-//        Gdx.app.log("render","secondFromStart:"+ secondFromStart+", %:"+percent);
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        moveCamera();
+        camera.update();
         
         mapStage.act();
         guiStage.act();
         mapStage.draw();
         guiStage.draw();
     }
-
-    private void moveCamera(){
-//        float currentX = startX + (endX-startX)*percent;
-//        float currentY = startY + (endY-startY)*percent;
-//        float percentZ = Math.abs(percent - 0.5f)*2;
-//        float currentZ = maxAltitude - (maxAltitude-minAltitude)*percentZ  ;
-//
-//        camera.position.x = currentX;
-//        camera.position.y = currentY;
-//        camera.zoom = currentZ;
-    	
-        camera.update();
-    }
-
 
     @Override
     public void resize(int width, int height) {
