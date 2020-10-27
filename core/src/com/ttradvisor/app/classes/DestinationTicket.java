@@ -4,15 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DestinationTicket {
-	ArrayList<City> startEnd = new ArrayList<City>();
+	ArrayList<String> startEnd = new ArrayList<String>();
 	int value;
 	
 	
-	public DestinationTicket(City start, City end) {
+	public DestinationTicket(String start, String end) {
 		
 	}
 	
-	public DestinationTicket(City start, City end, int length) {
+	public DestinationTicket(String start, String end, int length) {
 		value = length;
 	}
 

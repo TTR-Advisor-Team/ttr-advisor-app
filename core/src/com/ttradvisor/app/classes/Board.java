@@ -35,14 +35,26 @@ public class Board {
 		}
 
 	}
+	
 	public HashMap<String, LinkedList<Route>> getBoard() {
 		return board;
 	}
-
+	
+	public String getCity(String city) {
+		if (board.containsKey(city))
+			return city;
+		return null;
+	}
+	
+	public HashMap<String, LinkedList<Route>> snapshotBoard () {	
+		return null;
+	}
+	
 	public static class Route {
 		String begin;
 		String end;
 		Colors.route color;
+		Colors.player owner;
 		int cost;
 
 		public Route(String begin, String end, Colors.route color, int cost) {
@@ -50,6 +62,7 @@ public class Board {
 			this.end = end;
 			this.color = color;
 			this.cost = cost;
+			this.owner = Colors.player.NONE;
 		}
 	}
 }
