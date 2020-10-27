@@ -54,7 +54,25 @@ public class GameScreen implements Screen {
 //                return true;
 //            }
 //        });
+		
 		guiStage.addActor(destButton);
+		
+		TextButton TCButton = new TextButton("Draw Train \n Card", TTRAdvisorApp.skin, "small");
+		TCButton.setWidth(Gdx.graphics.getWidth() / 5);
+		TCButton.setPosition(0, TCButton.getHeight() / 8);
+		// Sam: what Jake said
+//        destButton.addListener(new InputListener(){
+//            @Override
+//            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+//        	 	  
+//            }
+//            @Override
+//            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+//                return true;
+//            }
+//        });
+		
+		guiStage.addActor(TCButton);
 
 		setupMapInputHandling();
 
