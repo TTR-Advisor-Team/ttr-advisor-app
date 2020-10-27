@@ -44,44 +44,41 @@ public class TitleScreen implements Screen {
         mainApp = main;
         stage = new Stage(new ScreenViewport());
 
+        // Title Screen label
         Label title = new Label("Ticket to Ride Advisor", TTRAdvisorApp.skin,"big-black");
         title.setAlignment(Align.center);
         title.setY(Gdx.graphics.getHeight() - title.getHeight());
         title.setWidth(Gdx.graphics.getWidth());
         stage.addActor(title);
         
-        SelectBox<Integer> numPlayers = new SelectBox<Integer>(TTRAdvisorApp.skin);
+        // Box to select number of players (2-5)
+        final SelectBox<Integer> numPlayers = new SelectBox<Integer>(TTRAdvisorApp.skin);
         numPlayers.setWidth(Gdx.graphics.getWidth() / 4);
+        numPlayers.setHeight(Gdx.graphics.getHeight()/16);
         numPlayers.setPosition(Gdx.graphics.getWidth()/2- numPlayers.getWidth()*9/5,
 				Gdx.graphics.getHeight() - numPlayers.getHeight()*4);
         numPlayers.setItems(2,3,4,5);
-        numPlayers.addListener(new ChangeListener(){
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				
-			}
-        });
-        numPlayers.setSelected(2);
-		stage.addActor(numPlayers);
 		
+		// Label for the above selection box
 		Label numTitle = new Label("# of Players", TTRAdvisorApp.skin,"black");
         numTitle.setPosition(Gdx.graphics.getWidth()/2 - numPlayers.getWidth()*9/5,
 				numPlayers.getY() + numTitle.getHeight()*2);
         numTitle.setWidth(Gdx.graphics.getWidth()/4);
-        numTitle.setHeight(title.getHeight()/6);
+        numTitle.setHeight(title.getHeight()/2);
         stage.addActor(numTitle);
         
+        // Label for selection of colors
         Label colorSel = new Label("Player Colors:", TTRAdvisorApp.skin,"black");
         colorSel.setPosition(numPlayers.getX() , numPlayers.getY() - numPlayers.getHeight());
         colorSel.setWidth(Gdx.graphics.getWidth()/4);
-        colorSel.setHeight(title.getHeight()/6);
+        colorSel.setHeight(numTitle.getHeight());
         stage.addActor(colorSel);
         
         // Black color select
         Label black = new Label(Colors.player.BLACK.toString(), TTRAdvisorApp.skin,"black");
         black.setPosition(numPlayers.getX(), colorSel.getY() - colorSel.getHeight()*5/3);
         black.setWidth(Gdx.graphics.getWidth()/4);
-        black.setHeight(title.getHeight()/8);
+        black.setHeight(title.getHeight()/2);
         
         // Checkbox for black color is being used
         final CheckBox bkUsedBox = new CheckBox("Yes", TTRAdvisorApp.skin);
@@ -89,12 +86,14 @@ public class TitleScreen implements Screen {
         float  corX = black.getWidth();
         // used for Y of checked box
         float corY =  bkUsedBox.getHeight()/4;
+        bkUsedBox.setScaleX(8);
+        bkUsedBox.setScaleY(8);
         bkUsedBox.setPosition(black.getX()  + corX, black.getY() - corY);
         // Checkbox for black color not being used
         final CheckBox bkNotUsedBox = new CheckBox("No", TTRAdvisorApp.skin);
         bkNotUsedBox.setPosition(bkUsedBox.getX() + corX/2, black.getY() - corY);
         // Check whether tmax players is selected
-        if(numPlayers.getSelected() == 5){
+        if(numPlayers.getSelected().equals(5)){
         	bkUsedBox.setChecked(true);
         }
         else {
@@ -134,8 +133,8 @@ public class TitleScreen implements Screen {
         //Blue color select
         Label blue = new Label(Colors.player.BLUE.toString(), TTRAdvisorApp.skin,"black");
         blue.setPosition(numPlayers.getX(), black.getY() - black.getHeight()*5/2);
-        blue.setWidth(Gdx.graphics.getWidth()/4);
-        blue.setHeight(title.getHeight()/8);
+        blue.setWidth(black.getWidth());
+        blue.setHeight(black.getHeight());
 
         // Checkbox for blue color is being used
         final CheckBox blUsedBox = new CheckBox("Yes", TTRAdvisorApp.skin);
@@ -184,8 +183,8 @@ public class TitleScreen implements Screen {
         // Green color select
         Label green = new Label(Colors.player.GREEN.toString(), TTRAdvisorApp.skin,"black");
         green.setPosition(numPlayers.getX(), blue.getY() - blue.getHeight()*5/2);
-        green.setWidth(Gdx.graphics.getWidth()/4);
-        green.setHeight(title.getHeight()/8);
+        green.setWidth(black.getWidth());
+        green.setHeight(black.getHeight());
         
         // Checkbox for green color is being used
         final CheckBox grUsedBox = new CheckBox("Yes", TTRAdvisorApp.skin);
@@ -234,8 +233,8 @@ public class TitleScreen implements Screen {
         // Red color select
         Label red = new Label(Colors.player.RED.toString(), TTRAdvisorApp.skin,"black");
         red.setPosition(numPlayers.getX(), green.getY() - green.getHeight()*5/2);
-        red.setWidth(Gdx.graphics.getWidth()/4);
-        red.setHeight(title.getHeight()/8);
+        red.setWidth(black.getWidth());
+        red.setHeight(black.getHeight());
         
         // Checkbox for red color is being used
         final CheckBox rdUsedBox = new CheckBox("Yes", TTRAdvisorApp.skin);
@@ -284,8 +283,8 @@ public class TitleScreen implements Screen {
         // Yellow color select
         Label yellow = new Label(Colors.player.YELLOW.toString(), TTRAdvisorApp.skin,"black");
         yellow.setPosition(numPlayers.getX(), red.getY() - red.getHeight()*5/2);
-        yellow.setWidth(Gdx.graphics.getWidth()/4);
-        yellow.setHeight(title.getHeight()/8);
+        yellow.setWidth(black.getWidth());
+        yellow.setHeight(black.getHeight());
 
         // Checkbox for yellow color is being used
         final CheckBox ywUsedBox = new CheckBox("Yes", TTRAdvisorApp.skin);
@@ -331,24 +330,73 @@ public class TitleScreen implements Screen {
         stage.addActor(ywUsedBox);
         stage.addActor(ywNotUsedBox);
         
+        numPlayers.addListener(new ChangeListener(){
+            @Override
+            public void changed (ChangeEvent event, Actor actor){
+            	// if 5 players is selected then all the colors must be used
+            	if(numPlayers.getSelected() == 5) {
+            		bkUsedBox.setChecked(true);
+            		blUsedBox.setChecked(true);
+            		grUsedBox.setChecked(true);
+            		rdUsedBox.setChecked(true);
+            		ywUsedBox.setChecked(true);
+            		
+            		bkNotUsedBox.setChecked(false);
+            		blNotUsedBox.setChecked(false);
+            		grNotUsedBox.setChecked(false);
+            		rdNotUsedBox.setChecked(false);
+            		ywNotUsedBox.setChecked(false);
+            	}
+            	else {
+            		bkNotUsedBox.setChecked(true);
+            		blNotUsedBox.setChecked(true);
+            		grNotUsedBox.setChecked(true);
+            		rdNotUsedBox.setChecked(true);
+            		ywNotUsedBox.setChecked(true);
+            		
+            		bkUsedBox.setChecked(false);
+            		blUsedBox.setChecked(false);
+            		grUsedBox.setChecked(false);
+            		rdUsedBox.setChecked(false);
+            		ywUsedBox.setChecked(false);
+            	}
+            }
+        });
+		stage.addActor(numPlayers);
+        
         Label used = new Label("Used:", TTRAdvisorApp.skin,"black");
-        used.setWidth(Gdx.graphics.getWidth()/28);
-        used.setPosition(bkUsedBox.getX() - used.getWidth()/2, colorSel.getY());
-        used.setHeight(title.getHeight()/6);
+        used.setWidth(colorSel.getWidth());
+        used.setPosition(bkUsedBox.getX(), colorSel.getY());
+        used.setHeight(colorSel.getHeight());
         stage.addActor(used);
         
-        Label notUsed = new Label("Unused:", TTRAdvisorApp.skin,"black");
-        notUsed.setWidth(Gdx.graphics.getWidth()/28);
-        notUsed.setPosition(bkNotUsedBox.getX() - used.getWidth()/2, colorSel.getY());
-        notUsed.setHeight(title.getHeight()/6);
-        stage.addActor(notUsed);
+        final TextField turnOrder = new TextField("", TTRAdvisorApp.skin);
+        turnOrder.setWidth(numPlayers.getWidth());
+        turnOrder.setHeight(numPlayers.getHeight());
+        turnOrder.setPosition(Gdx.graphics.getWidth()/2, numPlayers.getY());
+        turnOrder.setMessageText("Turn Order: (Ex: black,blue,green");
+        stage.addActor(turnOrder);
 
+        // Button to access GameScreen
         TextButton playButton = new TextButton("Play!", TTRAdvisorApp.skin, "small");
         playButton.setWidth(Gdx.graphics.getWidth()/4);
+        playButton.setHeight(playButton.getHeight()*2);
         playButton.setPosition(Gdx.graphics.getWidth()-playButton.getWidth(),playButton.getHeight()/8);
         playButton.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+            	String turns = turnOrder.getText();
+            	String[] tOrder = turns.split(",");
+            	ArrayList<Colors.player> order = new ArrayList<Colors.player>();
+            	for(int i = 0; i < tOrder.length; i++) {
+            		for(Colors.player col : Colors.player.values()) {
+            			if(col.toString().toLowerCase().equals(tOrder[i])) {
+            				order.add(col);
+            			}
+            		}
+            	}
+            	mainApp.turnOrder = order;
+            	mainApp.numPlayers = numPlayers.getSelected();
                 mainApp.setScreen(new GameScreen(mainApp));
             }
             @Override
@@ -358,8 +406,10 @@ public class TitleScreen implements Screen {
         });
         stage.addActor(playButton);
         
+        // Button to access TutorialScreen
         TextButton tutorialButton = new TextButton("Tutorial", TTRAdvisorApp.skin, "small");
         tutorialButton.setWidth(Gdx.graphics.getWidth()/4);
+        tutorialButton.setHeight(playButton.getHeight());
         tutorialButton.setPosition(0,tutorialButton.getHeight()/8);
         tutorialButton.addListener(new InputListener(){
             @Override
