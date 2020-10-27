@@ -61,8 +61,7 @@ public class TitleScreen implements Screen {
 		
 		// Label for the above selection box
 		Label numTitle = new Label("# of Players", TTRAdvisorApp.skin,"black");
-        numTitle.setPosition(Gdx.graphics.getWidth()/2 - numPlayers.getWidth()*9/5,
-				numPlayers.getY() + numTitle.getHeight()*2);
+        numTitle.setPosition(numPlayers.getX(),	numPlayers.getY() + numTitle.getHeight()*2);
         numTitle.setWidth(Gdx.graphics.getWidth()/4);
         numTitle.setHeight(title.getHeight()/2);
         stage.addActor(numTitle);
@@ -78,7 +77,8 @@ public class TitleScreen implements Screen {
         Label black = new Label(Colors.player.BLACK.toString(), TTRAdvisorApp.skin,"black");
         black.setPosition(numPlayers.getX(), colorSel.getY() - colorSel.getHeight()*5/3);
         black.setWidth(Gdx.graphics.getWidth()/4);
-        black.setHeight(title.getHeight()/2);
+        black.setHeight(Gdx.graphics.getHeight()/40);
+        black.setFontScale(2);
         
         // Checkbox for black color is being used
         final CheckBox bkUsedBox = new CheckBox("Yes", TTRAdvisorApp.skin);
@@ -86,8 +86,7 @@ public class TitleScreen implements Screen {
         float  corX = black.getWidth();
         // used for Y of checked box
         float corY =  bkUsedBox.getHeight()/4;
-        bkUsedBox.setScaleX(8);
-        bkUsedBox.setScaleY(8);
+        bkUsedBox.setScale(8);
         bkUsedBox.setPosition(black.getX()  + corX, black.getY() - corY);
         // Checkbox for black color not being used
         final CheckBox bkNotUsedBox = new CheckBox("No", TTRAdvisorApp.skin);
@@ -135,6 +134,7 @@ public class TitleScreen implements Screen {
         blue.setPosition(numPlayers.getX(), black.getY() - black.getHeight()*5/2);
         blue.setWidth(black.getWidth());
         blue.setHeight(black.getHeight());
+        blue.setFontScale(black.getFontScaleX(), black.getFontScaleY());
 
         // Checkbox for blue color is being used
         final CheckBox blUsedBox = new CheckBox("Yes", TTRAdvisorApp.skin);
@@ -185,6 +185,7 @@ public class TitleScreen implements Screen {
         green.setPosition(numPlayers.getX(), blue.getY() - blue.getHeight()*5/2);
         green.setWidth(black.getWidth());
         green.setHeight(black.getHeight());
+        green.setFontScale(black.getFontScaleX(), black.getFontScaleY());
         
         // Checkbox for green color is being used
         final CheckBox grUsedBox = new CheckBox("Yes", TTRAdvisorApp.skin);
@@ -235,6 +236,7 @@ public class TitleScreen implements Screen {
         red.setPosition(numPlayers.getX(), green.getY() - green.getHeight()*5/2);
         red.setWidth(black.getWidth());
         red.setHeight(black.getHeight());
+        red.setFontScale(black.getFontScaleX(), black.getFontScaleY());
         
         // Checkbox for red color is being used
         final CheckBox rdUsedBox = new CheckBox("Yes", TTRAdvisorApp.skin);
@@ -285,6 +287,7 @@ public class TitleScreen implements Screen {
         yellow.setPosition(numPlayers.getX(), red.getY() - red.getHeight()*5/2);
         yellow.setWidth(black.getWidth());
         yellow.setHeight(black.getHeight());
+        yellow.setFontScale(black.getFontScaleX(), black.getFontScaleY());
 
         // Checkbox for yellow color is being used
         final CheckBox ywUsedBox = new CheckBox("Yes", TTRAdvisorApp.skin);
