@@ -3,14 +3,14 @@ package com.ttradvisor.app.classes;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Game {
+public class GameState {
 
 	private ArrayList<Player> curPlayers;
 	private Board curBoard;
 	//private Recommender rec;
 	private ArrayList<Turn> turns;
 	
-	public Game(ArrayList<Player> players, Board board, ArrayList<Turn> turns) {
+	public GameState(ArrayList<Player> players, Board board, ArrayList<Turn> turns) {
 		curPlayers = players;
 		curBoard = board;
 		this.turns = turns;
