@@ -8,6 +8,13 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		
+		config.pauseWhenMinimized = true;
+		
+		// config options set for testing
+		
+//		config.width = 1920;
+//		config.height = 1080;
+//		config.fullscreen = true;
 		config.resizable = false;
 		config.title = "Ticket to Ride Advisor";
 		

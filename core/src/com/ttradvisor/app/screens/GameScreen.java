@@ -92,6 +92,7 @@ public class GameScreen implements Screen {
 		camera.zoom = 1;
 
 		camera.position.set(0, 0, camera.position.z);
+		clampCamera();
 
 	}
 
@@ -131,8 +132,8 @@ public class GameScreen implements Screen {
 				}
 				panCurrentScreen = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
 
-				trueScreenDelta = new Vector3(panOriginScreen.x - panCurrentScreen.x,
-						panOriginScreen.y - panCurrentScreen.y, 0);
+				trueScreenDelta = new Vector3((panOriginScreen.x - panCurrentScreen.x) * camera.zoom,
+						(panOriginScreen.y - panCurrentScreen.y) * camera.zoom, 0);
 
 				camera.position.set(panOriginCamera.x + trueScreenDelta.x, panOriginCamera.y - trueScreenDelta.y,
 						camera.position.z);
@@ -149,8 +150,13 @@ public class GameScreen implements Screen {
 
 			@Override
 			public void zoom(InputEvent event, float initialDistance, float distance) {
-				float ratio = (initialDistance / distance) * camera.zoom;
-				camera.zoom = ratio;
+//				float ratio = (initialDistance / distance) * camera.zoom;
+//				camera.zoom = ratio;
+		        if (initialDistance >= distance) {
+		            camera.zoom += 0.02;
+		        } else {
+		            camera.zoom -= 0.02;
+		        }
 				clampCamera();
 				Gdx.app.log("Camera", "Zoomed to: " + camera.zoom);
 				super.zoom(event, initialDistance, distance);
@@ -163,7 +169,7 @@ public class GameScreen implements Screen {
 
 		// TODO review zoom bounds (dependent on map size?)
 
-		camera.zoom = MathUtils.clamp(camera.zoom, 0.2f, 1.4f);
+		camera.zoom = MathUtils.clamp(camera.zoom, 0.2f, Math.min(mapHeight/camera.viewportHeight, mapWidth/camera.viewportWidth));
 
 		float effectiveViewportWidth = camera.viewportWidth * camera.zoom;
 		float effectiveViewportHeight = camera.viewportHeight * camera.zoom;
