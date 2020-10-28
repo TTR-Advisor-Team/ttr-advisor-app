@@ -108,7 +108,7 @@ public class GameScreen implements Screen {
 			public boolean scrolled(InputEvent event, float x, float y, int amount) {
 				camera.zoom += (float) amount / 10f;
 				clampCamera();
-				Gdx.app.log("Camera", "Zoomed to: " + camera.zoom);
+				// Gdx.app.log("Camera", "Zoomed to: " + camera.zoom);
 				return super.scrolled(event, x, y, amount);
 			}
 
@@ -137,7 +137,7 @@ public class GameScreen implements Screen {
 
 				camera.position.set(panOriginCamera.x + trueScreenDelta.x, panOriginCamera.y - trueScreenDelta.y,
 						camera.position.z);
-				Gdx.app.log("Camera", "Translated to coords: " + camera.position.x + ", " + camera.position.y);
+				// Gdx.app.log("Camera", "Translated to coords: " + camera.position.x + ", " + camera.position.y);
 				super.pan(event, x, y, deltaX, deltaY);
 			}
 
@@ -150,26 +150,20 @@ public class GameScreen implements Screen {
 
 			@Override
 			public void zoom(InputEvent event, float initialDistance, float distance) {
-//				float ratio = (initialDistance / distance) * camera.zoom;
-//				camera.zoom = ratio;
-		        if (initialDistance >= distance) {
-		            camera.zoom += 0.02;
-		        } else {
-		            camera.zoom -= 0.02;
-		        }
+				float ratio = (initialDistance / distance) * camera.zoom;
+				camera.zoom = ratio;
 				clampCamera();
-				Gdx.app.log("Camera", "Zoomed to: " + camera.zoom);
+				// Gdx.app.log("Camera", "Zoomed to: " + camera.zoom);
 				super.zoom(event, initialDistance, distance);
 			}
+			
 		});
 
 	}
 
 	private void clampCamera() {
 
-		// TODO review zoom bounds (dependent on map size?)
-
-		camera.zoom = MathUtils.clamp(camera.zoom, 0.2f, Math.min(mapHeight/camera.viewportHeight, mapWidth/camera.viewportWidth));
+		camera.zoom = MathUtils.clamp(camera.zoom, Math.min(mapHeight/camera.viewportHeight, mapWidth/camera.viewportWidth) * 0.2f, Math.min(mapHeight/camera.viewportHeight, mapWidth/camera.viewportWidth));
 
 		float effectiveViewportWidth = camera.viewportWidth * camera.zoom;
 		float effectiveViewportHeight = camera.viewportHeight * camera.zoom;
@@ -179,7 +173,7 @@ public class GameScreen implements Screen {
 		camera.position.y = MathUtils.clamp(camera.position.y, effectiveViewportHeight / 2f,
 				mapHeight - effectiveViewportHeight / 2f);
 
-		Gdx.app.log("Camera", "Snapped to coords: " + camera.position.x + ", " + camera.position.y);
+		// Gdx.app.log("Camera", "Clamped to coords: " + camera.position.x + ", " + camera.position.y);
 	}
 
 	@Override
