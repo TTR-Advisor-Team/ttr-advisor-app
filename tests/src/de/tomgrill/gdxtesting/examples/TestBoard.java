@@ -18,13 +18,17 @@ import java.io.File;
 
 @RunWith(GdxTestRunner.class)
 public class TestBoard {
+	
 	@Test
 	public void boardNotNull() {
 		Board b = new Board("cities.txt");
 		assertNotNull(b);
+	}
+	@Test
+	public void getBoardNotNull() {
+		Board b = new Board("cities.txt");
 		assertNotNull(b.getBoard());
 	}
-
 	@Test
 	public void handleNotNull() {
 		FileHandle handle = Gdx.files.internal("cities.txt");
