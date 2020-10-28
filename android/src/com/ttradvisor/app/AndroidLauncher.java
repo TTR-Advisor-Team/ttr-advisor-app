@@ -15,7 +15,6 @@ public class AndroidLauncher extends AndroidApplication {
 		config.useAccelerometer = false;
 		config.useCompass = false;
 		config.useGyroscope = false;
-		config.useWakeLock = true;
 		
 		initialize(new TTRAdvisorApp(), config);
 	}
