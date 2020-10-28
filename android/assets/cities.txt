@@ -18,9 +18,9 @@ Montreal,Boston,ANY,2,,Boston,ANY,2,,Sault St. Marie,BLACK,5,,Toronto,ANY,3
 Nashville,Saint Louis,ANY,2,,Pittsburg,YELLOW,4,,Raleigh,BLACK,3,,Atlanta,ANY,1,,Little Rock,WHITE,3
 New Orleans,Houston,ANY,2,,Miami,RED,6,,Atlanta,YELLOW,4,,Atlanta,ORANGE,4,,Little Rock,GREEN,3
 New York,Boston,RED,2,,Boston,YELLOW,2,,Monteal,BLUE,3,,Pittsburg,WHITE,2,,Pittsburg,GREEN,2,,Washinton,BLACK,2,,Washington,ORANGE,2
-Oklahoma City,Denver,RED,4,,Santa Fe,BLUE,3,,El Paso, YELLOW,5,,Dallas,ANY,2,Dallas,ANY,2,Little Rock,ANY,2,Kansas City,ANY,2,Kansas City,ANY,2
+Oklahoma City,Denver,RED,4,,Santa Fe,BLUE,3,,El Paso,YELLOW,5,,Dallas,ANY,2,,Dallas,ANY,2,,Little Rock,ANY,2,,Kansas City,ANY,2,,Kansas City,ANY,2
 Omaha,Kansas City,ANY,1,,Kansas City,ANY,1,,Denver,PINK,4,,Helena,RED,5,,Duluth,ANY,2,,Duluth,ANY,2,,Chicago,BLUE,4
-Phoenix,Los Angeles,ANY,3,,El Paso, ANY,3,,Santa Fe,ANY,3,,Denver,WHITE,5
+Phoenix,Los Angeles,ANY,3,,El Paso,ANY,3,,Santa Fe,ANY,3,,Denver,WHITE,5
 Pittsburg,Toronto,ANY,2,,New York,WHITE,2,,New York,GREEN,2,,Washington,ANY,2,,Raleigh,ANY,2,,Nashville,YELLOW,4,,Saint Louis,GREEN,5,,Chicago,BLACK,2,,Chicago,ORANGE,2
 Portland,San Francisco,GREEN,5,,San Francisco,PINK,5,,Salt Lake City,BLUE,6,,Seattle,ANY,1,,Seattle,ANY,1
 Raleigh,Nashville,BLACK,3,,Atlanta,ANY,2,,Atlanta,ANY,2,,Charleston,ANY,2,,Washington,ANY,2,,Washington,ANY,2,,Pittsburg,ANY,2
@@ -28,9 +28,9 @@ Saint Louis,Kansa City,BLUE,2,,Kansas City,PINK,2,,Little Rock,ANY,2,,Nashville,
 Salt Lake City,Portland,BLUE,6,,San Francisco,WHITE,5,,San Francisco,ORANGE,5,,Las Vegas,ORANGE,3,,Denver,RED,3,,Denver,YELLOW,3,,Helena,PINK,3
 San Francisco,Portland,GREEN,5,,Portland,PINK,5,,Salt Lake City,ORANGE,5,,Salt Lake City,WHITE,5,,Los Angeles,YELLOW,3,,Los Angeles,PINK,3
 Santa Fe,Denver,ANY,2,,Phoenix,ANY,3,,El Paso,ANY,2,,Oklahoma City,BLUE,3
-Sault St. Marie,Winnipeg,ANY,6,,Duluth,Any,3,,Toronto,ANY,2,,Montreal,BLACK,5
-Seattle,Vancouver,ANY,1,,Vancouver,ANY,1,,Calgary,ANY,4,Helena,YELLOW,6,,Portland,ANY,1,,Portland,ANY,1
+Sault St. Marie,Winnipeg,ANY,6,,Duluth,ANY,3,,Toronto,ANY,2,,Montreal,BLACK,5
+Seattle,Vancouver,ANY,1,,Vancouver,ANY,1,,Calgary,ANY,4,,Helena,YELLOW,6,,Portland,ANY,1,,Portland,ANY,1
 Toronto,Montreal,ANY,3,,Pittsburgs,ANY,2,,Chicago,WHITE,3,,Duluth,PINK,6,,Sault St. Marie,ANY,2
 Vancouver,Seattle,ANY,1,,Seattle,ANY,1,,Calgary,ANY,3
 Washington,New York,BLACK,2,,New York,ORANGE,2,,Pittsburg,ANY,2,,Raleigh,ANY,2,,Raleigh,ANY,2
-Winnipeg,Calgary,WHITE,6,,Helena,BLUE,4,,Duluth,BLACK,4,Sault St. Marie,ANY,6
+Winnipeg,Calgary,WHITE,6,,Helena,BLUE,4,,Duluth,BLACK,4,,Sault St. Marie,ANY,6
