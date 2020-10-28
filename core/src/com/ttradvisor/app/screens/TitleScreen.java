@@ -400,6 +400,7 @@ public class TitleScreen implements Screen {
             	}
             	mainApp.turnOrder = order;
             	mainApp.numPlayers = numPlayers.getSelected();
+            	mainApp.turnInput.startInitialTurn(); // set up controller for start
                 mainApp.setScreen(new GameScreen(mainApp));
             }
             @Override
