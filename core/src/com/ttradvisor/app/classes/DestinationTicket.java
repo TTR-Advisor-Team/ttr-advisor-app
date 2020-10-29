@@ -28,6 +28,14 @@ public class DestinationTicket {
 	public int getValue() {
 		return value;
 	}
+	
+	public String getStart() {
+		return startEnd.get(0);
+	}
+	
+	public String getEnd() {
+		return startEnd.get(1);
+	}
 
 	//
 }
