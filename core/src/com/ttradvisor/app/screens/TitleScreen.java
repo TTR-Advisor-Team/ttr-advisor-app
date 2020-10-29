@@ -61,9 +61,10 @@ public class TitleScreen implements Screen {
 		
 		// Label for the above selection box
 		Label numTitle = new Label("# of Players", TTRAdvisorApp.skin,"black");
-        numTitle.setPosition(numPlayers.getX(),	numPlayers.getY() + numTitle.getHeight()*2);
+        numTitle.setPosition(numPlayers.getX(),	numPlayers.getY() + numPlayers.getHeight()*3/2);
         numTitle.setWidth(Gdx.graphics.getWidth()/4);
         numTitle.setHeight(title.getHeight()/2);
+        numTitle.setFontScale(5/2);
         stage.addActor(numTitle);
         
         // Label for selection of colors
@@ -71,6 +72,7 @@ public class TitleScreen implements Screen {
         colorSel.setPosition(numPlayers.getX() , numPlayers.getY() - numPlayers.getHeight());
         colorSel.setWidth(Gdx.graphics.getWidth()/4);
         colorSel.setHeight(numTitle.getHeight());
+        colorSel.setFontScale(5/2);
         stage.addActor(colorSel);
         
         // Black color select
@@ -371,13 +373,14 @@ public class TitleScreen implements Screen {
         used.setWidth(colorSel.getWidth());
         used.setPosition(bkUsedBox.getX(), colorSel.getY());
         used.setHeight(colorSel.getHeight());
+        used.setFontScale(5/2);
         stage.addActor(used);
         
         final TextField turnOrder = new TextField("", TTRAdvisorApp.skin);
         turnOrder.setWidth(numPlayers.getWidth());
         turnOrder.setHeight(numPlayers.getHeight());
         turnOrder.setPosition(Gdx.graphics.getWidth()/2, numPlayers.getY());
-        turnOrder.setMessageText("Turn Order: (Ex: black,blue,green");
+        turnOrder.setMessageText("Turn Order: (Ex: black,blue,green)");
         stage.addActor(turnOrder);
 
         // Button to access GameScreen
