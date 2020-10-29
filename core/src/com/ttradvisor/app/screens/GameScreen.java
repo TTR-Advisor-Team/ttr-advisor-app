@@ -20,7 +20,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.ttradvisor.app.TTRAdvisorApp;
 import com.ttradvisor.app.classes.Colors;
+import com.ttradvisor.app.classes.Player;
 import com.ttradvisor.app.classes.TrainCard;
+import com.ttradvisor.app.classes.TrainCardAction;
 
 /**
  * Created by julienvillegas on 17/01/2017.
@@ -34,12 +36,21 @@ public class GameScreen implements Screen {
 	private Stage mapStage;
 	private OrthographicCamera camera;
 	private Stage guiStage;
+	
+	public Player currentPlayer;
 
 	private float mapWidth;
 	private float mapHeight;
 
 	public GameScreen(TTRAdvisorApp main) {
 		mainApp = main;
+		
+		// MOCKUP
+		
+		// TODO should be the selected first player!
+		currentPlayer = main.gameState.getPlayers().get(0);
+		
+		
 		guiStage = new Stage(new ScreenViewport());
 		mapStage = new Stage(new ScreenViewport());
 		inputMult = new InputMultiplexer(guiStage, mapStage);
@@ -155,7 +166,13 @@ public class GameScreen implements Screen {
             	TextButton done = new TextButton("Done", TTRAdvisorApp.skin, "small");
             	done.addListener(new InputListener() {
             		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-//            			mainApp.turnInput.takeAction(new TrainCardAction(current player, drawnCards));
+            			
+            			// MOCKUP
+            			// TODO this should work once the other bits are in place
+            			mainApp.turnInput.takeAction(new TrainCardAction(currentPlayer, drawnCards));
+            			
+            			
+            			
             			destButton.setVisible(true);
                     	TCButton.setVisible(true);
                     	table.setVisible(false);

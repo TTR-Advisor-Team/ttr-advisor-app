@@ -47,34 +47,38 @@ public class InputTurnController {
 	 * Process an Action object as the next turn.
 	 * @param thisTurn the Action taken for the current player's turn
 	 */
-	public void takeAction(Action thisTurn) {
+	public boolean takeAction(Action thisTurn) {
 		if (isInitialTurnActive) {
 			if (thisTurn instanceof TrainCardAction) {
-				initialTurnDrawTC((TrainCardAction)thisTurn);
+				return initialTurnDrawTC((TrainCardAction)thisTurn);
 			}
 			else if (thisTurn instanceof DestinationAction) {
-				initialTurnDrawDT((DestinationAction)thisTurn);
+				return initialTurnDrawDT((DestinationAction)thisTurn);
 			}
 			else {
 				Gdx.app.error("Turn", "May only draw destination tickets or train cards on initial turn.");
+				return false;
 			}
 		}
 		else {
+			return false;
 			// for a future iteration
 			// process with context of normal round turn
 		}
 	}
 	
-	private void initialTurnDrawTC(TrainCardAction thisTurn) {
+	private boolean initialTurnDrawTC(TrainCardAction thisTurn) {
 		// checks:
 		// # of cards must be valid (2-4)?
 		// player must exist in the game state
 		// 
 		thisTurn.actingPlayer.getTCS().addAll(thisTurn.getDrawnCards());
+		return true;
 	}
 	
-	private void initialTurnDrawDT(DestinationAction thisTurn) {
+	private boolean initialTurnDrawDT(DestinationAction thisTurn) {
 		thisTurn.actingPlayer.getDTS().addAll(thisTurn.getDrawnTickets());
+		return true;
 	}
 
 }

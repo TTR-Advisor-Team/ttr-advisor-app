@@ -24,6 +24,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.ttradvisor.app.TTRAdvisorApp;
 import com.ttradvisor.app.classes.Colors;
+import com.ttradvisor.app.classes.Player;
 
 /**
  * Created by julienvillegas on 17/01/2017.
@@ -474,6 +475,16 @@ public class TitleScreen implements Screen {
             		}
             	mainApp.turnOrder = order;
             	mainApp.numPlayers = numPlayers.getSelected();
+            	
+            	// MOCKUP
+            	
+            	// TODO set up gameState here before triggering the initial turn & going to GameScreen
+            	// Instead of BLACK they should all get the right colors
+//            	
+//            	for (int i=0; i<numPlayers.getSelectedIndex(); i++) {
+//            		mainApp.gameState.getPlayers().add(new Player(Colors.player.BLACK));
+//            	}
+//            	
             	mainApp.turnInput.startInitialTurn(); // set up controller for start
             	mainApp.setScreen(new GameScreen(mainApp));
             }
