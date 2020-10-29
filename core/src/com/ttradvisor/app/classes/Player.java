@@ -11,6 +11,15 @@ public class Player {
 	private int score;
 	private int numTrains;
 	
+	/**
+	 * Init Player for game start.
+	 * 
+	 * @param color
+	 */
+	public Player(Colors.player color) {
+		this(new ArrayList<DestinationTicket>(), new ArrayList<TrainCard>(), color, 0, 45);
+	}
+	
 	public Player(ArrayList<DestinationTicket> dts, ArrayList<TrainCard> hand,
 			Colors.player color, int score, int numTrains) {
 		destTicketHand = dts;

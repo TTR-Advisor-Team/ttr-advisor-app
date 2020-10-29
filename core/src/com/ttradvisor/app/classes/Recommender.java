@@ -31,8 +31,8 @@ public class Recommender {
 				}
 			});
 
-			String begin = dt.startEnd.get(0);
-			String end = dt.startEnd.get(1);
+			String begin = dt.getStart();
+			String end = dt.getEnd();
 
 			LinkedList<City> closed = new LinkedList<City>();
 			openSet.add(new City(begin, null, 0));
