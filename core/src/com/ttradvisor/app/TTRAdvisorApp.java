@@ -9,8 +9,12 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.ttradvisor.app.classes.Board;
 import com.ttradvisor.app.classes.Colors;
+import com.ttradvisor.app.classes.GameState;
 import com.ttradvisor.app.classes.InputTurnController;
+import com.ttradvisor.app.classes.Player;
+import com.ttradvisor.app.classes.Turn;
 import com.ttradvisor.app.screens.TitleScreen;
 
 /**
@@ -23,10 +27,12 @@ public class TTRAdvisorApp extends Game {
 	public ArrayList<Colors.player> turnOrder;
 	
 	public InputTurnController turnInput;
+	public GameState gameState;
 	
 	@Override
 	public void create () {
-		turnInput = new InputTurnController();
+		turnInput = new InputTurnController(this);
+		gameState = new GameState(new ArrayList<Player>(), new Board("cities.txt"), new ArrayList<Turn>());
 		skin = new Skin(Gdx.files.internal("ui skin/glassy-ui.json"));
 		this.setScreen(new TitleScreen(this));
 	}
