@@ -67,13 +67,16 @@ public class GameScreen implements Screen {
         TCButton.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+            	final Table table = new Table();
             	destButton.setVisible(false);
             	TCButton.setVisible(false);
             	final ArrayList<TrainCard> drawnCards = new ArrayList<>();
             	TextButton redTrain = new TextButton("Red", TTRAdvisorApp.skin, "small");
             	redTrain.addListener(new InputListener() {
             		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-//            			drawnCards.add(new TrainCard("red"));
+            			if(drawnCards.size() < 2) {
+//            				drawnCards.add(new TrainCard("red"));
+            			}
             		}
             		public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                         return true;
@@ -82,7 +85,9 @@ public class GameScreen implements Screen {
             	TextButton orangeTrain = new TextButton("Orange", TTRAdvisorApp.skin, "small");
             	orangeTrain.addListener(new InputListener() {
             		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-//            			drawnCards.add(new TrainCard("orange"));
+            			if(drawnCards.size() < 2) {
+//            				drawnCards.add(new TrainCard("orange"));
+            			}
             		}
             		public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                         return true;
@@ -91,7 +96,9 @@ public class GameScreen implements Screen {
             	TextButton yellowTrain = new TextButton("Yellow", TTRAdvisorApp.skin, "small");
             	yellowTrain.addListener(new InputListener() {
             		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-//            			drawnCards.add(new TrainCard("yellow"));
+            			if(drawnCards.size() < 2) {
+//            				drawnCards.add(new TrainCard("yellow"));
+            			}
             		}
             		public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                         return true;
@@ -100,7 +107,9 @@ public class GameScreen implements Screen {
             	TextButton greenTrain = new TextButton("Green", TTRAdvisorApp.skin, "small");
             	greenTrain.addListener(new InputListener() {
             		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-//            			drawnCards.add(new TrainCard("green"));
+            			if(drawnCards.size() < 2) {
+//            				drawnCards.add(new TrainCard("green"));
+            			}
             		}
             		public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                         return true;
@@ -109,7 +118,9 @@ public class GameScreen implements Screen {
             	TextButton blueTrain = new TextButton("Blue", TTRAdvisorApp.skin, "small");
             	blueTrain.addListener(new InputListener() {
             		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-//            			drawnCards.add(new TrainCard("blue"));
+            			if(drawnCards.size() < 2) {
+//            				drawnCards.add(new TrainCard("blue"));
+            			}
             		}
             		public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                         return true;
@@ -118,7 +129,9 @@ public class GameScreen implements Screen {
             	TextButton purpleTrain = new TextButton("Purple", TTRAdvisorApp.skin, "small");
             	purpleTrain.addListener(new InputListener() {
             		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-//            			drawnCards.add(new TrainCard("purple"));
+            			if(drawnCards.size() < 2) {
+//            				drawnCards.add(new TrainCard("purple"));
+            			}
             		}
             		public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                         return true;
@@ -127,7 +140,9 @@ public class GameScreen implements Screen {
             	TextButton blackTrain = new TextButton("Black", TTRAdvisorApp.skin, "small");
             	blackTrain.addListener(new InputListener() {
             		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+            			if(drawnCards.size() < 2) {
 //            			drawnCards.add(new TrainCard("black"));
+            			}
             		}
             		public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                         return true;
@@ -136,7 +151,9 @@ public class GameScreen implements Screen {
             	TextButton whiteTrain = new TextButton("White", TTRAdvisorApp.skin, "small");
             	whiteTrain.addListener(new InputListener() {
             		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-//            			drawnCards.add(new TrainCard("white"));
+            			if(drawnCards.size() < 2) {
+//            				drawnCards.add(new TrainCard("white"));
+            			}
             		}
             		public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                         return true;
@@ -145,7 +162,10 @@ public class GameScreen implements Screen {
             	TextButton wildTrain = new TextButton("Wild", TTRAdvisorApp.skin, "small");
             	wildTrain.addListener(new InputListener() {
             		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-//            			drawnCards.add(new TrainCard("wild"));
+            			if(drawnCards.isEmpty()) {
+//            				drawnCards.add(new TrainCard("wild"));
+//            				drawnCards.add(new TrainCard("wild"));
+            			}
             		}
             		public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                         return true;
@@ -154,7 +174,15 @@ public class GameScreen implements Screen {
             	TextButton done = new TextButton("Done", TTRAdvisorApp.skin, "small");
             	done.addListener(new InputListener() {
             		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-//            			inputTurnController(TrainCardAction(drawnCards));
+//            			if(drawnCards.size() == 2){
+//            				if(drawnCards.get(0).getColor == "wild") {
+//            					drawnCards.remove(1);
+//            				}
+//            				inputTurnController(TrainCardAction(drawnCards));
+            				destButton.setVisible(true);
+                    		TCButton.setVisible(true);
+                    		table.setVisible(false);
+//            			}
             		}
             		public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                         return true;
@@ -164,7 +192,12 @@ public class GameScreen implements Screen {
             	whiteTrain.addListener(new InputListener() {
             		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
             			if(!drawnCards.isEmpty()) {
-            				drawnCards.remove(drawnCards.size()-1);
+//            				if(drawnCards.get(0).getColor() == "wild") {
+//           					drawnCards.removeAll(drawnCards);
+//          				}
+//         					else {
+            					drawnCards.remove(drawnCards.size()-1);
+//           				}
             			}
             		}
             		public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -175,6 +208,9 @@ public class GameScreen implements Screen {
             	back.addListener(new InputListener() {
             		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
 //            			drawnCards.removeAll(drawnCards);
+                    	destButton.setVisible(true);
+                    	TCButton.setVisible(true);
+                    	table.setVisible(false);
             		}
             		public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                         return true;
@@ -183,7 +219,6 @@ public class GameScreen implements Screen {
             	TextButton invis = new TextButton("", TTRAdvisorApp.skin, "small");
             	invis.setVisible(false);
             	//Red, Orange, Yellow, Green, Blue, Purple, Black & White, wild
-            	Table table = new Table();
             	table.bottom();
             	table.add(invis);
             	table.add(redTrain);
