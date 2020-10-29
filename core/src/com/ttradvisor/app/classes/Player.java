@@ -7,12 +7,12 @@ public class Player {
 
 	private ArrayList<DestinationTicket> destTicketHand;
 	private ArrayList<TrainCard> trainCardHand;
-	private Colors color;
+	private Colors.player color;
 	private int score;
 	private int numTrains;
 	
 	public Player(ArrayList<DestinationTicket> dts, ArrayList<TrainCard> hand,
-			Colors color, int score, int numTrains) {
+			Colors.player color, int score, int numTrains) {
 		destTicketHand = dts;
 		trainCardHand = hand;
 		this.color = color;
@@ -50,10 +50,10 @@ public class Player {
 	public void setTCS(ArrayList<TrainCard> hand) {
 		trainCardHand = hand;
 	}
-	public Colors getColor(){
+	public Colors.player getColor(){
 		return color;
 	}
-	public void setColor(Colors color) {
+	public void setColor(Colors.player color) {
 		this.color = color;
 	}
 	public int getScore(){
