@@ -18,21 +18,21 @@ public class Recommender {
 	public LinkedList<Route> shortestPath(ArrayList<DestinationTicket> tickets) {
 
 		LinkedList<Route> routes = new LinkedList<Route>();
-
+		
+		PriorityQueue<City> openSet = new PriorityQueue<City>(new Comparator<City>() {
+			public int compare(City c1, City c2) {
+				if (c1.totalCost > c2.totalCost)
+					return 1;
+				if (c1.totalCost < c2.totalCost)
+					return -1;
+				return 0;
+			}
+		});
+		
 		for (DestinationTicket dt : tickets) {
 
 			String begin = dt.startEnd.get(0);
 			String end = dt.startEnd.get(1);
-
-			PriorityQueue<City> openSet = new PriorityQueue<City>(new Comparator<City>() {
-				public int compare(City c1, City c2) {
-					if (c1.totalCost > c2.totalCost)
-						return 1;
-					if (c1.totalCost < c2.totalCost)
-						return -1;
-					return 0;
-				}
-			});
 
 			LinkedList<City> closed = new LinkedList<City>();
 			openSet.add(new City(begin, null, 0));
@@ -46,6 +46,7 @@ public class Recommender {
 					// these are the routes to focus on claiming or saving up for
 					while (c.previous != null) {
 						routes.add(board.getRoute(c.current, c.previous));
+						break;
 					}
 
 				}
