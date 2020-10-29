@@ -19,17 +19,17 @@ public class Recommender {
 
 		LinkedList<Route> routes = new LinkedList<Route>();
 		
-		PriorityQueue<City> openSet = new PriorityQueue<City>(new Comparator<City>() {
-			public int compare(City c1, City c2) {
-				if (c1.totalCost > c2.totalCost)
-					return 1;
-				if (c1.totalCost < c2.totalCost)
-					return -1;
-				return 0;
-			}
-		});
-		
 		for (DestinationTicket dt : tickets) {
+			
+			PriorityQueue<City> openSet = new PriorityQueue<City>(new Comparator<City>() {
+				public int compare(City c1, City c2) {
+					if (c1.totalCost > c2.totalCost)
+						return 1;
+					if (c1.totalCost < c2.totalCost)
+						return -1;
+					return 0;
+				}
+			});
 
 			String begin = dt.startEnd.get(0);
 			String end = dt.startEnd.get(1);
