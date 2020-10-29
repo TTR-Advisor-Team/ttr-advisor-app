@@ -94,13 +94,30 @@ public class TestBoard {
 	public void getRouteTest() {
 		Board b = new Board("cities.txt");
 		//Boston,Montreal,ANY,2,,Montreal,ANY,2,,New York,RED,2,,New York,YELLOW,2
-		Route r1 = new Route("Boston", "Montreal", Colors.route.ANY, 2);
-		Route r2 = b.getRoute("Boston", "Montreal", Colors.route.ANY, Colors.player.NONE);
-		assertEquals(r1.getBegin(), r2.getBegin());
-		assertEquals(r1.getEnd(), r2.getEnd());
-		assertEquals(r1.getColor(), r2.getColor());
-		assertEquals(r1.getOwner(), r2.getOwner());
+		Route r1 = b.getRoute("Boston", "New York", Colors.route.YELLOW, Colors.player.NONE);
+		assertEquals("Boston", r1.getBegin());
+		assertEquals("New York", r1.getEnd());
+		assertEquals(Colors.route.YELLOW, r1.getColor());
+		assertEquals(Colors.player.NONE, r1.getOwner());
 	}
+	
+	@Test
+	public void getRouteTest2() {
+		Board b = new Board("cities.txt");
+		//Boston,Montreal,ANY,2,,Montreal,ANY,2,,New York,RED,2,,New York,YELLOW,2
+		Route r1 = b.getRoute("Boston", "New York", Colors.route.RED, Colors.player.NONE);
+		assertEquals("Boston", r1.getBegin());
+		assertEquals("New York", r1.getEnd());
+		assertEquals(Colors.route.RED, r1.getColor());
+		assertEquals(Colors.player.NONE, r1.getOwner());
+	}
+	@Test
+	public void getRouteTest3() {
+		Board b = new Board("cities.txt");
+		Route r1 = b.getRoute("Boston", "New York");
+		assertEquals(Colors.route.RED, r1.getColor());		
+	}
+	
 	
 	@Test
 	public void getBadRouteTest() {
@@ -114,11 +131,29 @@ public class TestBoard {
 	public void claimRouteTest() {
 		Board b = new Board("cities.txt");
 		//Boston,Montreal,ANY,2,,Montreal,ANY,2,,New York,RED,2,,New York,YELLOW,2
-		//Montreal,Boston,ANY,2,,Boston,ANY,2,,Sault St. Marie,BLACK,5,,Toronto,ANY,3
-		b.claimRoute("Boston", "Montreal", Colors.route.ANY, Colors.player.BLUE);
-		Route r1 = b.getRoute("Boston", "Montreal", Colors.route.ANY, Colors.player.BLUE);
-		Route r2 = b.getRoute("Montreal", "Boston", Colors.route.ANY, Colors.player.BLUE);
-		assertEquals(Colors.player.BLUE, r1.getOwner());
-		assertEquals(Colors.player.BLUE, r2.getOwner());
+		Route r1 = b.getRoute("Boston", "New York", Colors.route.YELLOW, Colors.player.NONE);
+		Route r2 = b.getRoute("New York", "Boston", Colors.route.YELLOW, Colors.player.NONE);
+		assertEquals(Colors.player.NONE, r1.getOwner());
+		assertEquals(Colors.player.NONE, r2.getOwner());
+		b.claimRoute("Boston", "New York", Colors.route.YELLOW, Colors.player.BLACK);
+		assertEquals(Colors.player.BLACK, r1.getOwner());
+		assertEquals(Colors.player.BLACK, r2.getOwner());
+	}
+	
+	@Test
+	public void getRouteTest4() {
+		Board b = new Board("cities.txt");
+		//Boston,Montreal,ANY,2,,Montreal,ANY,2,,New York,RED,2,,New York,YELLOW,2
+		b.claimRoute("Boston", "New York", Colors.route.RED, Colors.player.BLUE);
+		Route r1 = b.getRoute("Boston", "New York");
+		assertEquals(Colors.route.YELLOW, r1.getColor());	
+	}
+	
+	@Test 
+	public void getRouteTest5() {
+		Board b = new Board("cities.txt");
+		b.claimRoute("Boston", "New York", Colors.route.RED, Colors.player.BLUE);
+		Route r1 = b.getRoute("Boston", "New York", Colors.route.RED, Colors.player.BLUE);
+		assertNotNull(r1);
 	}
 }
