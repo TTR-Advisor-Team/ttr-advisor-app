@@ -45,6 +45,7 @@ public class GameScreen implements Screen {
 
 		// Button to draw Destination tickets
 		final TextButton destButton = new TextButton("Draw DT", TTRAdvisorApp.skin, "small");
+		final TextButton TCButton = new TextButton("Draw Train \n Card", TTRAdvisorApp.skin, "small");
 		destButton.setWidth(Gdx.graphics.getWidth() / 5);
 		destButton.setPosition(Gdx.graphics.getWidth() - destButton.getWidth(), destButton.getHeight() / 8);
 		// Jake: Still need to add way to choose DTs within this screen
@@ -61,7 +62,6 @@ public class GameScreen implements Screen {
 		
 		guiStage.addActor(destButton);
 		
-		final TextButton TCButton = new TextButton("Draw Train \n Card", TTRAdvisorApp.skin, "small");
 		TCButton.setHeight(destButton.getHeight());
 		TCButton.setPosition(0, TCButton.getHeight() / 8);
         TCButton.addListener(new InputListener(){
