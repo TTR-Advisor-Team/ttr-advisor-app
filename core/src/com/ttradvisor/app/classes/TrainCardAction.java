@@ -5,7 +5,8 @@ import java.util.ArrayList;
 public class TrainCardAction extends Action {
 	private ArrayList<TrainCard> drawnCards;
 	
-	public TrainCardAction(ArrayList<TrainCard> drawnCards) {
+	public TrainCardAction(Player actingPlayer, ArrayList<TrainCard> drawnCards) {
+		super(actingPlayer);
 		this.setDrawnCards(drawnCards);
 	}
 	

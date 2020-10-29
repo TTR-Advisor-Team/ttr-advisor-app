@@ -1,5 +1,11 @@
 package com.ttradvisor.app.classes;
 
-public class Action {
+public abstract class Action {
+	
+	public Player actingPlayer;
+	
+	public Action(Player actingPlayer) {
+		this.actingPlayer = actingPlayer;
+	}
 
 }
