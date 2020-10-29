@@ -57,7 +57,7 @@ public class Board {
 		
 		LinkedList<Route> end = board.get(cityEnd);
 		for(Route r: end) {
-			if ((r.end.equals(cityEnd))  && (r.color==color)) {
+			if ((r.end.equals(cityBegin))  && (r.color==color)) {
 				r.owner = player;
 				break;
 			}
@@ -74,10 +74,10 @@ public class Board {
 	}
 	
 	//return a route from start city to end city
-	public Route getRoute(String start, String end) {
+	public Route getRoute(String start, String end, Colors.route color, Colors.player owner) {
 		LinkedList<Route> routes = board.get(start);
 		for (Route r: routes) {
-			if (r.end.equals(end))
+			if (r.end.equals(end) && r.color.equals(color) && r.owner.equals(owner))
 				return r;
 			continue;
 		}
@@ -98,5 +98,24 @@ public class Board {
 			this.owner = Colors.player.NONE;
 		}
 		
+		public String getBegin() {
+			return this.begin;
+		}
+		
+		public String getEnd() {
+			return this.end;
+		}
+		
+		public Colors.route getColor() {
+			return this.color;
+		}
+		
+		public Colors.player getOwner() {
+			return this.owner;
+		}
+		
+		public int getCost() {
+			return this.cost;
+		}
 	}
 }
