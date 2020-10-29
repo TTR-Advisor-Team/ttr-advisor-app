@@ -33,7 +33,14 @@ public class InputTurnController {
 	 * Actions are to be interpreted in the context of the initial turn.
 	 */
 	public void startInitialTurn() {
-		isInitialTurnActive = false;
+		isInitialTurnActive = true;
+	}
+	
+	/**
+	 * @return true only if the initial turn is ongoing
+	 */
+	public boolean isInitialTurn() {
+		return isInitialTurnActive;
 	}
 	
 	/**
@@ -43,12 +50,10 @@ public class InputTurnController {
 	public void takeAction(Action thisTurn) {
 		if (isInitialTurnActive) {
 			if (thisTurn instanceof TrainCardAction) {
-				TrainCardAction TCaction = (TrainCardAction)thisTurn;
-				TCaction.actingPlayer.getTCS().addAll(TCaction.getDrawnCards());
+				initialTurnDrawTC((TrainCardAction)thisTurn);
 			}
 			else if (thisTurn instanceof DestinationAction) {
-				DestinationAction DTaction = (DestinationAction)thisTurn;
-				DTaction.actingPlayer.getDTS().addAll(DTaction.getDrawnTickets());
+				initialTurnDrawDT((DestinationAction)thisTurn);
 			}
 			else {
 				Gdx.app.error("Turn", "May only draw destination tickets or train cards on initial turn.");
@@ -58,6 +63,18 @@ public class InputTurnController {
 			// for a future iteration
 			// process with context of normal round turn
 		}
+	}
+	
+	private void initialTurnDrawTC(TrainCardAction thisTurn) {
+		// checks:
+		// # of cards must be valid (2-4)?
+		// player must exist in the game state
+		// 
+		thisTurn.actingPlayer.getTCS().addAll(thisTurn.getDrawnCards());
+	}
+	
+	private void initialTurnDrawDT(DestinationAction thisTurn) {
+		thisTurn.actingPlayer.getDTS().addAll(thisTurn.getDrawnTickets());
 	}
 
 }
