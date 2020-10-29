@@ -178,7 +178,7 @@ public class GameScreen implements Screen {
 //            				if(drawnCards.get(0).getColor == "wild") {
 //            					drawnCards.remove(1);
 //            				}
-//            				inputTurnController(TrainCardAction(drawnCards));
+//            				mainApp.turnInput.takeAction(new TrainCardAction(Player?, drawnCards));
             				destButton.setVisible(true);
                     		TCButton.setVisible(true);
                     		table.setVisible(false);

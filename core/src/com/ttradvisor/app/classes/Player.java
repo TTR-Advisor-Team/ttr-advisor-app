@@ -77,4 +77,15 @@ public class Player {
 	public void setNumTrains(int numTrains) {
 		this.numTrains = numTrains;
 	}
+	
+	/**
+	 * Since there can only be one player of a given color in a game, equality is having the same color.
+	 */
+	@Override
+	public boolean equals(Object other) {
+		if (other instanceof Player) {
+			return ((Player)other).color == color; 
+		}
+		return false;
+	}
 }

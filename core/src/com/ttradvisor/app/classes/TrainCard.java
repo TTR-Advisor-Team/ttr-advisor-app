@@ -1,17 +1,17 @@
 package com.ttradvisor.app.classes;
 
 public class TrainCard {
-	private String color;
+	private Colors.route color;
 	
-	public TrainCard(String color) {
-		setColor(color);
-	}
-	
-	public void setColor(String color) {
+	public TrainCard(Colors.route color) {
 		this.color = color;
 	}
 	
-	public String getColor() {
+	public void setColor(Colors.route color) {
+		this.color = color;
+	}
+	
+	public Colors.route getColor() {
 		return color;
 	}
 	
