@@ -1,6 +1,5 @@
 package com.ttradvisor.app.classes;
 import java.util.ArrayList;
-import java.util.List;
 
 public class DestinationAction extends Action {
 	ArrayList<DestinationTicket> drawnTickets = new ArrayList<DestinationTicket>();
@@ -10,5 +9,12 @@ public class DestinationAction extends Action {
 		drawnTickets = tickets;
 	}
 	
+	public ArrayList<DestinationTicket> getDrawnTickets() {
+		return drawnTickets;
+	}
+	
+	public void setDrawnCards(ArrayList<DestinationTicket> tickets) {
+		this.drawnTickets = tickets;
+	}
 
 }
