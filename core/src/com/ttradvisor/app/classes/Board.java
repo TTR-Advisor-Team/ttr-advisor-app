@@ -49,15 +49,17 @@ public class Board {
 	public void claimRoute(String cityBegin, String cityEnd, Colors.route color, Colors.player player) {
 		LinkedList<Route> begin = board.get(cityBegin);
 		for(Route r: begin) {
-			if ((r.begin.compareTo(cityBegin) == 0) && (r.color==color)) {
+			if ((r.begin.equals(cityBegin)) && (r.color==color)) {
 				r.owner = player;
+				break;
 			}
 		}
 		
 		LinkedList<Route> end = board.get(cityEnd);
 		for(Route r: end) {
-			if ((r.end.compareTo(cityEnd) == 0)  && (r.color==color)) {
+			if ((r.end.equals(cityEnd))  && (r.color==color)) {
 				r.owner = player;
+				break;
 			}
 		}
 		
@@ -66,9 +68,20 @@ public class Board {
 	public HashMap<String, LinkedList<Route>> snapshotBoard () {	
 		return null;
 	}
-	//returns a list of all routes from a city to all neighboring cities
-	public LinkedList<Route> getRoutes(String city) {
+	//returns a list of routes from a city to all neighboring cities
+	public LinkedList<Route> getAllRoutes(String city) {
 		return board.get(city);
+	}
+	
+	//return a route from start city to end city
+	public Route getRoute(String start, String end) {
+		LinkedList<Route> routes = board.get(start);
+		for (Route r: routes) {
+			if (r.end.equals(end))
+				return r;
+			continue;
+		}
+		return null;
 	}
 	public static class Route {
 		String begin;

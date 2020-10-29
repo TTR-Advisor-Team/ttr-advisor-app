@@ -53,4 +53,5 @@ public class TestBoard {
 		Route r = new Route("a","b",Colors.route.ANY,2);
 		assertNotNull(r);
 	}
+	
 }
