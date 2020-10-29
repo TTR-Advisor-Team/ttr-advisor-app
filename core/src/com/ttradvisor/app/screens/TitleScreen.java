@@ -480,11 +480,11 @@ public class TitleScreen implements Screen {
             	
             	// TODO set up gameState here before triggering the initial turn & going to GameScreen
             	// Instead of BLACK they should all get the right colors
-//            	
-//            	for (int i=0; i<numPlayers.getSelectedIndex(); i++) {
-//            		mainApp.gameState.getPlayers().add(new Player(Colors.player.BLACK));
-//            	}
-//            	
+            	
+            	for (int i=0; i<numPlayers.getSelectedIndex() + 2; i++) {
+            		mainApp.gameState.getPlayers().add(new Player(Colors.player.BLACK));
+            	}
+            	
             	mainApp.turnInput.startInitialTurn(); // set up controller for start
             	mainApp.setScreen(new GameScreen(mainApp));
             }
