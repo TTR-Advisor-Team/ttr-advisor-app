@@ -1,5 +1,7 @@
 package com.ttradvisor.app.screens;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
@@ -12,10 +14,12 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.ttradvisor.app.TTRAdvisorApp;
+import com.ttradvisor.app.classes.TrainCard;
 
 /**
  * Created by julienvillegas on 17/01/2017.
@@ -40,7 +44,7 @@ public class GameScreen implements Screen {
 		inputMult = new InputMultiplexer(guiStage, mapStage);
 
 		// Button to draw Destination tickets
-		TextButton destButton = new TextButton("Draw DT", TTRAdvisorApp.skin, "small");
+		final TextButton destButton = new TextButton("Draw DT", TTRAdvisorApp.skin, "small");
 		destButton.setWidth(Gdx.graphics.getWidth() / 5);
 		destButton.setPosition(Gdx.graphics.getWidth() - destButton.getWidth(), destButton.getHeight() / 8);
 		// Jake: Still need to add way to choose DTs within this screen
@@ -57,20 +61,156 @@ public class GameScreen implements Screen {
 		
 		guiStage.addActor(destButton);
 		
-		TextButton TCButton = new TextButton("Draw Train \n Card", TTRAdvisorApp.skin, "small");
-		TCButton.setWidth(Gdx.graphics.getWidth() / 5);
+		final TextButton TCButton = new TextButton("Draw Train \n Card", TTRAdvisorApp.skin, "small");
+		TCButton.setHeight(destButton.getHeight());
 		TCButton.setPosition(0, TCButton.getHeight() / 8);
-		// Sam: what Jake said
-//        destButton.addListener(new InputListener(){
-//            @Override
-//            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-//        	 	  
-//            }
-//            @Override
-//            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-//                return true;
-//            }
-//        });
+        TCButton.addListener(new InputListener(){
+            @Override
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+            	destButton.setVisible(false);
+            	TCButton.setVisible(false);
+            	final ArrayList<TrainCard> drawnCards = new ArrayList<>();
+            	TextButton redTrain = new TextButton("Red", TTRAdvisorApp.skin, "small");
+            	redTrain.addListener(new InputListener() {
+            		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+//            			drawnCards.add(new TrainCard("red"));
+            		}
+            		public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                        return true;
+                    }
+            	});
+            	TextButton orangeTrain = new TextButton("Orange", TTRAdvisorApp.skin, "small");
+            	orangeTrain.addListener(new InputListener() {
+            		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+//            			drawnCards.add(new TrainCard("orange"));
+            		}
+            		public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                        return true;
+                    }
+            	});
+            	TextButton yellowTrain = new TextButton("Yellow", TTRAdvisorApp.skin, "small");
+            	yellowTrain.addListener(new InputListener() {
+            		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+//            			drawnCards.add(new TrainCard("yellow"));
+            		}
+            		public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                        return true;
+                    }
+            	});
+            	TextButton greenTrain = new TextButton("Green", TTRAdvisorApp.skin, "small");
+            	greenTrain.addListener(new InputListener() {
+            		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+//            			drawnCards.add(new TrainCard("green"));
+            		}
+            		public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                        return true;
+                    }
+            	});
+            	TextButton blueTrain = new TextButton("Blue", TTRAdvisorApp.skin, "small");
+            	blueTrain.addListener(new InputListener() {
+            		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+//            			drawnCards.add(new TrainCard("blue"));
+            		}
+            		public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                        return true;
+                    }
+            	});
+            	TextButton purpleTrain = new TextButton("Purple", TTRAdvisorApp.skin, "small");
+            	purpleTrain.addListener(new InputListener() {
+            		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+//            			drawnCards.add(new TrainCard("purple"));
+            		}
+            		public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                        return true;
+                    }
+            	});
+            	TextButton blackTrain = new TextButton("Black", TTRAdvisorApp.skin, "small");
+            	blackTrain.addListener(new InputListener() {
+            		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+//            			drawnCards.add(new TrainCard("black"));
+            		}
+            		public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                        return true;
+                    }
+            	});
+            	TextButton whiteTrain = new TextButton("White", TTRAdvisorApp.skin, "small");
+            	whiteTrain.addListener(new InputListener() {
+            		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+//            			drawnCards.add(new TrainCard("white"));
+            		}
+            		public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                        return true;
+                    }
+            	});
+            	TextButton wildTrain = new TextButton("Wild", TTRAdvisorApp.skin, "small");
+            	wildTrain.addListener(new InputListener() {
+            		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+//            			drawnCards.add(new TrainCard("wild"));
+            		}
+            		public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                        return true;
+                    }
+            	});
+            	TextButton done = new TextButton("Done", TTRAdvisorApp.skin, "small");
+            	done.addListener(new InputListener() {
+            		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+//            			inputTurnController(TrainCardAction(drawnCards));
+            		}
+            		public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                        return true;
+                    }
+            	});
+            	TextButton undo = new TextButton("Undo", TTRAdvisorApp.skin, "small");
+            	whiteTrain.addListener(new InputListener() {
+            		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+            			if(!drawnCards.isEmpty()) {
+            				drawnCards.remove(drawnCards.size()-1);
+            			}
+            		}
+            		public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                        return true;
+                    }
+            	});
+            	TextButton back = new TextButton("Back", TTRAdvisorApp.skin, "small");
+            	back.addListener(new InputListener() {
+            		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+//            			drawnCards.removeAll(drawnCards);
+            		}
+            		public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                        return true;
+                    }
+            	});
+            	TextButton invis = new TextButton("", TTRAdvisorApp.skin, "small");
+            	invis.setVisible(false);
+            	//Red, Orange, Yellow, Green, Blue, Purple, Black & White, wild
+            	Table table = new Table();
+            	table.bottom();
+            	table.add(invis);
+            	table.add(redTrain);
+            	table.add(orangeTrain);
+            	table.add(yellowTrain);
+            	table.row();
+            	table.add(invis);
+            	table.add(greenTrain);
+            	table.add(blueTrain);
+            	table.add(purpleTrain);
+            	table.add(back);
+            	table.row();
+            	table.add(undo);
+            	table.add(blackTrain);
+            	table.add(whiteTrain);
+            	table.add(wildTrain);
+            	table.add(done);
+                table.setFillParent(true);
+                
+//              table.setDebug(true); // turn on all debug lines (table, cell, and widget)
+                guiStage.addActor(table);
+            }
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+        });
 		
 		guiStage.addActor(TCButton);
 
