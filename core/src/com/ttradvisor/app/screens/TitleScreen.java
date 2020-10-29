@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -88,18 +89,14 @@ public class TitleScreen implements Screen {
         float  corX = black.getWidth();
         // used for Y of checked box
         float corY =  bkUsedBox.getHeight()/4;
-        bkUsedBox.setScale(8);
+        //bkUsedBox.setScale(8);
         bkUsedBox.setPosition(black.getX()  + corX, black.getY() - corY);
         // Checkbox for black color not being used
         final CheckBox bkNotUsedBox = new CheckBox("No", TTRAdvisorApp.skin);
         bkNotUsedBox.setPosition(bkUsedBox.getX() + corX/2, black.getY() - corY);
-        // Check whether tmax players is selected
-        if(numPlayers.getSelected().equals(5)){
-        	bkUsedBox.setChecked(true);
-        }
-        else {
-        	bkNotUsedBox.setChecked(true);
-        }
+        // CheckBox for if this is the user's color
+        final CheckBox bkUserBox = new CheckBox("User", TTRAdvisorApp.skin);
+        bkUserBox.setPosition(bkNotUsedBox.getX() + corX/2, black.getY() - corY);
         // Listeners for check boxes
         bkUsedBox.addListener(new InputListener(){
             @Override
@@ -120,6 +117,7 @@ public class TitleScreen implements Screen {
             {
             	if (bkNotUsedBox.isChecked()) {
             		bkUsedBox.setChecked(false);
+            		bkUserBox.setChecked(false);
             	}
             }
             @Override
@@ -144,13 +142,9 @@ public class TitleScreen implements Screen {
         // Checkbox for blue color not being used
         final CheckBox blNotUsedBox = new CheckBox("No", TTRAdvisorApp.skin);
         blNotUsedBox.setPosition(blUsedBox.getX()  + corX/2, blue.getY()- corY);
-        // Check whether max players is selected
-        if(numPlayers.getSelected() == 5){
-        	blUsedBox.setChecked(true);
-        }
-        else {
-        	blNotUsedBox.setChecked(true);
-        }
+        // CheckBox for if this is the user's color
+        final CheckBox blUserBox = new CheckBox("User", TTRAdvisorApp.skin);
+        blUserBox.setPosition(blNotUsedBox.getX() + corX/2, blue.getY() - corY);
         // Listeners for check boxes
         blUsedBox.addListener(new InputListener(){
             @Override
@@ -171,6 +165,7 @@ public class TitleScreen implements Screen {
             {
             	if (blNotUsedBox.isChecked()) {
             		blUsedBox.setChecked(false);
+            		blUserBox.setChecked(false);
             	}
             }
             @Override
@@ -195,13 +190,9 @@ public class TitleScreen implements Screen {
         // Checkbox for green color not being used
         final CheckBox grNotUsedBox = new CheckBox("No", TTRAdvisorApp.skin);
         grNotUsedBox.setPosition(grUsedBox.getX() + corX/2, green.getY() - corY);
-        // Check whether max players is selected
-        if(numPlayers.getSelected() == 5){
-        	grUsedBox.setChecked(true);
-        }
-        else {
-        	grNotUsedBox.setChecked(true);
-        }
+        // CheckBox for if this is the user's color
+        final CheckBox grUserBox = new CheckBox("User", TTRAdvisorApp.skin);
+        grUserBox.setPosition(grNotUsedBox.getX() + corX/2, green.getY() - corY);
         // Listeners for check boxes
         grUsedBox.addListener(new InputListener(){
             @Override
@@ -222,6 +213,7 @@ public class TitleScreen implements Screen {
             {
             	if (grNotUsedBox.isChecked()) {
             		grUsedBox.setChecked(false);
+            		grUserBox.setChecked(false);
             	}
             }
             @Override
@@ -246,13 +238,9 @@ public class TitleScreen implements Screen {
         // Checkbox for red color not being used
         final CheckBox rdNotUsedBox = new CheckBox("No", TTRAdvisorApp.skin);
         rdNotUsedBox.setPosition(rdUsedBox.getX() + corX/2, red.getY() - corY);
-        // Check whether max players is selected
-        if(numPlayers.getSelected() == 5){
-        	rdUsedBox.setChecked(true);
-        }
-        else {
-        	rdNotUsedBox.setChecked(true);
-        }
+        // CheckBox for if this is the user's color
+        final CheckBox rdUserBox = new CheckBox("User", TTRAdvisorApp.skin);
+        rdUserBox.setPosition(rdNotUsedBox.getX() + corX/2, red.getY() - corY);
         // Listeners for check boxes
         rdUsedBox.addListener(new InputListener(){
             @Override
@@ -273,6 +261,7 @@ public class TitleScreen implements Screen {
             {
             	if (rdNotUsedBox.isChecked()) {
             		rdUsedBox.setChecked(false);
+            		rdUserBox.setChecked(false);
             	}
             }
             @Override
@@ -297,13 +286,9 @@ public class TitleScreen implements Screen {
         // Checkbox for yellow color not being used
         final CheckBox ywNotUsedBox = new CheckBox("No", TTRAdvisorApp.skin);
         ywNotUsedBox.setPosition(ywUsedBox.getX() + corX/2, yellow.getY() - corY);
-        // Check whether max players is selected
-        if(numPlayers.getSelected() == 5){
-        	ywUsedBox.setChecked(true);
-        }
-        else {
-        	ywNotUsedBox.setChecked(true);
-        }
+        // CheckBox for if this is the user's color
+        final CheckBox ywUserBox = new CheckBox("User", TTRAdvisorApp.skin);
+        ywUserBox.setPosition(ywNotUsedBox.getX() + corX/2, yellow.getY() - corY);
         // Listeners for check boxes
         ywUsedBox.addListener(new InputListener(){
             @Override
@@ -324,6 +309,7 @@ public class TitleScreen implements Screen {
             {
             	if (ywNotUsedBox.isChecked()) {
             		ywUsedBox.setChecked(false);
+            		ywUserBox.setChecked(false);
             	}
             }
             @Override
@@ -334,6 +320,92 @@ public class TitleScreen implements Screen {
         stage.addActor(yellow);
         stage.addActor(ywUsedBox);
         stage.addActor(ywNotUsedBox);
+        // listeners for user boxes
+        bkUserBox.addListener(new InputListener(){
+            @Override
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button)
+            {
+            	if (bkUserBox.isChecked()) {
+            		blUserBox.setChecked(false);
+            		grUserBox.setChecked(false);
+            		rdUserBox.setChecked(false);
+            		ywUserBox.setChecked(false);
+            	}
+            }
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+        });
+        blUserBox.addListener(new InputListener(){
+            @Override
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button)
+            {
+            	if (blUserBox.isChecked()) {
+            		bkUserBox.setChecked(false);
+            		grUserBox.setChecked(false);
+            		rdUserBox.setChecked(false);
+            		ywUserBox.setChecked(false);
+            	}
+            }
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+        });
+        grUserBox.addListener(new InputListener(){
+            @Override
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button)
+            {
+            	if (grUserBox.isChecked()) {
+            		blUserBox.setChecked(false);
+            		bkUserBox.setChecked(false);
+            		rdUserBox.setChecked(false);
+            		ywUserBox.setChecked(false);
+            	}
+            }
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+        });
+        rdUserBox.addListener(new InputListener(){
+            @Override
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button)
+            {
+            	if (rdUserBox.isChecked()) {
+            		blUserBox.setChecked(false);
+            		grUserBox.setChecked(false);
+            		bkUserBox.setChecked(false);
+            		ywUserBox.setChecked(false);
+            	}
+            }
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+        });
+        ywUserBox.addListener(new InputListener(){
+            @Override
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button)
+            {
+            	if (ywUserBox.isChecked()) {
+            		blUserBox.setChecked(false);
+            		grUserBox.setChecked(false);
+            		rdUserBox.setChecked(false);
+            		bkUserBox.setChecked(false);
+            	}
+            }
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+        });
+        stage.addActor(bkUserBox);
+        stage.addActor(blUserBox);
+        stage.addActor(grUserBox);
+        stage.addActor(rdUserBox);
+        stage.addActor(ywUserBox);
         
         numPlayers.addListener(new ChangeListener(){
             @Override
@@ -396,15 +468,14 @@ public class TitleScreen implements Screen {
             	ArrayList<Colors.player> order = new ArrayList<Colors.player>();
             	for(int i = 0; i < tOrder.length; i++) {
             		for(Colors.player col : Colors.player.values()) {
-            			if(col.toString().toLowerCase().equals(tOrder[i])) {
-            				order.add(col);
+            			if(col.toString().toLowerCase().equals(tOrder[i])) 
+            					order.add(col);	
             			}
             		}
-            	}
             	mainApp.turnOrder = order;
             	mainApp.numPlayers = numPlayers.getSelected();
             	mainApp.turnInput.startInitialTurn(); // set up controller for start
-                mainApp.setScreen(new GameScreen(mainApp));
+            	mainApp.setScreen(new GameScreen(mainApp));
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
