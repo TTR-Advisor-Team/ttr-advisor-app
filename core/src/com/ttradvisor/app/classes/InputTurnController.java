@@ -15,8 +15,8 @@ public class InputTurnController {
 	
 	// context for interpreting Actions
 	private boolean isInitialTurnActive;
-	private int initialTurnTCDrawn;
-	private int initialTurnDTDrawn;
+	private boolean initialTurnDTSDrawn;
+	private boolean initialTurnTCSDrawn;
 	
 	/**
 	 * Init a controller linked to the given game state object.
@@ -36,8 +36,6 @@ public class InputTurnController {
 	 */
 	public void startInitialTurn() {
 		isInitialTurnActive = true;
-		initialTurnTCDrawn = 0;
-		initialTurnDTDrawn = 0;
 	}
 	
 	/**
@@ -73,14 +71,12 @@ public class InputTurnController {
 	}
 	
 	private boolean initialTurnDrawTC(TrainCardAction thisTurn) {
-		if (thisTurn.getDrawnCards().size() + initialTurnTCDrawn > 4) {
-			Gdx.app.error("Turn", "May not draw more than 4 train cards on initial turn.");
+		if (thisTurn.getDrawnCards().size() != 4) {
+			Gdx.app.error("Turn", "Must draw 4 train cards on initial turn.");
 			return false;
 		}
 		thisTurn.actingPlayer.getTCS().addAll(thisTurn.getDrawnCards());
-		initialTurnTCDrawn += thisTurn.getDrawnCards().size();
-		if (initialTurnTCDrawn == 4 && (initialTurnDTDrawn == 2 || initialTurnDTDrawn == 3)) {
-			// done drawing cards for the initial turn
+		if (initialTurnDTSDrawn && initialTurnTCSDrawn) {
 			isInitialTurnActive = false;
 			return true;
 		}
@@ -88,14 +84,12 @@ public class InputTurnController {
 	}
 	
 	private boolean initialTurnDrawDT(DestinationAction thisTurn) {
-		if (thisTurn.getDrawnTickets().size() + initialTurnDTDrawn > 3) {
-			Gdx.app.error("Turn", "May not draw more than 3 tickets on initial turn.");
+		if (thisTurn.getDrawnTickets().size() < 2 || thisTurn.getDrawnTickets().size() > 4) {
+			Gdx.app.error("Turn", "Must draw between 2 and 3 destination tickets on initial turn.");
 			return false;
 		}
 		thisTurn.actingPlayer.getDTS().addAll(thisTurn.getDrawnTickets());
-		initialTurnDTDrawn += thisTurn.getDrawnTickets().size();
-		if (initialTurnTCDrawn == 4 && (initialTurnDTDrawn == 2 || initialTurnDTDrawn == 3)) {
-			// done drawing cards for the initial turn
+		if (initialTurnDTSDrawn && initialTurnTCSDrawn) {
 			isInitialTurnActive = false;
 			return true;
 		}
