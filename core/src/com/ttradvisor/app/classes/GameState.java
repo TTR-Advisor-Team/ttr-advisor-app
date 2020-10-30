@@ -3,22 +3,23 @@ package com.ttradvisor.app.classes;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ttradvisor.app.classes.Board.Route;
+
 public class GameState {
 
 	private ArrayList<Player> curPlayers;
 	private Board curBoard;
 	//private Recommender rec;
-	private DestinationTicketList dtList;
+	//private DestinationTicketList dtList;
 	private ArrayList<Turn> turns;
-	public Player currentPlayer;
+	private ArrayList<Route> claimedRoutes;
 	
-	public GameState(ArrayList<Player> players, Board board, DestinationTicketList dtList, ArrayList<Turn> turns) {
+	public GameState(ArrayList<Player> players, Board board, ArrayList<Turn> turns) {
 		curPlayers = players;
 		curBoard = board;
 		this.turns = turns;
-		currentPlayer = null;
-
-		this.dtList = dtList;
+		//this.dtList = dtList;
+		claimedRoutes = new ArrayList<Route>();
 	}
 	
 	public void addTurn(Turn newTurn) {
@@ -46,7 +47,17 @@ public class GameState {
 	public void setTurns(ArrayList<Turn> turns) {
 		this.turns = turns;
 	}
-	public DestinationTicketList getDtList() {
-		return dtList;
+
+	public void addClaimedRoute(Route claim) {
+		claimedRoutes.add(claim);
 	}
+	public  ArrayList<Route> getClaimedRoutes(){
+		return claimedRoutes;
+	}
+	public void setClaimedRoutes(ArrayList<Route> claimedRoutes){
+		this.claimedRoutes = claimedRoutes;
+	}
+//	public DestinationTicketList getDtList() {
+//		return dtList;
+//	}
 }
