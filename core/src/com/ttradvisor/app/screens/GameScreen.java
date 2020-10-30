@@ -47,6 +47,7 @@ public class GameScreen implements Screen {
 	private ScrollPane listPane;
 
 	private List<Colors.player> demonstration; // TODO delete this after demo
+	private Label demoCurrPlayer;
 
 	private float mapWidth;
 	private float mapHeight;
@@ -72,6 +73,12 @@ public class GameScreen implements Screen {
 		demonstration.setSize(200, 100);
 		demonstration.setPosition(50, 500);
 		guiStage.addActor(demonstration);
+		
+		demoCurrPlayer = new Label("", mainApp.skin);
+		demoCurrPlayer.setColor(0, 0, 0, 1);
+		demoCurrPlayer.setSize(100, 30);
+		demoCurrPlayer.setPosition(50, 400);
+		guiStage.addActor(demoCurrPlayer);
 		
 		// Button to draw Destination tickets
 		final TextButton destButton = new TextButton("Draw DT", TTRAdvisorApp.skin, "small");
@@ -390,6 +397,7 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
+		demoCurrPlayer.setText("Current player: " + mainApp.gameState.currentPlayer.getColor());
 		Gdx.gl.glClearColor(.58f, .71f, .78f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
