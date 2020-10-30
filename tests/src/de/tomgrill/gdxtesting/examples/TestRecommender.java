@@ -10,6 +10,8 @@ import com.badlogic.gdx.files.FileHandle;
 import com.ttradvisor.app.classes.Board;
 import com.ttradvisor.app.classes.Board.Route;
 import com.ttradvisor.app.classes.Colors;
+import com.ttradvisor.app.classes.DestinationTicket;
+import com.ttradvisor.app.classes.DestinationTicketList;
 import com.ttradvisor.app.classes.Player;
 import com.ttradvisor.app.classes.Recommender;
 
@@ -153,5 +155,33 @@ public class TestRecommender {
 			cost += r.getCost();
 		}
 		assertEquals(10, cost);
+	}
+	
+	@Test
+	public void testAllDT() {
+		DestinationTicketList dl =  new DestinationTicketList("destinations.txt");
+		LinkedList<DestinationTicket> dt = dl.getList();
+		for (DestinationTicket d: dt) {
+			LinkedList<Route> routes = rec.shortestPath(d.getStart(), d.getEnd());
+			LinkedList<Route> reverseRoutes = rec.shortestPath(d.getEnd(), d.getStart());
+			int cost = 0;
+			for(Route r: routes) {
+				cost += r.getCost();
+			}			
+			assertEquals(d.getValue(), cost);
+		}
+	}
+	@Test
+	public void testAllReverseDT() {
+		DestinationTicketList dl =  new DestinationTicketList("destinations.txt");
+		LinkedList<DestinationTicket> dt = dl.getList();
+		for (DestinationTicket d: dt) {
+			LinkedList<Route> reverseRoutes = rec.shortestPath(d.getEnd(), d.getStart());
+			int cost = 0;
+			for(Route r: reverseRoutes) {
+				cost += r.getCost();
+			}
+			assertEquals(d.getValue(), cost);
+		}
 	}
 }
