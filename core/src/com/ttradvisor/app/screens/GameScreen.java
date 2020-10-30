@@ -136,6 +136,9 @@ public class GameScreen implements Screen {
 		    		drawnTickets.add(destTickets.getSelected());		
 		        	
 		        	mainApp.turnInput.takeAction(new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets));
+		        	
+		        	guiStage.setScrollFocus(null);
+		        	
 		    		destButton.setVisible(true);
 		    		TCButton.setVisible(true);
 		    		listPane.setVisible(false);
