@@ -300,7 +300,13 @@ public class GameScreen implements Screen {
             			
             			// MOCKUP
             			// TODO this should work once the other bits are in place
-            			mainApp.turnInput.takeAction(new TrainCardAction(mainApp.gameState.currentPlayer, drawnCards));
+            			boolean isInitial = mainApp.turnInput.isInitialTurn();
+    		    		
+    		        	if (mainApp.turnInput.takeAction(new TrainCardAction(mainApp.gameState.currentPlayer, drawnCards))) {
+    		        		if (isInitial) {
+    		        			mainApp.gameState.currentPlayer = mainApp.gameState.getPlayers().get(0);
+    		        		}
+    		        	}
             			
             			
             			
