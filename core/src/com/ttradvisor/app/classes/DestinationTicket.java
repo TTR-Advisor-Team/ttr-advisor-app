@@ -11,8 +11,7 @@ public class DestinationTicket {
 	public DestinationTicket(String start, String end) {
 		startEnd.add(start);
 		startEnd.add(end);
-		//Maybe some shortest path calculation if passed in without length
-		//OR do we even need any of this and can just pass in all the info from like a text file? 
+		//Maybe some shortest path calculation if passed in without length 
 	}
 	
 	public DestinationTicket(String start, String end, int length) {

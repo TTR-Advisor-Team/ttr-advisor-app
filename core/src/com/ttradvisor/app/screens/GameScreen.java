@@ -20,6 +20,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.ttradvisor.app.TTRAdvisorApp;
 import com.ttradvisor.app.classes.Colors;
+import com.ttradvisor.app.classes.DestinationAction;
+import com.ttradvisor.app.classes.DestinationTicket;
+import com.ttradvisor.app.classes.DestinationTicketList;
 import com.ttradvisor.app.classes.Player;
 import com.ttradvisor.app.classes.TrainCard;
 import com.ttradvisor.app.classes.TrainCardAction;
@@ -36,6 +39,7 @@ public class GameScreen implements Screen {
 	private Stage mapStage;
 	private OrthographicCamera camera;
 	private Stage guiStage;
+	private DestinationTicketList dtList;
 	
 	public Player currentPlayer;
 
@@ -50,6 +54,9 @@ public class GameScreen implements Screen {
 		// TODO should be the selected first player!
 		currentPlayer = main.gameState.getPlayers().get(0);
 		
+		//dtList = main.gameState.getDtList();
+		
+		
 		
 		guiStage = new Stage(new ScreenViewport());
 		mapStage = new Stage(new ScreenViewport());
@@ -58,21 +65,42 @@ public class GameScreen implements Screen {
 		// Button to draw Destination tickets
 		final TextButton destButton = new TextButton("Draw DT", TTRAdvisorApp.skin, "small");
 		final TextButton TCButton = new TextButton("Draw Train \n Card", TTRAdvisorApp.skin, "small");
+		// Button to draw Destination tickets
 		destButton.setWidth(Gdx.graphics.getWidth() / 5);
 		destButton.setPosition(Gdx.graphics.getWidth() - destButton.getWidth(), destButton.getHeight() / 8);
 		// Jake: Still need to add way to choose DTs within this screen
-//        destButton.addListener(new InputListener(){
-//            @Override
-//            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-//        	 	  
-//            }
-//            @Override
-//            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-//                return true;
-//            }
-//        });
-		
+		destButton.addListener(new InputListener(){
+		@Override
+		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+		    destButton.setVisible(false);
+		    TCButton.setVisible(false);
+		    TextButton done = new TextButton("Done", TTRAdvisorApp.skin, "small");
+		    done.addListener(new InputListener() {
+		    	public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+//				        	if(drawnCards.size() == 2){
+//				        		if(drawnCards.get(0).getColor == "wild") {
+//				        			drawnCards.remove(1);
+//				        		}
+//				        	mainApp.turnInput.takeAction(new TrainCardAction(Player?, drawnCards));
+		    		destButton.setVisible(true);
+		    		TCButton.setVisible(true);
+		    		//table.setVisible(false);
+//				        	}
+		    	}
+		    	public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+		    		return true;
+		    	}
+		    });
+		            	//   
+		 }
+		 @Override
+		 public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+		        return true;
+		 }
+		 });
 		guiStage.addActor(destButton);
+		
+		
 		TCButton.setHeight(destButton.getHeight());
 		TCButton.setPosition(0, TCButton.getHeight() / 8);
         TCButton.addListener(new InputListener(){
