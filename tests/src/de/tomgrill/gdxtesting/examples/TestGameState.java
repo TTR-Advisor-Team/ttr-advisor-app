@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 @RunWith(GdxTestRunner.class)
-public class TestModel {
+public class TestGameState {
 	
 	private GameState initTestGameState() {
 		Player testP1 = new Player(Colors.player.RED);
