@@ -161,7 +161,7 @@ public class InputTurnController {
 				}	
 			}
 
-			thisTurn.actingPlayer.addClaimedRoutes(thisTurn.claimedRoute);
+//			thisTurn.actingPlayer.addClaimedRoutes(thisTurn.claimedRoute);
 			gameState.addClaimedRoute(thisTurn.claimedRoute);
 
 			return true;

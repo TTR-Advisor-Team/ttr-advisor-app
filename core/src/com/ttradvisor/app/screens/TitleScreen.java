@@ -294,7 +294,6 @@ public class TitleScreen implements Screen {
             	}
             	else {
             		err2 = true;
-            		System.out.println("here");
             	}
             	
             	if(!(err1 || err2)) {
