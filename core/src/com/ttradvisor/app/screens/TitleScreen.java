@@ -220,12 +220,19 @@ public class TitleScreen implements Screen {
         });
 		stage.addActor(numPlayers);
 		
-		final Label error = new Label("Error: Can't have duplicate colors", TTRAdvisorApp.skin);
-        error.setWidth(Gdx.graphics.getWidth()/4);
-		error.setPosition(Gdx.graphics.getWidth()/2 - error.getWidth()/2, Gdx.graphics.getHeight()/8);
-        error.setColor(Color.RED);
-        stage.addActor(error);
-        error.setVisible(false);
+		final Label error1 = new Label("Error: Can't have duplicate colors", TTRAdvisorApp.skin);
+        error1.setWidth(Gdx.graphics.getWidth()/4);
+		error1.setPosition(Gdx.graphics.getWidth()/2 - error1.getWidth()/2, Gdx.graphics.getHeight()/8);
+        error1.setColor(Color.RED);
+        stage.addActor(error1);
+        error1.setVisible(false);
+        
+        final Label error2 = new Label("Error: Invalid user color", TTRAdvisorApp.skin);
+        error2.setWidth(Gdx.graphics.getWidth()/4);
+		error2.setPosition(error1.getX(), error1.getY() - error1.getHeight());
+        error2.setColor(Color.RED);
+        stage.addActor(error2);
+        error2.setVisible(false);
 
         // Button to access GameScreen
         TextButton playButton = new TextButton("Play!", TTRAdvisorApp.skin, "small");
@@ -235,7 +242,8 @@ public class TitleScreen implements Screen {
         playButton.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-            	boolean err = false;
+            	boolean err1 = false;
+            	boolean err2 = false;
             	ArrayList<String> tOrder = null;
             	ArrayList<Colors.player> order = new ArrayList<Colors.player>();
             	// makes it so there is only info visible for the correct amount of players
@@ -274,17 +282,22 @@ public class TitleScreen implements Screen {
             					order.add(col);
             				}
             				else {
-            					err = true;
+            					err1 = true;
             				}
             			}
             		}
-            	
-            	for (Colors.player col1 : Colors.player.values()) {
-            		if(col1.toString().toLowerCase().equals(userCol.getSelected().toLowerCase())) 
-            			mainApp.userColor = col1;
+            	if(tOrder.contains(userCol.getSelected())) {
+            		for (Colors.player col1 : Colors.player.values()) {
+	            		if(col1.toString().toLowerCase().equals(userCol.getSelected().toLowerCase())) 
+	            			mainApp.userColor = col1;
+            		}
+            	}
+            	else {
+            		err2 = true;
+            		System.out.println("here");
             	}
             	
-            	if(!err) {
+            	if(!(err1 || err2)) {
 	            	// Initialize player colors
 	            	for (int i=0; i<numPlayers.getSelected(); i++) {
 	            		mainApp.gameState.getPlayers().add(new Player(order.get(i)));
@@ -293,8 +306,17 @@ public class TitleScreen implements Screen {
 	            	mainApp.turnInput.startInitialTurn(); // set up controller for start
 	            	mainApp.setScreen(new GameScreen(mainApp));
             	}
+            	else if(err1 & err2){
+            		error1.setVisible(true);
+            		error2.setVisible(true);
+            	}
+            	else if(err1){
+            		error1.setVisible(true);
+            		error2.setVisible(false);
+            	}
             	else {
-            		error.setVisible(true);
+            		error1.setVisible(false);
+            		error2.setVisible(true);
             	}
             }
             @Override
