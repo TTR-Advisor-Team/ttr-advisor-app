@@ -8,7 +8,7 @@ Denver,Salt Lake City,RED,3,,Salt Lake City,YELLOW,3,,Helena,GREEN,4,,Omaha,PINK
 Duluth,Winnipeg,BLACK,4,,Helena,ORANGE,6,,Omaha,ANY,2,,Omaha,ANY,2,,Chicago,RED,3,,Sault St. Marie,ANY,3
 El Paso,Los Angeles,BLACK,6,,Phoenix,ANY,3,,Santa Fe,ANY,2,,Oklahoma City,YELLOW,5,,Dallas,RED,4,,Houston,GREEN,6
 Helena,Seattle,YELLOW,6,,Salt Lake City,PINK,3,,Denver,GREEN,4,,Omaha,RED,5,,Duluth,ORANGE,6,,Winnipeg,BLUE,4,,Calgary,ANY,4
-Houston,El Paso,GREEN,6,,Dallas,ANY,2,,Dallas,ANY,2,,New Orleans,ANY,1
+Houston,El Paso,GREEN,6,,Dallas,ANY,1,,Dallas,ANY,2,,New Orleans,ANY,1
 Kansas City,Oklahoma City,ANY,2,,Oklahoma City,ANY,2,,Omaha,ANY,1,,Omaha,ANY,1,,Denver,ORANGE,4,,Denver,BLACK,4,,Saint Louis,BLUE,2,,Saint Louis,PINK,2
 Las Vegas,Los Angeles,ANY,2,,Salt Lake City,ORANGE,3
 Little Rock,Saint Louis,ANY,2,,Oklahoma City,ANY,2,,Dallas,ANY,2,,New Orleans,GREEN,3,,Nashville,WHITE,3
