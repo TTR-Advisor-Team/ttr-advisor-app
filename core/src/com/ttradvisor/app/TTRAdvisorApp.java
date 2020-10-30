@@ -23,8 +23,6 @@ import com.ttradvisor.app.screens.TitleScreen;
  */
 public class TTRAdvisorApp extends Game {
 	static public Skin skin;
-	public int numPlayers;
-	public ArrayList<Colors.player> turnOrder;
 	public Colors.player userColor;
 	
 	public InputTurnController turnInput;
