@@ -310,6 +310,19 @@ public class GameScreen implements Screen {
     		        		if (isInitial) {
     		        			mainApp.gameState.currentPlayer = mainApp.gameState.getPlayers().get(0);
     		        		}
+    		        		else {
+    		        			int currPlayerIndex = mainApp.gameState.getPlayers().indexOf(mainApp.gameState.currentPlayer);
+    		        			if (currPlayerIndex < mainApp.gameState.getPlayers().size() - 1) {
+    		        				mainApp.gameState.currentPlayer = mainApp.gameState.getPlayers().get(currPlayerIndex + 1);
+    		        			}
+    		        			else {
+    		        				mainApp.gameState.currentPlayer = mainApp.gameState.getPlayers().get(0);
+    		        			}
+    		        		}
+    		        		
+//    		        		ArrayList<Player> deepCopyPlayers = new ArrayList<Player>();
+//    		        		deepCopyPlayers.addAll((mainApp.gameState.getPlayers());
+//    		        		mainApp.gameState.addTurn(new Turn(mainApp.gameState.getBoard(), new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets), deepCopyPlayers);
     		        	}
             			
             			
