@@ -14,9 +14,12 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.ttradvisor.app.TTRAdvisorApp;
 import com.ttradvisor.app.classes.Colors;
@@ -38,6 +41,7 @@ public class GameScreen implements Screen {
 	private Stage guiStage;
 	
 	public Player currentPlayer;
+	private List<Colors.player> demonstration; // TODO delete this after demo
 
 	private float mapWidth;
 	private float mapHeight;
@@ -50,11 +54,22 @@ public class GameScreen implements Screen {
 		// TODO should be the selected first player!
 		currentPlayer = main.gameState.getPlayers().get(0);
 		
-		
 		guiStage = new Stage(new ScreenViewport());
 		mapStage = new Stage(new ScreenViewport());
 		inputMult = new InputMultiplexer(guiStage, mapStage);
-
+		
+		// MOCKUP to show state internals
+		// Delete this after
+		demonstration = new List<Colors.player>(TTRAdvisorApp.skin);
+		Array<Colors.player> demoColors = new Array<Colors.player>();
+		for (Player p : mainApp.gameState.getPlayers()) {
+			demoColors.add(p.getColor());
+		}
+		demonstration.setItems(demoColors);
+		demonstration.setSize(200, 100);
+		demonstration.setPosition(50, 500);
+		guiStage.addActor(demonstration);
+		
 		// Button to draw Destination tickets
 		final TextButton destButton = new TextButton("Draw DT", TTRAdvisorApp.skin, "small");
 		final TextButton TCButton = new TextButton("Draw Train \n Card", TTRAdvisorApp.skin, "small");
