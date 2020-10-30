@@ -81,7 +81,7 @@ public class TestBoard {
 		while((routes1.peek() != null) && (routes2.peek() != null)) {
 			Route r1 = routes1.removeFirst();
 			Route r2 = routes2.removeFirst();
-			
+			//all assertions must pass
 			assertEquals(r1.getBegin(), r2.getBegin());
 			assertEquals(r1.getEnd(), r2.getEnd());
 			assertEquals(r1.getColor(), r2.getColor());

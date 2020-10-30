@@ -46,7 +46,7 @@ public class Recommender {
 		while (!openSet.isEmpty()) {
 			City c = openSet.poll();
 			closed.add(c);
-			System.out.println(c.current);
+			System.out.println(c.current + " total cost:" + c.totalCost);
 			// check if goal has been reached
 			//System.out.println(c.current + " == " + end + ": " + c.current.equals(end));
 			if (c.current.equals(end)) {
@@ -74,7 +74,7 @@ public class Recommender {
 			for (Route r : board.getAllRoutes(c.current)) {
 				boolean open = false;
 				boolean close = false;
-				System.out.println(r.toString());
+				//System.out.println(r.toString());
 				City next = new City(r.end, c, c.totalCost + r.cost);
 				// if openSet contains r.end compare totalCost
 				for (City old : openSet) {

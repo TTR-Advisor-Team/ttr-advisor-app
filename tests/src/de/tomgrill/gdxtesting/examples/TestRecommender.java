@@ -104,7 +104,7 @@ public class TestRecommender {
 		for(Route r: routes) {
 			cost += r.getCost();
 		}
-		assertEquals(18, cost);
+		assertEquals(17, cost);
 	}
 	@Test
 	public void reverseALongPathTest1() {
@@ -113,7 +113,7 @@ public class TestRecommender {
 		for(Route r: routes) {
 			cost += r.getCost();
 		}
-		assertEquals(18, cost);
+		assertEquals(17, cost);
 	}
 	@Test
 	public void aLongPathTest2() {
