@@ -12,6 +12,7 @@ public class GameState {
 	//private Recommender rec;
 	private DestinationTicketList dtList;
 	private ArrayList<Turn> turns;
+	public Player currentPlayer;
 	private ArrayList<Route> claimedRoutes;
 	
 	public GameState(ArrayList<Player> players, Board board, DestinationTicketList dtList,
@@ -20,6 +21,7 @@ public class GameState {
 		curBoard = board;
 		this.turns = turns;
 		this.dtList = dtList;
+		currentPlayer = null;
 		claimedRoutes = new ArrayList<Route>();
 	}
 	
