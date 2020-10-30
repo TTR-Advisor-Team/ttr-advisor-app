@@ -132,12 +132,17 @@ public class GameScreen implements Screen {
             TextButton done = new TextButton("Done", TTRAdvisorApp.skin, "small");
 		    done.addListener(new InputListener() {
 		    	public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-		    		//Should check if initial turn, when 2-3 tickets allowed (edge cases)
 		    		for (DestinationTicket ticket : destTickets.getSelection().toArray()) {
 		    			drawnTickets.add(ticket);
 		    		}
 		        	
-		        	mainApp.turnInput.takeAction(new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets));
+		    		boolean isInitial = mainApp.turnInput.isInitialTurn();
+		    		
+		        	if (mainApp.turnInput.takeAction(new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets))) {
+		        		if (isInitial) {
+		        			mainApp.gameState.currentPlayer = mainApp.gameState.getPlayers().get(0);
+		        		}
+		        	}
 		        	
 		        	guiStage.setScrollFocus(null);
 		        	
