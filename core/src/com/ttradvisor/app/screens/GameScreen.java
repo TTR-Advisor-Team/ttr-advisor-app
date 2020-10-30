@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.utils.ArraySelection;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -48,6 +50,8 @@ public class GameScreen implements Screen {
 	private ScrollPane listPane;
 	private List<DestinationTicket> destTickets;
 	private DestinationTicket[] ticketArray;
+	private ArraySelection<DestinationTicket> ticketSelection;
+	//private Array<DestinationTicket> multipleTickets;
 
 	private List<Colors.player> demonstration; // TODO delete this after demo
 	private Label demoCurrPlayer;
@@ -62,13 +66,21 @@ public class GameScreen implements Screen {
 		//need to handle if dtlist is somehow null
 		dtList = main.gameState.getDtList();
 		destTickets = new List<DestinationTicket>(TTRAdvisorApp.skin);
+		//simple array of the DestinationTickets to pass into the Scrollpane
 		ticketArray = new DestinationTicket[dtList.getList().size()];
+		
+		
 		for (int i=0; i<dtList.getList().size(); i++) {
 			ticketArray[i] = dtList.getTicket(i);
 		}
 		//Set an equivalent List<DestinationTicket> for the scrollpane
 		destTickets.setItems(ticketArray);
 		destTickets.setAlignment(Align.left);
+		
+		// Needed to edit destTicket's selection style in order to select multiple tickets
+		ticketSelection = destTickets.getSelection();
+		ticketSelection.setMultiple(true);
+		destTickets.setSelection(ticketSelection);
 		
 
 		guiStage = new Stage(new ScreenViewport());
