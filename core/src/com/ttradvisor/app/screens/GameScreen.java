@@ -20,6 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.ttradvisor.app.TTRAdvisorApp;
@@ -45,6 +46,8 @@ public class GameScreen implements Screen {
 	private Stage guiStage;
 	private DestinationTicketList dtList;
 	private ScrollPane listPane;
+	private List<DestinationTicket> destTickets;
+	private DestinationTicket[] ticketArray;
 
 	private List<Colors.player> demonstration; // TODO delete this after demo
 	private Label demoCurrPlayer;
@@ -55,8 +58,18 @@ public class GameScreen implements Screen {
 	public GameScreen(TTRAdvisorApp main) {
 		mainApp = main;
 		
-
-		//dtList = main.gameState.getDtList();
+		//get the initialized DestinationTicketList from GameState
+		//need to handle if dtlist is somehow null
+		dtList = main.gameState.getDtList();
+		destTickets = new List<DestinationTicket>(TTRAdvisorApp.skin);
+		ticketArray = new DestinationTicket[dtList.getList().size()];
+		for (int i=0; i<dtList.getList().size(); i++) {
+			ticketArray[i] = dtList.getTicket(i);
+		}
+		//Set an equivalent List<DestinationTicket> for the scrollpane
+		destTickets.setItems(ticketArray);
+		destTickets.setAlignment(Align.left);
+		
 
 		guiStage = new Stage(new ScreenViewport());
 		mapStage = new Stage(new ScreenViewport());
@@ -81,7 +94,7 @@ public class GameScreen implements Screen {
 		guiStage.addActor(demoCurrPlayer);
 		
 		// Button to draw Destination tickets
-		final TextButton destButton = new TextButton("Draw DT", TTRAdvisorApp.skin, "small");
+		final TextButton destButton = new TextButton("Draw Destination \n Ticket", TTRAdvisorApp.skin, "small");
 		final TextButton TCButton = new TextButton("Draw Train \n Card", TTRAdvisorApp.skin, "small");
 		// Button to draw Destination tickets
 		destButton.setWidth(Gdx.graphics.getWidth() / 5);
@@ -92,30 +105,60 @@ public class GameScreen implements Screen {
 		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
 		    destButton.setVisible(false);
 		    TCButton.setVisible(false);
-		    TextButton done = new TextButton("Done", TTRAdvisorApp.skin, "small");
+		    final Table table = new Table();
+		    final ArrayList<DestinationTicket> drawnTickets = new ArrayList<>();
+		    // Initialize ScrollPane that holds the list of DTs
+		    listPane = new ScrollPane(destTickets, TTRAdvisorApp.skin);
+            listPane.setX(Gdx.graphics.getWidth() * 3/5);
+            listPane.setY(Gdx.graphics.getHeight()* 1/100);
+            listPane.setHeight(Gdx.graphics.getHeight() * 1/2);
+            listPane.setWidth(Gdx.graphics.getWidth()*1/3);
+            guiStage.addActor(listPane);
+            guiStage.setScrollFocus(listPane);
+		    
+            //Button to confirm DestinationAction with selected tickets
+            TextButton done = new TextButton("Done", TTRAdvisorApp.skin, "small");
 		    done.addListener(new InputListener() {
 		    	public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-//		    		listPane = new ScrollPane();
-//		            listPane.setX(Gdx.graphics.getWidth() * 1/8);
-//		            listPane.setY(Gdx.graphics.getHeight() * 3/10);
-//		            listPane.setHeight(Gdx.graphics.getHeight() * 1/2);
-//		            listPane.setWidth(Gdx.graphics.getWidth()*3/4);
-//		            guiStage.addActor(listPane);
-//				        	if(drawnCards.size() == 2){
-//				        		if(drawnCards.get(0).getColor == "wild") {
-//				        			drawnCards.remove(1);
-//				        		}
-//				        	mainApp.turnInput.takeAction(new TrainCardAction(Player?, drawnCards));
+		    		//Should check if initial turn, when 2-3 tickets allowed (edge cases)
+		    		
+		    		//if not initial turn, allow 1-3 tickets
+		    		
+		    		
+		        	
+		        	mainApp.turnInput.takeAction(new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets));
 		    		destButton.setVisible(true);
 		    		TCButton.setVisible(true);
-		    		//table.setVisible(false);
-//				        	}
+		    		listPane.setVisible(false);
+				    table.setVisible(false);  	
 		    	}
 		    	public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
 		    		return true;
 		    	}
 		    });
-		            	//   
+		    
+		    //Button to return to the GameScreen without inputting the action
+		    TextButton back = new TextButton("Back", TTRAdvisorApp.skin, "small");
+        	back.addListener(new InputListener() {
+        		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+        			drawnTickets.removeAll(drawnTickets);
+                	destButton.setVisible(true);
+                	TCButton.setVisible(true);
+                	listPane.setVisible(false);
+                	table.setVisible(false);
+        		}
+        		public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                    return true;
+                }
+        	});
+        	//Populate the table with back and done buttons
+        	table.bottom();
+        	table.add(back);
+        	table.row();
+        	table.add(done);
+        	table.setFillParent(true);
+        	
+        	guiStage.addActor(table);
 		 }
 		 @Override
 		 public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {

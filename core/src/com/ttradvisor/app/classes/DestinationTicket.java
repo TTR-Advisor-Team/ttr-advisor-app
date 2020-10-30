@@ -35,6 +35,11 @@ public class DestinationTicket {
 	public String getEnd() {
 		return startEnd.get(1);
 	}
+	
+	@Override
+	public String toString() {
+		return startEnd.get(0) + " to " + startEnd.get(1) + ", " + Integer.toString(value);
+	}
 
 	//
 }
