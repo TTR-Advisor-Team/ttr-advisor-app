@@ -154,6 +154,9 @@ public class GameScreen implements Screen {
         	back.addListener(new InputListener() {
         		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
         			drawnTickets.removeAll(drawnTickets);
+        			
+		        	guiStage.setScrollFocus(null);
+        			
                 	destButton.setVisible(true);
                 	TCButton.setVisible(true);
                 	listPane.setVisible(false);
