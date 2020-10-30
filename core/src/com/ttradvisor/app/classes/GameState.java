@@ -10,11 +10,14 @@ public class GameState {
 	//private Recommender rec;
 	//private DestinationTicketList dtList;
 	private ArrayList<Turn> turns;
+	public Player currentPlayer;
 	
 	public GameState(ArrayList<Player> players, Board board, ArrayList<Turn> turns) {
 		curPlayers = players;
 		curBoard = board;
 		this.turns = turns;
+		currentPlayer = players.get(0);
+
 		//this.dtList = dtList;
 	}
 	

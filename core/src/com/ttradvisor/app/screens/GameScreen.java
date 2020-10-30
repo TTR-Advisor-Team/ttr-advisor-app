@@ -45,8 +45,7 @@ public class GameScreen implements Screen {
 	private Stage guiStage;
 	private DestinationTicketList dtList;
 	private ScrollPane listPane;
-	
-	public Player currentPlayer;
+
 	private List<Colors.player> demonstration; // TODO delete this after demo
 
 	private float mapWidth;
@@ -55,10 +54,6 @@ public class GameScreen implements Screen {
 	public GameScreen(TTRAdvisorApp main) {
 		mainApp = main;
 		
-		// MOCKUP
-		
-		// TODO should be the selected first player!
-		currentPlayer = main.gameState.getPlayers().get(0);
 
 		//dtList = main.gameState.getDtList();
 
@@ -219,7 +214,7 @@ public class GameScreen implements Screen {
             			
             			// MOCKUP
             			// TODO this should work once the other bits are in place
-            			mainApp.turnInput.takeAction(new TrainCardAction(currentPlayer, drawnCards));
+            			mainApp.turnInput.takeAction(new TrainCardAction(mainApp.gameState.currentPlayer, drawnCards));
             			
             			
             			
