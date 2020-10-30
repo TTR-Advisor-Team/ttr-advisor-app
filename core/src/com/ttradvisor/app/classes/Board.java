@@ -57,7 +57,7 @@ public class Board {
 		
 		LinkedList<Route> end = board.get(cityEnd);
 		for(Route r: end) {
-			if ((r.end.equals(cityBegin))  && (r.color.equals(color))) {
+			if ((r.end.equals(cityBegin)) && (r.color.equals(color))) {
 				r.owner = player;
 				break;
 			}
@@ -106,7 +106,10 @@ public class Board {
 			this.cost = cost;
 			this.owner = Colors.player.NONE;
 		}
-		
+		@Override
+		public String toString() {
+			return begin + " ====> " + end; 
+		}
 		public String getBegin() {
 			return this.begin;
 		}

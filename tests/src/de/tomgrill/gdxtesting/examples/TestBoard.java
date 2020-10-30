@@ -156,4 +156,10 @@ public class TestBoard {
 		Route r1 = b.getRoute("Boston", "New York", Colors.route.RED, Colors.player.BLUE);
 		assertNotNull(r1);
 	}
+	@Test
+	public void toStringTest() {
+		Board b = new Board("cities.txt");
+		Route r = b.getRoute("New Orleans", "Miami");
+		assertEquals("New Orleans ====> Miami",r.toString() );
+	}
 }
