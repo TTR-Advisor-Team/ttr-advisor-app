@@ -133,7 +133,9 @@ public class GameScreen implements Screen {
 		    done.addListener(new InputListener() {
 		    	public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
 		    		//Should check if initial turn, when 2-3 tickets allowed (edge cases)
-		    		drawnTickets.add(destTickets.getSelected());		
+		    		for (DestinationTicket ticket : destTickets.getSelection().toArray()) {
+		    			drawnTickets.add(ticket);
+		    		}
 		        	
 		        	mainApp.turnInput.takeAction(new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets));
 		        	
