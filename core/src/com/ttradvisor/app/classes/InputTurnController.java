@@ -15,10 +15,8 @@ public class InputTurnController {
 	
 	// context for interpreting Actions
 	private boolean isInitialTurnActive;
-	private int initialTurnTCDrawn;
-	private int initialTurnDTDrawn;
-	private int generalTurnTCDrawn;
-	private int generalTurnDTDrawn;
+	private boolean initialTurnDTSDrawn;
+	private boolean initialTurnTCSDrawn;
 	
 	/**
 	 * Init a controller linked to the given game state object.
@@ -38,16 +36,6 @@ public class InputTurnController {
 	 */
 	public void startInitialTurn() {
 		isInitialTurnActive = true;
-		initialTurnTCDrawn = 0;
-		initialTurnDTDrawn = 0;
-	}
-	/**
-	 * 
-	 */
-	public void newGeralTurn() {
-		isInitialTurnActive = false;
-		generalTurnTCDrawn = 0;
-		generalTurnDTDrawn = 0;
 	}
 	
 	/**
@@ -76,6 +64,8 @@ public class InputTurnController {
 			}
 		}
 		else {
+			// for a future iteration
+			// process with context of normal round turn
 			if (thisTurn instanceof TrainCardAction) {
 				return drawTC((TrainCardAction)thisTurn);
 			}
@@ -93,14 +83,12 @@ public class InputTurnController {
 	}
 	
 	private boolean initialTurnDrawTC(TrainCardAction thisTurn) {
-		if (thisTurn.getDrawnCards().size() + initialTurnTCDrawn > 4) {
-			Gdx.app.error("Turn", "May not draw more than 4 train cards on initial turn.");
+		if (thisTurn.getDrawnCards().size() != 4) {
+			Gdx.app.error("Turn", "Must draw 4 train cards on initial turn.");
 			return false;
 		}
 		thisTurn.actingPlayer.getTCS().addAll(thisTurn.getDrawnCards());
-		initialTurnTCDrawn += thisTurn.getDrawnCards().size();
-		if (initialTurnTCDrawn == 4 && (initialTurnDTDrawn == 2 || initialTurnDTDrawn == 3)) {
-			// done drawing cards for the initial turn
+		if (initialTurnDTSDrawn && initialTurnTCSDrawn) {
 			isInitialTurnActive = false;
 			return true;
 		}
@@ -108,28 +96,26 @@ public class InputTurnController {
 	}
 	
 	private boolean initialTurnDrawDT(DestinationAction thisTurn) {
-		if (thisTurn.getDrawnTickets().size() + initialTurnDTDrawn > 3) {
-			Gdx.app.error("Turn", "May not draw more than 3 tickets on initial turn.");
+		if (thisTurn.getDrawnTickets().size() < 2 || thisTurn.getDrawnTickets().size() > 4) {
+			Gdx.app.error("Turn", "Must draw between 2 and 3 destination tickets on initial turn.");
 			return false;
 		}
 		thisTurn.actingPlayer.getDTS().addAll(thisTurn.getDrawnTickets());
-		initialTurnDTDrawn += thisTurn.getDrawnTickets().size();
-		if (initialTurnTCDrawn == 4 && (initialTurnDTDrawn == 2 || initialTurnDTDrawn == 3)) {
-			// done drawing cards for the initial turn
+		if (initialTurnDTSDrawn && initialTurnTCSDrawn) {
 			isInitialTurnActive = false;
 			return true;
 		}
 		return false;
 	}
-	
+
+
 	private boolean drawTC(TrainCardAction thisTurn) {
-		generalTurnTCDrawn = thisTurn.getDrawnCards().size();
-		if (generalTurnTCDrawn > 2) {
+		if (thisTurn.getDrawnCards().size() > 2) {
 			Gdx.app.error("Turn", "May not draw more than 2 train cards on a turn.");
 			return false;
 		}
 		//This is incomplete, it needs to check if there are any train cards available.
-		else if (generalTurnTCDrawn == 1 && thisTurn.getDrawnCards().get(thisTurn.getDrawnCards().size() - 1).getColor() != new TrainCard(Colors.route.ANY).getColor()) {
+		else if (thisTurn.getDrawnCards().size() == 1 && thisTurn.getDrawnCards().get(thisTurn.getDrawnCards().size() - 1).getColor() != new TrainCard(Colors.route.ANY).getColor()) {
 			Gdx.app.error("Turn", "If one card is drawn it must be a card of Any color.");
 			//Gdx.app.error("Turn", "If one card is drawn there are no other cards left.");
 			return false;
@@ -139,10 +125,9 @@ public class InputTurnController {
 			return true;
 		}
 	}
-	
-	private boolean drawDT(DestinationAction thisTurn) {	
-		generalTurnDTDrawn = thisTurn.getDrawnTickets().size();	
-		if (generalTurnDTDrawn >  3 && generalTurnDTDrawn <  0) {
+
+	private boolean drawDT(DestinationAction thisTurn) {
+		if (thisTurn.getDrawnTickets().size() >  3 && thisTurn.getDrawnTickets().size() < 0) {
 			Gdx.app.error("Turn", "May not draw more than 3 tickets on a turn, and must keep atleast one drawn card.");
 			return false;
 		}
@@ -151,7 +136,7 @@ public class InputTurnController {
 			return true;
 		}
 	}
-	
+
 	private boolean claimRoute(RouteAction thisTurn) {	
 		if (gameState.getClaimedRoutes().contains(thisTurn.claimedRoute)){
 			Gdx.app.error("Turn", "Can not claim rout that has already been claimed.");
@@ -173,12 +158,11 @@ public class InputTurnController {
 					currentCost--;
 				}	
 			}
-			
+
 			thisTurn.actingPlayer.addClaimedRoutes(thisTurn.claimedRoute);
 			gameState.addClaimedRoute(thisTurn.claimedRoute);
 
 			return true;
 		}
 	}
-
 }

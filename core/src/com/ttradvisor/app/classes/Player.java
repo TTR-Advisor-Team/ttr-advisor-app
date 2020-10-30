@@ -12,8 +12,7 @@ public class Player {
 	private Colors.player color;
 	private int score;
 	private int numTrains;
-	private ArrayList<Route> playerClaimedRoute;
-	private Colors.route cardColor;
+	
 	/**
 	 * Init Player for game start.
 	 * 
@@ -30,7 +29,6 @@ public class Player {
 		this.color = color;
 		this.score = score;
 		this.numTrains = numTrains;
-		playerClaimedRoute = new ArrayList<Route>();
 	}
 	
 	public void addDT(DestinationTicket addedTicket) {
@@ -81,16 +79,7 @@ public class Player {
 	public void setNumTrains(int numTrains) {
 		this.numTrains = numTrains;
 	}
-	
-	public void addClaimedRoutes(Route claim) {
-		playerClaimedRoute.add(claim);
-	}
-	public  ArrayList<Route> getPlayerRoutes(){
-		return playerClaimedRoute;
-	}
-	public void setPlayerRoutes(ArrayList<Route> playerClaimedRoute){
-		this.playerClaimedRoute = playerClaimedRoute;
-	}
+
 	public TrainCard getCardOfColor(Colors.route cardColor){
 		for (TrainCard card : trainCardHand) {
 			if(card.getColor() ==  cardColor) {
