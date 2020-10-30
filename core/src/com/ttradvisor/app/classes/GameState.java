@@ -10,15 +10,16 @@ public class GameState {
 	private ArrayList<Player> curPlayers;
 	private Board curBoard;
 	//private Recommender rec;
-	//private DestinationTicketList dtList;
+	private DestinationTicketList dtList;
 	private ArrayList<Turn> turns;
 	private ArrayList<Route> claimedRoutes;
 	
-	public GameState(ArrayList<Player> players, Board board, ArrayList<Turn> turns) {
+	public GameState(ArrayList<Player> players, Board board, DestinationTicketList dtList,
+			ArrayList<Turn> turns) {
 		curPlayers = players;
 		curBoard = board;
 		this.turns = turns;
-		//this.dtList = dtList;
+		this.dtList = dtList;
 		claimedRoutes = new ArrayList<Route>();
 	}
 	
@@ -57,7 +58,7 @@ public class GameState {
 	public void setClaimedRoutes(ArrayList<Route> claimedRoutes){
 		this.claimedRoutes = claimedRoutes;
 	}
-//	public DestinationTicketList getDtList() {
-//		return dtList;
-//	}
+	public DestinationTicketList getDtList() {
+		return dtList;
+	}
 }

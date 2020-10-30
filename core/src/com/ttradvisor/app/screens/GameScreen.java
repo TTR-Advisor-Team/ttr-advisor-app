@@ -133,12 +133,25 @@ public class GameScreen implements Screen {
 		    done.addListener(new InputListener() {
 		    	public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
 		    		//Should check if initial turn, when 2-3 tickets allowed (edge cases)
-		    		
-		    		//if not initial turn, allow 1-3 tickets
-		    		
-		    		
+		    		drawnTickets.add(destTickets.getSelected());
+		    		if (mainApp.turnInput.isInitialTurn()) {
+		    			if (drawnTickets.size()<2 || drawnTickets.size()>3) {
+		    				Gdx.app.error("Turn", "Must draw 2 or 3 tickets on initial turn.");
+		    			}
+		    			else {
+				        	mainApp.turnInput.takeAction(new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets));
+		    			}
+		    		}
+		    		else {
+		    			if (drawnTickets.size()<1 || drawnTickets.size()>3) {
+		    				Gdx.app.error("Turn", "Must draw 2 or 3 tickets on initial turn.");
+		    			}
+		    			else {
+				        	mainApp.turnInput.takeAction(new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets));
+		    			}
+		    		}   		
 		        	
-		        	mainApp.turnInput.takeAction(new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets));
+		        	//mainApp.turnInput.takeAction(new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets));
 		    		destButton.setVisible(true);
 		    		TCButton.setVisible(true);
 		    		listPane.setVisible(false);
