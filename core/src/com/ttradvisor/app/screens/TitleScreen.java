@@ -228,56 +228,68 @@ public class TitleScreen implements Screen {
         playButton.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-            	ArrayList<String> tOrder = new ArrayList<String>();
+            	boolean err = false;
+            	ArrayList<String> tOrder = null;
             	ArrayList<Colors.player> order = new ArrayList<Colors.player>();
+            	// makes it so there is only info visable for the correct amount of players
             	switch(numPlayers.getSelected()) {
             	case(2):
+            		tOrder = new ArrayList<String>();
             		tOrder.add(order1.getSelected());
             		tOrder.add(order2.getSelected());
-            	;
+            		break;
             	case(3):
+            		tOrder = new ArrayList<String>();
             		tOrder.add(order1.getSelected());
             		tOrder.add(order2.getSelected());
             		tOrder.add(order3.getSelected());
-            	;
+            		break;
             	case(4):
+            		tOrder = new ArrayList<String>();
             		tOrder.add(order1.getSelected());
             		tOrder.add(order2.getSelected());
             		tOrder.add(order3.getSelected());
             		tOrder.add(order4.getSelected());
-            	;
+            		break;
             	case(5):
+            		tOrder = new ArrayList<String>();
             		tOrder.add(order1.getSelected());
             		tOrder.add(order2.getSelected());
             		tOrder.add(order3.getSelected());
             		tOrder.add(order4.getSelected());
             		tOrder.add(order5.getSelected());
-            	;
+            	break;
             	}
             	for(int i = 0; i < tOrder.size(); i++) {
             		for(Colors.player col : Colors.player.values()) {
             			if(col.toString().toLowerCase().equals(tOrder.get(i).toLowerCase())) 
-            					order.add(col);	
+            				if(!order.contains(col)) {
+            					order.add(col);
+            				}
+            				else {
+            					err = true;
+            				}
             			}
             		}
-            	mainApp.turnOrder = order;
-            	mainApp.numPlayers = numPlayers.getSelected();
             	
             	for (Colors.player col1 : Colors.player.values()) {
             		if(col1.toString().toLowerCase().equals(userCol.getSelected().toLowerCase())) 
             			mainApp.userColor = col1;
             	}
-            	// MOCKUP
             	
-            	// TODO set up gameState here before triggering the initial turn & going to GameScreen
-            	// Instead of BLACK they should all get the right colors
-            	
-            	for (int i=0; i<numPlayers.getSelectedIndex() + 2; i++) {
-            		mainApp.gameState.getPlayers().add(new Player(Colors.player.BLACK));
+            	if(!err) {
+	            	// Initialize player colors
+	            	for (int i=0; i<numPlayers.getSelected(); i++) {
+	            		mainApp.gameState.getPlayers().add(new Player(order.get(i)));
+	            	}
+	            	//mainApp.gameState.currentPlayer = mainApp.gameState.getPlayers().get(tOrder.indexOf(userCol.getSelected()));
+	            	//System.out.println(tOrder.indexOf(userCol.getSelected()));
+	            	mainApp.turnInput.startInitialTurn(); // set up controller for start
+	            	mainApp.setScreen(new GameScreen(mainApp));
             	}
-            	
-            	mainApp.turnInput.startInitialTurn(); // set up controller for start
-            	mainApp.setScreen(new GameScreen(mainApp));
+            	else {
+            		
+            	}
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
