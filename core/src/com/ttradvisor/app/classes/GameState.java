@@ -16,7 +16,7 @@ public class GameState {
 		curPlayers = players;
 		curBoard = board;
 		this.turns = turns;
-		currentPlayer = players.get(0);
+		currentPlayer = null;
 
 		//this.dtList = dtList;
 	}
