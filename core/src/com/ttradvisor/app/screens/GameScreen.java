@@ -153,6 +153,10 @@ public class GameScreen implements Screen {
 		        			}
 		        		}
 		        		
+		        		// MOCKUP - this is pretty much how to save a turn to the history...
+		        		// just need to do DEEP DEEP COPIES (e.g. save both the board AND all it's internal references)
+		        		
+		        		
 //		        		ArrayList<Player> deepCopyPlayers = new ArrayList<Player>();
 //		        		deepCopyPlayers.addAll((mainApp.gameState.getPlayers());
 //		        		mainApp.gameState.addTurn(new Turn(mainApp.gameState.getBoard(), new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets), deepCopyPlayers);
