@@ -294,7 +294,7 @@ public class GameScreen implements Screen {
                     }
             	});
             	TextButton undo = new TextButton("Undo", TTRAdvisorApp.skin, "small");
-            	whiteTrain.addListener(new InputListener() {
+            	undo.addListener(new InputListener() {
             		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
             			drawnCards.remove(drawnCards.size()-1);
             		}
