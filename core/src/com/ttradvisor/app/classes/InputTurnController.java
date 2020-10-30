@@ -2,7 +2,7 @@ package com.ttradvisor.app.classes;
 
 import com.badlogic.gdx.Gdx;
 import com.ttradvisor.app.TTRAdvisorApp;
-//testing commit 2
+
 /**
  *	Contains logic and validation for inputting new turns. 
  *	Determines whether the new turn created is valid and updates the View.
