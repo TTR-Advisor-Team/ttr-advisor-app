@@ -8,12 +8,14 @@ public class GameState {
 	private ArrayList<Player> curPlayers;
 	private Board curBoard;
 	//private Recommender rec;
+	//private DestinationTicketList dtList;
 	private ArrayList<Turn> turns;
 	
 	public GameState(ArrayList<Player> players, Board board, ArrayList<Turn> turns) {
 		curPlayers = players;
 		curBoard = board;
 		this.turns = turns;
+		//this.dtList = dtList;
 	}
 	
 	public void addTurn(Turn newTurn) {
@@ -41,4 +43,7 @@ public class GameState {
 	public void setTurns(ArrayList<Turn> turns) {
 		this.turns = turns;
 	}
+//	public DestinationTicketList getDtList() {
+//		return dtList;
+//	}
 }
