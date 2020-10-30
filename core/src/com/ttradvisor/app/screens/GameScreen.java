@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
@@ -43,6 +44,7 @@ public class GameScreen implements Screen {
 	private OrthographicCamera camera;
 	private Stage guiStage;
 	private DestinationTicketList dtList;
+	private ScrollPane listPane;
 	
 	public Player currentPlayer;
 	private List<Colors.player> demonstration; // TODO delete this after demo
@@ -91,6 +93,12 @@ public class GameScreen implements Screen {
 		    TextButton done = new TextButton("Done", TTRAdvisorApp.skin, "small");
 		    done.addListener(new InputListener() {
 		    	public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+//		    		listPane = new ScrollPane();
+//		            listPane.setX(Gdx.graphics.getWidth() * 1/8);
+//		            listPane.setY(Gdx.graphics.getHeight() * 3/10);
+//		            listPane.setHeight(Gdx.graphics.getHeight() * 1/2);
+//		            listPane.setWidth(Gdx.graphics.getWidth()*3/4);
+//		            guiStage.addActor(listPane);
 //				        	if(drawnCards.size() == 2){
 //				        		if(drawnCards.get(0).getColor == "wild") {
 //				        			drawnCards.remove(1);
