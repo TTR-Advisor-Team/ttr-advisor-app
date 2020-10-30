@@ -88,6 +88,7 @@ public class InputTurnController {
 			return false;
 		}
 		thisTurn.actingPlayer.getTCS().addAll(thisTurn.getDrawnCards());
+		initialTurnTCSDrawn = true;
 		if (initialTurnDTSDrawn && initialTurnTCSDrawn) {
 			isInitialTurnActive = false;
 			return true;
@@ -101,6 +102,7 @@ public class InputTurnController {
 			return false;
 		}
 		thisTurn.actingPlayer.getDTS().addAll(thisTurn.getDrawnTickets());
+		initialTurnDTSDrawn = true;
 		if (initialTurnDTSDrawn && initialTurnTCSDrawn) {
 			isInitialTurnActive = false;
 			return true;
