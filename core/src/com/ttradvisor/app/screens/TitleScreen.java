@@ -256,13 +256,17 @@ public class TitleScreen implements Screen {
             	}
             	for(int i = 0; i < tOrder.size(); i++) {
             		for(Colors.player col : Colors.player.values()) {
-            			if(col.toString().toLowerCase().equals(tOrder.get(i))) 
+            			if(col.toString().toLowerCase().equals(tOrder.get(i).toLowerCase())) 
             					order.add(col);	
             			}
             		}
             	mainApp.turnOrder = order;
             	mainApp.numPlayers = numPlayers.getSelected();
             	
+            	for (Colors.player col1 : Colors.player.values()) {
+            		if(col1.toString().toLowerCase().equals(userCol.getSelected().toLowerCase())) 
+            			mainApp.userColor = col1;
+            	}
             	// MOCKUP
             	
             	// TODO set up gameState here before triggering the initial turn & going to GameScreen
