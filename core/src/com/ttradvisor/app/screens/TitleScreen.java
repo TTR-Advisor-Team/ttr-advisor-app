@@ -219,6 +219,13 @@ public class TitleScreen implements Screen {
             }
         });
 		stage.addActor(numPlayers);
+		
+		final Label error = new Label("Error: Can't have duplicate colors", TTRAdvisorApp.skin);
+        error.setWidth(Gdx.graphics.getWidth()/4);
+		error.setPosition(Gdx.graphics.getWidth()/2 - error.getWidth()/2, Gdx.graphics.getHeight()/8);
+        error.setColor(Color.RED);
+        stage.addActor(error);
+        error.setVisible(false);
 
         // Button to access GameScreen
         TextButton playButton = new TextButton("Play!", TTRAdvisorApp.skin, "small");
@@ -282,13 +289,13 @@ public class TitleScreen implements Screen {
 	            	for (int i=0; i<numPlayers.getSelected(); i++) {
 	            		mainApp.gameState.getPlayers().add(new Player(order.get(i)));
 	            	}
-	            	//mainApp.gameState.currentPlayer = mainApp.gameState.getPlayers().get(tOrder.indexOf(userCol.getSelected()));
-	            	//System.out.println(tOrder.indexOf(userCol.getSelected()));
+	            	mainApp.gameState.currentPlayer = mainApp.gameState.getPlayers().get(tOrder.indexOf(userCol.getSelected()));
+	            	System.out.println(tOrder.indexOf(userCol.getSelected()));
 	            	mainApp.turnInput.startInitialTurn(); // set up controller for start
 	            	mainApp.setScreen(new GameScreen(mainApp));
             	}
             	else {
-            		
+            		error.setVisible(true);
             	}
             }
             @Override
