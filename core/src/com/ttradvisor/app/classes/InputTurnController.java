@@ -15,6 +15,8 @@ public class InputTurnController {
 	
 	// context for interpreting Actions
 	private boolean isInitialTurnActive;
+	private int initialTurnTCDrawn;
+	private int initialTurnDTDrawn;
 	
 	/**
 	 * Init a controller linked to the given game state object.
@@ -34,6 +36,8 @@ public class InputTurnController {
 	 */
 	public void startInitialTurn() {
 		isInitialTurnActive = true;
+		initialTurnTCDrawn = 0;
+		initialTurnDTDrawn = 0;
 	}
 	
 	/**
@@ -46,6 +50,7 @@ public class InputTurnController {
 	/**
 	 * Process an Action object as the next turn.
 	 * @param thisTurn the Action taken for the current player's turn
+	 * @return true if the turn is finished and we can move on to the next player's turn
 	 */
 	public boolean takeAction(Action thisTurn) {
 		if (isInitialTurnActive) {
@@ -68,17 +73,33 @@ public class InputTurnController {
 	}
 	
 	private boolean initialTurnDrawTC(TrainCardAction thisTurn) {
-		// checks:
-		// # of cards must be valid (2-4)?
-		// player must exist in the game state
-		// 
+		if (thisTurn.getDrawnCards().size() + initialTurnTCDrawn > 4) {
+			Gdx.app.error("Turn", "May not draw more than 4 train cards on initial turn.");
+			return false;
+		}
 		thisTurn.actingPlayer.getTCS().addAll(thisTurn.getDrawnCards());
-		return true;
+		initialTurnTCDrawn += thisTurn.getDrawnCards().size();
+		if (initialTurnTCDrawn == 4 && (initialTurnDTDrawn == 2 || initialTurnDTDrawn == 3)) {
+			// done drawing cards for the initial turn
+			isInitialTurnActive = false;
+			return true;
+		}
+		return false;
 	}
 	
 	private boolean initialTurnDrawDT(DestinationAction thisTurn) {
+		if (thisTurn.getDrawnTickets().size() + initialTurnDTDrawn > 3) {
+			Gdx.app.error("Turn", "May not draw more than 3 tickets on initial turn.");
+			return false;
+		}
 		thisTurn.actingPlayer.getDTS().addAll(thisTurn.getDrawnTickets());
-		return true;
+		initialTurnDTDrawn += thisTurn.getDrawnTickets().size();
+		if (initialTurnTCDrawn == 4 && (initialTurnDTDrawn == 2 || initialTurnDTDrawn == 3)) {
+			// done drawing cards for the initial turn
+			isInitialTurnActive = false;
+			return true;
+		}
+		return false;
 	}
 
 }
