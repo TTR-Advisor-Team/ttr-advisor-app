@@ -238,7 +238,7 @@ public class TitleScreen implements Screen {
             	boolean err = false;
             	ArrayList<String> tOrder = null;
             	ArrayList<Colors.player> order = new ArrayList<Colors.player>();
-            	// makes it so there is only info visable for the correct amount of players
+            	// makes it so there is only info visible for the correct amount of players
             	switch(numPlayers.getSelected()) {
             	case(2):
             		tOrder = new ArrayList<String>();
@@ -290,7 +290,6 @@ public class TitleScreen implements Screen {
 	            		mainApp.gameState.getPlayers().add(new Player(order.get(i)));
 	            	}
 	            	mainApp.gameState.currentPlayer = mainApp.gameState.getPlayers().get(tOrder.indexOf(userCol.getSelected()));
-	            	System.out.println(tOrder.indexOf(userCol.getSelected()));
 	            	mainApp.turnInput.startInitialTurn(); // set up controller for start
 	            	mainApp.setScreen(new GameScreen(mainApp));
             	}
