@@ -110,13 +110,12 @@ public class InputTurnController {
 
 
 	private boolean drawTC(TrainCardAction thisTurn) {
-		generalTurnTCDrawn = thisTurn.getDrawnCards().size();
-		if (generalTurnTCDrawn > 2) {
+		if (thisTurn.getDrawnCards().size() > 2) {
 			Gdx.app.error("Turn", "May not draw more than 2 train cards on a turn.");
 			return false;
 		}
 		//This is incomplete, it needs to check if there are any train cards available.
-		else if (generalTurnTCDrawn == 1 && thisTurn.getDrawnCards().get(thisTurn.getDrawnCards().size() - 1).getColor() != new TrainCard(Colors.route.ANY).getColor()) {
+		else if (thisTurn.getDrawnCards().size() == 1 && thisTurn.getDrawnCards().get(thisTurn.getDrawnCards().size() - 1).getColor() != new TrainCard(Colors.route.ANY).getColor()) {
 			Gdx.app.error("Turn", "If one card is drawn it must be a card of Any color.");
 			//Gdx.app.error("Turn", "If one card is drawn there are no other cards left.");
 			return false;
@@ -127,9 +126,8 @@ public class InputTurnController {
 		}
 	}
 
-	private boolean drawDT(DestinationAction thisTurn) {	
-		generalTurnDTDrawn = thisTurn.getDrawnTickets().size();	
-		if (generalTurnDTDrawn >  3 && generalTurnDTDrawn <  0) {
+	private boolean drawDT(DestinationAction thisTurn) {
+		if (thisTurn.getDrawnTickets().size() >  3 && thisTurn.getDrawnTickets().size() < 0) {
 			Gdx.app.error("Turn", "May not draw more than 3 tickets on a turn, and must keep atleast one drawn card.");
 			return false;
 		}
