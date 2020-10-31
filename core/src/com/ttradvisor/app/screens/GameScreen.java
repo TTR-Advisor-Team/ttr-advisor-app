@@ -70,6 +70,7 @@ public class GameScreen implements Screen {
 		//simple array of the DestinationTickets to pass into the Scrollpane
 		ticketArray = new DestinationTicket[dtList.getList().size()];
 		
+		//
 		
 		for (int i=0; i<dtList.getList().size(); i++) {
 			ticketArray[i] = dtList.getTicket(i);
