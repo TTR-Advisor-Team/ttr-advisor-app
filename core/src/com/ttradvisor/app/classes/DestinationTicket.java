@@ -41,5 +41,4 @@ public class DestinationTicket {
 		return startEnd.get(0) + " to " + startEnd.get(1) + ", " + Integer.toString(value);
 	}
 
-	//
 }

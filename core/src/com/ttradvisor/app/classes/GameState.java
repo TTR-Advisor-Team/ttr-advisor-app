@@ -63,4 +63,18 @@ public class GameState {
 	public DestinationTicketList getDtList() {
 		return dtList;
 	}
+	
+	/**
+	 * @return the current turn (not the current round)
+	 */
+	public int getCurrentTurnCounter() {
+		return turns.size();
+	}
+	
+	/**
+	 * @return the current round (not the current turn)
+	 */
+	public int getCurrentRoundCounter() {
+		return turns.size() / curPlayers.size() + 1;
+	}
 }

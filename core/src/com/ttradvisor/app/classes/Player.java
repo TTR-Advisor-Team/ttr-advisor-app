@@ -109,6 +109,17 @@ public class Player {
 	}
 	
 	/**
+	 * @return a deep copy of this Player object (incl. internal lists)
+	 */
+	@SuppressWarnings("unchecked")
+	public Player getDeepCopy() {
+		ArrayList<DestinationTicket> deepCopyDTHand = (ArrayList<DestinationTicket>) destTicketHand.clone();
+		ArrayList<TrainCard> deepCopyTCHand = (ArrayList<TrainCard>) trainCardHand.clone();
+		
+		return new Player(deepCopyDTHand, deepCopyTCHand, color, score, numTrains);
+	}
+	
+	/**
 	 * Since there can only be one player of a given color in a game, equality is having the same color.
 	 */
 	@Override
