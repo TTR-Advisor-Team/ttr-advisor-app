@@ -26,6 +26,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.ttradvisor.app.TTRAdvisorApp;
+import com.ttradvisor.app.classes.Action;
 import com.ttradvisor.app.classes.Colors;
 import com.ttradvisor.app.classes.DestinationAction;
 import com.ttradvisor.app.classes.DestinationTicket;
@@ -141,26 +142,7 @@ public class GameScreen implements Screen {
 		    		boolean isInitial = mainApp.turnInput.isInitialTurn();
 		    		
 		        	if (mainApp.turnInput.takeAction(new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets))) {
-		        		if (isInitial) {
-		        			mainApp.gameState.currentPlayer = mainApp.gameState.getPlayers().get(0);
-		        		}
-		        		else {
-		        			int currPlayerIndex = mainApp.gameState.getPlayers().indexOf(mainApp.gameState.currentPlayer);
-		        			if (currPlayerIndex < mainApp.gameState.getPlayers().size() - 1) {
-		        				mainApp.gameState.currentPlayer = mainApp.gameState.getPlayers().get(currPlayerIndex + 1);
-		        			}
-		        			else {
-		        				mainApp.gameState.currentPlayer = mainApp.gameState.getPlayers().get(0);
-		        			}
-		        		}
-		        		
-		        		// MOCKUP - this is pretty much how to save a turn to the history...
-		        		// just need to do DEEP DEEP COPIES (e.g. save both the board AND all it's internal references)
-		        		
-		        		
-//		        		ArrayList<Player> deepCopyPlayers = new ArrayList<Player>();
-//		        		deepCopyPlayers.addAll((mainApp.gameState.getPlayers());
-//		        		mainApp.gameState.addTurn(new Turn(mainApp.gameState.getBoard(), new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets), deepCopyPlayers);
+		        		advanceTurn(isInitial, new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets));
 		        	}
 		        	
 		        	guiStage.setScrollFocus(null);
@@ -303,27 +285,10 @@ public class GameScreen implements Screen {
             	done.addListener(new InputListener() {
             		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
             			
-            			// MOCKUP
-            			// TODO this should work once the other bits are in place
             			boolean isInitial = mainApp.turnInput.isInitialTurn();
     		    		
     		        	if (mainApp.turnInput.takeAction(new TrainCardAction(mainApp.gameState.currentPlayer, drawnCards))) {
-    		        		if (isInitial) {
-    		        			mainApp.gameState.currentPlayer = mainApp.gameState.getPlayers().get(0);
-    		        		}
-    		        		else {
-    		        			int currPlayerIndex = mainApp.gameState.getPlayers().indexOf(mainApp.gameState.currentPlayer);
-    		        			if (currPlayerIndex < mainApp.gameState.getPlayers().size() - 1) {
-    		        				mainApp.gameState.currentPlayer = mainApp.gameState.getPlayers().get(currPlayerIndex + 1);
-    		        			}
-    		        			else {
-    		        				mainApp.gameState.currentPlayer = mainApp.gameState.getPlayers().get(0);
-    		        			}
-    		        		}
-    		        		
-//    		        		ArrayList<Player> deepCopyPlayers = new ArrayList<Player>();
-//    		        		deepCopyPlayers.addAll((mainApp.gameState.getPlayers());
-//    		        		mainApp.gameState.addTurn(new Turn(mainApp.gameState.getBoard(), new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets), deepCopyPlayers);
+    		        		advanceTurn(isInitial, new TrainCardAction(mainApp.gameState.currentPlayer, drawnCards));
     		        	}
             			
             			
@@ -409,6 +374,35 @@ public class GameScreen implements Screen {
 		camera.position.set(0, 0, camera.position.z);
 		clampCamera();
 
+	}
+	
+	/**
+	 * Should only be called when the InputTurnController returns true on an Action
+	 * @param isInitial - whether we are advancing from the initial turn
+	 * @param Action - the action to record as happening in the turn list
+	 */
+	private void advanceTurn(boolean isInitial, Action action) {
+   		if (isInitial) {
+			mainApp.gameState.currentPlayer = mainApp.gameState.getPlayers().get(0);
+		}
+		else {
+			int currPlayerIndex = mainApp.gameState.getPlayers().indexOf(mainApp.gameState.currentPlayer);
+			if (currPlayerIndex < mainApp.gameState.getPlayers().size() - 1) {
+				mainApp.gameState.currentPlayer = mainApp.gameState.getPlayers().get(currPlayerIndex + 1);
+			}
+			else {
+				mainApp.gameState.currentPlayer = mainApp.gameState.getPlayers().get(0);
+			}
+		}
+		
+		ArrayList<Player> deepCopyPlayers = new ArrayList<Player>();
+		for (Player p : mainApp.gameState.getPlayers()) {
+			deepCopyPlayers.add(p.getDeepCopy());
+		}
+		
+		// TODO use mainApp.gameState.getBoard().snapshotBoard() here?
+		
+		// mainApp.gameState.addTurn(new Turn(new Board(), action, deepCopyPlayers));
 	}
 
 	/**
