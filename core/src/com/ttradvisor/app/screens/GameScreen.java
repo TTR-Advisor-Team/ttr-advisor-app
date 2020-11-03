@@ -21,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
@@ -111,6 +112,9 @@ public class GameScreen implements Screen {
 		// Button to draw Destination tickets
 		final TextButton destButton = new TextButton("Draw Destination \n Ticket", TTRAdvisorApp.skin, "small");
 		final TextButton TCButton = new TextButton("Draw Train \n Card", TTRAdvisorApp.skin, "small");
+		final Label trainCardHand = new Label(mainApp.gameState.currentPlayer.getTCS().toString(), TTRAdvisorApp.skin);
+		trainCardHand.setWidth(Gdx.graphics.getWidth() / 5);
+		trainCardHand.setPosition(trainCardHand.getWidth(), trainCardHand.getHeight() / 8);
 		// Button to draw Destination tickets
 		destButton.setWidth(Gdx.graphics.getWidth() / 5);
 		destButton.setPosition(Gdx.graphics.getWidth() - destButton.getWidth(), destButton.getHeight() / 8);
@@ -292,7 +296,7 @@ public class GameScreen implements Screen {
     		        	}
             			
             			
-            			
+            			trainCardHand.setText(mainApp.gameState.currentPlayer.getTCS().toString());
             			destButton.setVisible(true);
                     	TCButton.setVisible(true);
                     	table.setVisible(false);
@@ -353,6 +357,7 @@ public class GameScreen implements Screen {
         });
 		
 		guiStage.addActor(TCButton);
+		guiStage.addActor(trainCardHand);
 
 		setupMapInputHandling();
 
