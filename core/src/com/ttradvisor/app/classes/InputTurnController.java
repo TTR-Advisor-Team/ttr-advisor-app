@@ -97,7 +97,7 @@ public class InputTurnController {
 	}
 	
 	private boolean initialTurnDrawDT(DestinationAction thisTurn) {
-		if (thisTurn.getDrawnTickets().size() < 2 || thisTurn.getDrawnTickets().size() > 4) {
+		if (thisTurn.getDrawnTickets().size() < 2 || thisTurn.getDrawnTickets().size() > 3) {
 			Gdx.app.error("Turn", "Must draw between 2 and 3 destination tickets on initial turn.");
 			return false;
 		}
