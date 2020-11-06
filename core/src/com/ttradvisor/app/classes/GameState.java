@@ -23,6 +23,7 @@ public class GameState {
 		this.dtList = dtList;
 		currentPlayer = null;
 		claimedRoutes = new ArrayList<Route>();
+
 	}
 	
 	public void addTurn(Turn newTurn) {
