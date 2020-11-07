@@ -8,7 +8,9 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.utils.ArraySelection;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -49,7 +51,9 @@ public class GameScreen implements Screen {
 	private Stage mapStage;
 	private OrthographicCamera camera;
 	private Stage guiStage;
+	
 	private DestinationTicketList dtList;
+	
 	private ScrollPane listPane;
 	private List<DestinationTicket> destTickets;
 	private DestinationTicket[] ticketArray;
@@ -58,6 +62,8 @@ public class GameScreen implements Screen {
 
 	private List<Colors.player> demonstration; // TODO delete this after demo
 	private Label demoCurrPlayer;
+	
+	private SpriteBatch batch;
 
 	private float mapWidth;
 	private float mapHeight;
@@ -361,7 +367,7 @@ public class GameScreen implements Screen {
 
 		setupMapInputHandling();
 
-		Image map = new Image(new Texture("low_res_board.jpg"));
+		Image map = new Image(new Texture("high_res_map.png"));
 
 		// notes: doing this is risky (I think) because texture coordinates != world
 		// coordinates
@@ -417,6 +423,13 @@ public class GameScreen implements Screen {
 	private void setupMapInputHandling() {
 
 		mapStage.addListener(new InputListener() {
+			
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				Vector3 tap = camera.unproject(new Vector3(x, y, 0));
+				// tap.
+				super.touchUp(event, x, y, pointer, button);
+			}
 
 			@Override
 			public boolean scrolled(InputEvent event, float x, float y, int amount) {
