@@ -30,6 +30,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.ttradvisor.app.TTRAdvisorApp;
 import com.ttradvisor.app.classes.Action;
+import com.ttradvisor.app.classes.CityLocations;
 import com.ttradvisor.app.classes.Colors;
 import com.ttradvisor.app.classes.DestinationAction;
 import com.ttradvisor.app.classes.DestinationTicket;
@@ -62,11 +63,11 @@ public class GameScreen implements Screen {
 
 	private List<Colors.player> demonstration; // TODO delete this after demo
 	private Label demoCurrPlayer;
-	
-	private SpriteBatch batch;
 
 	private float mapWidth;
 	private float mapHeight;
+	
+	private CityLocations cityLocs;
 
 	public GameScreen(TTRAdvisorApp main) {
 		mainApp = main;
@@ -77,8 +78,6 @@ public class GameScreen implements Screen {
 		destTickets = new List<DestinationTicket>(TTRAdvisorApp.skin);
 		//simple array of the DestinationTickets to pass into the Scrollpane
 		ticketArray = new DestinationTicket[dtList.getList().size()];
-		
-		//
 		
 		for (int i=0; i<dtList.getList().size(); i++) {
 			ticketArray[i] = dtList.getTicket(i);
@@ -91,12 +90,39 @@ public class GameScreen implements Screen {
 		ticketSelection = destTickets.getSelection();
 		ticketSelection.setMultiple(true);
 		destTickets.setSelection(ticketSelection);
-		
 
 		guiStage = new Stage(new ScreenViewport());
 		mapStage = new Stage(new ScreenViewport());
 		inputMult = new InputMultiplexer(guiStage, mapStage);
 		
+		setupDisplayElements();
+		
+		setupCardInputHandling();
+		
+		setupMapInputHandling();
+
+		Image map = new Image(new Texture("high_res_map.png"));
+
+		// Important note: The assumption here is that we NEVER
+		// scale texture coordinates independently of the world coordinates
+		// So, 1px in texture is always == 1px in world
+		mapWidth = map.getWidth();
+		mapHeight = map.getHeight();
+		
+		// load city locations; these are relative to the high_res_map.png image above
+		cityLocs = new CityLocations("city_locations.json");
+
+		mapStage.addActor(map);
+		camera = (OrthographicCamera) mapStage.getViewport().getCamera();
+		camera.setToOrtho(false);
+		camera.zoom = 1;
+
+		camera.position.set(0, 0, camera.position.z);
+		clampCamera();
+
+	}
+	
+	private void setupDisplayElements() {
 		// MOCKUP to show state internals
 		// Delete this after
 		demonstration = new List<Colors.player>(TTRAdvisorApp.skin);
@@ -114,7 +140,9 @@ public class GameScreen implements Screen {
 		demoCurrPlayer.setSize(100, 30);
 		demoCurrPlayer.setPosition(50, 400);
 		guiStage.addActor(demoCurrPlayer);
-		
+	}
+	
+	private void setupCardInputHandling() {
 		// Button to draw Destination tickets
 		final TextButton destButton = new TextButton("Draw Destination \n Ticket", TTRAdvisorApp.skin, "small");
 		final TextButton TCButton = new TextButton("Draw Train \n Card", TTRAdvisorApp.skin, "small");
@@ -364,56 +392,6 @@ public class GameScreen implements Screen {
 		
 		guiStage.addActor(TCButton);
 		guiStage.addActor(trainCardHand);
-
-		setupMapInputHandling();
-
-		Image map = new Image(new Texture("high_res_map.png"));
-
-		// notes: doing this is risky (I think) because texture coordinates != world
-		// coordinates
-		// but I guess it's fine as long as we never scale the textures independently of
-		// the world
-		// (so that 1px in texture is always == 1px in world)
-		mapWidth = map.getWidth();
-		mapHeight = map.getHeight();
-
-		mapStage.addActor(map);
-		camera = (OrthographicCamera) mapStage.getViewport().getCamera();
-		camera.setToOrtho(false);
-		camera.zoom = 1;
-
-		camera.position.set(0, 0, camera.position.z);
-		clampCamera();
-
-	}
-	
-	/**
-	 * Should only be called when the InputTurnController returns true on an Action
-	 * @param isInitial - whether we are advancing from the initial turn
-	 * @param Action - the action to record as happening in the turn list
-	 */
-	private void advanceTurn(boolean isInitial, Action action) {
-   		if (isInitial) {
-			mainApp.gameState.currentPlayer = mainApp.gameState.getPlayers().get(0);
-		}
-		else {
-			int currPlayerIndex = mainApp.gameState.getPlayers().indexOf(mainApp.gameState.currentPlayer);
-			if (currPlayerIndex < mainApp.gameState.getPlayers().size() - 1) {
-				mainApp.gameState.currentPlayer = mainApp.gameState.getPlayers().get(currPlayerIndex + 1);
-			}
-			else {
-				mainApp.gameState.currentPlayer = mainApp.gameState.getPlayers().get(0);
-			}
-		}
-		
-		ArrayList<Player> deepCopyPlayers = new ArrayList<Player>();
-		for (Player p : mainApp.gameState.getPlayers()) {
-			deepCopyPlayers.add(p.getDeepCopy());
-		}
-		
-		// TODO use mainApp.gameState.getBoard().snapshotBoard() here?
-		
-		// mainApp.gameState.addTurn(new Turn(new Board(), action, deepCopyPlayers));
 	}
 
 	/**
@@ -486,6 +464,35 @@ public class GameScreen implements Screen {
 			
 		});
 
+	}
+	
+	/**
+	 * Should only be called when the InputTurnController returns true on an Action
+	 * @param isInitial - whether we are advancing from the initial turn
+	 * @param Action - the action to record as happening in the turn list
+	 */
+	private void advanceTurn(boolean isInitial, Action action) {
+   		if (isInitial) {
+			mainApp.gameState.currentPlayer = mainApp.gameState.getPlayers().get(0);
+		}
+		else {
+			int currPlayerIndex = mainApp.gameState.getPlayers().indexOf(mainApp.gameState.currentPlayer);
+			if (currPlayerIndex < mainApp.gameState.getPlayers().size() - 1) {
+				mainApp.gameState.currentPlayer = mainApp.gameState.getPlayers().get(currPlayerIndex + 1);
+			}
+			else {
+				mainApp.gameState.currentPlayer = mainApp.gameState.getPlayers().get(0);
+			}
+		}
+		
+		ArrayList<Player> deepCopyPlayers = new ArrayList<Player>();
+		for (Player p : mainApp.gameState.getPlayers()) {
+			deepCopyPlayers.add(p.getDeepCopy());
+		}
+		
+		// TODO use mainApp.gameState.getBoard().snapshotBoard() here?
+		
+		// mainApp.gameState.addTurn(new Turn(new Board(), action, deepCopyPlayers));
 	}
 
 	private void clampCamera() {
