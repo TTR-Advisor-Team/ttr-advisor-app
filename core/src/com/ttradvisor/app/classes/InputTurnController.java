@@ -139,9 +139,13 @@ public class InputTurnController {
 		}
 	}
 
-	private boolean claimRoute(RouteAction thisTurn) {	
+	private boolean claimRoute(RouteAction thisTurn) {
+		if (thisTurn.claimedRoute == null) {
+			Gdx.app.error("Turn", "There is no route between the selected cities.");
+			return false;
+		}
 		if (gameState.getClaimedRoutes().contains(thisTurn.claimedRoute)){
-			Gdx.app.error("Turn", "Can not claim rout that has already been claimed.");
+			Gdx.app.error("Turn", "Can not claim route that has already been claimed.");
 			return false;
 		}
 		else if(thisTurn.actingPlayer.getNumberOfUsable(thisTurn.claimedRoute.getColor()) <  thisTurn.claimedRoute.getCost()) {

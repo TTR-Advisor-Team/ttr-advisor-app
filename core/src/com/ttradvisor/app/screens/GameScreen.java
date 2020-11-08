@@ -37,6 +37,7 @@ import com.ttradvisor.app.classes.DestinationAction;
 import com.ttradvisor.app.classes.DestinationTicket;
 import com.ttradvisor.app.classes.DestinationTicketList;
 import com.ttradvisor.app.classes.Player;
+import com.ttradvisor.app.classes.RouteAction;
 import com.ttradvisor.app.classes.TrainCard;
 import com.ttradvisor.app.classes.TrainCardAction;
 import com.ttradvisor.app.classes.Turn;
@@ -458,8 +459,21 @@ public class GameScreen implements Screen {
 							selectedCity = loc.name;
 						}
 						else {
-							selectedRoute = "Route: " + selectedCity + " to " + loc.name;
+							selectedRoute = "RouteAction sent: " + selectedCity + " to " + loc.name;
+							// TODO this is where the RouteAction should be submitted
+							// MOCKUP - Need a system to choose which cards to spend for this route
+
+	            			boolean isInitial = mainApp.turnInput.isInitialTurn();
+	    		    		
+	            			// empty list of cards sent for now
+	            			RouteAction routeAction = new RouteAction(mainApp.gameState.currentPlayer, new ArrayList<TrainCard>(), mainApp.gameState.getBoard().getRoute(selectedCity, loc.name));
+	            			
+	    		        	if (mainApp.turnInput.takeAction(routeAction)) {
+	    		        		advanceTurn(isInitial, routeAction);
+	    		        	}
+	    		        	
 							selectedCity = DEFAULT_CITY_LABEL;
+							
 						}
 						super.tap(event, x, y, count, button);
 						return;

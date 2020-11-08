@@ -31,9 +31,9 @@ public class TTRAdvisorApp extends Game {
 	
 	@Override
 	public void create () {
-		turnInput = new InputTurnController(gameState);
 		gameState = new GameState(new ArrayList<Player>(), new Board("cities.txt"),
 				new DestinationTicketList("destinations.txt"), new ArrayList<Turn>());
+		turnInput = new InputTurnController(gameState);
 		skin = new Skin(Gdx.files.internal("ui skin/glassy-ui.json"));
 		this.setScreen(new TitleScreen(this));
 	}
