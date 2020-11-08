@@ -31,6 +31,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.ttradvisor.app.TTRAdvisorApp;
 import com.ttradvisor.app.classes.Action;
 import com.ttradvisor.app.classes.CityLocations;
+import com.ttradvisor.app.classes.CityLocations.CityLocation;
 import com.ttradvisor.app.classes.Colors;
 import com.ttradvisor.app.classes.DestinationAction;
 import com.ttradvisor.app.classes.DestinationTicket;
@@ -400,14 +401,8 @@ public class GameScreen implements Screen {
 	 */
 	private void setupMapInputHandling() {
 
+		// enable scrolling with scroll wheel for desktop
 		mapStage.addListener(new InputListener() {
-			
-			@Override
-			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				Vector3 tap = camera.unproject(new Vector3(x, y, 0));
-				// tap.
-				super.touchUp(event, x, y, pointer, button);
-			}
 
 			@Override
 			public boolean scrolled(InputEvent event, float x, float y, int amount) {
@@ -419,6 +414,7 @@ public class GameScreen implements Screen {
 
 		});
 
+		// android gestures
 		mapStage.addListener(new ActorGestureListener() {
 
 			// screen (not world) coordinates of the start of the pan and current pan
@@ -427,6 +423,26 @@ public class GameScreen implements Screen {
 			private Vector3 trueScreenDelta;
 			// world coordinates of camera when starting the pan
 			private Vector3 panOriginCamera;
+			
+			@Override
+			public void tap(InputEvent event, float x, float y, int count, int button) {
+				Vector3 tapPos = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+				for (CityLocation loc : cityLocs.getCityLocations()) {
+					
+//					Gdx.app.log("City Event", "World coordinates of tap are: " + tapPos);
+//					Gdx.app.log("City Event", "Distance to " + loc.name + " is " + tapPos.dst(loc.x, loc.y, 0) + " px.");
+					
+					// cities have a radius of 16 pixels, roughly
+					if (tapPos.dst(loc.x, loc.y, 0) < 16) {
+						Gdx.app.log("City Event", "Tapped on city: " + loc.name);
+						super.tap(event, x, y, count, button);
+						return;
+					}
+				}
+				Gdx.app.log("City Event", "Tapped on background.");
+				super.tap(event, x, y, count, button);
+				return;
+			}
 
 			@Override
 			public void pan(InputEvent event, float x, float y, float deltaX, float deltaY) {
