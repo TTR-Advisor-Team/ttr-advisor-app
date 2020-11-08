@@ -69,6 +69,14 @@ public class GameScreen implements Screen {
 	private float mapHeight;
 	
 	private CityLocations cityLocs;
+	
+	private static final String DEFAULT_CITY_LABEL = "No city selected.";
+	private static final String DEFAULT_ROUTE_LABEL = "No route selected.";
+	
+	private String selectedCity = DEFAULT_CITY_LABEL;
+	private String selectedRoute = DEFAULT_ROUTE_LABEL;
+	private Label demoSelectedCity;
+	private Label demoSelectedRoute;
 
 	public GameScreen(TTRAdvisorApp main) {
 		mainApp = main;
@@ -141,6 +149,18 @@ public class GameScreen implements Screen {
 		demoCurrPlayer.setSize(100, 30);
 		demoCurrPlayer.setPosition(50, 400);
 		guiStage.addActor(demoCurrPlayer);
+		
+		demoSelectedCity = new Label("", mainApp.skin);
+		demoSelectedCity.setColor(0, 0, 0, 1);
+		demoSelectedCity.setSize(100, 30);
+		demoSelectedCity.setPosition(50, 360);
+		guiStage.addActor(demoSelectedCity);
+		
+		demoSelectedRoute = new Label("", mainApp.skin);
+		demoSelectedRoute.setColor(0, 0, 0, 1);
+		demoSelectedRoute.setSize(100, 30);
+		demoSelectedRoute.setPosition(50, 320);
+		guiStage.addActor(demoSelectedRoute);
 	}
 	
 	private void setupCardInputHandling() {
@@ -426,20 +446,28 @@ public class GameScreen implements Screen {
 			
 			@Override
 			public void tap(InputEvent event, float x, float y, int count, int button) {
+				// unproject the world coordinates of tap
 				Vector3 tapPos = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 				for (CityLocation loc : cityLocs.getCityLocations()) {
 					
-//					Gdx.app.log("City Event", "World coordinates of tap are: " + tapPos);
 //					Gdx.app.log("City Event", "Distance to " + loc.name + " is " + tapPos.dst(loc.x, loc.y, 0) + " px.");
 					
 					// cities have a radius of 16 pixels, roughly
 					if (tapPos.dst(loc.x, loc.y, 0) < 16) {
-						Gdx.app.log("City Event", "Tapped on city: " + loc.name);
+						if (selectedCity == DEFAULT_CITY_LABEL) {
+							selectedCity = loc.name;
+						}
+						else {
+							selectedRoute = "Route: " + selectedCity + " to " + loc.name;
+							selectedCity = DEFAULT_CITY_LABEL;
+						}
 						super.tap(event, x, y, count, button);
 						return;
 					}
 				}
-				Gdx.app.log("City Event", "Tapped on background.");
+				// Gdx.app.log("City Event", "Tapped on background.");
+				selectedCity = DEFAULT_CITY_LABEL;
+				selectedRoute = DEFAULT_ROUTE_LABEL;
 				super.tap(event, x, y, count, button);
 				return;
 			}
@@ -536,6 +564,8 @@ public class GameScreen implements Screen {
 	@Override
 	public void render(float delta) {
 		demoCurrPlayer.setText("Current player: " + mainApp.gameState.currentPlayer.getColor());
+		demoSelectedCity.setText(selectedCity);
+		demoSelectedRoute.setText(selectedRoute);
 		Gdx.gl.glClearColor(.58f, .71f, .78f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
