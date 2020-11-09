@@ -40,7 +40,7 @@ public class Board {
 			 * 4)]))); } board.put(data[0], routes); }
 			 */
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			Gdx.app.error("Board Parser", e.getClass() + e.getMessage());
 			board = null;
 		}
 
