@@ -46,7 +46,7 @@ public class Recommender {
 		while (!openSet.isEmpty()) {
 			City c = openSet.poll();
 			closed.add(c);
-			System.out.println(c.current + " total cost:" + c.totalCost);
+			//System.out.println(c.current + " total cost:" + c.totalCost);
 			// check if goal has been reached
 			//System.out.println(c.current + " == " + end + ": " + c.current.equals(end));
 			if (c.current.equals(end)) {
@@ -75,13 +75,12 @@ public class Recommender {
 				boolean open = false;
 				boolean close = false;
 				//System.out.println(r.toString());
-				City next = new City(r.end, c, c.totalCost + r.cost);
+				City next = new City(r.end, c, calcCost(c, r.end));
 				// if openSet contains r.end compare totalCost
 				for (City old : openSet) {
 					// if less update totalCost and previous
 					if (old.equals(next)) {
 						open = true;
-						next.totalCost = calcCost(c, next.current);
 						if (old.totalCost > next.totalCost) {
 							old.previous = next.previous;
 							old.totalCost = next.totalCost;
@@ -95,7 +94,6 @@ public class Recommender {
 					// if less update totalCost and previous
 					if (old.equals(next)) {
 						close = true;
-						next.totalCost = calcCost(c, next.current);
 						if (old.totalCost > next.totalCost) {
 							old.previous = next.previous;
 							old.totalCost = next.totalCost;

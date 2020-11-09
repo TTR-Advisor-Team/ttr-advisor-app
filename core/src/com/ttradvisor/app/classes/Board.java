@@ -5,22 +5,19 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Scanner;
+import java.util.Set;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 
 public class Board {
 	private HashMap<String, LinkedList<Route>> board;
-
+	
 	public Board(String path) {
 		board = new HashMap<String, LinkedList<Route>>();
-		System.out.println(Gdx.files.getLocalStoragePath());
 		try {
 			FileHandle handle = Gdx.files.internal(path);
 			File initBoard = handle.file();
-			System.out.println("1: " + handle.path());
-			System.out.println("2: " + handle);
-			System.out.println("3: " + initBoard);
 			String allCities = handle.readString();
 			String[] cities = allCities.split(System.lineSeparator());
 			for (String s : cities) {
@@ -32,18 +29,14 @@ public class Board {
 				}
 				board.put(data[0], routes);
 			}
-			/*
-			 * while (reader.hasNextLine()) { String[] data = reader.nextLine().split(",");
-			 * LinkedList<Route> routes = new LinkedList<Route>(); for (int i = 0; i <
-			 * data.length / 4; ++i) { routes.add(new Route(data[0], data[1 + (i * 4)],
-			 * Colors.route.valueOf(data[2 + (i * 4)]), Integer.parseInt(data[3 + (i *
-			 * 4)]))); } board.put(data[0], routes); }
-			 */
 		} catch (Exception e) {
 			Gdx.app.error("Board Parser", e.getClass() + e.getMessage());
 			board = null;
 		}
 
+	}
+	private Board(HashMap<String, LinkedList<Route>> board) {
+		this.board = board;
 	}
 
 	public HashMap<String, LinkedList<Route>> getBoard() {
@@ -59,7 +52,7 @@ public class Board {
 	public void claimRoute(String cityBegin, String cityEnd, Colors.route color, Colors.player player) {
 		LinkedList<Route> begin = board.get(cityBegin);
 		for (Route r : begin) {
-			if ((r.end.equals(cityEnd)) && (r.color.equals(color))) {
+			if ((r.end.equals(cityEnd)) && (r.color.equals(color)) && (r.owner.equals(Colors.player.NONE))) {
 				r.owner = player;
 				break;
 			}
@@ -67,7 +60,7 @@ public class Board {
 
 		LinkedList<Route> end = board.get(cityEnd);
 		for (Route r : end) {
-			if ((r.end.equals(cityBegin)) && (r.color.equals(color))) {
+			if ((r.end.equals(cityBegin)) && (r.color.equals(color)) && (r.owner.equals(Colors.player.NONE))) {
 				r.owner = player;
 				break;
 			}
@@ -75,8 +68,19 @@ public class Board {
 
 	}
 
-	public HashMap<String, LinkedList<Route>> snapshotBoard() {
-		return null;
+	public Board snapshotBoard() {
+		HashMap<String, LinkedList<Route>> copyMap = new HashMap<String, LinkedList<Route>>();
+		Set<String> s = board.keySet();
+		for(String city: s) {
+			LinkedList<Route> routes = board.get(city);
+			LinkedList<Route> copyRoutes = new LinkedList<Route>();
+			for(Route r: routes) {
+				copyRoutes.add(new Route(r.begin, r.end, r.color, r.owner, r.cost));
+			}
+			copyMap.put(city, copyRoutes);
+		}
+		Board copyBoard = new Board(copyMap);
+		return copyBoard;
 	}
 
 	// returns a list of routes from a city to all neighboring cities
@@ -118,6 +122,14 @@ public class Board {
 			this.color = color;
 			this.cost = cost;
 			this.owner = Colors.player.NONE;
+		}
+		
+		private Route(String begin, String end, Colors.route color, Colors.player owner, int cost) {
+			this.begin = begin;
+			this.end = end;
+			this.color = color;
+			this.cost = cost;
+			this.owner = owner;
 		}
 
 		@Override

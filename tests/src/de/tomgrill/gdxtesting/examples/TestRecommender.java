@@ -156,4 +156,26 @@ public class TestRecommender {
 		}
 		assertEquals(10, cost);
 	}
+	@Test
+	public void pathingAroundOtherPlayers() {
+		board.claimRoute("Nashville", "Atlanta", Colors.route.ANY, Colors.player.GREEN);
+		LinkedList<Route> routes = rec.shortestPath("Nashville", "Atlanta");
+		int cost = 0;
+		for(Route r: routes) {
+			cost += r.getCost();
+		}
+		assertEquals("Pathing around other players", 5, cost);
+		
+	}
+	@Test
+	public void reversePathingAroundOtherPlayers() {
+		board.claimRoute("Nashville", "Atlanta", Colors.route.ANY, Colors.player.GREEN);
+		LinkedList<Route> routes = rec.shortestPath("Atlanta", "Nashville");
+		int cost = 0;
+		for(Route r: routes) {
+			cost += r.getCost();
+		}
+		assertEquals("Reverse pathing around other players", 5, cost);
+		
+	}
 }
