@@ -156,11 +156,11 @@ public class InputTurnController {
 			int currentCost = thisTurn.claimedRoute.getCost();
 			for (int i = 0; i  <  currentCost; i++) {
 				if (thisTurn.actingPlayer.getNumberOfColor(thisTurn.claimedRoute.getColor()) >= currentCost){
-					thisTurn.actingPlayer.removeTC(thisTurn.actingPlayer.getCardOfColor(thisTurn.claimedRoute.getColor()));
+					thisTurn.actingPlayer.getTCS().remove(thisTurn.actingPlayer.getCardOfColor(thisTurn.claimedRoute.getColor()));
 					currentCost--;
 				}
 				else {
-					thisTurn.actingPlayer.removeTC(thisTurn.actingPlayer.getCardOfColor(Colors.route.ANY));
+					thisTurn.actingPlayer.getTCS().remove(thisTurn.actingPlayer.getCardOfColor(Colors.route.ANY));
 					currentCost--;
 				}	
 			}

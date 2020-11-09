@@ -6,11 +6,7 @@ public class TrainCard {
 	public TrainCard(Colors.route color) {
 		this.color = color;
 	}
-	
-	public void setColor(Colors.route color) {
-		this.color = color;
-	}
-	
+
 	public Colors.route getColor() {
 		return color;
 	}
