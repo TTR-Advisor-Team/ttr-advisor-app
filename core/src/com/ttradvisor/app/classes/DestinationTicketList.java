@@ -27,7 +27,7 @@ public class DestinationTicketList {
 			}
 		} catch (Exception e) {
 			// default to an empty list rather than null
-			Gdx.app.error("DTList Parser", e.getMessage());
+			Gdx.app.error("DTList Parser", e.getClass() + e.getMessage());
 			dtList = new LinkedList<DestinationTicket>();
 		}
 	}
