@@ -1,36 +1,36 @@
-Atlanta,Charleston,ANY,2,,Raleigh,ANY,2,,Raleigh,ANY,2,,New Orleans,YELLOW,4,,New Orleans,ORANGE,4,,Nashville,ANY,1,,Miami,BLUE,5
-Boston,Montreal,ANY,2,,Montreal,ANY,2,,New York,RED,2,,New York,YELLOW,2
-Calgary,Helena,ANY,4,,Vancouver,ANY,3,,Seattle,ANY,4,,Winnipeg,WHITE,6
-Charleston,Atlanta,ANY,2,,Raleigh,ANY,2,,Miami,PINK,4
-Chicago,Toronto,WHITE,4,,Pittsburg,ORANGE,3,,Pittsburg,WHITE,3,,Saint Louis,WHITE,2,,Saint Louis,GREEN,2,,Omaha,BLUE,4,,Duluth,RED,3
-Dallas,Oklahoma City,ANY,2,,Oklahoma City,ANY,2,,Houston,ANY,1,,Houston,ANY,1,,Little Rock,ANY,1,,El Paso,RED,4
-Denver,Salt Lake City,RED,3,,Salt Lake City,YELLOW,3,,Helena,GREEN,4,,Omaha,PINK,4,,Kansas City,BLACK,4,,Kansas City,ORANGE,4,,Oklahoma City,RED,4,,Santa Fe,ANY,2,,Phoenix,WHITE,5
-Duluth,Winnipeg,BLACK,4,,Helena,ORANGE,6,,Omaha,ANY,2,,Omaha,ANY,2,,Chicago,RED,3,,Sault St. Marie,ANY,3
-El Paso,Los Angeles,BLACK,6,,Phoenix,ANY,3,,Santa Fe,ANY,2,,Oklahoma City,YELLOW,5,,Dallas,RED,4,,Houston,GREEN,6
-Helena,Seattle,YELLOW,6,,Salt Lake City,PINK,3,,Denver,GREEN,4,,Omaha,RED,5,,Duluth,ORANGE,6,,Winnipeg,BLUE,4
-Houston,El Paso,GREEN,6,,Dallas,ANY,2,,Dallas,ANY,2,,New Orleans,ANY,1
-Kansas City,Oklahoma City,ANY,2,,Oklahoma City,ANY,2,,Omaha,ANY,1,,Omaha,ANY,1,,Denver,ORANGE,4,,Denver,BLACK,4,,Saint Louis,BLUE,2,,Saint Louis,PINK,2
-Las Vegas,Los Angeles,ANY,2,,Salt Lake City,ORANGE,3
-Little Rock,Saint Louis,ANY,2,,Oklahoma City,ANY,2,,Dallas,ANY,2,,New Orleans,GREEN,3,,Nashville,WHITE,3
-Los Angeles,San Francisco,YELLOW,3,,San Francisco,PINK,3,,Las Vegas,ANY,2,,Phoenix,ANY,3,,El Paso,BLACK,6
-Miami,Atlanta,BLUE,5,,Charleston,PINK,4,,New Orleans,RED,6
-Montreal,Boston,ANY,2,,Boston,ANY,2,,Sault St. Marie,BLACK,5,,Toronto,ANY,3,,New York,BLUE,3
-Nashville,Saint Louis,ANY,2,,Pittsburg,YELLOW,4,,Raleigh,BLACK,3,,Atlanta,ANY,1,,Little Rock,WHITE,3
-New Orleans,Houston,ANY,2,,Miami,RED,6,,Atlanta,YELLOW,4,,Atlanta,ORANGE,4,,Little Rock,GREEN,3
-New York,Boston,RED,2,,Boston,YELLOW,2,,Montreal,BLUE,3,,Pittsburg,WHITE,2,,Pittsburg,GREEN,2,,Washington,BLACK,2,,Washington,ORANGE,2
-Oklahoma City,Denver,RED,4,,Santa Fe,BLUE,3,,El Paso,YELLOW,5,,Dallas,ANY,2,,Dallas,ANY,2,,Little Rock,ANY,2,,Kansas City,ANY,2,,Kansas City,ANY,2
-Omaha,Kansas City,ANY,1,,Kansas City,ANY,1,,Denver,PINK,4,,Helena,RED,5,,Duluth,ANY,2,,Duluth,ANY,2,,Chicago,BLUE,4
-Phoenix,Los Angeles,ANY,3,,El Paso,ANY,3,,Santa Fe,ANY,3,,Denver,WHITE,5
-Pittsburg,Toronto,ANY,2,,New York,WHITE,2,,New York,GREEN,2,,Washington,ANY,2,,Raleigh,ANY,2,,Nashville,YELLOW,4,,Saint Louis,GREEN,5,,Chicago,BLACK,3,,Chicago,ORANGE,3
-Portland,San Francisco,GREEN,5,,San Francisco,PINK,5,,Salt Lake City,BLUE,6,,Seattle,ANY,1,,Seattle,ANY,1
-Raleigh,Nashville,BLACK,3,,Atlanta,ANY,2,,Atlanta,ANY,2,,Charleston,ANY,2,,Washington,ANY,2,,Washington,ANY,2,,Pittsburg,ANY,2
-Saint Louis,Kansas City,BLUE,2,,Kansas City,PINK,2,,Little Rock,ANY,2,,Nashville,ANY,2,,Pittsburg,GREEN,5,,Chicago,GREEN,2,,Chicago,WHITE,2
-Salt Lake City,Portland,BLUE,6,,San Francisco,WHITE,5,,San Francisco,ORANGE,5,,Las Vegas,ORANGE,3,,Denver,RED,3,,Denver,YELLOW,3,,Helena,PINK,3
-San Francisco,Portland,GREEN,5,,Portland,PINK,5,,Salt Lake City,ORANGE,5,,Salt Lake City,WHITE,5,,Los Angeles,YELLOW,3,,Los Angeles,PINK,3
-Santa Fe,Denver,ANY,2,,Phoenix,ANY,3,,El Paso,ANY,2,,Oklahoma City,BLUE,3
-Sault St. Marie,Winnipeg,ANY,6,,Duluth,ANY,3,,Toronto,ANY,2,,Montreal,BLACK,5
-Seattle,Vancouver,ANY,1,,Vancouver,ANY,1,,Calgary,ANY,4,,Helena,YELLOW,6,,Portland,ANY,1,,Portland,ANY,1
-Toronto,Montreal,ANY,3,,Pittsburg,ANY,2,,Chicago,WHITE,3,,Duluth,PINK,6,,Sault St. Marie,ANY,2
-Vancouver,Seattle,ANY,1,,Seattle,ANY,1,,Calgary,ANY,3
-Washington,New York,BLACK,2,,New York,ORANGE,2,,Pittsburg,ANY,2,,Raleigh,ANY,2,,Raleigh,ANY,2
-Winnipeg,Calgary,WHITE,6,,Helena,BLUE,4,,Duluth,BLACK,4,,Sault St. Marie,ANY,6
+Atlanta,Charleston,ANY,2,,Raleigh,ANY,2,,Raleigh,ANY,2,,New Orleans,YELLOW,4,,New Orleans,ORANGE,4,,Nashville,ANY,1,,Miami,BLUE,5,
+Boston,Montreal,ANY,2,,Montreal,ANY,2,,New York,RED,2,,New York,YELLOW,2,
+Calgary,Helena,ANY,4,,Vancouver,ANY,3,,Seattle,ANY,4,,Winnipeg,WHITE,6,
+Charleston,Atlanta,ANY,2,,Raleigh,ANY,2,,Miami,PINK,4,
+Chicago,Toronto,WHITE,4,,Pittsburg,ORANGE,3,,Pittsburg,WHITE,3,,Saint Louis,WHITE,2,,Saint Louis,GREEN,2,,Omaha,BLUE,4,,Duluth,RED,3,
+Dallas,Oklahoma City,ANY,2,,Oklahoma City,ANY,2,,Houston,ANY,1,,Houston,ANY,1,,Little Rock,ANY,1,,El Paso,RED,4,
+Denver,Salt Lake City,RED,3,,Salt Lake City,YELLOW,3,,Helena,GREEN,4,,Omaha,PINK,4,,Kansas City,BLACK,4,,Kansas City,ORANGE,4,,Oklahoma City,RED,4,,Santa Fe,ANY,2,,Phoenix,WHITE,5,
+Duluth,Winnipeg,BLACK,4,,Helena,ORANGE,6,,Omaha,ANY,2,,Omaha,ANY,2,,Chicago,RED,3,,Sault St. Marie,ANY,3,
+El Paso,Los Angeles,BLACK,6,,Phoenix,ANY,3,,Santa Fe,ANY,2,,Oklahoma City,YELLOW,5,,Dallas,RED,4,,Houston,GREEN,6,
+Helena,Seattle,YELLOW,6,,Salt Lake City,PINK,3,,Denver,GREEN,4,,Omaha,RED,5,,Duluth,ORANGE,6,,Winnipeg,BLUE,4,
+Houston,El Paso,GREEN,6,,Dallas,ANY,2,,Dallas,ANY,2,,New Orleans,ANY,1,
+Kansas City,Oklahoma City,ANY,2,,Oklahoma City,ANY,2,,Omaha,ANY,1,,Omaha,ANY,1,,Denver,ORANGE,4,,Denver,BLACK,4,,Saint Louis,BLUE,2,,Saint Louis,PINK,2,
+Las Vegas,Los Angeles,ANY,2,,Salt Lake City,ORANGE,3,
+Little Rock,Saint Louis,ANY,2,,Oklahoma City,ANY,2,,Dallas,ANY,2,,New Orleans,GREEN,3,,Nashville,WHITE,3,
+Los Angeles,San Francisco,YELLOW,3,,San Francisco,PINK,3,,Las Vegas,ANY,2,,Phoenix,ANY,3,,El Paso,BLACK,6,
+Miami,Atlanta,BLUE,5,,Charleston,PINK,4,,New Orleans,RED,6,
+Montreal,Boston,ANY,2,,Boston,ANY,2,,Sault St. Marie,BLACK,5,,Toronto,ANY,3,,New York,BLUE,3,
+Nashville,Saint Louis,ANY,2,,Pittsburg,YELLOW,4,,Raleigh,BLACK,3,,Atlanta,ANY,1,,Little Rock,WHITE,3,
+New Orleans,Houston,ANY,2,,Miami,RED,6,,Atlanta,YELLOW,4,,Atlanta,ORANGE,4,,Little Rock,GREEN,3,
+New York,Boston,RED,2,,Boston,YELLOW,2,,Montreal,BLUE,3,,Pittsburg,WHITE,2,,Pittsburg,GREEN,2,,Washington,BLACK,2,,Washington,ORANGE,2,
+Oklahoma City,Denver,RED,4,,Santa Fe,BLUE,3,,El Paso,YELLOW,5,,Dallas,ANY,2,,Dallas,ANY,2,,Little Rock,ANY,2,,Kansas City,ANY,2,,Kansas City,ANY,2,
+Omaha,Kansas City,ANY,1,,Kansas City,ANY,1,,Denver,PINK,4,,Helena,RED,5,,Duluth,ANY,2,,Duluth,ANY,2,,Chicago,BLUE,4,
+Phoenix,Los Angeles,ANY,3,,El Paso,ANY,3,,Santa Fe,ANY,3,,Denver,WHITE,5,
+Pittsburg,Toronto,ANY,2,,New York,WHITE,2,,New York,GREEN,2,,Washington,ANY,2,,Raleigh,ANY,2,,Nashville,YELLOW,4,,Saint Louis,GREEN,5,,Chicago,BLACK,3,,Chicago,ORANGE,3,
+Portland,San Francisco,GREEN,5,,San Francisco,PINK,5,,Salt Lake City,BLUE,6,,Seattle,ANY,1,,Seattle,ANY,1,
+Raleigh,Nashville,BLACK,3,,Atlanta,ANY,2,,Atlanta,ANY,2,,Charleston,ANY,2,,Washington,ANY,2,,Washington,ANY,2,,Pittsburg,ANY,2,
+Saint Louis,Kansas City,BLUE,2,,Kansas City,PINK,2,,Little Rock,ANY,2,,Nashville,ANY,2,,Pittsburg,GREEN,5,,Chicago,GREEN,2,,Chicago,WHITE,2,
+Salt Lake City,Portland,BLUE,6,,San Francisco,WHITE,5,,San Francisco,ORANGE,5,,Las Vegas,ORANGE,3,,Denver,RED,3,,Denver,YELLOW,3,,Helena,PINK,3,
+San Francisco,Portland,GREEN,5,,Portland,PINK,5,,Salt Lake City,ORANGE,5,,Salt Lake City,WHITE,5,,Los Angeles,YELLOW,3,,Los Angeles,PINK,3,
+Santa Fe,Denver,ANY,2,,Phoenix,ANY,3,,El Paso,ANY,2,,Oklahoma City,BLUE,3,
+Sault St. Marie,Winnipeg,ANY,6,,Duluth,ANY,3,,Toronto,ANY,2,,Montreal,BLACK,5,
+Seattle,Vancouver,ANY,1,,Vancouver,ANY,1,,Calgary,ANY,4,,Helena,YELLOW,6,,Portland,ANY,1,,Portland,ANY,1,
+Toronto,Montreal,ANY,3,,Pittsburg,ANY,2,,Chicago,WHITE,3,,Duluth,PINK,6,,Sault St. Marie,ANY,2,
+Vancouver,Seattle,ANY,1,,Seattle,ANY,1,,Calgary,ANY,3,
+Washington,New York,BLACK,2,,New York,ORANGE,2,,Pittsburg,ANY,2,,Raleigh,ANY,2,,Raleigh,ANY,2,
+Winnipeg,Calgary,WHITE,6,,Helena,BLUE,4,,Duluth,BLACK,4,,Sault St. Marie,ANY,6,
