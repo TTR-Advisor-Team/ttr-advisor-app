@@ -15,21 +15,38 @@ public class Recommender {
 		this.player = player;
 	}
 
-	public void calculate(ArrayList<DestinationTicket> tickets) {
-		for (DestinationTicket dt : tickets) {
-			LinkedList<Route> route= shortestPath(dt.getStart(), dt.getEnd());
-			int cost = 0;
-			for(Route r: route) {
-				System.out.println(r.toString());
-				cost += r.getCost();
-			}
-			System.out.println(cost);
+	public String[] calculate(ArrayList<DestinationTicket> tickets) {
+		ArrayList<Route> routes = getRoutes(tickets);
+		for(Route r: routes) {
+			System.out.println(r.toString());
 		}
+		return null;
 	}
+	/**
+	 * 
+	 * @param tickets
+	 * @return all unique routes that a player needs to complete their destination tickets
+	 */
+	public ArrayList<Route> getRoutes(ArrayList<DestinationTicket> tickets){
+		ArrayList<Route> allRoutes = new ArrayList<Route>();
+		for (DestinationTicket dt : tickets) {
+			ArrayList<Route> routes = shortestPath(dt.getStart(), dt.getEnd());
+			for(Route r: routes) {
+				if (!allRoutes.contains(r)) 
+					allRoutes.add(r);
+			}
+		}
+		return allRoutes;
+	}
+	/**
+	 * Implementation of Dijkstra's Algorithm
+	 * @param begin the starting node of the path
+	 * @param end then ending node of the path
+	 * @return A list of all routes on the shortest path
+	 */
+	public ArrayList<Route> shortestPath(String begin, String end) {
 
-	public LinkedList<Route> shortestPath(String begin, String end) {
-
-		LinkedList<Route> routes = new LinkedList<Route>();
+		ArrayList<Route> routes = new ArrayList<Route>();
 		PriorityQueue<City> openSet = new PriorityQueue<City>(new Comparator<City>() {
 			public int compare(City c1, City c2) {
 				if (c1.totalCost > c2.totalCost)
@@ -48,7 +65,6 @@ public class Recommender {
 			closed.add(c);
 			//System.out.println(c.current + " total cost:" + c.totalCost);
 			// check if goal has been reached
-			//System.out.println(c.current + " == " + end + ": " + c.current.equals(end));
 			if (c.current.equals(end)) {
 				// follow previous until null and add them to routes list
 				// these are the routes to focus on claiming or saving up for
@@ -58,12 +74,12 @@ public class Recommender {
 					c = c.previous;
 				}
 				int cost = 0;
-				System.out.println("FINAL ROUTE");
+				//System.out.println("FINAL ROUTE");
 				for(Route r: routes) {
-					System.out.println(r.toString());
+					//System.out.println(r.toString());
 					cost += r.getCost();
 				}
-				System.out.println("Total route cost: " + cost);
+				//System.out.println("Total route cost: " + cost);
 
 				return routes;
 			}

@@ -1,10 +1,8 @@
 package com.ttradvisor.app.classes;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Scanner;
 import java.util.Set;
 
 import com.badlogic.gdx.Gdx;
@@ -17,7 +15,6 @@ public class Board {
 		board = new HashMap<String, LinkedList<Route>>();
 		try {
 			FileHandle handle = Gdx.files.internal(path);
-			File initBoard = handle.file();
 			String allCities = handle.readString();
 			String[] cities = allCities.split(System.lineSeparator());
 			for (String s : cities) {
@@ -98,7 +95,12 @@ public class Board {
 		}
 		return null;
 	}
-
+	/**
+	 * Returns the first unowned route from start city to end city
+	 * @param start 
+	 * @param end
+	 * @return an unowned route from begin to end
+	 */
 	public Route getRoute(String start, String end) {
 		LinkedList<Route> routes = board.get(start);
 		for (Route r : routes) {
