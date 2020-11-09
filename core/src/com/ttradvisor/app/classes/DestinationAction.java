@@ -12,9 +12,5 @@ public class DestinationAction extends Action {
 	public ArrayList<DestinationTicket> getDrawnTickets() {
 		return drawnTickets;
 	}
-	
-	public void setDrawnCards(ArrayList<DestinationTicket> tickets) {
-		this.drawnTickets = tickets;
-	}
 
 }

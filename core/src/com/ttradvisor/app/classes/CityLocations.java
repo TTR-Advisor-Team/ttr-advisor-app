@@ -72,10 +72,10 @@ public class CityLocations {
 	 * Returns the pixel location of the given city
 	 */
 	public Vector2 getCityLocation(String cityName) {
-		JsonValue cityInfo = cityLocs.getChild(cityName);
+		JsonValue cityInfo = cityLocs.get(cityName);
 		if (cityInfo == null) {
 			Gdx.app.error("City Locations Parser", "The city " + cityName + " does not exist in the locations list.");
-			return new Vector2(0, 0);
+			return null;
 		}
 		return new Vector2(cityInfo.getInt("x"), cityInfo.getInt("y"));
 	}

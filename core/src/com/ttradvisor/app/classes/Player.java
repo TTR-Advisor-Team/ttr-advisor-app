@@ -31,42 +31,18 @@ public class Player {
 		this.numTrains = numTrains;
 	}
 	
-	public void addDT(DestinationTicket addedTicket) {
-		destTicketHand.add(addedTicket);
-	}
-	
-	public void removeDT(DestinationTicket removedTicket) {
-		if(destTicketHand.contains(removedTicket))
-			destTicketHand.remove(removedTicket);
-	}
-	
-	public void addTC(TrainCard addedCard) {
-		trainCardHand.add(addedCard);
-	}
-	
-	public void removeTC(TrainCard removedCard) {
-		if(trainCardHand.contains(removedCard))
-			trainCardHand.remove(removedCard);
-	}
-	
 	public List<DestinationTicket> getDTS(){
 		return destTicketHand;
 	}
-	public void setDTS(ArrayList<DestinationTicket> dts) {
-		destTicketHand = dts;
-	}
+
 	public List<TrainCard> getTCS(){
 		return trainCardHand;
 	}
-	public void setTCS(ArrayList<TrainCard> hand) {
-		trainCardHand = hand;
-	}
+
 	public Colors.player getColor(){
 		return color;
 	}
-	public void setColor(Colors.player color) {
-		this.color = color;
-	}
+
 	public int getScore(){
 		return score;
 	}
