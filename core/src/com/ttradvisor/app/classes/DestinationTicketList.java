@@ -1,9 +1,7 @@
 package com.ttradvisor.app.classes;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
-import java.util.Scanner;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
@@ -16,7 +14,6 @@ public class DestinationTicketList {
 		dtList = new LinkedList<DestinationTicket>();
 		try {
 			FileHandle handle = Gdx.files.internal(path);
-			File initList = handle.file();
 			String allTickets = handle.readString();
 			String[] dt = allTickets.split(System.lineSeparator());
 			for (String s : dt) {
