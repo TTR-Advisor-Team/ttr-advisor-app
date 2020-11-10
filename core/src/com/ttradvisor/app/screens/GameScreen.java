@@ -547,10 +547,8 @@ public class GameScreen implements Screen {
 		for (Player p : mainApp.gameState.getPlayers()) {
 			deepCopyPlayers.add(p.getDeepCopy());
 		}
-		
-		// TODO use mainApp.gameState.getBoard().snapshotBoard() here?
-		
-		// mainApp.gameState.addTurn(new Turn(new Board(), action, deepCopyPlayers));
+
+		mainApp.gameState.addTurn(new Turn(mainApp.gameState.getBoard().snapshotBoard(), action, deepCopyPlayers));
 	}
 
 	private void clampCamera() {
