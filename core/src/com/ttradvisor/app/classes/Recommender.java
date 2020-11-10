@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
 import java.util.Comparator;
+import java.util.HashMap;
+
 import com.ttradvisor.app.classes.Board.Route;
 
 public class Recommender {
@@ -14,13 +16,43 @@ public class Recommender {
 		this.board = board;
 		this.player = player;
 	}
-
+	/**
+	 * 
+	 * @param tickets
+	 * @return strings that tell the player what the best option is
+	 */
 	public String[] calculate(ArrayList<DestinationTicket> tickets) {
+		String[] recommendations = new String[3];
 		ArrayList<Route> routes = getRoutes(tickets);
 		for(Route r: routes) {
 			System.out.println(r.toString());
 		}
-		return null;
+		// calculate the player's train ticket resources
+		HashMap<Colors.route, Integer> resources = getResources();
+		
+		// if can purchase a route in routes, buy it
+		// if not draw train cards, prioritize those closest to completion, if tied prioritize longer routes
+		
+		// if not possible to complete, either draw new destination tickets, or claim as many expensive
+		// routes as possible depending on how many turns have expired and how many expected turns are left
+		
+		// or go for the longest route bonus. Iteration3
+		
+		return recommendations;
+	}
+	/**
+	 * 
+	 * @return a mapping of the number of each train card resource
+	 */
+	public HashMap<Colors.route, Integer> getResources() {
+		HashMap<Colors.route, Integer> resources = new HashMap<Colors.route, Integer>();
+		for (Colors.route c: Colors.route.values()) {
+			resources.put(c, 0);			
+		}
+		for(TrainCard tc: player.getTCS()) {
+			resources.replace(tc.getColor(), resources.get(tc.getColor())+1);
+		}
+		return resources;
 	}
 	/**
 	 * 
@@ -73,14 +105,15 @@ public class Recommender {
 					routes.add(board.getRoute(c.current, c.previous.current));
 					c = c.previous;
 				}
+				/*
 				int cost = 0;
-				//System.out.println("FINAL ROUTE");
+				System.out.println("FINAL ROUTE");
 				for(Route r: routes) {
-					//System.out.println(r.toString());
+					System.out.println(r.toString());
 					cost += r.getCost();
 				}
-				//System.out.println("Total route cost: " + cost);
-
+				System.out.println("Total route cost: " + cost);
+				*/
 				return routes;
 			}
 
@@ -126,7 +159,12 @@ public class Recommender {
 		return null;
 	}
 
-	// calculate total cost of route from city to city
+	/**
+	 * Cost calculator for Dijkstra's Algorithm
+	 * @param currentCity
+	 * @param nextCity
+	 * @return the total cost of traversing to the next city
+	 */
 	private int calcCost(City currentCity, String nextCity) {
 		LinkedList<Route> routes = board.getAllRoutes(currentCity.current);
 		for (Route r : routes) {
