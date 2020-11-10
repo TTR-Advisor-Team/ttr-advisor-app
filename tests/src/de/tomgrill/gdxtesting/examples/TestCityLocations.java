@@ -51,8 +51,7 @@ public class TestCityLocations {
 		Board b = new Board("cities.txt");
 		// ensure all cities in city_locations.json
 		for (String city : b.getBoard().keySet()) {
-			System.out.println("Now testing key: " + city);
-			assertNotNull("CityLocations data should include all cities listed in cities.txt", testLocs.getCityLocation(city));
+			assertNotNull("Error, this city wasn't in city_locations.json: " + city, testLocs.getCityLocation(city));
 		}
 	}
 
