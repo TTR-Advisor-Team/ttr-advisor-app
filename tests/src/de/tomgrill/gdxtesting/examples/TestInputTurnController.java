@@ -41,6 +41,29 @@ public class TestInputTurnController {
 		return new GameState(testPlayerList, new Board("cities.txt"),
 				new DestinationTicketList("destinations.txt"), new ArrayList<Turn>());
 	}
+	private GameState generalTestGameState() {
+		GameState testState = initTestGameState();
+		InputTurnController testController = new InputTurnController(testState);
+		testController.startInitialTurn();
+		
+		ArrayList<TrainCard> drawnCards = new ArrayList<TrainCard>();
+		drawnCards.add(new TrainCard(Colors.route.BLUE));
+		drawnCards.add(new TrainCard(Colors.route.RED));
+		drawnCards.add(new TrainCard(Colors.route.RED));
+		drawnCards.add(new TrainCard(Colors.route.YELLOW));
+		
+		testController.takeAction(new TrainCardAction(testState.getPlayers().get(0), drawnCards));
+		
+		ArrayList<DestinationTicket> drawnTickets = new ArrayList<DestinationTicket>();
+		drawnTickets.add(new DestinationTicket("A", "B", 100));
+		drawnTickets.add(new DestinationTicket("C", "D", 10));
+		drawnTickets.add(new DestinationTicket("E", "F", 10));
+		
+		testController.takeAction(new DestinationAction(testState.getPlayers().get(0), drawnTickets));
+		
+		return testState;
+	}
+	
 	
 	@Test
 	public void initialTurnTrainCardAction() {
@@ -105,17 +128,8 @@ public class TestInputTurnController {
 	
 	@Test
 	public void generalTurnDrawTwoTrain() {
-		GameState testState = initTestGameState();
+		GameState testState = generalTestGameState();
 		InputTurnController testController = new InputTurnController(testState);
-		testController.startInitialTurn();
-		
-		ArrayList<TrainCard> drawnCards = new ArrayList<TrainCard>();
-		drawnCards.add(new TrainCard(Colors.route.BLUE));
-		drawnCards.add(new TrainCard(Colors.route.RED));
-		drawnCards.add(new TrainCard(Colors.route.RED));
-		drawnCards.add(new TrainCard(Colors.route.YELLOW));
-		
-		testController.takeAction(new TrainCardAction(testState.getPlayers().get(0), drawnCards));
 
 		ArrayList<TrainCard> drawnCards2 = new ArrayList<TrainCard>();
 		drawnCards2.add(new TrainCard(Colors.route.RED));
@@ -128,17 +142,8 @@ public class TestInputTurnController {
 	
 	@Test
 	public void generalTurnDrawOneTrain() {
-		GameState testState = initTestGameState();
+		GameState testState = generalTestGameState();
 		InputTurnController testController = new InputTurnController(testState);
-		testController.startInitialTurn();
-		
-		ArrayList<TrainCard> drawnCards = new ArrayList<TrainCard>();
-		drawnCards.add(new TrainCard(Colors.route.BLUE));
-		drawnCards.add(new TrainCard(Colors.route.RED));
-		drawnCards.add(new TrainCard(Colors.route.RED));
-		drawnCards.add(new TrainCard(Colors.route.YELLOW));
-		
-		testController.takeAction(new TrainCardAction(testState.getPlayers().get(0), drawnCards));
 		
 		ArrayList<TrainCard> drawnCards2 = new ArrayList<TrainCard>();
 		drawnCards2.add(new TrainCard(Colors.route.ANY));
@@ -150,37 +155,21 @@ public class TestInputTurnController {
 	
 	@Test
 	public void generalTurnDrawDestinationOneCard() {
-		GameState testState = initTestGameState();
+		GameState testState = generalTestGameState();
 		InputTurnController testController = new InputTurnController(testState);
-		testController.startInitialTurn();
-		
-		ArrayList<DestinationTicket> drawnTickets = new ArrayList<DestinationTicket>();
-		drawnTickets.add(new DestinationTicket("Not a real", "city", 50));
-		drawnTickets.add(new DestinationTicket("Also a fake", "city", 10));
-		drawnTickets.add(new DestinationTicket("city", "seventeen", 20));
-		
-		testController.takeAction(new DestinationAction(testState.getPlayers().get(0), drawnTickets));
 		
 		ArrayList<DestinationTicket> drawnTickets2 = new ArrayList<DestinationTicket>();
 		drawnTickets2.add(new DestinationTicket("city2", "city3", 50));
 		
 		testController.takeAction(new DestinationAction(testState.getPlayers().get(0), drawnTickets2));
-		
+
 		assertTrue("General turn, add 1 destination ticket", testState.getPlayers().get(0).getDTS().size() == 4 && testState.getPlayers().get(0).getDTS().containsAll(drawnTickets2));
 	}
 	
 	@Test
 	public void generalTurnDrawDestinationThreeCard() {
-		GameState testState = initTestGameState();
+		GameState testState = generalTestGameState();
 		InputTurnController testController = new InputTurnController(testState);
-		testController.startInitialTurn();
-		
-		ArrayList<DestinationTicket> drawnTickets = new ArrayList<DestinationTicket>();
-		drawnTickets.add(new DestinationTicket("Not a real", "city", 50));
-		drawnTickets.add(new DestinationTicket("Also a fake", "city", 10));
-		drawnTickets.add(new DestinationTicket("city", "seventeen", 20));
-		
-		testController.takeAction(new DestinationAction(testState.getPlayers().get(0), drawnTickets));
 		
 		ArrayList<DestinationTicket> drawnTickets2 = new ArrayList<DestinationTicket>();
 		drawnTickets2.add(new DestinationTicket("city2", "city3", 50));
@@ -191,99 +180,198 @@ public class TestInputTurnController {
 		
 		assertTrue("General turn, add 3 destination tickets", testState.getPlayers().get(0).getDTS().size() == 6 && testState.getPlayers().get(0).getDTS().containsAll(drawnTickets2));
 	}
-	
 
+	
 	@Test
-	public void generalTurnClaimRouteOneColor() {
-		
-		GameState testState = initTestGameState();
+	public void generalTurnClaimRoute() {		
+		GameState testState = generalTestGameState();
 		InputTurnController testController = new InputTurnController(testState);
-		testController.startInitialTurn();
-		
-		ArrayList<TrainCard> drawnCards = new ArrayList<TrainCard>();
-		drawnCards.add(new TrainCard(Colors.route.RED));
-		drawnCards.add(new TrainCard(Colors.route.RED));
-		drawnCards.add(new TrainCard(Colors.route.RED));
-		drawnCards.add(new TrainCard(Colors.route.RED));
-	
-		testController.takeAction(new TrainCardAction(testState.getPlayers().get(0), drawnCards));
-		
+						
 		ArrayList<TrainCard> spentCards = new ArrayList<TrainCard>();
-		spentCards.add(new TrainCard(Colors.route.RED));
-		spentCards.add(new TrainCard(Colors.route.RED));
-		spentCards.add(new TrainCard(Colors.route.RED));
-
-		
-		Route claimedRoute1 = new Route("city1", "city2", Colors.route.RED, 3);
-//		Route claimedRoute2= new Route("city1", "city3", Colors.route.BLUE, 3);
-//		Route claimedRoute3 = new Route("city2", "city3", Colors.route.GREEN, 3);
-//		testState.addClaimedRoute(claimedRoute2);
-//		testState.addClaimedRoute(claimedRoute3);
-		
+		spentCards.add(testState.getPlayers().get(0).getTCS().get(1));
+		spentCards.add(testState.getPlayers().get(0).getTCS().get(2));
+	
+		Route claimedRoute1 = new Route("Charleston", "Atlanta", Colors.route.ANY, 2);
 		
 		testController.takeAction(new RouteAction(testState.getPlayers().get(0), spentCards, claimedRoute1));
-	
-		assertTrue("Claim route with train cards of all route color", testState.getBoard().getRoute("city1", "city2").getOwner().equals(testState.getPlayers().get(0).getColor()) && testState.getPlayers().get(0).getTCS().size() == 1);
+
+		assertTrue("Claim route with train cards of all route color", testState.getBoard().getAllRoutesOfPlayer(testState.getPlayers().get(0).getColor()).size()/2 == 1 && 
+					testState.getBoard().getRouteAnyOwner(claimedRoute1.getBegin(), claimedRoute1.getEnd()).getOwner().equals(testState.getPlayers().get(0).getColor()));	
 	}
-	@Test
-	public void generalTurnClaimRouteANY() {
-		
-		GameState testState = initTestGameState();
-		InputTurnController testController = new InputTurnController(testState);
-		testController.startInitialTurn();
-		
-		ArrayList<TrainCard> drawnCards = new ArrayList<TrainCard>();
-		drawnCards.add(new TrainCard(Colors.route.RED));
-		drawnCards.add(new TrainCard(Colors.route.RED));
-		drawnCards.add(new TrainCard(Colors.route.BLUE));
-		drawnCards.add(new TrainCard(Colors.route.ANY));
 	
-		testController.takeAction(new TrainCardAction(testState.getPlayers().get(0), drawnCards));
+	@Test
+	public void generalTurnClaimRouteClaimed() {		
+		GameState testState = generalTestGameState();
+		InputTurnController testController = new InputTurnController(testState);
+						
+		ArrayList<TrainCard> spentCards = new ArrayList<TrainCard>();
+		spentCards.add(testState.getPlayers().get(0).getTCS().get(1));
+		spentCards.add(testState.getPlayers().get(0).getTCS().get(2));
+		
+		Route claimedRoute1 = new Route("Charleston", "Atlanta", Colors.route.ANY, 2);
+		
+		testState.getBoard().claimRoute(claimedRoute1.getBegin(),claimedRoute1.getEnd(), claimedRoute1.getColor(), testState.getPlayers().get(0).getColor());
+	
+		assertFalse("Can not claim route that is alreadt claimed", testController.takeAction(new RouteAction(testState.getPlayers().get(0), spentCards, claimedRoute1)));	
+	}
+	
+	
+	@Test
+	public void generalTurnClaimRouteTwoRoutes3Players() {		
+		GameState testState = generalTestGameState();
+		InputTurnController testController = new InputTurnController(testState);
+						
+		ArrayList<TrainCard> spentCards = new ArrayList<TrainCard>();
+		spentCards.add(testState.getPlayers().get(0).getTCS().get(1));
+		spentCards.add(testState.getPlayers().get(0).getTCS().get(2));
+		
+		Route claimedRoute2 = new Route("Oklahoma City", "Kansas City", Colors.route.ANY, 2);
+		
+		Boolean result = testController.takeAction(new RouteAction(testState.getPlayers().get(0), spentCards, claimedRoute2));
+		
+		assertTrue("3 players, double route claim", result);	
+	}
+	
+	@Test
+	public void generalTurnClaimRouteTwoRoutes3PlayersClaimed() {		
+		GameState testState = generalTestGameState();
+		InputTurnController testController = new InputTurnController(testState);
+						
+		ArrayList<TrainCard> spentCards = new ArrayList<TrainCard>();
+		spentCards.add(testState.getPlayers().get(0).getTCS().get(1));
+		spentCards.add(testState.getPlayers().get(0).getTCS().get(2));
+		
+		Route claimedRoute2 = new Route("Oklahoma City", "Kansas City", Colors.route.ANY, 2);
+		
+		testState.getBoard().claimRoute(claimedRoute2.getBegin(),claimedRoute2.getEnd(), claimedRoute2.getColor(), testState.getPlayers().get(1).getColor());
+		
+		Boolean result = testController.takeAction(new RouteAction(testState.getPlayers().get(0), spentCards, claimedRoute2));
+		
+		assertFalse("3 players, double route claim", result);	
+	}
+	
+	@Test
+	public void generalTurnClaimRouteTwoRoutes4Players() {		
+		GameState testState = generalTestGameState();
+		InputTurnController testController = new InputTurnController(testState);
+						
+		ArrayList<TrainCard> spentCards = new ArrayList<TrainCard>();
+		spentCards.add(testState.getPlayers().get(0).getTCS().get(1));
+		spentCards.add(testState.getPlayers().get(0).getTCS().get(2));
+		
+		Route claimedRoute2 = new Route("Oklahoma City", "Kansas City", Colors.route.ANY, 2);
+		
+		Player testP4 = new Player(Colors.player.YELLOW);
+		testState.getPlayers().add(testP4);
+		
+		testState.getBoard().claimRoute(claimedRoute2.getBegin(),claimedRoute2.getEnd(), claimedRoute2.getColor(), testState.getPlayers().get(1).getColor());
+		
+		Boolean result = testController.takeAction(new RouteAction(testState.getPlayers().get(0), spentCards, claimedRoute2));
+		
+		assertTrue("4 players, double route claim", result);	
+	}
+	
+	@Test
+	public void generalTurnClaimRouteTwoRoutes4PlayersOwned() {		
+		GameState testState = generalTestGameState();
+		InputTurnController testController = new InputTurnController(testState);
+						
+		ArrayList<TrainCard> spentCards = new ArrayList<TrainCard>();
+		spentCards.add(testState.getPlayers().get(0).getTCS().get(1));
+		spentCards.add(testState.getPlayers().get(0).getTCS().get(2));
+		
+		Route claimedRoute2 = new Route("Oklahoma City", "Kansas City", Colors.route.ANY, 2);
+		
+		Player testP4 = new Player(Colors.player.YELLOW);
+		testState.getPlayers().add(testP4);
+		
+		testState.getBoard().claimRoute(claimedRoute2.getBegin(),claimedRoute2.getEnd(), claimedRoute2.getColor(), testState.getPlayers().get(1).getColor());
+		testState.getBoard().claimRoute(claimedRoute2.getBegin(),claimedRoute2.getEnd(), claimedRoute2.getColor(), testState.getPlayers().get(1).getColor());
+		
+		Boolean result = testController.takeAction(new RouteAction(testState.getPlayers().get(0), spentCards, claimedRoute2));
+		
+		assertFalse("4 players, double route claim fails, no route available", result);	
+	}
+	
+	@Test
+	public void generalTurnClaimRouteTwoRoutes4PlayersOtherOwns() {		
+		GameState testState = generalTestGameState();
+		InputTurnController testController = new InputTurnController(testState);
+						
+		ArrayList<TrainCard> spentCards = new ArrayList<TrainCard>();
+		spentCards.add(testState.getPlayers().get(0).getTCS().get(1));
+		spentCards.add(testState.getPlayers().get(0).getTCS().get(2));
+		
+		Route claimedRoute2 = new Route("Oklahoma City", "Kansas City", Colors.route.ANY, 2);
+		
+		Player testP4 = new Player(Colors.player.YELLOW);
+		testState.getPlayers().add(testP4);
+		
+		testState.getBoard().claimRoute(claimedRoute2.getBegin(),claimedRoute2.getEnd(), claimedRoute2.getColor(), testState.getPlayers().get(0).getColor());
+		
+		Boolean result = testController.takeAction(new RouteAction(testState.getPlayers().get(0), spentCards, claimedRoute2));
+		
+		assertFalse("4 players, double route claim fails, already claimed parallel route", result);	
+	}
+	
+	@Test
+	public void generalTurnClaimRouteSpent() {		
+		GameState testState = generalTestGameState();
+		InputTurnController testController = new InputTurnController(testState);
+						
+		ArrayList<TrainCard> spentCards = new ArrayList<TrainCard>();
+		spentCards.add(testState.getPlayers().get(0).getTCS().get(1));
+		
+		Route claimedRoute2 = new Route("Oklahoma City", "Kansas City", Colors.route.ANY, 2);
+		
+		testState.getBoard().claimRoute(claimedRoute2.getBegin(),claimedRoute2.getEnd(), claimedRoute2.getColor(), testState.getPlayers().get(0).getColor());
+		
+		Boolean result = testController.takeAction(new RouteAction(testState.getPlayers().get(0), spentCards, claimedRoute2));
+		
+		assertFalse("Cards spent are less than cost", result);	
+	}
+	
+	@Test
+	public void generalTurnClaimRouteSpentWrong() {		
+		GameState testState = generalTestGameState();
+		InputTurnController testController = new InputTurnController(testState);
+						
+		ArrayList<TrainCard> spentCards = new ArrayList<TrainCard>();
+		spentCards.add(testState.getPlayers().get(0).getTCS().get(1));
+		spentCards.add(testState.getPlayers().get(0).getTCS().get(2));
+		
+		Route claimedRoute2 = new Route("Oklahoma City", "Kansas City", Colors.route.ANY, 2);
+		
+		testState.getBoard().claimRoute(claimedRoute2.getBegin(),claimedRoute2.getEnd(), claimedRoute2.getColor(), testState.getPlayers().get(0).getColor());
+		
+		Boolean result = testController.takeAction(new RouteAction(testState.getPlayers().get(0), spentCards, claimedRoute2));
+		
+		assertFalse("Cards spent are less than cost", result);	
+	}
+
+	@Test
+	public void generalTurnClaimRouteSpentBlue() {		
+		GameState testState = generalTestGameState();
+		InputTurnController testController = new InputTurnController(testState);
+						
+		ArrayList<TrainCard> drawnCards2 = new ArrayList<TrainCard>();
+		drawnCards2.add(new TrainCard(Colors.route.BLUE));
+		drawnCards2.add(new TrainCard(Colors.route.BLUE));
+		
+		testController.takeAction(new TrainCardAction(testState.getPlayers().get(0), drawnCards2));
 		
 		ArrayList<TrainCard> spentCards = new ArrayList<TrainCard>();
-		spentCards.add(new TrainCard(Colors.route.BLUE));
-		spentCards.add(new TrainCard(Colors.route.ANY));
-
+		spentCards.add(testState.getPlayers().get(0).getTCS().get(4));
+		spentCards.add(testState.getPlayers().get(0).getTCS().get(5));
+		spentCards.add(testState.getPlayers().get(0).getTCS().get(0));
 		
-		Route claimedRoute2= new Route("city1", "city3", Colors.route.BLUE, 2);
-		Route claimedRoute3 = new Route("city2", "city3", Colors.route.GREEN, 4);
-
-		testState.addClaimedRoute(claimedRoute3);
+		Route claimedRoute3 = new Route("Oklahoma City", "Santa Fe", Colors.route.BLUE, 3);
 		
+		Boolean result = testController.takeAction(new RouteAction(testState.getPlayers().get(0), spentCards, claimedRoute3));
 		
-		testController.takeAction(new RouteAction(testState.getPlayers().get(0), spentCards, claimedRoute2));
-
-	
-		assertTrue("Claim route with use of ANY color train card", testState.getBoard().getRoute("city2", "city3").getOwner().equals(testState.getPlayers().get(0).getColor()) && testState.getPlayers().get(0).getTCS().size() == 2);
+		assertTrue("Cards spent are less than cost", result);	
 	}
-
-	@Test
-	public void generalTurnClaimRouteNotAble() {
-		
-		GameState testState = initTestGameState();
-		InputTurnController testController = new InputTurnController(testState);
-		testController.startInitialTurn();
-		
-		ArrayList<TrainCard> drawnCards = new ArrayList<TrainCard>();
-		drawnCards.add(new TrainCard(Colors.route.RED));
-		drawnCards.add(new TrainCard(Colors.route.RED));
-		drawnCards.add(new TrainCard(Colors.route.BLUE));
-		drawnCards.add(new TrainCard(Colors.route.ANY));
 	
-		testController.takeAction(new TrainCardAction(testState.getPlayers().get(0), drawnCards));
-		
-		ArrayList<TrainCard> spentCards = new ArrayList<TrainCard>();
-		spentCards.add(new TrainCard(Colors.route.GREEN));
-		spentCards.add(new TrainCard(Colors.route.GREEN));
-		spentCards.add(new TrainCard(Colors.route.GREEN));
-		spentCards.add(new TrainCard(Colors.route.GREEN));
-
-		Route claimedRoute3 = new Route("city2", "city3", Colors.route.GREEN, 4);
-		
-		testController.takeAction(new RouteAction(testState.getPlayers().get(0), spentCards, claimedRoute3));
-
-		assertTrue("Player does not have correct train cards", testState.getBoard().getRoute("city2", "city3").getOwner() == Colors.player.NONE && testState.getPlayers().get(0).getTCS().size() == 4);
-	}
 	
 	@Test
 	public void generalTurnClaimRouteParallel() {
