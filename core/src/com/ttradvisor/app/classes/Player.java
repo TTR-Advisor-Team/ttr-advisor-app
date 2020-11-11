@@ -56,33 +56,33 @@ public class Player {
 		this.numTrains = numTrains;
 	}
 
-	public TrainCard getCardOfColor(Colors.route cardColor){
-		for (TrainCard card : trainCardHand) {
-			if(card.getColor() ==  cardColor) {
-				return card;
-			}
-		}
-		//if no card of the correct color is found
-		return null;
-	}
-	public int getNumberOfColor(Colors.route cardColor){
-		int i = 0;
-		for (TrainCard card : trainCardHand) {
-			if(card.getColor() ==  cardColor) {
-				i++;
-			}
-		}
-		return i;
-	}
-	public int getNumberOfUsable(Colors.route cardColor){
-		int i = 0;
-		for (TrainCard card : trainCardHand) {
-			if(card.getColor() ==  cardColor || card.getColor() == Colors.route.ANY) {
-				i++;
-			}
-		}
-		return i;
-	}
+//	public TrainCard getCardOfColor(Colors.route cardColor){
+//		for (TrainCard card : trainCardHand) {
+//			if(card.getColor() ==  cardColor) {
+//				return card;
+//			}
+//		}
+//		//if no card of the correct color is found
+//		return null;
+//	}
+//	public int getNumberOfColor(Colors.route cardColor){
+//		int i = 0;
+//		for (TrainCard card : trainCardHand) {
+//			if(card.getColor() ==  cardColor) {
+//				i++;
+//			}
+//		}
+//		return i;
+//	}
+//	public int getNumberOfUsable(Colors.route cardColor){
+//		int i = 0;
+//		for (TrainCard card : trainCardHand) {
+//			if(card.getColor() ==  cardColor || card.getColor() == Colors.route.ANY) {
+//				i++;
+//			}
+//		}
+//		return i;
+//	}
 	
 	/**
 	 * @return a deep copy of this Player object (incl. internal lists)
