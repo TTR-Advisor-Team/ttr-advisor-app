@@ -2,6 +2,7 @@ package com.ttradvisor.app.classes;
 
 import com.badlogic.gdx.Gdx;
 import com.ttradvisor.app.TTRAdvisorApp;
+import com.ttradvisor.app.classes.Board.Route;
 
 /**
  *	Contains logic and validation for inputting new turns. 
@@ -116,12 +117,12 @@ public class InputTurnController {
 			Gdx.app.error("Turn", "May not draw more than 2 train cards on a turn.");
 			return false;
 		}
-		//This is incomplete, it needs to check if there are any train cards available.
-		else if (thisTurn.getDrawnCards().size() == 1 && thisTurn.getDrawnCards().get(thisTurn.getDrawnCards().size() - 1).getColor() != new TrainCard(Colors.route.ANY).getColor()) {
-			Gdx.app.error("Turn", "If one card is drawn it must be a card of Any color.");
-			//Gdx.app.error("Turn", "If one card is drawn there are no other cards left.");
-			return false;
-		}
+//		This is incomplete, it needs to check if there are any train cards available.
+//		else if (thisTurn.getDrawnCards().size() == 1 && thisTurn.getDrawnCards().get(thisTurn.getDrawnCards().size() - 1).getColor() != new TrainCard(Colors.route.ANY).getColor()) {
+//			Gdx.app.error("Turn", "If one card is drawn it must be a card of Any color.");
+//			//Gdx.app.error("Turn", "If one card is drawn there are no other cards left.");
+//			return false;
+//		}
 		else {
 			thisTurn.actingPlayer.getTCS().addAll(thisTurn.getDrawnCards());
 			return true;
@@ -139,36 +140,69 @@ public class InputTurnController {
 		}
 	}
 
-	private boolean claimRoute(RouteAction thisTurn) {
-		if (thisTurn.claimedRoute == null) {
-			Gdx.app.error("Turn", "There is no route between the selected cities.");
-			return false;
-		}
-		if (gameState.getClaimedRoutes().contains(thisTurn.claimedRoute)){
-			Gdx.app.error("Turn", "Can not claim route that has already been claimed.");
-			return false;
-		}
-		else if(thisTurn.actingPlayer.getNumberOfUsable(thisTurn.claimedRoute.getColor()) <  thisTurn.claimedRoute.getCost()) {
-			Gdx.app.error("Turn", "Must have enough train tickets to claim route.");
-			return false;
-		}
-		else {
-			int currentCost = thisTurn.claimedRoute.getCost();
-			for (int i = 0; i  <  currentCost; i++) {
-				if (thisTurn.actingPlayer.getNumberOfColor(thisTurn.claimedRoute.getColor()) >= currentCost){
-					thisTurn.actingPlayer.getTCS().remove(thisTurn.actingPlayer.getCardOfColor(thisTurn.claimedRoute.getColor()));
-					currentCost--;
-				}
-				else {
-					thisTurn.actingPlayer.getTCS().remove(thisTurn.actingPlayer.getCardOfColor(Colors.route.ANY));
-					currentCost--;
-				}	
-			}
-
-//			thisTurn.actingPlayer.addClaimedRoutes(thisTurn.claimedRoute);
-			gameState.addClaimedRoute(thisTurn.claimedRoute);
-
-			return true;
-		}
+    
+    private boolean claimRoute(RouteAction thisTurn) {	
+//    	int count  = 0;
+//		for (String city : gameState.getBoard().getBoard().keySet()) {
+//			for (Route route : gameState.getBoard().getAllRoutes(city)) {
+//				System.out.print(route+": ");
+//				System.out.print(route.getOwner()+": ");
+//				System.out.print(route.getColor()+": ");
+//				System.out.print(route.getCost()+": ");
+//				System.out.println();
+//			}
+//			count++;
+//			if (count>1) break;
+//		}
+    	if (gameState.getBoard().getCountSpendableCards(thisTurn.claimedRoute, thisTurn.spentCards) < thisTurn.claimedRoute.getCost()) {
+    		Gdx.app.error("Turn", "Not enough cards of acceptable colors spent to claim route, spent: "+gameState.getBoard().getCountSpendableCards(thisTurn.claimedRoute, thisTurn.spentCards)
+    				+" cost: "+thisTurn.claimedRoute.getCost()+".");
+    		return false;
+    	}
+    	else {
+    		if (gameState.getBoard().getAllRoutes(thisTurn.claimedRoute.getBegin(),thisTurn.claimedRoute.getEnd()).size() == 1) {
+        		if (!gameState.getBoard().hasUnOwnedRoute(gameState.getBoard().getAllRoutes(thisTurn.claimedRoute.getBegin(),thisTurn.claimedRoute.getEnd()))){
+        			Gdx.app.error("Turn", "1 No route available to be claimed between "+thisTurn.claimedRoute.getBegin()+" and "+ thisTurn.claimedRoute.getEnd()+".");
+        			return false;
+        		}
+        		else {
+        			gameState.getBoard().claimRoute(thisTurn.claimedRoute.getBegin(), thisTurn.claimedRoute.getEnd(), thisTurn.claimedRoute.getColor(), thisTurn.actingPlayer.getColor());
+        			return true;
+        		}
+           	}
+    		else if (gameState.getBoard().getAllRoutes(thisTurn.claimedRoute.getBegin(),thisTurn.claimedRoute.getEnd()).size() == 2) {
+    			if (gameState.getPlayers().size() < 4) {
+    				if (gameState.getBoard().getNumberNotOwned(gameState.getBoard().getAllRoutes(thisTurn.claimedRoute.getBegin(),thisTurn.claimedRoute.getEnd())) != 2){
+    					Gdx.app.error("Turn", "Only one route may be claimed on double routes when playing with 2-3 players.");
+            			return false;
+    				}
+    				else {
+            			gameState.getBoard().claimRoute(thisTurn.claimedRoute.getBegin(), thisTurn.claimedRoute.getEnd(), thisTurn.claimedRoute.getColor(), thisTurn.actingPlayer.getColor());
+            			return true;
+            		}
+    			} 
+    			else {
+    				if (!gameState.getBoard().hasUnOwnedRoute(gameState.getBoard().getAllRoutes(thisTurn.claimedRoute.getBegin(),thisTurn.claimedRoute.getEnd()))) {
+            			Gdx.app.error("Turn", "2 No route available to be claimed between "+thisTurn.claimedRoute.getBegin()+" and "+ thisTurn.claimedRoute.getEnd()+".");
+            			return false;
+            		}
+            		else if (gameState.getBoard().getRouteAnyOwner(thisTurn.claimedRoute.getBegin(),thisTurn.claimedRoute.getEnd()).getOwner().equals(thisTurn.actingPlayer.getColor())) {
+            			Gdx.app.error("Turn", "Can not claim 2 routes between "+thisTurn.claimedRoute.getBegin()+" and "+ thisTurn.claimedRoute.getEnd()+".");
+            			return false;
+            		}
+            		else {
+            			gameState.getBoard().claimRoute(thisTurn.claimedRoute.getBegin(), thisTurn.claimedRoute.getEnd(), thisTurn.claimedRoute.getColor(), thisTurn.actingPlayer.getColor());
+            			return true;
+            		}
+    			}
+        	}
+        	
+        	else {
+        		Gdx.app.error("Turn", "3 Error in collecting number of routes between "+thisTurn.claimedRoute.getBegin()+" and "+ thisTurn.claimedRoute.getEnd()+".");
+        		return false;
+        	}		
+    	}
 	}
+	
+	
 }

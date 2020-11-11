@@ -13,7 +13,7 @@ public class GameState {
 	private DestinationTicketList dtList;
 	private ArrayList<Turn> turns;
 	public Player currentPlayer;
-	private ArrayList<Route> claimedRoutes;
+//	private ArrayList<Route> claimedRoutes;
 	
 	public GameState(ArrayList<Player> players, Board board, DestinationTicketList dtList,
 			ArrayList<Turn> turns) {
@@ -22,7 +22,7 @@ public class GameState {
 		this.turns = turns;
 		this.dtList = dtList;
 		currentPlayer = null;
-		claimedRoutes = new ArrayList<Route>();
+//		claimedRoutes = new ArrayList<Route>();
 
 	}
 	
@@ -52,15 +52,15 @@ public class GameState {
 		this.turns = turns;
 	}
 
-	public void addClaimedRoute(Route claim) {
-		claimedRoutes.add(claim);
-	}
-	public  ArrayList<Route> getClaimedRoutes(){
-		return claimedRoutes;
-	}
-	public void setClaimedRoutes(ArrayList<Route> claimedRoutes){
-		this.claimedRoutes = claimedRoutes;
-	}
+//	public void addClaimedRoute(Route claim) {
+//		claimedRoutes.add(claim);
+//	}
+//	public  ArrayList<Route> getClaimedRoutes(){
+//		return claimedRoutes;
+//	}
+//	public void setClaimedRoutes(ArrayList<Route> claimedRoutes){
+//		this.claimedRoutes = claimedRoutes;
+//	}
 	public DestinationTicketList getDtList() {
 		return dtList;
 	}

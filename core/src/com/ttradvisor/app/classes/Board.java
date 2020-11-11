@@ -1,12 +1,14 @@
 package com.ttradvisor.app.classes;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Set;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.ttradvisor.app.classes.Board.Route;
 
 public class Board {
 	private HashMap<String, LinkedList<Route>> board;
@@ -111,6 +113,98 @@ public class Board {
 		return null;
 	}
 
+	
+	
+	
+	
+	public Route getRouteAnyOwner(String start, String end) {
+		LinkedList<Route> routes = board.get(start);
+		for (Route r: routes) {
+			if (r.end.equals(end))
+				return r;
+		}
+		return null;
+	}
+	
+	public LinkedList<Route> getAllRoutesOfPlayer(Colors.player player) {
+		LinkedList<Route> list = new LinkedList<Route>();
+		Set<String> keys = board.keySet();
+		for (String key: keys) {
+			LinkedList<Route> routes = board.get(key);
+			for (Route r: routes) {
+				if (r.owner.equals(player))
+					list.add(r);
+			}
+		}
+		return list;
+	}
+	
+	public int getNumberRoutes(String start, String end) {
+		int count = 0;
+		LinkedList<Route> routes = board.get(start);
+		for (Route r: routes) {
+			if (r.end.equals(end))
+				count += 1;
+		}
+		if (count == 0) {
+			Gdx.app.error("City Conections", "City start and end is not signle route.");
+			return count;
+		}
+		else {
+			return count;
+		}
+	}
+	
+	public LinkedList<Route> getAllRoutes(String start, String end) {
+		LinkedList<Route> list = new LinkedList<Route>();
+		LinkedList<Route> routes = board.get(start);
+		for (Route r: routes) {
+			if (r.end.equals(end))
+				list.add(r);
+		}
+		return list;
+	}
+	
+	public int getIndexeNotOwned(LinkedList<Route> routes) {
+		int index = 0;
+		for (Route r : routes) {
+			if (r.owner.equals(Colors.player.NONE)) {
+				 return index;
+			}
+			index++;
+		}
+		return index;
+	}
+	public int getNumberNotOwned(LinkedList<Route> routes) {
+		int count = 0;
+		for (Route r : routes) {
+			if (r.owner.equals(Colors.player.NONE)) {
+				 count++;
+			}
+		}
+		return count;
+	}
+	
+	public int getCountSpendableCards(Route route, ArrayList<TrainCard> spent) {
+		int count  = 0;
+		for (TrainCard card: spent) {
+			if (card.getColor().equals(route.getColor()) || route.getColor().equals(Colors.route.ANY)) {
+				count++;
+			}
+		}
+		return count;
+	}
+	
+	public Boolean hasUnOwnedRoute(LinkedList<Route> routes) {
+		for (Route r : routes) {
+			if (r.owner.equals(Colors.player.NONE)) {
+				 return true;
+			}
+		}
+		return false;
+	}
+	
+	
 	public static class Route {
 		String begin;
 		String end;
