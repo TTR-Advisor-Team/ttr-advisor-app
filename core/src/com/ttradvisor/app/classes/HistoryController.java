@@ -10,6 +10,18 @@ public class HistoryController {
 		this.turnIndex = gameState.getCurrentTurnCounter()-1;
 	}
 	
+	public GameState getGameState() {
+		return gameState;
+	}
+	
+	public int getTurnIndex() {
+		return turnIndex;
+	}
+	
+	public void setTurnIndex(int turnIndex) {
+		this.turnIndex = turnIndex;
+	}
+	
 	public boolean previousTurn() {
 		if (turnIndex <= 0) {
 			return false;
