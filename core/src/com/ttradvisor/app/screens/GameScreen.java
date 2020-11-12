@@ -603,8 +603,48 @@ public class GameScreen implements Screen {
 	/**
 	 * @param routeOptions the options we've narrowed down to
 	 */
-	private void setupHelperChooseRoute(LinkedList<Route> routeOptions) {
-		
+	private void setupHelperChooseRoute(final LinkedList<Route> routeOptions) {
+		final Table table = new Table();
+    	destButton.setVisible(false);
+    	TCButton.setVisible(false);
+    	TextButton routeChoice0 = new TextButton("Color: " + routeOptions.get(0).getColor(), TTRAdvisorApp.skin, "small");
+    	routeChoice0.addListener(new InputListener() {
+    		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+    			setupHelperChooseCards(routeOptions.get(0));
+            	table.setVisible(false);
+    		}
+    		public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+    			return true;
+    		}
+    	});
+    	TextButton routeChoice1 = new TextButton("Color: " + routeOptions.get(1).getColor(), TTRAdvisorApp.skin, "small");
+    	routeChoice1.addListener(new InputListener() {
+    		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+    			setupHelperChooseCards(routeOptions.get(1));
+            	table.setVisible(false);
+    		}
+    		public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+    			return true;
+    		}
+    	});
+    	TextButton back = new TextButton("Cancel", TTRAdvisorApp.skin, "small");
+    	back.addListener(new InputListener() {
+    		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+            	destButton.setVisible(true);
+            	TCButton.setVisible(true);
+            	table.setVisible(false);
+    		}
+    		public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+    			return true;
+    		}
+    	});
+    	table.center();
+    	table.add(routeChoice0);
+    	table.add(routeChoice1);
+    	table.row();
+    	table.add(back);
+        table.setFillParent(true);
+        guiStage.addActor(table);
 	}
 	
 	/**
