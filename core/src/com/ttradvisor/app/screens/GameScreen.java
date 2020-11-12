@@ -902,12 +902,12 @@ public class GameScreen implements Screen {
 				Vector2 endLoc = cityLocs.getCityLocation(r.getEnd());
 				
 				float dist = beginLoc.dst(endLoc);
-				
-				float dir = endLoc.angle(beginLoc);
+
+				double angle = Math.atan2(endLoc.y - beginLoc.y, endLoc.x - beginLoc.x) * 180 / Math.PI;
 				
 				TextureRegion tex = playerColors.get(mainApp.gameState.getPlayers().indexOf(p));
 				
-				mapStage.getBatch().draw(tex, beginLoc.x, beginLoc.y, 0, 0, dist, 20, 1, 1, dir);
+				mapStage.getBatch().draw(tex, beginLoc.x, beginLoc.y, 0, 0, dist, 10, 1, 1, (float)angle);
 
 			}
 		}
