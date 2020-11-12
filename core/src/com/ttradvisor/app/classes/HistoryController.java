@@ -10,39 +10,43 @@ public class HistoryController {
 		this.turnIndex = gameState.getCurrentTurnCounter()-1;
 	}
 	
-	private boolean previousTurn() {
+	public boolean previousTurn() {
 		if (turnIndex <= 0) {
 			return false;
 		}
 		turnIndex--;
 		gameState.setBoard(gameState.getTurns().get(turnIndex).getSnapshot());
+		gameState.setPlayers(gameState.getTurns().get(turnIndex).getPlayerSnapshots());
+		
 		return true;
 	}
 	
-	private boolean nextTurn() {
+	public boolean nextTurn() {
 		if (turnIndex >= gameState.getCurrentTurnCounter()-1) {
 			return false;
 		}
 		turnIndex++;
 		gameState.setBoard(gameState.getTurns().get(turnIndex).getSnapshot());
+		gameState.setPlayers(gameState.getTurns().get(turnIndex).getPlayerSnapshots());
 		return true;
 	}
 	
-	private boolean goToTurn(int turnIndex) {
+	public boolean goToTurn(int turnIndex) {
 		if (turnIndex > gameState.getCurrentTurnCounter()-1 || turnIndex < 0) {
 			return false;
 		}
 		this.turnIndex = turnIndex;
 		gameState.setBoard(gameState.getTurns().get(turnIndex).getSnapshot());
+		gameState.setPlayers(gameState.getTurns().get(turnIndex).getPlayerSnapshots());
 		return true;
 	}
 	
-	private boolean validateCorrection(Action replacementAction){
+	public boolean validateCorrection(Action replacementAction){
 		return false;
 		
 	}
 	
-	private void makeCorrection(Action replacementAction) {
+	public void makeCorrection(Action replacementAction) {
 		
 	}
 

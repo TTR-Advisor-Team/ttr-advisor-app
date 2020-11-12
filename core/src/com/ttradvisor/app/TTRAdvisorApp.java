@@ -13,6 +13,7 @@ import com.ttradvisor.app.classes.Board;
 import com.ttradvisor.app.classes.Colors;
 import com.ttradvisor.app.classes.DestinationTicketList;
 import com.ttradvisor.app.classes.GameState;
+import com.ttradvisor.app.classes.HistoryController;
 import com.ttradvisor.app.classes.InputTurnController;
 import com.ttradvisor.app.classes.Player;
 import com.ttradvisor.app.classes.Turn;
@@ -27,6 +28,7 @@ public class TTRAdvisorApp extends Game {
 	public Colors.player userColor;
 	
 	public InputTurnController turnInput;
+	public HistoryController hist;
 	public GameState gameState;
 	
 	@Override
@@ -34,6 +36,7 @@ public class TTRAdvisorApp extends Game {
 		gameState = new GameState(new ArrayList<Player>(), new Board("cities.txt"),
 				new DestinationTicketList("destinations.txt"), new ArrayList<Turn>());
 		turnInput = new InputTurnController(gameState);
+		hist = new HistoryController(gameState);
 		skin = new Skin(Gdx.files.internal("ui skin/glassy-ui.json"));
 		this.setScreen(new TitleScreen(this));
 	}

@@ -447,6 +447,22 @@ public class GameScreen implements Screen {
 		prevTurn.setPosition(0, Gdx.graphics.getHeight()-prevTurn.getHeight());
 		final TextButton nextTurn = new TextButton("View \n Next Turn", TTRAdvisorApp.skin, "small");
 		nextTurn.setPosition(Gdx.graphics.getWidth()-nextTurn.getWidth(), Gdx.graphics.getHeight()-nextTurn.getHeight());
+		prevTurn.addListener(new InputListener() {
+    		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+    			mainApp.hist.previousTurn();
+    		}
+    		public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+    	});
+		nextTurn.addListener(new InputListener() {
+    		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+    			mainApp.hist.nextTurn();
+    		}
+    		public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+    	});
 		guiStage.addActor(prevTurn);
 		guiStage.addActor(nextTurn);
 	}
