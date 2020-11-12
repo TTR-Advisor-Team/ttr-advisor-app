@@ -40,7 +40,6 @@ public class HistoryController {
 		turnIndex--;
 		gameState.setBoard(gameState.getTurns().get(turnIndex).getSnapshot());
 		gameState.setPlayers(gameState.getTurns().get(turnIndex).getPlayerSnapshots());
-		
 		return true;
 	}
 	
