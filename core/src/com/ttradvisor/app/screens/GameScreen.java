@@ -874,10 +874,10 @@ public class GameScreen implements Screen {
 		float effectiveViewportWidth = camera.viewportWidth * camera.zoom;
 		float effectiveViewportHeight = camera.viewportHeight * camera.zoom;
 
-		camera.position.x = MathUtils.clamp(camera.position.x, effectiveViewportWidth / 2f,
-				mapWidth - effectiveViewportWidth / 2f);
-		camera.position.y = MathUtils.clamp(camera.position.y, effectiveViewportHeight / 2f,
-				mapHeight - effectiveViewportHeight / 2f);
+		camera.position.x = MathUtils.clamp(camera.position.x, effectiveViewportWidth * 0.6f / 2f,
+				mapWidth - effectiveViewportWidth * 0.6f / 2f);
+		camera.position.y = MathUtils.clamp(camera.position.y, effectiveViewportHeight * 0.6f / 2f,
+				mapHeight - effectiveViewportHeight * 0.6f / 2f);
 
 		// Gdx.app.log("Camera", "Clamped to coords: " + camera.position.x + ", " + camera.position.y);
 	}
