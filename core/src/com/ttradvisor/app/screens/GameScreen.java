@@ -68,7 +68,7 @@ public class GameScreen implements Screen {
 	private List<DestinationTicket> destTickets;
 	private DestinationTicket[] ticketArray;
 	private ArraySelection<DestinationTicket> ticketSelection;
-	//private Array<DestinationTicket> multipleTickets;
+	private Array<DestinationTicket> multipleTickets;
 
 	private List<Colors.player> demonstration; // TODO delete this after demo
 	private Label demoCurrPlayer;
@@ -213,8 +213,13 @@ public class GameScreen implements Screen {
             TextButton done = new TextButton("Done", TTRAdvisorApp.skin, "small");
 		    done.addListener(new InputListener() {
 		    	public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-		    		for (DestinationTicket ticket : destTickets.getSelection().toArray()) {
-		    			drawnTickets.add(ticket);
+//		    		for (DestinationTicket ticket : destTickets.getSelection().toArray()) {
+//		    			drawnTickets.add(ticket);
+//		    		}
+		    		multipleTickets = destTickets.getSelection().items().orderedItems();
+		    		while (multipleTickets.notEmpty()) {
+		    			System.out.println(multipleTickets.peek().toString());
+		    			drawnTickets.add(multipleTickets.pop());
 		    		}
 		        	
 		    		boolean isInitial = mainApp.turnInput.isInitialTurn();
