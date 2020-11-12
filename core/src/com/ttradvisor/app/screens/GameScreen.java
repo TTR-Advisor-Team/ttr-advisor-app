@@ -1,14 +1,20 @@
 package com.ttradvisor.app.screens;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.PolygonRegion;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.EarClippingTriangulator;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -30,6 +36,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.ttradvisor.app.TTRAdvisorApp;
 import com.ttradvisor.app.classes.Action;
+import com.ttradvisor.app.classes.Board.Route;
 import com.ttradvisor.app.classes.CityLocations;
 import com.ttradvisor.app.classes.CityLocations.CityLocation;
 import com.ttradvisor.app.classes.Colors;
@@ -78,6 +85,12 @@ public class GameScreen implements Screen {
 	private String selectedRoute = DEFAULT_ROUTE_LABEL;
 	private Label demoSelectedCity;
 	private Label demoSelectedRoute;
+	
+	private TextButton destButton;
+	private TextButton TCButton;
+	private Label trainCardHand; 
+	
+	private ArrayList<TextureRegion> playerColors;
 
 	public GameScreen(TTRAdvisorApp main) {
 		mainApp = main;
@@ -112,6 +125,8 @@ public class GameScreen implements Screen {
 		setupMapInputHandling();
 		
 		setupTurnView();
+		
+		setupClaimedRouteTextures();
 
 		Image map = new Image(new Texture("high_res_map.png"));
 
@@ -168,9 +183,9 @@ public class GameScreen implements Screen {
 	
 	private void setupCardInputHandling() {
 		// Button to draw Destination tickets
-		final TextButton destButton = new TextButton("Draw Destination \n Ticket", TTRAdvisorApp.skin, "small");
-		final TextButton TCButton = new TextButton("Draw Train \n Card", TTRAdvisorApp.skin, "small");
-		final Label trainCardHand = new Label(mainApp.gameState.currentPlayer.getTCS().toString(), TTRAdvisorApp.skin);
+		destButton = new TextButton("Draw Destination \n Ticket", TTRAdvisorApp.skin, "small");
+		TCButton = new TextButton("Draw Train \n Card", TTRAdvisorApp.skin, "small");
+		trainCardHand = new Label(mainApp.gameState.currentPlayer.getTCS().toString(), TTRAdvisorApp.skin);
 		trainCardHand.setWidth(Gdx.graphics.getWidth() / 5);
 		trainCardHand.setPosition(trainCardHand.getWidth(), trainCardHand.getHeight() / 8);
 		// Button to draw Destination tickets
@@ -512,23 +527,28 @@ public class GameScreen implements Screen {
 					// cities have a radius of 16 pixels, roughly
 					if (tapPos.dst(loc.x, loc.y, 0) < 16) {
 						if (selectedCity == DEFAULT_CITY_LABEL) {
+							// select first city
 							selectedCity = loc.name;
 						}
 						else {
-							selectedRoute = "RouteAction sent: " + selectedCity + " to " + loc.name;
-							// TODO this is where the RouteAction should be submitted
-							// MOCKUP - Need a system to choose which cards to spend for this route
-
-	            			boolean isInitial = mainApp.turnInput.isInitialTurn();
-	    		    		
-	            			// empty list of cards sent for now
-	            			RouteAction routeAction = new RouteAction(mainApp.gameState.currentPlayer, new ArrayList<TrainCard>(), mainApp.gameState.getBoard().getRoute(selectedCity, loc.name));
-	            			
-	    		        	if (mainApp.turnInput.takeAction(routeAction)) {
-	    		        		advanceTurn(isInitial, routeAction);
-	    		        	}
-	    		        	
-							selectedCity = DEFAULT_CITY_LABEL;
+							// second city selected
+							LinkedList<Route> routeOptions = mainApp.gameState.getBoard().getAllRoutes(selectedCity, loc.name);
+							
+							// just deselect if no routes between them
+							if (routeOptions.isEmpty()) {
+								selectedCity = DEFAULT_CITY_LABEL;
+								selectedRoute = DEFAULT_ROUTE_LABEL;
+								super.tap(event, x, y, count, button);
+								return;
+							}
+							else if (routeOptions.size() == 1) {
+								// exactly one route exists
+								setupHelperChooseCards(routeOptions.get(0));
+							}
+							else {
+								// 2+ routes exist
+								setupHelperChooseRoute(routeOptions);
+							}
 							
 						}
 						super.tap(event, x, y, count, button);
@@ -581,6 +601,245 @@ public class GameScreen implements Screen {
 	}
 	
 	/**
+	 * @param routeOptions the options we've narrowed down to
+	 */
+	private void setupHelperChooseRoute(final LinkedList<Route> routeOptions) {
+		
+		if (routeOptions.get(0).getColor() == routeOptions.get(1).getColor()) {
+			// identical colors, ignore
+			setupHelperChooseCards(routeOptions.get(0));
+		}
+		
+		
+		final Table table = new Table();
+    	destButton.setVisible(false);
+    	TCButton.setVisible(false);
+    	TextButton routeChoice0 = new TextButton("Color: " + routeOptions.get(0).getColor(), TTRAdvisorApp.skin, "small");
+    	routeChoice0.addListener(new InputListener() {
+    		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+    			setupHelperChooseCards(routeOptions.get(0));
+            	table.setVisible(false);
+    		}
+    		public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+    			return true;
+    		}
+    	});
+    	TextButton routeChoice1 = new TextButton("Color: " + routeOptions.get(1).getColor(), TTRAdvisorApp.skin, "small");
+    	routeChoice1.addListener(new InputListener() {
+    		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+    			setupHelperChooseCards(routeOptions.get(1));
+            	table.setVisible(false);
+    		}
+    		public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+    			return true;
+    		}
+    	});
+    	TextButton back = new TextButton("Cancel", TTRAdvisorApp.skin, "small");
+    	back.addListener(new InputListener() {
+    		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+            	destButton.setVisible(true);
+            	TCButton.setVisible(true);
+            	table.setVisible(false);
+    		}
+    		public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+    			return true;
+    		}
+    	});
+    	table.center();
+    	table.add(routeChoice0);
+    	table.add(routeChoice1);
+    	table.row();
+    	table.add(back);
+        table.setFillParent(true);
+        guiStage.addActor(table);
+	}
+	
+	/**
+	 * @param route the one route we've narrowed down to
+	 */
+	private void setupHelperChooseCards(final Route route) {
+		
+		selectedRoute = "Selected: " + route;
+		
+		final Table table = new Table();
+    	destButton.setVisible(false);
+    	TCButton.setVisible(false);
+    	trainCardHand.setVisible(false);
+    	final ArrayList<TrainCard> drawnCards = new ArrayList<>();
+    	final Label drawnCardList = new Label(drawnCards.toString(), TTRAdvisorApp.skin);
+		drawnCardList.setWidth((Gdx.graphics.getWidth()/5)*2);
+		drawnCardList.setPosition(drawnCardList.getWidth(), drawnCardList.getHeight()*9);
+    	TextButton redTrain = new TextButton("Red", TTRAdvisorApp.skin, "small");
+    	redTrain.addListener(new InputListener() {
+    		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+    			drawnCards.add(new TrainCard(Colors.route.RED));
+    			drawnCardList.setText(drawnCards.toString());
+    		}
+    		public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+    	});
+    	TextButton orangeTrain = new TextButton("Orange", TTRAdvisorApp.skin, "small");
+    	orangeTrain.addListener(new InputListener() {
+    		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+    			drawnCards.add(new TrainCard(Colors.route.ORANGE));
+    			drawnCardList.setText(drawnCards.toString());
+    		}
+    		public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+    	});
+    	TextButton yellowTrain = new TextButton("Yellow", TTRAdvisorApp.skin, "small");
+    	yellowTrain.addListener(new InputListener() {
+    		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+    			drawnCards.add(new TrainCard(Colors.route.YELLOW));
+    			drawnCardList.setText(drawnCards.toString());
+    		}
+    		public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+    	});
+    	TextButton greenTrain = new TextButton("Green", TTRAdvisorApp.skin, "small");
+    	greenTrain.addListener(new InputListener() {
+    		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+    			drawnCards.add(new TrainCard(Colors.route.GREEN));
+    			drawnCardList.setText(drawnCards.toString());
+    		}
+    		public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+    	});
+    	TextButton blueTrain = new TextButton("Blue", TTRAdvisorApp.skin, "small");
+    	blueTrain.addListener(new InputListener() {
+    		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+    			drawnCards.add(new TrainCard(Colors.route.BLUE));
+    			drawnCardList.setText(drawnCards.toString());
+    		}
+    		public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+    	});
+    	TextButton pinkTrain = new TextButton("Pink", TTRAdvisorApp.skin, "small");
+    	pinkTrain.addListener(new InputListener() {
+    		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+    			drawnCards.add(new TrainCard(Colors.route.PINK));
+    			drawnCardList.setText(drawnCards.toString());
+    		}
+    		public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+    	});
+    	TextButton blackTrain = new TextButton("Black", TTRAdvisorApp.skin, "small");
+    	blackTrain.addListener(new InputListener() {
+    		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+    			drawnCards.add(new TrainCard(Colors.route.BLACK));
+    			drawnCardList.setText(drawnCards.toString());
+    		}
+    		public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+    	});
+    	TextButton whiteTrain = new TextButton("White", TTRAdvisorApp.skin, "small");
+    	whiteTrain.addListener(new InputListener() {
+    		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+    			drawnCards.add(new TrainCard(Colors.route.WHITE));
+    			drawnCardList.setText(drawnCards.toString());
+    		}
+    		public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+    	});
+    	TextButton wildTrain = new TextButton("Wild", TTRAdvisorApp.skin, "small");
+    	wildTrain.addListener(new InputListener() {
+    		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+    			drawnCards.add(new TrainCard(Colors.route.ANY));
+    			drawnCardList.setText(drawnCards.toString());
+    		}
+    		public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+    	});
+    	TextButton done = new TextButton("Done", TTRAdvisorApp.skin, "small");
+    	done.addListener(new InputListener() {
+    		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+    			
+    			boolean isInitial = mainApp.turnInput.isInitialTurn();
+    			
+    			// send the selected cards
+    			RouteAction routeAction = new RouteAction(mainApp.gameState.currentPlayer, drawnCards, route);
+    			
+    	    	if (mainApp.turnInput.takeAction(routeAction)) {
+    	    		advanceTurn(isInitial, routeAction);
+    	    	}
+    	    	
+    			selectedCity = DEFAULT_CITY_LABEL;
+    			
+    			trainCardHand.setText(mainApp.gameState.currentPlayer.getTCS().toString());
+    			destButton.setVisible(true);
+            	TCButton.setVisible(true);
+            	trainCardHand.setVisible(true);
+            	table.setVisible(false);
+            	drawnCardList.setVisible(false);
+    		}
+    		public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+    	});
+    	TextButton undo = new TextButton("Undo", TTRAdvisorApp.skin, "small");
+    	undo.addListener(new InputListener() {
+    		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+    			if(!drawnCards.isEmpty()) {
+    				drawnCards.remove(drawnCards.size()-1);
+    				drawnCardList.setText(drawnCards.toString());
+    			}
+    		}
+    		public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+    	});
+    	TextButton back = new TextButton("Back", TTRAdvisorApp.skin, "small");
+    	back.addListener(new InputListener() {
+    		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+    			drawnCards.removeAll(drawnCards);
+            	destButton.setVisible(true);
+            	TCButton.setVisible(true);
+            	trainCardHand.setVisible(true);
+            	table.setVisible(false);
+            	drawnCardList.setVisible(false);
+    		}
+    		public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+    	});
+    	TextButton invis = new TextButton("", TTRAdvisorApp.skin, "small");
+    	invis.setVisible(false);
+    	table.bottom();
+    	table.add(invis);
+    	table.add(redTrain);
+    	table.add(orangeTrain);
+    	table.add(yellowTrain);
+    	table.row();
+    	table.add(invis);
+    	table.add(greenTrain);
+    	table.add(blueTrain);
+    	table.add(pinkTrain);
+    	table.add(back);
+    	table.row();
+    	table.add(undo);
+    	table.add(blackTrain);
+    	table.add(whiteTrain);
+    	table.add(wildTrain);
+    	table.add(done);
+        table.setFillParent(true);
+        
+//      table.setDebug(true); // turn on all debug lines (table, cell, and widget)
+        guiStage.addActor(table);
+        guiStage.addActor(drawnCardList);
+
+
+	}
+	
+	/**
 	 * Should only be called when the InputTurnController returns true on an Action
 	 * @param isInitial - whether we are advancing from the initial turn
 	 * @param Action - the action to record as happening in the turn list
@@ -605,6 +864,7 @@ public class GameScreen implements Screen {
 		}
 
 		mainApp.gameState.addTurn(new Turn(mainApp.gameState.getBoard().snapshotBoard(), action, deepCopyPlayers));
+
 	}
 
 	private void clampCamera() {
@@ -620,6 +880,87 @@ public class GameScreen implements Screen {
 				mapHeight - effectiveViewportHeight / 2f);
 
 		// Gdx.app.log("Camera", "Clamped to coords: " + camera.position.x + ", " + camera.position.y);
+	}
+	
+	/**
+	 * Initialize textures for all players' colors
+	 * Call in constructor only
+	 */
+	private void setupClaimedRouteTextures() {
+		playerColors = new ArrayList<TextureRegion>();
+
+		Pixmap tempPix = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
+
+		// for each player: generate a 1x1 texture (using pixmap) of their color
+		for (Player p : mainApp.gameState.getPlayers()) {
+			switch (p.getColor()) {
+				case BLACK:
+					tempPix.setColor(0, 0, 0, 1);
+					break;
+				case BLUE:
+					tempPix.setColor(0, 0, 1, 1);
+					break;
+				case GREEN:
+					tempPix.setColor(0, 1, 0, 1);
+					break;
+				case NONE:
+					Gdx.app.error("GameScreen", "Player of color \"NONE\" exists in game state.");
+					tempPix.setColor(1, 1, 1, 1);
+					// non-fatal error
+					break;
+				case RED:
+					tempPix.setColor(1, 0, 0, 1);
+					break;
+				case YELLOW:
+					tempPix.setColor(1, 1, 0, 1);
+					break;
+				default:
+					Gdx.app.error("GameScreen", "Player of invalid color exists in game state.");
+					tempPix.setColor(1, 1, 1, 1);
+					// non-fatal error
+					break;
+			}
+			tempPix.fill();
+			playerColors.add(new TextureRegion(new Texture(tempPix)));
+		}
+		tempPix.dispose();
+	}
+	
+	/**
+	 * Call every render cycle instead of mapStage.draw()
+	 */
+	private void drawMapStageManually() {
+
+		mapStage.getCamera().update();
+
+		if (!mapStage.getRoot().isVisible()) return;
+
+		Batch batch = mapStage.getBatch();
+		batch.setProjectionMatrix(camera.combined);
+
+		mapStage.getBatch().begin();
+		
+		mapStage.getRoot().draw(mapStage.getBatch(), 1);
+
+		for (Player p : mainApp.gameState.getPlayers()) {
+			for (Route r : mainApp.gameState.getBoard().getAllRoutesOfPlayer(p.getColor())) {
+								
+				Vector2 beginLoc = cityLocs.getCityLocation(r.getBegin());
+				Vector2 endLoc = cityLocs.getCityLocation(r.getEnd());
+				
+				float dist = beginLoc.dst(endLoc);
+
+				double angle = Math.atan2(endLoc.y - beginLoc.y, endLoc.x - beginLoc.x) * 180 / Math.PI;
+				
+				TextureRegion tex = playerColors.get(mainApp.gameState.getPlayers().indexOf(p));
+				
+				mapStage.getBatch().draw(tex, beginLoc.x, beginLoc.y, 0, 0, dist, 10, 1, 1, (float)angle);
+
+			}
+		}
+		
+		// and do the default behavior too
+		mapStage.getBatch().end();
 	}
 
 	@Override
@@ -641,7 +982,8 @@ public class GameScreen implements Screen {
 
 		mapStage.act();
 		guiStage.act();
-		mapStage.draw();
+		drawMapStageManually();
+		// mapStage.draw();
 		guiStage.draw();
 	}
 
@@ -667,6 +1009,9 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void dispose() {
+		for (TextureRegion tr : playerColors) {
+			tr.getTexture().dispose();
+		}
 		mapStage.dispose();
 		guiStage.dispose();
 	}

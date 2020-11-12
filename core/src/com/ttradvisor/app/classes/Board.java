@@ -231,7 +231,7 @@ public class Board {
 
 		@Override
 		public String toString() {
-			return begin + " ====> " + end;
+			return color + ": " + begin + " ====> " + end;
 		}
 
 		public String getBegin() {
