@@ -3,6 +3,7 @@ package com.ttradvisor.app.classes;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
+import java.util.Set;
 import java.util.Comparator;
 import java.util.HashMap;
 
@@ -11,31 +12,63 @@ import com.ttradvisor.app.classes.Board.Route;
 public class Recommender {
 	Board board;
 	Player player;
-
-	public Recommender(Board board, Player player) {
+	int turn;
+	int numPlayers;
+	public Recommender(Board board, Player player, int turn, int numPlayers) {
 		this.board = board;
 		this.player = player;
+		this.turn = turn;
+		this.numPlayers = numPlayers;
 	}
 	/**
 	 * 
 	 * @param tickets
 	 * @return strings that tell the player what the best option is
 	 */
-	public String[] calculate(ArrayList<DestinationTicket> tickets) {
-		String[] recommendations = new String[3];
-		ArrayList<Route> routes = getRoutes(tickets);
-		for(Route r: routes) {
-			System.out.println(r.toString());
-		}
+	public ArrayList<String> calculate(ArrayList<DestinationTicket> tickets) {
+		ArrayList<String> recommendations = new ArrayList<String>();
+		
 		// calculate the player's train ticket resources
 		HashMap<Colors.route, Integer> resources = getResources();
 		
+		//if player has complete all destination tickets
+		if(tickets.isEmpty()) {
+			//the game is still relatively new
+			if (turn <= numPlayers*10) {
+				recommendations.add("Draw destination ticket.");
+			}
+			else {
+				//the game is too far along to realistically complete another ticket
+				for(Colors.route c: resources.keySet()) {
+					if (resources.get(c) > 5) {
+						recommendations.add("Claim the most expensive " + c + " or GRAY route." );
+					}
+				}
+				
+			}
+		}
+		//find all routes on shortest path between cities
+		ArrayList<Route> routes = getRoutes(tickets);
+		routes.sort(new Comparator<Route>() {
+			public int compare(Route r1, Route r2) {
+				return r2.getCost() - r1.getCost();
+			}
+		});	
+		
 		// if can purchase a route in routes, buy it
-		// if not draw train cards, prioritize those closest to completion, if tied prioritize longer routes
+		for(Route r: routes) {
+			if(((resources.get(r.getColor()) + resources.get(Colors.route.ANY)) >= r.getCost()) && (player.getNumTrains() >= r.cost)) {
+				recommendations.add("Claim "+r.getColor()+" route from "+r.getBegin()+" to " + r.getEnd()+".");
+			}
+		}
 		
-		// if not possible to complete, either draw new destination tickets, or claim as many expensive
-		// routes as possible depending on how many turns have expired and how many expected turns are left
-		
+				
+		// if not draw train cards, prioritize longer routes
+		for(Route r: routes) {
+			String s = "Draw train cards. Priority: " + r.color; 
+			if (!recommendations.contains(s))
+				recommendations.add(s);			
+		}
 		// or go for the longest route bonus. Iteration3
 		
 		return recommendations;
@@ -81,11 +114,11 @@ public class Recommender {
 		ArrayList<Route> routes = new ArrayList<Route>();
 		PriorityQueue<City> openSet = new PriorityQueue<City>(new Comparator<City>() {
 			public int compare(City c1, City c2) {
-				if (c1.totalCost > c2.totalCost)
-					return 1;
-				if (c1.totalCost < c2.totalCost)
-					return -1;
-				return 0;
+				//if (c1.totalCost > c2.totalCost)
+					//return 1;
+				//if (c1.totalCost < c2.totalCost)
+					//return -1;
+				return c1.totalCost - c2.totalCost;
 			}
 		});
 
@@ -94,6 +127,7 @@ public class Recommender {
 
 		while (!openSet.isEmpty()) {
 			City c = openSet.poll();
+			//System.out.println("Investigating city: " +c.current);
 			closed.add(c);
 			//System.out.println(c.current + " total cost:" + c.totalCost);
 			// check if goal has been reached
@@ -105,7 +139,7 @@ public class Recommender {
 					routes.add(board.getRoute(c.current, c.previous.current));
 					c = c.previous;
 				}
-				/*
+				
 				int cost = 0;
 				System.out.println("FINAL ROUTE");
 				for(Route r: routes) {
@@ -113,7 +147,7 @@ public class Recommender {
 					cost += r.getCost();
 				}
 				System.out.println("Total route cost: " + cost);
-				*/
+				
 				return routes;
 			}
 

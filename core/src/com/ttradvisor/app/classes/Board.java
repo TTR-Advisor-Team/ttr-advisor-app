@@ -98,15 +98,16 @@ public class Board {
 		return null;
 	}
 	/**
-	 * Returns the first unowned route from start city to end city
+	 * Returns the first route from start city to end city
 	 * @param start 
 	 * @param end
-	 * @return an unowned route from begin to end
+	 * @return a route from begin to end
 	 */
 	public Route getRoute(String start, String end) {
+		//needs to be redone, functionality checked
 		LinkedList<Route> routes = board.get(start);
 		for (Route r : routes) {
-			if (r.end.equals(end) && r.owner.equals(Colors.player.NONE))
+			if (r.end.equals(end) /*&& r.owner.equals(Colors.player.NONE)*/)
 				return r;
 			continue;
 		}

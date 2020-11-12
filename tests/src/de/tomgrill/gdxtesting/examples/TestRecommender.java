@@ -33,7 +33,7 @@ public class TestRecommender {
 	public void setUp() {
 		board = new Board("cities.txt");
 		player = new Player(Colors.player.BLACK);
-		rec = new Recommender(board, player);
+		rec = new Recommender(board, player, 20, 4);
 	}
 	
 	@After
@@ -194,5 +194,21 @@ public class TestRecommender {
 				assertFalse(routes.get(i).equals(routes.get(j)));
 			}
 		}
+	}
+	@Test
+	public void ownerTest() {
+		board.claimRoute("New Orleans", "Miami", Colors.route.RED, Colors.player.BLACK);
+		ArrayList<Route> routes = rec.shortestPath("New Orleans", "Charleston");
+		int cost = 0;
+		for(Route r: routes) {
+			cost += r.getCost();
+		}
+		assertEquals(10, cost);
+	}
+	@Test
+	public void calculateTest() {
+		ArrayList<DestinationTicket> dts = new ArrayList<DestinationTicket>();
+		dts.add(new DestinationTicket("New York", "San Francisco"));
+		rec.calculate(dts);
 	}
 }
