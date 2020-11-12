@@ -604,6 +604,13 @@ public class GameScreen implements Screen {
 	 * @param routeOptions the options we've narrowed down to
 	 */
 	private void setupHelperChooseRoute(final LinkedList<Route> routeOptions) {
+		
+		if (routeOptions.get(0).getColor() == routeOptions.get(1).getColor()) {
+			// identical colors, ignore
+			setupHelperChooseCards(routeOptions.get(0));
+		}
+		
+		
 		final Table table = new Table();
     	destButton.setVisible(false);
     	TCButton.setVisible(false);
