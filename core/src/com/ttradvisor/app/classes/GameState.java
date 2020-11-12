@@ -9,7 +9,7 @@ public class GameState {
 
 	private ArrayList<Player> curPlayers;
 	private Board curBoard;
-	//private Recommender rec;
+	private Recommender rec;
 	private DestinationTicketList dtList;
 	private ArrayList<Turn> turns;
 	public Player currentPlayer;
@@ -25,7 +25,9 @@ public class GameState {
 //		claimedRoutes = new ArrayList<Route>();
 
 	}
-	
+	public Recommender getRecommender() {
+		return rec;
+	}
 	public void addTurn(Turn newTurn) {
 		turns.add(newTurn);
 	}
