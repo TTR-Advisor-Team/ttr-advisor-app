@@ -2,10 +2,12 @@ package com.ttradvisor.app.classes;
 
 public class HistoryController {
 	
+	private GameState initialGameState;
 	private GameState gameState;
 	private int turnIndex;
 	
 	public HistoryController(GameState gameState) {
+		this.initialGameState = gameState;
 		this.gameState = gameState;
 		this.turnIndex = gameState.getCurrentTurnCounter();
 	}
@@ -33,7 +35,6 @@ public class HistoryController {
 	
 	public boolean previousTurn() {
 		if (turnIndex <= 0) {
-			System.out.println("returned false");
 			return false;
 		}
 		turnIndex--;
@@ -45,8 +46,12 @@ public class HistoryController {
 	
 	public boolean nextTurn() {
 		if (turnIndex >= gameState.getCurrentTurnCounter()) {
-			System.out.println("returned false");
 			return false;
+		}
+		if(turnIndex == gameState.getCurrentTurnCounter()-1) {
+			turnIndex++;
+			gameState = initialGameState;
+			return true;
 		}
 		turnIndex++;
 		gameState.setBoard(gameState.getTurns().get(turnIndex).getSnapshot());

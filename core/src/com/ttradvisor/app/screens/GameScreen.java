@@ -469,11 +469,9 @@ public class GameScreen implements Screen {
 		nextTurn.setPosition(Gdx.graphics.getWidth()-nextTurn.getWidth(), Gdx.graphics.getHeight()-nextTurn.getHeight());
 		prevTurn.addListener(new InputListener() {
     		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-    			System.out.println(mainApp.hist.getTurnIndex());
     			if(mainApp.hist.previousTurn()){
-        			System.out.println(mainApp.hist.getTurnIndex());
     				mainApp.gameState.setBoard(mainApp.hist.getGameState().getBoard());
-    				//trainCardHand.setText(mainApp.hist.getGameState().getPlayers().get(mainApp.hist.getTurnIndexView()).getTCS().toString());
+    				trainCardHand.setText(mainApp.hist.getGameState().getPlayers().get(mainApp.hist.getTurnIndexView()).getTCS().toString());
     			}
     		}
     		public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -484,7 +482,7 @@ public class GameScreen implements Screen {
     		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
     			if(mainApp.hist.nextTurn()) {
     				mainApp.gameState.setBoard(mainApp.hist.getGameState().getBoard());
-    				//trainCardHand.setText(mainApp.hist.getGameState().getPlayers().get(mainApp.hist.getTurnIndexView()).getTCS().toString());
+    				trainCardHand.setText(mainApp.hist.getGameState().getPlayers().get(mainApp.hist.getTurnIndexView()).getTCS().toString());
     			}
     		}
     		public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
