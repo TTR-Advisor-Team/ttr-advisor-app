@@ -107,6 +107,8 @@ project(":tests") {
         compile "org.mockito:mockito-all:1.9.+"
         
         compile "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
+        
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"        
 
         testCompile 'junit:junit:4.+'
