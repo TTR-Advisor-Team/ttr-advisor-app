@@ -110,6 +110,8 @@ public class GameScreen implements Screen {
 		setupCardInputHandling();
 		
 		setupMapInputHandling();
+		
+		setupTurnView();
 
 		Image map = new Image(new Texture("high_res_map.png"));
 
@@ -438,6 +440,15 @@ public class GameScreen implements Screen {
 		
 		guiStage.addActor(TCButton);
 		guiStage.addActor(trainCardHand);
+	}
+	
+	private void setupTurnView() {
+		final TextButton prevTurn = new TextButton("View \n Previous Turn", TTRAdvisorApp.skin, "small");
+		prevTurn.setPosition(0, Gdx.graphics.getHeight()-prevTurn.getHeight());
+		final TextButton nextTurn = new TextButton("View \n Next Turn", TTRAdvisorApp.skin, "small");
+		nextTurn.setPosition(Gdx.graphics.getWidth()-nextTurn.getWidth(), Gdx.graphics.getHeight()-nextTurn.getHeight());
+		guiStage.addActor(prevTurn);
+		guiStage.addActor(nextTurn);
 	}
 
 	/**
