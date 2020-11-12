@@ -91,7 +91,6 @@ project(":tests") {
 		 * BUT: I recommend to create seperate test sub projects for each platform. Trust me :)
 		 * 
 		 */
-	
 //        compile project(":android")
 //        compile project(":html")
 //        compile project(":desktop")
@@ -102,7 +101,7 @@ project(":tests") {
 //        }
         
         compile project(":core")
-        
+        compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         compile "junit:junit:4.+"
         compile "org.mockito:mockito-all:1.9.+"
         
@@ -113,7 +112,7 @@ project(":tests") {
 
         testCompile 'junit:junit:4.+'
         testCompile "org.mockito:mockito-all:1.9.+"
-
+		testCompile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         testCompile "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
         testCompile "com.badlogicgames.gdx:gdx:$gdxVersion"
         testCompile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"

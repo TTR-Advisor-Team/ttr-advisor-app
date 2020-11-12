@@ -31,11 +31,11 @@ public class Player {
 		this.numTrains = numTrains;
 	}
 	
-	public List<DestinationTicket> getDTS(){
+	public ArrayList<DestinationTicket> getDTS(){
 		return destTicketHand;
 	}
 
-	public List<TrainCard> getTCS(){
+	public ArrayList<TrainCard> getTCS(){
 		return trainCardHand;
 	}
 

@@ -62,6 +62,9 @@ public class GameScreen implements Screen {
 	private OrthographicCamera camera;
 	private Stage guiStage;
 	
+	private Label rec1;
+	private Label rec2;
+	private Label rec3;
 	private DestinationTicketList dtList;
 	
 	private ScrollPane listPane;
@@ -122,6 +125,8 @@ public class GameScreen implements Screen {
 		mapStage = new Stage(new ScreenViewport());
 		inputMult = new InputMultiplexer(guiStage, mapStage);
 		
+		setupRecommendations();
+		
 		setupDisplayElements();
 		
 		setupCardInputHandling();
@@ -131,6 +136,7 @@ public class GameScreen implements Screen {
 		setupTurnView();
 		
 		setupClaimedRouteTextures();
+		
 
 		Image map = new Image(new Texture("high_res_map.png"));
 
@@ -151,6 +157,38 @@ public class GameScreen implements Screen {
 		camera.position.set(0, 0, camera.position.z);
 		clampCamera();
 
+	}
+	private void setupRecommendations() {
+		Label l1 = new Label("First Recommendation",TTRAdvisorApp.skin);
+		Label l2 = new Label("Second Recommendation",TTRAdvisorApp.skin);
+		Label l3 = new Label("Third Recommendation",TTRAdvisorApp.skin);
+		rec1 = l1;
+		rec2 = l2;
+		rec3 = l3;
+		
+		
+		TextButton t = new TextButton("ShowRecommendations", TTRAdvisorApp.skin);
+		t.setPosition(Gdx.graphics.getWidth()/5, Gdx.graphics.getHeight()/8 + l1.getHeight());
+		t.setTransform(true);
+		t.setScale(.3f, .2f);
+		t.setTransform(false);
+		
+		l1.setPosition(Gdx.graphics.getWidth()/5, Gdx.graphics.getHeight()/8);
+		l2.setPosition(Gdx.graphics.getWidth()/5, Gdx.graphics.getHeight()/8 - l1.getHeight());
+		l3.setPosition(Gdx.graphics.getWidth()/5, Gdx.graphics.getHeight()/8 - l1.getHeight()*2);
+		
+		l1.setName("rec1");
+		l2.setName("rec2");
+		l3.setName("rec3");
+		
+		l1.setVisible(false);
+		l2.setVisible(false);
+		l3.setVisible(false);
+		guiStage.addActor(t);
+		guiStage.addActor(l1);
+		guiStage.addActor(l2);
+		guiStage.addActor(l3);
+		
 	}
 	
 	private void setupDisplayElements() {
