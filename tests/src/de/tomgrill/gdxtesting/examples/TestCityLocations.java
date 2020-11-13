@@ -36,6 +36,20 @@ public class TestCityLocations {
 	}
 	
 	@Test
+	public void testCityLocationsLoadFallback() {
+		testLocs = new CityLocations("doesnt_exist.json");
+		
+		assertTrue("File doesn't exist test", testLocs.getCityLocations().size() == 1);
+	}
+	
+	@Test
+	public void testCityLocationsLoadFallback2() {
+		testLocs = new CityLocations("invalid.json");
+		
+		assertTrue("Invalid JSON test", testLocs.getCityLocations().size() == 1);
+	}
+	
+	@Test
 	public void testAllLocatedCitiesInBoardFile() {
 		initTestLocations();
 		Board b = new Board("cities.txt");
@@ -53,6 +67,22 @@ public class TestCityLocations {
 		for (String city : b.getBoard().keySet()) {
 			assertNotNull("Error, this city wasn't in city_locations.json: " + city, testLocs.getCityLocation(city));
 		}
+	}
+	
+	@Test
+	public void testGetInvalidCity() {
+		initTestLocations();
+		assertEquals("Honolulu shouldn't be found in the map.", null, testLocs.getCityLocation("Honolulu"));
+	}
+	
+	@Test
+	public void testToString() {
+		initTestLocations();
+		CityLocation test = testLocs.new CityLocation();
+		test.name = "Honolulu";
+		test.x = -1;
+		test.y = -1;
+		assertEquals("Test CityLocations toString().", "City Honolulu: (-1, -1)", test.toString());
 	}
 
 }

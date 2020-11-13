@@ -1,0 +1,147 @@
+
+{ 
+    "Vancouver": {
+        "x":163
+	"invalid":"invalid"
+    },
+    "Seattle": {
+        "x":155,
+        "y":1077
+    },
+    "Portland": {
+        "x":107,
+        "y":965
+    },
+    "San Francisco": {
+        "x":75,
+        "y":528
+    },
+    "Los Angeles": {
+        "x":248,
+        "y":295
+    },
+    "Las Vegas": {
+        "x":393,
+        "y":426
+    },
+    "Phoenix": {
+        "x":514,
+        "y":281
+    },
+    "Salt Lake City": {
+        "x":516,
+        "y":671
+    },
+    "Helena": {
+        "x":676,
+        "y":944
+    },
+    "Calgary": {
+        "x":453,
+        "y":1238
+    },
+    "El Paso": {
+        "x":777,
+        "y":199
+    },
+    "Santa Fe": {
+        "x":790,
+        "y":400
+    },
+    "Denver": {
+        "x":805,
+        "y":599
+    },
+    "Winnipeg": {
+        "x":952,
+        "y":1214
+    },
+    "Houston": {
+        "x":1271,
+        "y":164
+    },
+    "Dallas": {
+        "x":1180,
+        "y":253
+    },
+    "Oklahoma City": {
+        "x":1134,
+        "y":448
+    },
+    "Kansas City": {
+        "x":1179,
+        "y":639
+    },
+    "Omaha": {
+        "x":1133,
+        "y":752
+    },
+    "Duluth": {
+        "x":1202,
+        "y":958
+    },
+    "New Orleans": {
+        "x":1482,
+        "y":179
+    },
+    "Little Rock": {
+        "x":1335,
+        "y":439
+    },
+    "Saint Louis": {
+        "x":1372,
+        "y":637
+    },
+    "Chicago": {
+        "x":1472,
+        "y":820
+    },
+    "Sault St. Marie": {
+        "x":1483,
+        "y":1104
+    },
+    "Atlanta": {
+        "x":1692,
+        "y":474
+    },
+    "Nashville": {
+        "x":1579,
+        "y":551
+    },
+    "Pittsburgh": {
+        "x":1763,
+        "y":852
+    },
+    "Toronto": {
+        "x":1724,
+        "y":1056
+    },
+    "Miami": {
+        "x":1971,
+        "y":108
+    },
+    "Charleston": {
+        "x":1900,
+        "y":457
+    },
+    "Raleigh": {
+        "x":1838,
+        "y":602
+    },
+    "Washington": {
+        "x":1969,
+        "y":752
+    },
+    "New York": {
+        "x":1950,
+        "y":953
+    },
+    "Boston": {
+        "x":2066,
+        "y":1118
+    },
+    "Montreal": {
+        "x":1908,
+        "y":1249
+    }
+}

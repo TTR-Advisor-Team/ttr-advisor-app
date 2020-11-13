@@ -51,6 +51,8 @@ public class CityLocations {
 			catch (Exception e) {
 				Gdx.app.error("City Locations Parser", "Parsed JSON file has unexpected format.");
 				Gdx.app.error("City Locations Parser", e.getClass().toString() + " : " + e.getMessage());
+				
+				initFallback();
 			}
 			
 		}
@@ -58,14 +60,20 @@ public class CityLocations {
 			Gdx.app.error("City Locations Parser", "Could not read JsonValue from given filename.");
 			Gdx.app.error("City Locations Parser", e.getClass().toString() + " : " + e.getMessage());
 			
-			// initialize Vancouver as a fallback
-			JsonValue mockCity = new JsonValue(ValueType.object);
-			mockCity.addChild("name", new JsonValue("Vancouver"));
-			mockCity.addChild("x", new JsonValue(163));
-			mockCity.addChild("y", new JsonValue(151));
-			cityLocs = new JsonValue(ValueType.array);
-			cityLocs.addChild(mockCity);
+			initFallback();
 		}
+	}
+	
+	public void initFallback() {
+		// initialize Vancouver as a fallback
+		JsonValue mockCity = new JsonValue(ValueType.object);
+		mockCity.addChild("name", new JsonValue("Vancouver"));
+		mockCity.addChild("x", new JsonValue(163));
+		mockCity.addChild("y", new JsonValue(151));
+		cityLocs = new JsonValue(ValueType.array);
+		cityLocs.addChild(mockCity);
+		// refresh the list to have only this, instead
+		getAllCityLocations();
 	}
 	
 	/**
