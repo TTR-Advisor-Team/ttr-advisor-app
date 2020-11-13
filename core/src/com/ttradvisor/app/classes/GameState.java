@@ -13,11 +13,9 @@ public class GameState {
 	private DestinationTicketList dtList;
 	private ArrayList<Turn> turns;
 	public Player currentPlayer;
-<<<<<<< HEAD
 	private String errorMessage;
-=======
+
 	public Colors.player userColor;
->>>>>>> refs/remotes/origin/master
 //	private ArrayList<Route> claimedRoutes;
 	
 	public GameState(Colors.player userColor, ArrayList<Player> players, Board board, DestinationTicketList dtList,
