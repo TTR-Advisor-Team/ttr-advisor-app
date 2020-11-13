@@ -15,4 +15,12 @@ public class TrainCard {
 		return color.toString();
 	}
 	
+	@Override
+	public boolean equals(Object other) {
+		if (other instanceof TrainCard && ((TrainCard)other).getColor() == color) {
+			return true;
+		}
+		return false;
+	}
+	
 }
