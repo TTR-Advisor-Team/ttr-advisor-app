@@ -32,11 +32,15 @@ public class TestHistoryController {
 				new DestinationTicketList("destinations.txt"), new ArrayList<Turn>()));
 	}
 	
+	@Test
 	public void testTurnIndex() {
 		HistoryController hist = initHistoryController();
 		assertEquals("turnIndex should be initialized to 0", hist.getTurnIndex(), 0);
+		assertEquals("turnIndexView should return the viewed players position in the player array (0)", hist.getTurnIndexView(), 0);
 		hist.setTurnIndex(8);
 		assertEquals("setTurnIndex should change the turn index", hist.getTurnIndex(), 8);
+		assertEquals("turnIndexView should return the viewed players position in the player array (non 0)", hist.getTurnIndexView(), 1);
+		
 	}
 	
 	@Test
@@ -68,8 +72,23 @@ public class TestHistoryController {
 	public void testNextTurn() {
 		HistoryController hist = initHistoryController();
 		assertEquals("Next Turn should return false if it is the current turn", hist.nextTurn(), false);
-		hist.getGameState().addTurn(null);
+		hist.getGameState().addTurn(new Turn(hist.getGameState().getBoard(), null, null));
+		hist.getGameState().addTurn(new Turn(hist.getGameState().getBoard(), null, null));
 		assertEquals("Next Turn should return true if it is not the current turn", hist.nextTurn(), true);
 		assertEquals("Calling Next Turn should change the turn index", hist.getTurnIndex(), 1);
+		assertEquals("Next Turn should return true if it is not the current turn (second call)", hist.nextTurn(), true);
+		assertEquals("Calling Next Turn should change the turn index (two calls)", hist.getTurnIndex(), 2);
+	}
+	
+	@Test
+	public void testGoToTurn() {
+		HistoryController hist = initHistoryController();
+		assertEquals("Go To Turn should return false if it is not a valid turn", hist.goToTurn(6), false);
+		hist.getGameState().addTurn(new Turn(hist.getGameState().getBoard(), null, null));
+		hist.getGameState().addTurn(new Turn(hist.getGameState().getBoard(), null, null));
+		assertEquals("Go To Turn should return true if input is a valid turn (1)", hist.goToTurn(1), true);
+		assertEquals("Calling Go To Turn should change the turn index (1)", hist.getTurnIndex(), 1);
+		assertEquals("Go To Turn should return true if input is a valid turn (2)", hist.goToTurn(2), true);
+		assertEquals("Calling Go To Turn should change the turn index (2)", hist.getTurnIndex(), 2);
 	}
 }

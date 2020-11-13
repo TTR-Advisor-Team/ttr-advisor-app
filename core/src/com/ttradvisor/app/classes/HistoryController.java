@@ -62,19 +62,24 @@ public class HistoryController {
 		if (turnIndex > gameState.getCurrentTurnCounter() || turnIndex < 0) {
 			return false;
 		}
+		if(turnIndex == gameState.getCurrentTurnCounter()) {
+			this.turnIndex = turnIndex;
+			gameState = initialGameState;
+			return true;
+		}
 		this.turnIndex = turnIndex;
 		gameState.setBoard(gameState.getTurns().get(turnIndex).getSnapshot());
 		gameState.setPlayers(gameState.getTurns().get(turnIndex).getPlayerSnapshots());
 		return true;
 	}
 	
-	public boolean validateCorrection(Action replacementAction){
-		return false;
+	//public boolean validateCorrection(Action replacementAction){
+		//return false;
 		
-	}
+	//}
 	
-	public void makeCorrection(Action replacementAction) {
+	//public void makeCorrection(Action replacementAction) {
 		
-	}
+	//}
 
 }
