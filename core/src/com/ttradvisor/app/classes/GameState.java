@@ -13,11 +13,16 @@ public class GameState {
 	private DestinationTicketList dtList;
 	private ArrayList<Turn> turns;
 	public Player currentPlayer;
+<<<<<<< HEAD
 	private String errorMessage;
+=======
+	public Colors.player userColor;
+>>>>>>> refs/remotes/origin/master
 //	private ArrayList<Route> claimedRoutes;
 	
-	public GameState(ArrayList<Player> players, Board board, DestinationTicketList dtList,
+	public GameState(Colors.player userColor, ArrayList<Player> players, Board board, DestinationTicketList dtList,
 			ArrayList<Turn> turns) {
+		this.userColor = userColor;
 		curPlayers = players;
 		curBoard = board;
 		this.turns = turns;

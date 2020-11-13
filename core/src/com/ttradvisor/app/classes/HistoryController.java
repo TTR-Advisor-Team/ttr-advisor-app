@@ -62,7 +62,7 @@ public class HistoryController {
 		if (turnIndex > gameState.getCurrentTurnCounter() || turnIndex < 0) {
 			return false;
 		}
-		if(turnIndex == gameState.getCurrentTurnCounter()) {
+		else if(turnIndex >= gameState.getCurrentTurnCounter()-1) {
 			this.turnIndex = turnIndex;
 			gameState = initialGameState;
 			return true;

@@ -30,7 +30,7 @@ public class TestDestinations {
 		ArrayList<Player> testPlayerList = new ArrayList<Player>();
 		testPlayerList.add(testP1);
 		testPlayerList.add(testP2);
-		return new GameState(testPlayerList, new Board("cities.txt"), 
+		return new GameState(Colors.player.BLACK, testPlayerList, new Board("cities.txt"), 
 				new DestinationTicketList("destinations.txt"), new ArrayList<Turn>());
 	}
 	

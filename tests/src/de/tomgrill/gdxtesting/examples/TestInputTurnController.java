@@ -38,7 +38,7 @@ public class TestInputTurnController {
 		testPlayerList.add(testP1);
 		testPlayerList.add(testP2);
 		testPlayerList.add(testP3);
-		return new GameState(testPlayerList, new Board("cities.txt"),
+		return new GameState(Colors.player.BLACK, testPlayerList, new Board("cities.txt"),
 				new DestinationTicketList("destinations.txt"), new ArrayList<Turn>());
 	}
 	private GameState generalTestGameState() {
@@ -386,6 +386,11 @@ public class TestInputTurnController {
 	
 	@Test
 	public void initialTurnCompletion() {
+	}
+	
+	@Test
+	public void severalconsecutiveTurns() {
+		initTestGameState();
 	}
 	
 }

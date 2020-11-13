@@ -126,7 +126,10 @@ public class Recommender {
 	public ArrayList<Route> getRoutes(ArrayList<DestinationTicket> tickets) {
 		ArrayList<Route> allRoutes = new ArrayList<Route>();
 		for (DestinationTicket dt : tickets) {
+			System.out.println("tickets "+tickets);
+			System.out.println("dt "+dt);
 			ArrayList<Route> routes = shortestPath(dt.getStart(), dt.getEnd());
+			System.out.println("size"+routes.size());
 			for (Route r : routes) {
 				if (!allRoutes.contains(r))
 					allRoutes.add(r);
@@ -177,8 +180,12 @@ public class Recommender {
 				int cost = 0;
 				System.out.println("FINAL ROUTE");
 				for (Route r : routes) {
+					System.out.println("routes"+ routes.size());
+//					if (r !=  null) {
+//					System.out.println(r);
 				    System.out.println(r.toString());
 				    cost += r.getCost();
+//					}
 				}
 				System.out.println("Total route cost: " + cost);
 
