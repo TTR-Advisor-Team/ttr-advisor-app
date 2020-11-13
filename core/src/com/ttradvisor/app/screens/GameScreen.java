@@ -3,6 +3,7 @@ package com.ttradvisor.app.screens;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
@@ -20,6 +21,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.utils.ArraySelection;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -92,6 +94,9 @@ public class GameScreen implements Screen {
 	private TextButton destButton;
 	private TextButton TCButton;
 	private Label trainCardHand; 
+	
+	// for multiple selection
+	private Array<DestinationTicket> prevSelection;
 	
 	private TextButton prevTurn;
 	private TextButton nextTurn;
@@ -248,6 +253,35 @@ public class GameScreen implements Screen {
             listPane.setY(Gdx.graphics.getHeight()* 1/100);
             listPane.setHeight(Gdx.graphics.getHeight() * 1/2);
             listPane.setWidth(Gdx.graphics.getWidth()*1/3);
+            
+            // multiple selection for android only
+            if (Gdx.app.getType() == ApplicationType.Android) {
+	            destTickets.addListener(new ClickListener() {
+	
+	            	@Override
+	            	public void clicked(InputEvent event, float x, float y) {
+	            		DestinationTicket clicked = destTickets.getItemAt(y);
+	            		
+	                	if (prevSelection == null) {
+	                		prevSelection = new Array<DestinationTicket>();
+	                	}
+	    				
+	    				if (prevSelection.contains(clicked, true)) {
+	    					// ticket was already selected, remove it
+	    					destTickets.getSelection().addAll(prevSelection);
+	    					destTickets.getSelection().remove(clicked);
+	    				}
+	    				else {
+	    					// new ticket selection; make sure the existing selection is preserved
+	    					destTickets.getSelection().addAll(prevSelection);
+	    				}
+	    				prevSelection = destTickets.getSelection().toArray();
+	    				
+	            		super.clicked(event, x, y);
+	            	}
+	            });
+            }
+            
             guiStage.addActor(listPane);
             guiStage.setScrollFocus(listPane);
 		    
@@ -255,9 +289,14 @@ public class GameScreen implements Screen {
             TextButton done = new TextButton("Done", TTRAdvisorApp.skin, "small");
 		    done.addListener(new InputListener() {
 		    	public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+		    		// reset the multiple selection tracking
+            		prevSelection = null;
+
 //		    		for (DestinationTicket ticket : destTickets.getSelection().toArray()) {
 //		    			drawnTickets.add(ticket);
 //		    		}
+		    		
+		    		
 		    		multipleTickets = destTickets.getSelection().items().orderedItems();
 		    		while (multipleTickets.notEmpty()) {
 		    			System.out.println(multipleTickets.peek().toString());
@@ -287,6 +326,8 @@ public class GameScreen implements Screen {
 		    TextButton back = new TextButton("Back", TTRAdvisorApp.skin, "small");
         	back.addListener(new InputListener() {
         		public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+        			// clear for multiple selection
+            		prevSelection = null;
         			drawnTickets.removeAll(drawnTickets);
         			
 		        	guiStage.setScrollFocus(null);
@@ -661,6 +702,7 @@ public class GameScreen implements Screen {
 		if (routeOptions.get(0).getColor() == routeOptions.get(1).getColor()) {
 			// identical colors, ignore
 			setupHelperChooseCards(routeOptions.get(0));
+			return;
 		}
 		
 		
