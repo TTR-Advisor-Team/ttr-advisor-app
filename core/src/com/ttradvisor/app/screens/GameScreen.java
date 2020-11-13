@@ -237,7 +237,7 @@ public class GameScreen implements Screen {
 		demonstration.setPosition(50, 500);
 		guiStage.addActor(demonstration);
 
-		demoCurrPlayer = new Label("", mainApp.skin);
+		demoCurrPlayer = new Label("Current player: " + mainApp.gameState.currentPlayer.getColor(), mainApp.skin);
 		demoCurrPlayer.setColor(0, 0, 0, 1);
 		demoCurrPlayer.setSize(100, 30);
 		demoCurrPlayer.setPosition(50, 400);
@@ -603,6 +603,7 @@ public class GameScreen implements Screen {
 					trainCardHand.setText(mainApp.hist.getGameState().getPlayers().get(mainApp.hist.getTurnIndexView())
 							.getTCS().toString());
 					turnNumber.setText(Integer.toString(mainApp.hist.getTurnIndex()));
+					demoCurrPlayer.setText("Current player: " + mainApp.hist.getGameState().getPlayers().get(mainApp.hist.getTurnIndexView()).getColor());
 				}
 			}
 
@@ -617,6 +618,7 @@ public class GameScreen implements Screen {
 					trainCardHand.setText(mainApp.hist.getGameState().getPlayers().get(mainApp.hist.getTurnIndexView())
 							.getTCS().toString());
 					turnNumber.setText(Integer.toString(mainApp.hist.getTurnIndex()));
+					demoCurrPlayer.setText("Current player: " + mainApp.hist.getGameState().getPlayers().get(mainApp.hist.getTurnIndexView()).getColor());
 				}
 			}
 
@@ -1049,6 +1051,7 @@ public class GameScreen implements Screen {
 			rec2.setText(recs.get(1));
 			rec3.setText(recs.get(2));
 		}
+		demoCurrPlayer.setText("Current player: " + mainApp.gameState.currentPlayer.getColor());
 
 	}
 
@@ -1160,7 +1163,6 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
-		demoCurrPlayer.setText("Current player: " + mainApp.gameState.currentPlayer.getColor());
 		demoSelectedCity.setText(selectedCity);
 		demoSelectedRoute.setText(selectedRoute);
 		Gdx.gl.glClearColor(.58f, .71f, .78f, 1);
