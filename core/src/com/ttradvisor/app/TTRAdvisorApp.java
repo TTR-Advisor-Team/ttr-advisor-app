@@ -16,6 +16,7 @@ import com.ttradvisor.app.classes.GameState;
 import com.ttradvisor.app.classes.HistoryController;
 import com.ttradvisor.app.classes.InputTurnController;
 import com.ttradvisor.app.classes.Player;
+import com.ttradvisor.app.classes.Recommender;
 import com.ttradvisor.app.classes.Turn;
 import com.ttradvisor.app.screens.TitleScreen;
 
@@ -27,6 +28,7 @@ public class TTRAdvisorApp extends Game {
 	static public Skin skin;
 	public Colors.player userColor;
 	
+	public Recommender rec;
 	public InputTurnController turnInput;
 	public HistoryController hist;
 	public GameState gameState;
