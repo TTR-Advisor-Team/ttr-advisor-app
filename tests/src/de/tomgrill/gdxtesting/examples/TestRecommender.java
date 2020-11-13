@@ -230,14 +230,15 @@ public class TestRecommender {
 
 	@Test
 	public void calculateDrawDestinationTicketTest() {
-		//tickets empty
+		// tickets empty
 		ArrayList<DestinationTicket> dts = new ArrayList<DestinationTicket>();
 		ArrayList<String> recs = rec.calculate(dts);
 		assertTrue(recs.contains("Draw destination ticket."));
 	}
+
 	@Test
 	public void calculateDrawDestinationTicketTest2() {
-		//tickets not empty, but impossible to complete route
+		// tickets not empty, but impossible to complete route
 		ArrayList<DestinationTicket> dts = new ArrayList<DestinationTicket>();
 		dts.add(new DestinationTicket("Atlanta", "Miami"));
 		board.claimRoute("Miami", "Atlanta", Colors.route.BLUE, Colors.player.GREEN);
@@ -246,17 +247,18 @@ public class TestRecommender {
 		ArrayList<String> recs = rec.calculate(dts);
 		assertTrue(recs.contains("Draw destination ticket."));
 	}
-	
+
 	@Test
 	public void calculateClaimExpensiveRouteTest() {
 		rec = new Recommender(board, player, 100, 4);
 		ArrayList<DestinationTicket> dts = new ArrayList<DestinationTicket>();
-		while(player.getTCS().size() < 10) {
+		while (player.getTCS().size() < 10) {
 			player.getTCS().add(new TrainCard(Colors.route.ORANGE));
 		}
 		ArrayList<String> recs = rec.calculate(dts);
-		assertTrue(recs.contains("Claim the most expensive ORANGE or GRAY route."));		
+		assertTrue(recs.contains("Claim the most expensive ORANGE or GRAY route."));
 	}
+
 	@Test
 	public void calculateClaimExpensiveRouteTest2() {
 		rec = new Recommender(board, player, 100, 4);
@@ -265,15 +267,25 @@ public class TestRecommender {
 		board.claimRoute("Miami", "Atlanta", Colors.route.BLUE, Colors.player.GREEN);
 		board.claimRoute("Miami", "New Orleans", Colors.route.RED, Colors.player.GREEN);
 		board.claimRoute("Miami", "Charleston", Colors.route.PINK, Colors.player.GREEN);
-		while(player.getTCS().size() < 10) {
+		while (player.getTCS().size() < 10) {
 			player.getTCS().add(new TrainCard(Colors.route.ORANGE));
 		}
 		ArrayList<String> recs = rec.calculate(dts);
-		assertTrue(recs.contains("Claim the most expensive ORANGE or GRAY route."));		
+		assertTrue(recs.contains("Claim the most expensive ORANGE or GRAY route."));
 	}
-	
+
 	@Test
 	public void calculateClaimRouteOnPathTest() {
-		
+		ArrayList<DestinationTicket> dts = new ArrayList<DestinationTicket>();
+		player.setNumTrains(46);
+		dts.add(new DestinationTicket("San Francisco", "New York"));
+		while (player.getTCS().size() < 10) {
+			player.getTCS().add(new TrainCard(Colors.route.ORANGE));
+		}
+		ArrayList<String> recs = rec.calculate(dts);
+		for (String s: recs) {
+			System.out.println(s);
+		}
+		assertTrue(recs.contains("Claim the ORANGE route from San Francisco to Salt Lake City."));
 	}
 }

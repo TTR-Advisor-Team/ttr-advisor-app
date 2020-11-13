@@ -174,13 +174,13 @@ public class Recommender {
 					c = c.previous;
 				}
 
-//				int cost = 0;
-//				System.out.println("FINAL ROUTE");
-//				for (Route r : routes) {
-//				    System.out.println(r.toString());
-//				    cost += r.getCost();
-//				}
-//				System.out.println("Total route cost: " + cost);
+				int cost = 0;
+				System.out.println("FINAL ROUTE");
+				for (Route r : routes) {
+				    System.out.println(r.toString());
+				    cost += r.getCost();
+				}
+				System.out.println("Total route cost: " + cost);
 
 				return routes;
 			}
