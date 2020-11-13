@@ -806,6 +806,25 @@ public class GameScreen implements Screen {
 	private void setupHelperChooseCards(final Route route) {
 
 		selectedRoute = "Selected: " + route;
+		
+		if (mainApp.gameState.currentPlayer.getColor() != mainApp.userColor) {
+			
+			boolean isInitial = mainApp.turnInput.isInitialTurn();
+
+			RouteAction routeAction = new RouteAction(mainApp.gameState.currentPlayer, new ArrayList<TrainCard>(), route);
+	
+			if (mainApp.turnInput.takeAction(routeAction)) {
+				advanceTurn(isInitial, routeAction);
+			}
+	
+			selectedCity = DEFAULT_CITY_LABEL;
+	
+			trainCardHand.setText(mainApp.gameState.currentPlayer.getTCS().toString());
+			destButton.setVisible(true);
+			TCButton.setVisible(true);
+			trainCardHand.setVisible(true);
+			return;
+		}
 
 		final Table table = new Table();
 		destButton.setVisible(false);

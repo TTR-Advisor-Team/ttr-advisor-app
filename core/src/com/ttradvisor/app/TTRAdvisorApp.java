@@ -35,7 +35,7 @@ public class TTRAdvisorApp extends Game {
 	
 	@Override
 	public void create () {
-		gameState = new GameState(new ArrayList<Player>(), new Board("cities.txt"),
+		gameState = new GameState(userColor, new ArrayList<Player>(), new Board("cities.txt"),
 				new DestinationTicketList("destinations.txt"), new ArrayList<Turn>());
 		turnInput = new InputTurnController(gameState);
 		hist = new HistoryController(gameState);

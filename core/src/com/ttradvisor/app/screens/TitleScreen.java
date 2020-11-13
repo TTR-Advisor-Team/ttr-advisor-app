@@ -25,6 +25,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.ttradvisor.app.TTRAdvisorApp;
 import com.ttradvisor.app.classes.Colors;
 import com.ttradvisor.app.classes.Player;
+import com.ttradvisor.app.classes.Colors.player;
 
 /**
  * Created by julienvillegas on 17/01/2017.
@@ -302,6 +303,7 @@ public class TitleScreen implements Screen {
 	            		mainApp.gameState.getPlayers().add(new Player(order.get(i)));
 	            	}
 	            	mainApp.gameState.currentPlayer = mainApp.gameState.getPlayers().get(tOrder.indexOf(userCol.getSelected()));
+	            	mainApp.gameState.userColor = mainApp.gameState.getPlayers().get(tOrder.indexOf(userCol.getSelected())).getColor();
 	            	mainApp.turnInput.startInitialTurn(); // set up controller for start
 	            	mainApp.setScreen(new GameScreen(mainApp));
             	}

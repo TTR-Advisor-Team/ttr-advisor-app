@@ -28,7 +28,7 @@ public class TestHistoryController {
 		testPlayerList.add(testP1);
 		testPlayerList.add(testP2);
 		testPlayerList.add(testP3);
-		return new HistoryController(new GameState(testPlayerList, new Board("cities.txt"), 
+		return new HistoryController(new GameState(Colors.player.BLACK, testPlayerList, new Board("cities.txt"), 
 				new DestinationTicketList("destinations.txt"), new ArrayList<Turn>()));
 	}
 	
@@ -49,7 +49,7 @@ public class TestHistoryController {
 		testPlayerList.add(testP1);
 		testPlayerList.add(testP2);
 		testPlayerList.add(testP3);
-		GameState gameState = new GameState(testPlayerList, new Board("cities.txt"), 
+		GameState gameState = new GameState(Colors.player.BLACK, testPlayerList, new Board("cities.txt"), 
 				new DestinationTicketList("destinations.txt"), new ArrayList<Turn>());
 		assertEquals("history controller should retireve the game state correctly", hist.getGameState().getPlayers(), testPlayerList);
 	}
