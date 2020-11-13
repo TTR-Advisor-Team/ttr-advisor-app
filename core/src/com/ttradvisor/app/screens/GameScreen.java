@@ -340,7 +340,6 @@ public class GameScreen implements Screen {
 								.takeAction(new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets))) {
 							
 							errorMessage.setVisible(false);
-							System.out.println(errorMessage.isVisible());
 							advanceTurn(isInitial,
 									new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets));
 						}else {	
