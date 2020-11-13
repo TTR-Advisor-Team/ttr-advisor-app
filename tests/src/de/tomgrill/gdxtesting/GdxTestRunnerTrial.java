@@ -1,18 +1,4 @@
-/*******************************************************************************
- * Copyright 2015 See AUTHORS file.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- ******************************************************************************/
+// Andrey's note - trial at making the JUnit testing work
 
 package de.tomgrill.gdxtesting;
 
@@ -26,27 +12,46 @@ import org.junit.runners.model.InitializationError;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.ttradvisor.app.TTRAdvisorApp;
 
 import static org.mockito.Mockito.mock;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.headless.HeadlessApplication;
 import com.badlogic.gdx.backends.headless.HeadlessApplicationConfiguration;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 /**
  * Sourced from https://github.com/TomGrill/gdx-testing
  *
  */
-public class GdxTestRunnerOld extends BlockJUnit4ClassRunner implements ApplicationListener {
-
-	private Map<FrameworkMethod, RunNotifier> invokeInRender = new HashMap<FrameworkMethod, RunNotifier>();
+public class GdxTestRunnerTrial extends BlockJUnit4ClassRunner implements ApplicationListener {
 	
-	public GdxTestRunnerOld(Class<?> klass) throws InitializationError {
-		super(klass);
-		HeadlessApplicationConfiguration conf = new HeadlessApplicationConfiguration();
+	public static TTRAdvisorApp testApp;
 
-		new HeadlessApplication(this, conf);
-		Gdx.gl = mock(GL20.class);
+	protected Map<FrameworkMethod, RunNotifier> invokeInRender = new HashMap<FrameworkMethod, RunNotifier>();
+	
+	public GdxTestRunnerTrial(Class<?> klass) throws InitializationError {
+		super(klass);
+		
+		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+		
+		config.pauseWhenMinimized = true;
+		
+		// config options set for testing
+		
+		config.width = 1080;
+		config.height = 720;
+//		config.fullscreen = true;
+		config.resizable = false;
+		config.title = "Ticket to Ride Advisor";
+		
+		testApp = new TTRAdvisorAppTest(this);
+		new LwjglApplication(testApp, config);
+		
+
+		// guiStage.getRoot().findActor(name);
 	}
 
 	@Override
@@ -92,7 +97,7 @@ public class GdxTestRunnerOld extends BlockJUnit4ClassRunner implements Applicat
 	/**
 	    *
 	    */
-	private void waitUntilInvokedInRenderMethod() {
+	protected void waitUntilInvokedInRenderMethod() {
 		try {
 			while (true) {
 				Thread.sleep(10);
