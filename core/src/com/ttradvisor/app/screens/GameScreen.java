@@ -7,6 +7,7 @@ import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -256,6 +257,11 @@ public class GameScreen implements Screen {
 	}
 
 	private void setupCardInputHandling() {
+		final Label errorMessage = new Label("", TTRAdvisorApp.skin);
+		errorMessage.setWidth(Gdx.graphics.getWidth()/2);
+		errorMessage.setPosition(Gdx.graphics.getWidth()/2 - errorMessage.getWidth()/2, Gdx.graphics.getHeight()/8);
+		errorMessage.setColor(Color.RED);
+        
 		// Button to draw Destination tickets
 		destButton = new TextButton("Draw Destination \n Ticket", TTRAdvisorApp.skin, "small");
 		TCButton = new TextButton("Draw Train \n Card", TTRAdvisorApp.skin, "small");
@@ -332,8 +338,14 @@ public class GameScreen implements Screen {
 
 						if (mainApp.turnInput
 								.takeAction(new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets))) {
+							
+							errorMessage.setVisible(false);
+							System.out.println(errorMessage.isVisible());
 							advanceTurn(isInitial,
 									new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets));
+						}else {	
+							errorMessage.setText(mainApp.gameState.getError());
+							errorMessage.setVisible(true);
 						}
 
 						guiStage.setScrollFocus(null);
@@ -509,6 +521,10 @@ public class GameScreen implements Screen {
 						if (mainApp.turnInput
 								.takeAction(new TrainCardAction(mainApp.gameState.currentPlayer, drawnCards))) {
 							advanceTurn(isInitial, new TrainCardAction(mainApp.gameState.currentPlayer, drawnCards));
+							errorMessage.setVisible(false);
+						} else {	
+							errorMessage.setText(mainApp.gameState.getError());
+							errorMessage.setVisible(true);
 						}
 
 						trainCardHand.setText(mainApp.gameState.currentPlayer.getTCS().toString());
@@ -585,6 +601,7 @@ public class GameScreen implements Screen {
 
 		guiStage.addActor(TCButton);
 		guiStage.addActor(trainCardHand);
+		guiStage.addActor(errorMessage);
 	}
 
 	private void setupTurnView() {

@@ -61,6 +61,7 @@ public class InputTurnController {
 			}
 			else {
 				Gdx.app.error("Turn", "May only draw destination tickets or train cards on initial turn.");
+				gameState.setError("May only draw destination tickets or train cards on initial turn.");
 				return false;
 			}
 		}
@@ -78,6 +79,7 @@ public class InputTurnController {
 			}
 			else {
 				Gdx.app.error("Turn", "No action selected for turn.");
+				gameState.setError("No action selected for turn");
 				return false;
 			}
 		}
@@ -86,6 +88,7 @@ public class InputTurnController {
 	private boolean initialTurnDrawTC(TrainCardAction thisTurn) {
 		if (thisTurn.getDrawnCards().size() != 4) {
 			Gdx.app.error("Turn", "Must draw 4 train cards on initial turn.");
+			gameState.setError("Must draw 4 train cards on initial turn.");
 			return false;
 		}
 		thisTurn.actingPlayer.getTCS().addAll(thisTurn.getDrawnCards());
@@ -100,6 +103,7 @@ public class InputTurnController {
 	private boolean initialTurnDrawDT(DestinationAction thisTurn) {
 		if (thisTurn.getDrawnTickets().size() < 2 || thisTurn.getDrawnTickets().size() > 3) {
 			Gdx.app.error("Turn", "Must draw between 2 and 3 destination tickets on initial turn.");
+			gameState.setError("Must draw between 2 and 3 destination tickets on initial turn.");
 			return false;
 		}
 		thisTurn.actingPlayer.getDTS().addAll(thisTurn.getDrawnTickets());
@@ -115,6 +119,7 @@ public class InputTurnController {
 	private boolean drawTC(TrainCardAction thisTurn) {
 		if (thisTurn.getDrawnCards().size() > 2) {
 			Gdx.app.error("Turn", "May not draw more than 2 train cards on a turn.");
+			gameState.setError("May not draw more than 2 train cards on a turn.");
 			return false;
 		}
 //		This is incomplete, it needs to check if there are any train cards available.
@@ -132,6 +137,7 @@ public class InputTurnController {
 	private boolean drawDT(DestinationAction thisTurn) {
 		if (thisTurn.getDrawnTickets().size() >  3 && thisTurn.getDrawnTickets().size() < 0) {
 			Gdx.app.error("Turn", "May not draw more than 3 tickets on a turn, and must keep atleast one drawn card.");
+			gameState.setError("May not draw more than 3 tickets on a turn, and must keep atleast one drawn card.");
 			return false;
 		}
 		else {
@@ -157,16 +163,19 @@ public class InputTurnController {
     	if (gameState.getBoard().getCountSpendableCards(thisTurn.claimedRoute, thisTurn.spentCards) < thisTurn.claimedRoute.getCost()) {
     		Gdx.app.error("Turn", "Not enough cards of acceptable colors spent to claim route, spent: "+gameState.getBoard().getCountSpendableCards(thisTurn.claimedRoute, thisTurn.spentCards)
     				+" cost: "+thisTurn.claimedRoute.getCost()+".");
+    		gameState.setError("Not enough cards of acceptable colors spent to claim route, spent.");
     		return false;
     	}
     	else if (!thisTurn.actingPlayer.canPlayerSpendCards(thisTurn.spentCards)) {
-    		Gdx.app.error("Turn", "Player doesn't have the selected cards in their hand! Your hand: " + thisTurn.actingPlayer.getTCS() + " vs. chosen cards: " + thisTurn.spentCards);
+    		Gdx.app.error("Turn", "Player doesn't have the selected cards in their hand. Your hand: " + thisTurn.actingPlayer.getTCS() + " vs. chosen cards: " + thisTurn.spentCards);
+    		gameState.setError("Player doesn't have the selected cards in their hand."); 
     		return false;
     	}
     	else {
     		if (gameState.getBoard().getAllRoutes(thisTurn.claimedRoute.getBegin(),thisTurn.claimedRoute.getEnd()).size() == 1) {
         		if (!gameState.getBoard().hasUnOwnedRoute(gameState.getBoard().getAllRoutes(thisTurn.claimedRoute.getBegin(),thisTurn.claimedRoute.getEnd()))){
         			Gdx.app.error("Turn", "1 No route available to be claimed between "+thisTurn.claimedRoute.getBegin()+" and "+ thisTurn.claimedRoute.getEnd()+".");
+        			gameState.setError("Route available to be claimed.");
         			return false;
         		}
         		else {
@@ -179,6 +188,7 @@ public class InputTurnController {
     			if (gameState.getPlayers().size() < 4) {
     				if (gameState.getBoard().getNumberNotOwned(gameState.getBoard().getAllRoutes(thisTurn.claimedRoute.getBegin(),thisTurn.claimedRoute.getEnd())) != 2){
     					Gdx.app.error("Turn", "Only one route may be claimed on double routes when playing with 2-3 players.");
+    					gameState.setError("Only one route may be claimed on double routes when playing with 2-3 players.");
             			return false;
     				}
     				else {
@@ -190,10 +200,12 @@ public class InputTurnController {
     			else {
     				if (!gameState.getBoard().hasUnOwnedRoute(gameState.getBoard().getAllRoutes(thisTurn.claimedRoute.getBegin(),thisTurn.claimedRoute.getEnd()))) {
             			Gdx.app.error("Turn", "2 No route available to be claimed between "+thisTurn.claimedRoute.getBegin()+" and "+ thisTurn.claimedRoute.getEnd()+".");
+            			gameState.setError("No route available to be claimed");
             			return false;
             		}
             		else if (gameState.getBoard().getRouteAnyOwner(thisTurn.claimedRoute.getBegin(),thisTurn.claimedRoute.getEnd()).getOwner().equals(thisTurn.actingPlayer.getColor())) {
             			Gdx.app.error("Turn", "Can not claim 2 routes between "+thisTurn.claimedRoute.getBegin()+" and "+ thisTurn.claimedRoute.getEnd()+".");
+            			gameState.setError("Can not claim 2 routes between the cities");
             			return false;
             		}
             		else {
@@ -206,6 +218,7 @@ public class InputTurnController {
         	
         	else {
         		Gdx.app.error("Turn", "3 Error in collecting number of routes between "+thisTurn.claimedRoute.getBegin()+" and "+ thisTurn.claimedRoute.getEnd()+".");
+        		gameState.setError("There was an error in setting routes on the board");
         		return false;
         	}		
     	}
