@@ -85,6 +85,30 @@ public class Player {
 	}
 	
 	/**
+	 * @return true if the player has the cards in this list
+	 */
+	public boolean canPlayerSpendCards(List<TrainCard> spentCards) {
+		ArrayList<TrainCard> hand = (ArrayList<TrainCard>) trainCardHand.clone();
+		for (TrainCard spentCard : spentCards) {
+			if (!hand.remove(spentCard)) {
+				// the player didn't have that card!
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	/**
+	 * Remove all the cards in the list from the player's hand
+	 * Assumes canPlayerSpendCards has been validated
+	 */
+	public  void spendCards(List<TrainCard> spentCards) {
+		for (TrainCard spentCard : spentCards) {
+			trainCardHand.remove(spentCard);
+		}
+	}
+	
+	/**
 	 * @return a deep copy of this Player object (incl. internal lists)
 	 */
 	@SuppressWarnings("unchecked")

@@ -159,7 +159,7 @@ public class InputTurnController {
     				+" cost: "+thisTurn.claimedRoute.getCost()+".");
     		return false;
     	}
-    	else if (!thisTurn.actingPlayer.getTCS().containsAll(thisTurn.spentCards)) {
+    	else if (!thisTurn.actingPlayer.canPlayerSpendCards(thisTurn.spentCards)) {
     		Gdx.app.error("Turn", "Player doesn't have the selected cards in their hand! Your hand: " + thisTurn.actingPlayer.getTCS() + " vs. chosen cards: " + thisTurn.spentCards);
     		return false;
     	}
@@ -170,7 +170,7 @@ public class InputTurnController {
         			return false;
         		}
         		else {
-        			thisTurn.actingPlayer.getTCS().removeAll(thisTurn.spentCards);
+        			thisTurn.actingPlayer.spendCards(thisTurn.spentCards);
         			gameState.getBoard().claimRoute(thisTurn.claimedRoute.getBegin(), thisTurn.claimedRoute.getEnd(), thisTurn.claimedRoute.getColor(), thisTurn.actingPlayer.getColor());
         			return true;
         		}
@@ -182,7 +182,7 @@ public class InputTurnController {
             			return false;
     				}
     				else {
-            			thisTurn.actingPlayer.getTCS().removeAll(thisTurn.spentCards);
+    					thisTurn.actingPlayer.spendCards(thisTurn.spentCards);
             			gameState.getBoard().claimRoute(thisTurn.claimedRoute.getBegin(), thisTurn.claimedRoute.getEnd(), thisTurn.claimedRoute.getColor(), thisTurn.actingPlayer.getColor());
             			return true;
             		}
@@ -197,7 +197,7 @@ public class InputTurnController {
             			return false;
             		}
             		else {
-            			thisTurn.actingPlayer.getTCS().removeAll(thisTurn.spentCards);
+            			thisTurn.actingPlayer.spendCards(thisTurn.spentCards);
             			gameState.getBoard().claimRoute(thisTurn.claimedRoute.getBegin(), thisTurn.claimedRoute.getEnd(), thisTurn.claimedRoute.getColor(), thisTurn.actingPlayer.getColor());
             			return true;
             		}
