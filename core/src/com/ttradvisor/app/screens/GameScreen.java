@@ -46,6 +46,7 @@ import com.ttradvisor.app.classes.DestinationAction;
 import com.ttradvisor.app.classes.DestinationTicket;
 import com.ttradvisor.app.classes.DestinationTicketList;
 import com.ttradvisor.app.classes.Player;
+import com.ttradvisor.app.classes.Recommender;
 import com.ttradvisor.app.classes.RouteAction;
 import com.ttradvisor.app.classes.TrainCard;
 import com.ttradvisor.app.classes.TrainCardAction;
@@ -1021,6 +1022,14 @@ public class GameScreen implements Screen {
 		mainApp.gameState.addTurn(new Turn(mainApp.gameState.getBoard().snapshotBoard(), action, deepCopyPlayers));
 		mainApp.hist.setTurnIndex(mainApp.gameState.getCurrentTurnCounter());
 		turnNumber.setText(Integer.toString(mainApp.hist.getTurnIndex()));
+		if (mainApp.userColor.equals(mainApp.gameState.currentPlayer.getColor())) {
+			Recommender rec = new Recommender(mainApp.gameState.getBoard(), mainApp.gameState.currentPlayer,
+					mainApp.gameState.getCurrentTurnCounter(), mainApp.gameState.getPlayers().size());
+			ArrayList<String> recs = rec.calculate(mainApp.gameState.currentPlayer.getDTS());
+			rec1.setText(recs.get(0));
+			rec2.setText(recs.get(1));
+			rec3.setText(recs.get(2));
+		}
 
 	}
 
