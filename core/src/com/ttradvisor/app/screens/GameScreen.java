@@ -820,6 +820,10 @@ public class GameScreen implements Screen {
 	 * @param route the one route we've narrowed down to
 	 */
 	private void setupHelperChooseCards(final Route route) {
+		final Label errorMessage = new Label("", TTRAdvisorApp.skin);
+		errorMessage.setWidth(Gdx.graphics.getWidth()/2);
+		errorMessage.setPosition(Gdx.graphics.getWidth()/2 - errorMessage.getWidth()/2, Gdx.graphics.getHeight()/8);
+		errorMessage.setColor(Color.RED);
 
 		selectedRoute = "Selected: " + route;
 
@@ -941,6 +945,11 @@ public class GameScreen implements Screen {
 
 				if (mainApp.turnInput.takeAction(routeAction)) {
 					advanceTurn(isInitial, routeAction);
+					errorMessage.setVisible(false);
+				} else {	
+					errorMessage.setText(mainApp.gameState.getError());
+					errorMessage.setVisible(true);
+					System.out.println(errorMessage.getText());
 				}
 
 				selectedCity = DEFAULT_CITY_LABEL;

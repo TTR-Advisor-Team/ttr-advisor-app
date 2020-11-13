@@ -148,18 +148,7 @@ public class InputTurnController {
 
     
     private boolean claimRoute(RouteAction thisTurn) {	
-//    	int count  = 0;
-//		for (String city : gameState.getBoard().getBoard().keySet()) {
-//			for (Route route : gameState.getBoard().getAllRoutes(city)) {
-//				System.out.print(route+": ");
-//				System.out.print(route.getOwner()+": ");
-//				System.out.print(route.getColor()+": ");
-//				System.out.print(route.getCost()+": ");
-//				System.out.println();
-//			}
-//			count++;
-//			if (count>1) break;
-//		}
+
     	if (gameState.getBoard().getCountSpendableCards(thisTurn.claimedRoute, thisTurn.spentCards) < thisTurn.claimedRoute.getCost()) {
     		Gdx.app.error("Turn", "Not enough cards of acceptable colors spent to claim route, spent: "+gameState.getBoard().getCountSpendableCards(thisTurn.claimedRoute, thisTurn.spentCards)
     				+" cost: "+thisTurn.claimedRoute.getCost()+".");
