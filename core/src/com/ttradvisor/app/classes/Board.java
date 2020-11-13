@@ -34,20 +34,39 @@ public class Board {
 		}
 
 	}
+	/**
+	 * Private constructor to only be used by snapShotBoard method
+	 * @param board
+	 */
 	private Board(HashMap<String, LinkedList<Route>> board) {
 		this.board = board;
 	}
-
+	/**
+	 * 
+	 * @return The HashMap for the game TicketToRide
+	 */
 	public HashMap<String, LinkedList<Route>> getBoard() {
 		return board;
 	}
-
+	/**
+	 * Debugging method. Confirms a city key exists in the Board's HashMap.
+	 * @param city
+	 * @return
+	 */
 	public String getCity(String city) {
 		if (board.containsKey(city))
 			return city;
 		return null;
 	}
-
+	/**
+	 * Claims a route for a particular player. Sets the route's owner field to that of player.
+	 * This is a pair-wise operation, as the graph is undirected, so all routes are double.
+	 * Can only claim route owned by Colors.player.NONE.
+	 * @param cityBegin
+	 * @param cityEnd
+	 * @param color
+	 * @param player
+	 */
 	public void claimRoute(String cityBegin, String cityEnd, Colors.route color, Colors.player player) {
 		LinkedList<Route> begin = board.get(cityBegin);
 		for (Route r : begin) {
@@ -66,7 +85,10 @@ public class Board {
 		}
 
 	}
-
+	/**
+	 * Makes a copy of the board object.
+	 * @return A deep copy of the current board.
+	 */
 	public Board snapshotBoard() {
 		HashMap<String, LinkedList<Route>> copyMap = new HashMap<String, LinkedList<Route>>();
 		Set<String> s = board.keySet();
@@ -82,18 +104,49 @@ public class Board {
 		return copyBoard;
 	}
 
-	// returns a list of routes from a city to all neighboring cities
+	/**
+	 *  returns a list of routes from a city to all neighboring cities
+	 * @param city
+	 * @return A linked list of all routes whose origin is the city
+	 */
 	public LinkedList<Route> getAllRoutes(String city) {
 		return board.get(city);
 	}
 
-	// return a specific route from start city to end city
+	/**
+	 *  return a specific route from start city to end city
+	 * @param start
+	 * @param end
+	 * @param color
+	 * @param owner
+	 * @return Returns a route that satisfies all parameters. Can return null.
+	 */
 	public Route getRoute(String start, String end, Colors.route color, Colors.player owner) {
 		LinkedList<Route> routes = board.get(start);
 		for (Route r : routes) {
 			if (r.end.equals(end) && r.color.equals(color) && r.owner.equals(owner))
 				return r;
-			continue;
+		}
+		return null;
+	}
+	/**
+	 * Returns a single route from start city to end city whose owner is specified. 
+	 * If none are found, returns the first unowned route. If none found, returns null.
+	 * @param start
+	 * @param end
+	 * @param owner
+	 * @return Route from start to end or null.
+	 */
+	public Route getRoute(String start, String end, Colors.player owner) {
+		LinkedList<Route> routes = board.get(start);
+		for (Route r: routes) {
+			if(r.end.equals(end) && r.owner.equals(owner)) {
+				return r;
+			}				
+		}
+		for (Route r: routes) { 
+			if(r.end.equals(end) && r.owner.equals(Colors.player.NONE))
+					return r;
 		}
 		return null;
 	}
@@ -104,10 +157,9 @@ public class Board {
 	 * @return a route from begin to end
 	 */
 	public Route getRoute(String start, String end) {
-		//needs to be redone, functionality checked
 		LinkedList<Route> routes = board.get(start);
 		for (Route r : routes) {
-			if (r.end.equals(end) /*&& r.owner.equals(Colors.player.NONE)*/)
+			if (r.end.equals(end))
 				return r;
 			continue;
 		}
@@ -117,7 +169,12 @@ public class Board {
 	
 	
 	
-	
+	/**
+	 * A convenience method for returning a single route between two neighboring cities.
+	 * @param start
+	 * @param end
+	 * @return Route from start to end. Can return null.
+	 */
 	public Route getRouteAnyOwner(String start, String end) {
 		LinkedList<Route> routes = board.get(start);
 		for (Route r: routes) {
@@ -231,7 +288,7 @@ public class Board {
 
 		@Override
 		public String toString() {
-			return color + ": " + begin + " ====> " + end;
+			return begin + " ====> " + end;
 		}
 
 		public String getBegin() {

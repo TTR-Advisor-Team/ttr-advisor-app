@@ -8,105 +8,139 @@ import java.util.Comparator;
 import java.util.HashMap;
 
 import com.ttradvisor.app.classes.Board.Route;
+import com.ttradvisor.app.classes.Colors.player;
 
 public class Recommender {
 	Board board;
 	Player player;
 	int turn;
 	int numPlayers;
+
 	public Recommender(Board board, Player player, int turn, int numPlayers) {
 		this.board = board;
 		this.player = player;
 		this.turn = turn;
 		this.numPlayers = numPlayers;
 	}
+
 	/**
 	 * 
 	 * @param tickets
-	 * @return strings that tell the player what the best option is
+	 * @return strings that tell the player what the best options are
 	 */
 	public ArrayList<String> calculate(ArrayList<DestinationTicket> tickets) {
 		ArrayList<String> recommendations = new ArrayList<String>();
-		
+
 		// calculate the player's train ticket resources
 		HashMap<Colors.route, Integer> resources = getResources();
-		
-		//if player has complete all destination tickets
-		if(tickets.isEmpty()) {
-			//the game is still relatively new
-			if (turn <= numPlayers*10) {
+
+		// if player has complete all destination tickets
+		if (tickets.isEmpty()) {
+			// the game is still relatively new
+			if (turn <= numPlayers * 10) {
 				recommendations.add("Draw destination ticket.");
-			}
-			else {
-				//the game is too far along to realistically complete another ticket
-				for(Colors.route c: resources.keySet()) {
+			} else {
+				// the game is too far along to realistically complete another ticket
+				for (Colors.route c : resources.keySet()) {
 					if (resources.get(c) > 5) {
-						recommendations.add("Claim the most expensive " + c + " or GRAY route." );
+						recommendations.add("Claim the most expensive " + c + " or GRAY route.");
+					} else {
+						String s = "Draw train cards. Priority: " + Colors.route.ANY;
+						if (!recommendations.contains(s))
+							recommendations.add(s);
 					}
 				}
-				
+
+			}
+		} else {
+			if (turn <= numPlayers * 10) {
+				recommendations.add("Draw destination ticket.");
+			} else {
+				// the game is too far along to realistically complete another ticket
+				for (Colors.route c : resources.keySet()) {
+					if (resources.get(c) > 5) {
+						recommendations.add("Claim the most expensive " + c + " or GRAY route.");
+					} else {
+						String s = "Draw train cards. Priority: " + Colors.route.ANY;
+						if (!recommendations.contains(s))
+							recommendations.add(s);
+					}
+				}
+
 			}
 		}
-		//find all routes on shortest path between cities
+		// find all routes on shortest path between cities
 		ArrayList<Route> routes = getRoutes(tickets);
 		routes.sort(new Comparator<Route>() {
 			public int compare(Route r1, Route r2) {
 				return r2.getCost() - r1.getCost();
 			}
-		});	
-		
+		});
+
 		// if can purchase a route in routes, buy it
-		for(Route r: routes) {
-			if(((resources.get(r.getColor()) + resources.get(Colors.route.ANY)) >= r.getCost()) && (player.getNumTrains() >= r.cost)) {
-				recommendations.add("Claim "+r.getColor()+" route from "+r.getBegin()+" to " + r.getEnd()+".");
+		for (Route r : routes) {
+			if (((resources.get(r.getColor()) + resources.get(Colors.route.ANY)) >= r.getCost())
+					&& (player.getNumTrains() >= r.cost) && (r.getOwner().equals(Colors.player.NONE))) {
+				recommendations
+						.add("Claim " + r.getColor() + " route from " + r.getBegin() + " to " + r.getEnd() + ".");
 			}
 		}
-		
-				
+
 		// if not draw train cards, prioritize longer routes
-		for(Route r: routes) {
-			String s = "Draw train cards. Priority: " + r.color; 
-			if (!recommendations.contains(s))
-				recommendations.add(s);			
+		for (Route r : routes) {
+			if (r.getOwner().equals(Colors.player.NONE)) {
+				String s = "Draw train cards. Priority: " + r.color;
+				if (!recommendations.contains(s))
+					recommendations.add(s);
+			}
+
 		}
 		// or go for the longest route bonus. Iteration3
-		
+		while (recommendations.size() < 3) {
+			recommendations.add("No recommendation");
+		}
 		return recommendations;
 	}
+
 	/**
 	 * 
 	 * @return a mapping of the number of each train card resource
 	 */
 	public HashMap<Colors.route, Integer> getResources() {
 		HashMap<Colors.route, Integer> resources = new HashMap<Colors.route, Integer>();
-		for (Colors.route c: Colors.route.values()) {
-			resources.put(c, 0);			
+		for (Colors.route c : Colors.route.values()) {
+			resources.put(c, 0);
 		}
-		for(TrainCard tc: player.getTCS()) {
-			resources.replace(tc.getColor(), resources.get(tc.getColor())+1);
+		for (TrainCard tc : player.getTCS()) {
+			resources.replace(tc.getColor(), resources.get(tc.getColor()) + 1);
 		}
 		return resources;
 	}
+
 	/**
 	 * 
 	 * @param tickets
-	 * @return all unique routes that a player needs to complete their destination tickets
+	 * @return all unique routes that a player needs to complete their destination
+	 *         tickets, can return empty if impossible to complete route(s)
 	 */
-	public ArrayList<Route> getRoutes(ArrayList<DestinationTicket> tickets){
+	public ArrayList<Route> getRoutes(ArrayList<DestinationTicket> tickets) {
 		ArrayList<Route> allRoutes = new ArrayList<Route>();
 		for (DestinationTicket dt : tickets) {
 			ArrayList<Route> routes = shortestPath(dt.getStart(), dt.getEnd());
-			for(Route r: routes) {
-				if (!allRoutes.contains(r)) 
+			for (Route r : routes) {
+				if (!allRoutes.contains(r))
 					allRoutes.add(r);
 			}
 		}
 		return allRoutes;
 	}
+
 	/**
-	 * Implementation of Dijkstra's Algorithm
+	 * Implementation of Dijkstra's Algorithm. Currently there is no termination
+	 * protocol for routes impossible to complete.
+	 * 
 	 * @param begin the starting node of the path
-	 * @param end then ending node of the path
+	 * @param end   then ending node of the path
 	 * @return A list of all routes on the shortest path
 	 */
 	public ArrayList<Route> shortestPath(String begin, String end) {
@@ -114,10 +148,10 @@ public class Recommender {
 		ArrayList<Route> routes = new ArrayList<Route>();
 		PriorityQueue<City> openSet = new PriorityQueue<City>(new Comparator<City>() {
 			public int compare(City c1, City c2) {
-				//if (c1.totalCost > c2.totalCost)
-					//return 1;
-				//if (c1.totalCost < c2.totalCost)
-					//return -1;
+				// if (c1.totalCost > c2.totalCost)
+				// return 1;
+				// if (c1.totalCost < c2.totalCost)
+				// return -1;
 				return c1.totalCost - c2.totalCost;
 			}
 		});
@@ -127,37 +161,37 @@ public class Recommender {
 
 		while (!openSet.isEmpty()) {
 			City c = openSet.poll();
-			//System.out.println("Investigating city: " +c.current);
 			closed.add(c);
-			//System.out.println(c.current + " total cost:" + c.totalCost);
+			if (c.totalCost >= 1000) {
+				return routes;
+			}
 			// check if goal has been reached
 			if (c.current.equals(end)) {
 				// follow previous until null and add them to routes list
 				// these are the routes to focus on claiming or saving up for
 				while (c.previous != null) {
-					//System.out.println(board.getRoute(c.current, c.previous.current).toString());
-					routes.add(board.getRoute(c.current, c.previous.current));
+					routes.add(board.getRoute(c.current, c.previous.current, player.getColor()));
 					c = c.previous;
 				}
-				
-				int cost = 0;
-				System.out.println("FINAL ROUTE");
-				for(Route r: routes) {
-					System.out.println(r.toString());
-					cost += r.getCost();
-				}
-				System.out.println("Total route cost: " + cost);
-				
+
+//				int cost = 0;
+//				System.out.println("FINAL ROUTE");
+//				for (Route r : routes) {
+//				    System.out.println(r.toString());
+//				    cost += r.getCost();
+//				}
+//				System.out.println("Total route cost: " + cost);
+
 				return routes;
 			}
 
 			// if the goal has not been reached
-			// expand search to all adjacent cities		
-			
+			// expand search to all adjacent cities
+
 			for (Route r : board.getAllRoutes(c.current)) {
 				boolean open = false;
 				boolean close = false;
-				//System.out.println(r.toString());
+
 				City next = new City(r.end, c, calcCost(c, r.end));
 				// if openSet contains r.end compare totalCost
 				for (City old : openSet) {
@@ -186,7 +220,7 @@ public class Recommender {
 				}
 
 				// if not on openSet or closed, place in open
-				if(!open && !close)
+				if (!open && !close)
 					openSet.add(next);
 			}
 		}
@@ -195,6 +229,7 @@ public class Recommender {
 
 	/**
 	 * Cost calculator for Dijkstra's Algorithm
+	 * 
 	 * @param currentCity
 	 * @param nextCity
 	 * @return the total cost of traversing to the next city
@@ -211,7 +246,7 @@ public class Recommender {
 			else
 				return currentCity.totalCost + 1000;
 		}
-		return -1;
+		return 100000;
 	}
 
 	static private class City {

@@ -152,16 +152,9 @@ public class TestBoard {
 
 	}
 
-	@Test
-	public void getRouteTest4() {
-		Board b = new Board("cities.txt");
-		b.claimRoute("Boston", "New York", Colors.route.RED, Colors.player.BLUE);
-		Route r1 = b.getRoute("Boston", "New York");
-		assertEquals(Colors.route.YELLOW, r1.getColor());
-	}
 
 	@Test
-	public void getRouteTest5() {
+	public void getRouteTest4() {
 		Board b = new Board("cities.txt");
 		b.claimRoute("Boston", "New York", Colors.route.RED, Colors.player.BLUE);
 		Route r1 = b.getRoute("Boston", "New York", Colors.route.RED, Colors.player.BLUE);
@@ -191,6 +184,7 @@ public class TestBoard {
 				assertEquals(routes.peek().getColor(), copyRoutes.peek().getColor());
 				assertEquals(routes.peek().getOwner(), copyRoutes.peek().getOwner());
 				assertEquals(routes.peek().getCost(), copyRoutes.peek().getCost());
+				assertFalse(routes.peek().equals(copyRoutes.peek()));
 				routes.poll();
 				copyRoutes.poll();
 			}
