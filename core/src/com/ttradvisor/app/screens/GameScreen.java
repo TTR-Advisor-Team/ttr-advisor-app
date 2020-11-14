@@ -104,6 +104,8 @@ public class GameScreen implements Screen {
 	private TextButton prevTurn;
 	private TextButton nextTurn;
 	private Label turnNumber;
+	
+	private Label errorMessage;
 
 	private ArrayList<TextureRegion> playerColors;
 
@@ -258,7 +260,7 @@ public class GameScreen implements Screen {
 	}
 
 	private void setupCardInputHandling() {
-		final Label errorMessage = new Label("", TTRAdvisorApp.skin);
+		errorMessage = new Label("", TTRAdvisorApp.skin);
 		errorMessage.setWidth(Gdx.graphics.getWidth()/2);
 		errorMessage.setPosition(Gdx.graphics.getWidth()/2 - errorMessage.getWidth()/2, Gdx.graphics.getHeight()/8);
 		errorMessage.setColor(Color.RED);
@@ -822,7 +824,7 @@ public class GameScreen implements Screen {
 	 * @param route the one route we've narrowed down to
 	 */
 	private void setupHelperChooseCards(final Route route) {
-		final Label errorMessage = new Label("", TTRAdvisorApp.skin);
+		errorMessage = new Label("", TTRAdvisorApp.skin);
 		errorMessage.setWidth(Gdx.graphics.getWidth()/2);
 		errorMessage.setPosition(Gdx.graphics.getWidth()/2 - errorMessage.getWidth()/2, Gdx.graphics.getHeight()/8);
 		errorMessage.setColor(Color.RED);
@@ -1039,6 +1041,7 @@ public class GameScreen implements Screen {
 //      table.setDebug(true); // turn on all debug lines (table, cell, and widget)
 		guiStage.addActor(table);
 		guiStage.addActor(drawnCardList);
+		guiStage.addActor(errorMessage);
 
 	}
 
@@ -1077,6 +1080,7 @@ public class GameScreen implements Screen {
 			rec3.setText(recs.get(2));
 		}
 		demoCurrPlayer.setText("Current player: " + mainApp.gameState.currentPlayer.getColor());
+		errorMessage.setVisible(false);
 
 	}
 
