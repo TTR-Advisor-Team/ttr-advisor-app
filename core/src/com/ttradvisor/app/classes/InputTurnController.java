@@ -86,6 +86,11 @@ public class InputTurnController {
 	}
 	
 	private boolean initialTurnDrawTC(TrainCardAction thisTurn) {
+		if (initialTurnTCSDrawn == true) {
+			Gdx.app.error("Turn", "Have already drawn starting hand");
+			gameState.setError("You have already drawn your starting hand.");
+			return false;
+		}
 		if (thisTurn.getDrawnCards().size() != 4) {
 			Gdx.app.error("Turn", "Must draw 4 train cards on initial turn.");
 			gameState.setError("Must draw 4 train cards on initial turn.");
@@ -97,10 +102,16 @@ public class InputTurnController {
 			isInitialTurnActive = false;
 			return true;
 		}
+		gameState.setError("");
 		return false;
 	}
 	
 	private boolean initialTurnDrawDT(DestinationAction thisTurn) {
+		if (initialTurnDTSDrawn == true) {
+			Gdx.app.error("Turn", "Have already drawn initial dest tickets.");
+			gameState.setError("You have already drawn your starting destination tickets.");
+			return false;
+		}
 		if (thisTurn.getDrawnTickets().size() < 2 || thisTurn.getDrawnTickets().size() > 3) {
 			Gdx.app.error("Turn", "Must draw between 2 and 3 destination tickets on initial turn.");
 			gameState.setError("Must draw between 2 and 3 destination tickets on initial turn.");
@@ -112,6 +123,7 @@ public class InputTurnController {
 			isInitialTurnActive = false;
 			return true;
 		}
+		gameState.setError("");
 		return false;
 	}
 
@@ -120,6 +132,11 @@ public class InputTurnController {
 		if (thisTurn.getDrawnCards().size() > 2) {
 			Gdx.app.error("Turn", "May not draw more than 2 train cards on a turn.");
 			gameState.setError("May not draw more than 2 train cards on a turn.");
+			return false;
+		}
+		else if (thisTurn.getDrawnCards().size() == 1 && thisTurn.getDrawnCards().get(0).getColor() != Colors.route.ANY) {
+			Gdx.app.error("Turn", "If drawing one card, it must be a wild.");
+			gameState.setError("If drawing one card, it must be a wild.");
 			return false;
 		}
 //		This is incomplete, it needs to check if there are any train cards available.
@@ -162,7 +179,13 @@ public class InputTurnController {
 	    		gameState.setError("Player doesn't have the selected cards in their hand."); 
 	    		return false;
 	    	}
+	    	if (thisTurn.spentCards.size() > thisTurn.claimedRoute.cost) {
+	    		Gdx.app.error("Turn", "Too many cards to claim this route.");
+	    		gameState.setError("Selected too many cards to claim this route."); 
+	    		return false;
+	    	}
     	}
+
     	// THESE CHECKS APPLY TO ALL PLAYERS
 
 		if (gameState.getBoard().getAllRoutes(thisTurn.claimedRoute.getBegin(),thisTurn.claimedRoute.getEnd()).size() == 1) {
