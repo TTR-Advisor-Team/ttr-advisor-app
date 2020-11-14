@@ -339,13 +339,11 @@ public class GameScreen implements Screen {
 
 						boolean isInitial = mainApp.turnInput.isInitialTurn();
 
-						if (mainApp.turnInput
-								.takeAction(new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets))) {
+						if (mainApp.turnInput.takeAction(new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets))) {
 							
-							errorMessage.setVisible(false);
-							advanceTurn(isInitial,
-									new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets));
-						}else {	
+							advanceTurn(isInitial,new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets));
+						}
+						else {	
 							errorMessage.setText(mainApp.gameState.getError());
 							errorMessage.setVisible(true);
 						}
@@ -520,10 +518,8 @@ public class GameScreen implements Screen {
 
 						boolean isInitial = mainApp.turnInput.isInitialTurn();
 
-						if (mainApp.turnInput
-								.takeAction(new TrainCardAction(mainApp.gameState.currentPlayer, drawnCards))) {
+						if (mainApp.turnInput.takeAction(new TrainCardAction(mainApp.gameState.currentPlayer, drawnCards))) {
 							advanceTurn(isInitial, new TrainCardAction(mainApp.gameState.currentPlayer, drawnCards));
-							errorMessage.setVisible(false);
 						} else {	
 							errorMessage.setText(mainApp.gameState.getError());
 							errorMessage.setVisible(true);
@@ -824,10 +820,6 @@ public class GameScreen implements Screen {
 	 * @param route the one route we've narrowed down to
 	 */
 	private void setupHelperChooseCards(final Route route) {
-		errorMessage = new Label("", TTRAdvisorApp.skin);
-		errorMessage.setWidth(Gdx.graphics.getWidth()/2);
-		errorMessage.setPosition(Gdx.graphics.getWidth()/2 - errorMessage.getWidth()/2, Gdx.graphics.getHeight()/8);
-		errorMessage.setColor(Color.RED);
 
 		selectedRoute = "Selected: " + route;
 		
@@ -968,11 +960,9 @@ public class GameScreen implements Screen {
 
 				if (mainApp.turnInput.takeAction(routeAction)) {
 					advanceTurn(isInitial, routeAction);
-					errorMessage.setVisible(false);
 				} else {	
 					errorMessage.setText(mainApp.gameState.getError());
 					errorMessage.setVisible(true);
-					System.out.println(errorMessage.getText());
 				}
 
 				selectedCity = DEFAULT_CITY_LABEL;
@@ -1041,8 +1031,6 @@ public class GameScreen implements Screen {
 //      table.setDebug(true); // turn on all debug lines (table, cell, and widget)
 		guiStage.addActor(table);
 		guiStage.addActor(drawnCardList);
-		guiStage.addActor(errorMessage);
-
 	}
 
 	/**
