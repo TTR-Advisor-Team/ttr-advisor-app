@@ -2,7 +2,7 @@ Atlanta,Charleston,ANY,2,,Raleigh,ANY,2,,Raleigh,ANY,2,,New Orleans,YELLOW,4,,Ne
 Boston,Montreal,ANY,2,,Montreal,ANY,2,,New York,RED,2,,New York,YELLOW,2,
 Calgary,Helena,ANY,4,,Vancouver,ANY,3,,Seattle,ANY,4,,Winnipeg,WHITE,6,
 Charleston,Atlanta,ANY,2,,Raleigh,ANY,2,,Miami,PINK,4,
-Chicago,Toronto,WHITE,4,,Pittsburgh,ORANGE,3,,Pittsburgh,WHITE,3,,Saint Louis,WHITE,2,,Saint Louis,GREEN,2,,Omaha,BLUE,4,,Duluth,RED,3,
+Chicago,Toronto,WHITE,4,,Pittsburgh,ORANGE,3,,Pittsburgh,BLACK,3,,Saint Louis,WHITE,2,,Saint Louis,GREEN,2,,Omaha,BLUE,4,,Duluth,RED,3,
 Dallas,Oklahoma City,ANY,2,,Oklahoma City,ANY,2,,Houston,ANY,1,,Houston,ANY,1,,Little Rock,ANY,1,,El Paso,RED,4,
 Denver,Salt Lake City,RED,3,,Salt Lake City,YELLOW,3,,Helena,GREEN,4,,Omaha,PINK,4,,Kansas City,BLACK,4,,Kansas City,ORANGE,4,,Oklahoma City,RED,4,,Santa Fe,ANY,2,,Phoenix,WHITE,5,
 Duluth,Winnipeg,BLACK,4,,Helena,ORANGE,6,,Omaha,ANY,2,,Omaha,ANY,2,,Chicago,RED,3,,Sault St. Marie,ANY,3,
