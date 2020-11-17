@@ -14,7 +14,9 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.PolygonRegion;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.EarClippingTriangulator;
 import com.badlogic.gdx.math.MathUtils;
@@ -49,6 +51,9 @@ import com.ttradvisor.app.classes.DestinationTicketList;
 import com.ttradvisor.app.classes.Player;
 import com.ttradvisor.app.classes.Recommender;
 import com.ttradvisor.app.classes.RouteAction;
+import com.ttradvisor.app.classes.RouteLocations;
+import com.ttradvisor.app.classes.RouteLocations.RouteLocation;
+import com.ttradvisor.app.classes.RouteLocations.TrainLocation;
 import com.ttradvisor.app.classes.TrainCard;
 import com.ttradvisor.app.classes.TrainCardAction;
 import com.ttradvisor.app.classes.Turn;
@@ -108,6 +113,10 @@ public class GameScreen implements Screen {
 	private Label errorMessage;
 
 	private ArrayList<TextureRegion> playerColors;
+	
+	private TextureAtlas textureAtlas;
+    private Sprite trainImage;
+	private RouteLocations routeLocations;
 
 	public GameScreen(TTRAdvisorApp main) {
 		mainApp = main;
@@ -167,6 +176,9 @@ public class GameScreen implements Screen {
 		camera.position.set(0, 0, camera.position.z);
 		clampCamera();
 
+		textureAtlas = new TextureAtlas("trains.txt");
+		routeLocations = new RouteLocations("routes.json");
+	
 	}
 
 	private void setupRecommendations() {
@@ -1138,37 +1150,98 @@ public class GameScreen implements Screen {
 	 */
 	private void drawMapStageManually() {
 
+//		mapStage.getCamera().update();
+//
+//		if (!mapStage.getRoot().isVisible())
+//			return;
+//
+//		Batch batch = mapStage.getBatch();
+//		batch.setProjectionMatrix(camera.combined);
+//
+//		mapStage.getBatch().begin();
+//
+//		mapStage.getRoot().draw(mapStage.getBatch(), 1);
+//
+//		for (Player p : mainApp.gameState.getPlayers()) {
+//			for (Route r : mainApp.gameState.getBoard().getAllRoutesOfPlayer(p.getColor())) {
+//
+//				Vector2 beginLoc = cityLocs.getCityLocation(r.getBegin());
+//				Vector2 endLoc = cityLocs.getCityLocation(r.getEnd());
+//
+//				float dist = beginLoc.dst(endLoc);
+//
+//				double angle = Math.atan2(endLoc.y - beginLoc.y, endLoc.x - beginLoc.x) * 180 / Math.PI;
+//
+//				TextureRegion tex = playerColors.get(mainApp.gameState.getPlayers().indexOf(p));
+//
+//				mapStage.getBatch().draw(tex, beginLoc.x, beginLoc.y, 0, 0, dist, 10, 1, 1, (float) angle);
+//
+//			}
+//		}
+//
+//		// and do the default behavior too
+//		mapStage.getBatch().end();
+		
 		mapStage.getCamera().update();
 
 		if (!mapStage.getRoot().isVisible())
 			return;
 
-		Batch batch = mapStage.getBatch();
-		batch.setProjectionMatrix(camera.combined);
+		mapStage.getBatch().setProjectionMatrix(camera.combined);
 
 		mapStage.getBatch().begin();
 
 		mapStage.getRoot().draw(mapStage.getBatch(), 1);
-
+		
+		
+//		for (int i = 0;i < mainApp.gameState.getBoard().getAllRoutes("Atlanta", "Raleigh").size();i++) {
+//			System.out.println( mainApp.gameState.getBoard().getAllRoutes("Atlanta", "Raleigh").get(i).getOwner());
+//		}
+		
+		
 		for (Player p : mainApp.gameState.getPlayers()) {
+			if(p.getColor().equals(Colors.player.BLACK)) {
+				trainImage = textureAtlas.createSprite("BlackTrain");
+			}
+			if (p.getColor().equals(Colors.player.BLUE)) {
+				trainImage = textureAtlas.createSprite("BlueTrain");
+			}
+			if (p.getColor().equals(Colors.player.GREEN)) {
+				trainImage = textureAtlas.createSprite("GreenTrain");
+			}
+			if (p.getColor().equals(Colors.player.RED)) {
+				trainImage = textureAtlas.createSprite("RedTrain");
+			}
+			if (p.getColor().equals(Colors.player.YELLOW)) {
+				trainImage = textureAtlas.createSprite("YellowTrain");
+			}
 			for (Route r : mainApp.gameState.getBoard().getAllRoutesOfPlayer(p.getColor())) {
-
-				Vector2 beginLoc = cityLocs.getCityLocation(r.getBegin());
-				Vector2 endLoc = cityLocs.getCityLocation(r.getEnd());
-
-				float dist = beginLoc.dst(endLoc);
-
-				double angle = Math.atan2(endLoc.y - beginLoc.y, endLoc.x - beginLoc.x) * 180 / Math.PI;
-
-				TextureRegion tex = playerColors.get(mainApp.gameState.getPlayers().indexOf(p));
-
-				mapStage.getBatch().draw(tex, beginLoc.x, beginLoc.y, 0, 0, dist, 10, 1, 1, (float) angle);
+				if (r.getColor().equals(Colors.route.ANY) && mainApp.gameState.getBoard().getAllRoutes(r.getBegin(), r.getEnd()).size() == 2) {
+					if (mainApp.gameState.getBoard().getAllRoutes(r.getBegin(), r.getEnd()).get(0).getOwner().equals(p.getColor())) {
+						for (TrainLocation t: routeLocations.getRouteLocation(r.getBegin(), r.getEnd(), r.getColor().toString()).trains){
+							mapStage.getBatch().draw(trainImage, t.x - 33, t.y - 15, 33, 15, 66, 30, 1, 1, t.r);
+						}
+					}else {
+						int secondANYIndex = 1 + routeLocations.getList().indexOf(routeLocations.getRouteLocation(r.getBegin(), r.getEnd(), r.getColor().toString()));
+						RouteLocation rL = routeLocations.getList().get(secondANYIndex);
+						for (TrainLocation t: rL.trains){
+							mapStage.getBatch().draw(trainImage, t.x - 33, t.y - 15, 33, 15, 66, 30, 1, 1, t.r);
+						}
+					}
+					
+				}
+				else {
+					for (TrainLocation t: routeLocations.getRouteLocation(r.getBegin(), r.getEnd(), r.getColor().toString()).trains){
+						mapStage.getBatch().draw(trainImage, t.x - 33, t.y - 15, 33, 15, 66, 30, 1, 1, t.r);
+					}
+				}
 
 			}
 		}
-
-		// and do the default behavior too
+		
 		mapStage.getBatch().end();
+	
+
 	}
 
 	@Override
