@@ -246,10 +246,12 @@ public class Board {
 	public int getCountSpendableCards(Route route, ArrayList<TrainCard> spent) {
 		int count  = 0;
 		for (TrainCard card: spent) {
-			if (card.getColor().equals(route.getColor()) || route.getColor().equals(Colors.route.ANY)) {
+			System.out.println("card color: "+card.getColor());
+			if (card.getColor().equals(route.getColor()) || card.getColor().equals(Colors.route.ANY)) {	
 				count++;
 			}
 		}
+		System.out.println("count: "+count);
 		return count;
 	}
 	
