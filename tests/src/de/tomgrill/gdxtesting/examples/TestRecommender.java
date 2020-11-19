@@ -49,8 +49,16 @@ public class TestRecommender {
 	public void shortesSinglePathTest1() {
 		ArrayList<Route> routes = rec.shortestPath("Nashville", "Atlanta");
 		int cost = 0;
+		Route prev = null;
 		for (Route r : routes) {
-			cost += r.getCost();
+			if (prev == null) {
+				cost += r.getCost();
+			} else if (prev.getBegin().equals(r.getBegin()) && prev.getEnd().equals(r.getEnd())) {
+				cost += 0;
+			} else {
+				cost += r.getCost();
+			}
+			prev = r;
 		}
 		assertEquals(1, cost);
 	}
@@ -59,8 +67,16 @@ public class TestRecommender {
 	public void reverseShortesSinglePathTest1() {
 		ArrayList<Route> routes = rec.shortestPath("Atlanta", "Nashville");
 		int cost = 0;
+		Route prev = null;
 		for (Route r : routes) {
-			cost += r.getCost();
+			if (prev == null) {
+				cost += r.getCost();
+			} else if (prev.getBegin().equals(r.getBegin()) && prev.getEnd().equals(r.getEnd())) {
+				cost += 0;
+			} else {
+				cost += r.getCost();
+			}
+			prev = r;
 		}
 		assertEquals(1, cost);
 	}
@@ -69,9 +85,18 @@ public class TestRecommender {
 	public void shortestDoublePathTest() {
 		ArrayList<Route> routes = rec.shortestPath("Vancouver", "Portland");
 		int cost = 0;
+		Route prev = null;
 		for (Route r : routes) {
-			cost += r.getCost();
+			if (prev == null) {
+				cost += r.getCost();
+			} else if (prev.getBegin().equals(r.getBegin()) && prev.getEnd().equals(r.getEnd())) {
+				cost += 0;
+			} else {
+				cost += r.getCost();
+			}
+			prev = r;
 		}
+
 		assertEquals(2, cost);
 	}
 
@@ -79,8 +104,16 @@ public class TestRecommender {
 	public void reverseShortestDoublePathTest() {
 		ArrayList<Route> routes = rec.shortestPath("Portland", "Vancouver");
 		int cost = 0;
+		Route prev = null;
 		for (Route r : routes) {
-			cost += r.getCost();
+			if (prev == null) {
+				cost += r.getCost();
+			} else if (prev.getBegin().equals(r.getBegin()) && prev.getEnd().equals(r.getEnd())) {
+				cost += 0;
+			} else {
+				cost += r.getCost();
+			}
+			prev = r;
 		}
 		assertEquals(2, cost);
 	}
@@ -89,8 +122,16 @@ public class TestRecommender {
 	public void shortDoublePathTest() {
 		ArrayList<Route> routes = rec.shortestPath("Miami", "Atlanta");
 		int cost = 0;
+		Route prev = null;
 		for (Route r : routes) {
-			cost += r.getCost();
+			if (prev == null) {
+				cost += r.getCost();
+			} else if (prev.getBegin().equals(r.getBegin()) && prev.getEnd().equals(r.getEnd())) {
+				cost += 0;
+			} else {
+				cost += r.getCost();
+			}
+			prev = r;
 		}
 		assertEquals(5, cost);
 	}
@@ -99,8 +140,16 @@ public class TestRecommender {
 	public void reverseShortDoublePathTest() {
 		ArrayList<Route> routes = rec.shortestPath("Atlanta", "Miami");
 		int cost = 0;
+		Route prev = null;
 		for (Route r : routes) {
-			cost += r.getCost();
+			if (prev == null) {
+				cost += r.getCost();
+			} else if (prev.getBegin().equals(r.getBegin()) && prev.getEnd().equals(r.getEnd())) {
+				cost += 0;
+			} else {
+				cost += r.getCost();
+			}
+			prev = r;
 		}
 		assertEquals(5, cost);
 	}
@@ -109,8 +158,16 @@ public class TestRecommender {
 	public void aLongPathTest1() {
 		ArrayList<Route> routes = rec.shortestPath("Seattle", "Toronto");
 		int cost = 0;
+		Route prev = null;
 		for (Route r : routes) {
-			cost += r.getCost();
+			if (prev == null) {
+				cost += r.getCost();
+			} else if (prev.getBegin().equals(r.getBegin()) && prev.getEnd().equals(r.getEnd())) {
+				cost += 0;
+			} else {
+				cost += r.getCost();
+			}
+			prev = r;
 		}
 		assertEquals(17, cost);
 	}
@@ -119,8 +176,16 @@ public class TestRecommender {
 	public void reverseALongPathTest1() {
 		ArrayList<Route> routes = rec.shortestPath("Toronto", "Seattle");
 		int cost = 0;
+		Route prev = null;
 		for (Route r : routes) {
-			cost += r.getCost();
+			if (prev == null) {
+				cost += r.getCost();
+			} else if (prev.getBegin().equals(r.getBegin()) && prev.getEnd().equals(r.getEnd())) {
+				cost += 0;
+			} else {
+				cost += r.getCost();
+			}
+			prev = r;
 		}
 		assertEquals(17, cost);
 	}
@@ -129,8 +194,16 @@ public class TestRecommender {
 	public void aLongPathTest2() {
 		ArrayList<Route> routes = rec.shortestPath("San Francisco", "New York");
 		int cost = 0;
+		Route prev = null;
 		for (Route r : routes) {
-			cost += r.getCost();
+			if (prev == null) {
+				cost += r.getCost();
+			} else if (prev.getBegin().equals(r.getBegin()) && prev.getEnd().equals(r.getEnd())) {
+				cost += 0;
+			} else {
+				cost += r.getCost();
+			}
+			prev = r;
 		}
 		assertEquals(21, cost);
 
@@ -140,8 +213,16 @@ public class TestRecommender {
 	public void reverseALongPathTest2() {
 		ArrayList<Route> routes = rec.shortestPath("New York", "San Francisco");
 		int cost = 0;
+		Route prev = null;
 		for (Route r : routes) {
-			cost += r.getCost();
+			if (prev == null) {
+				cost += r.getCost();
+			} else if (prev.getBegin().equals(r.getBegin()) && prev.getEnd().equals(r.getEnd())) {
+				cost += 0;
+			} else {
+				cost += r.getCost();
+			}
+			prev = r;
 		}
 		assertEquals(21, cost);
 
@@ -151,8 +232,16 @@ public class TestRecommender {
 	public void pathTest1() {
 		ArrayList<Route> routes = rec.shortestPath("El Paso", "Duluth");
 		int cost = 0;
+		Route prev = null;
 		for (Route r : routes) {
-			cost += r.getCost();
+			if (prev == null) {
+				cost += r.getCost();
+			} else if (prev.getBegin().equals(r.getBegin()) && prev.getEnd().equals(r.getEnd())) {
+				cost += 0;
+			} else {
+				cost += r.getCost();
+			}
+			prev = r;
 		}
 		assertEquals(10, cost);
 	}
@@ -161,8 +250,16 @@ public class TestRecommender {
 	public void reversePathTest1() {
 		ArrayList<Route> routes = rec.shortestPath("Duluth", "El Paso");
 		int cost = 0;
+		Route prev = null;
 		for (Route r : routes) {
-			cost += r.getCost();
+			if (prev == null) {
+				cost += r.getCost();
+			} else if (prev.getBegin().equals(r.getBegin()) && prev.getEnd().equals(r.getEnd())) {
+				cost += 0;
+			} else {
+				cost += r.getCost();
+			}
+			prev = r;
 		}
 		assertEquals(10, cost);
 	}
@@ -172,8 +269,16 @@ public class TestRecommender {
 		board.claimRoute("Nashville", "Atlanta", Colors.route.ANY, Colors.player.GREEN);
 		ArrayList<Route> routes = rec.shortestPath("Nashville", "Atlanta");
 		int cost = 0;
+		Route prev = null;
 		for (Route r : routes) {
-			cost += r.getCost();
+			if (prev == null) {
+				cost += r.getCost();
+			} else if (prev.getBegin().equals(r.getBegin()) && prev.getEnd().equals(r.getEnd())) {
+				cost += 0;
+			} else {
+				cost += r.getCost();
+			}
+			prev = r;
 		}
 		assertEquals("Pathing around other players", 5, cost);
 
@@ -184,8 +289,16 @@ public class TestRecommender {
 		board.claimRoute("Nashville", "Atlanta", Colors.route.ANY, Colors.player.GREEN);
 		ArrayList<Route> routes = rec.shortestPath("Atlanta", "Nashville");
 		int cost = 0;
+		Route prev = null;
 		for (Route r : routes) {
-			cost += r.getCost();
+			if (prev == null) {
+				cost += r.getCost();
+			} else if (prev.getBegin().equals(r.getBegin()) && prev.getEnd().equals(r.getEnd())) {
+				cost += 0;
+			} else {
+				cost += r.getCost();
+			}
+			prev = r;
 		}
 		assertEquals("Reverse pathing around other players", 5, cost);
 
@@ -233,6 +346,9 @@ public class TestRecommender {
 		// tickets empty
 		ArrayList<DestinationTicket> dts = new ArrayList<DestinationTicket>();
 		ArrayList<String> recs = rec.calculate(dts);
+		for (String s : recs) {
+			System.out.println(s);
+		}
 		assertTrue(recs.contains("Draw destination ticket."));
 	}
 
@@ -245,6 +361,9 @@ public class TestRecommender {
 		board.claimRoute("Miami", "New Orleans", Colors.route.RED, Colors.player.GREEN);
 		board.claimRoute("Miami", "Charleston", Colors.route.PINK, Colors.player.GREEN);
 		ArrayList<String> recs = rec.calculate(dts);
+		for (String s : recs) {
+			System.out.println(s);
+		}
 		assertTrue(recs.contains("Draw destination ticket."));
 	}
 
@@ -256,6 +375,9 @@ public class TestRecommender {
 			player.getTCS().add(new TrainCard(Colors.route.ORANGE));
 		}
 		ArrayList<String> recs = rec.calculate(dts);
+		for (String s : recs) {
+			System.out.println(s);
+		}
 		assertTrue(recs.contains("Claim the most expensive ORANGE or GRAY route."));
 	}
 
@@ -271,6 +393,9 @@ public class TestRecommender {
 			player.getTCS().add(new TrainCard(Colors.route.ORANGE));
 		}
 		ArrayList<String> recs = rec.calculate(dts);
+		for (String s : recs) {
+			System.out.println(s);
+		}
 		assertTrue(recs.contains("Claim the most expensive ORANGE or GRAY route."));
 	}
 
@@ -283,9 +408,9 @@ public class TestRecommender {
 			player.getTCS().add(new TrainCard(Colors.route.ORANGE));
 		}
 		ArrayList<String> recs = rec.calculate(dts);
-		for (String s: recs) {
+		for (String s : recs) {
 			System.out.println(s);
 		}
-		assertTrue(recs.contains("Claim the ORANGE route from San Francisco to Salt Lake City."));
+		assertTrue(recs.contains("Claim ORANGE route from Salt Lake City to San Francisco."));
 	}
 }

@@ -12,7 +12,7 @@ import com.ttradvisor.app.classes.Board.Route;
 
 public class Board {
 	private HashMap<String, LinkedList<Route>> board;
-	
+
 	public Board(String path) {
 		board = new HashMap<String, LinkedList<Route>>();
 		try {
@@ -34,13 +34,16 @@ public class Board {
 		}
 
 	}
+
 	/**
 	 * Private constructor to only be used by snapShotBoard method
+	 * 
 	 * @param board
 	 */
 	private Board(HashMap<String, LinkedList<Route>> board) {
 		this.board = board;
 	}
+
 	/**
 	 * 
 	 * @return The HashMap for the game TicketToRide
@@ -48,8 +51,10 @@ public class Board {
 	public HashMap<String, LinkedList<Route>> getBoard() {
 		return board;
 	}
+
 	/**
 	 * Debugging method. Confirms a city key exists in the Board's HashMap.
+	 * 
 	 * @param city
 	 * @return
 	 */
@@ -58,10 +63,12 @@ public class Board {
 			return city;
 		return null;
 	}
+
 	/**
-	 * Claims a route for a particular player. Sets the route's owner field to that of player.
-	 * This is a pair-wise operation, as the graph is undirected, so all routes are double.
-	 * Can only claim route owned by Colors.player.NONE.
+	 * Claims a route for a particular player. Sets the route's owner field to that
+	 * of player. This is a pair-wise operation, as the graph is undirected, so all
+	 * routes are double. Can only claim route owned by Colors.player.NONE.
+	 * 
 	 * @param cityBegin
 	 * @param cityEnd
 	 * @param color
@@ -85,17 +92,19 @@ public class Board {
 		}
 
 	}
+
 	/**
 	 * Makes a copy of the board object.
+	 * 
 	 * @return A deep copy of the current board.
 	 */
 	public Board snapshotBoard() {
 		HashMap<String, LinkedList<Route>> copyMap = new HashMap<String, LinkedList<Route>>();
 		Set<String> s = board.keySet();
-		for(String city: s) {
+		for (String city : s) {
 			LinkedList<Route> routes = board.get(city);
 			LinkedList<Route> copyRoutes = new LinkedList<Route>();
-			for(Route r: routes) {
+			for (Route r : routes) {
 				copyRoutes.add(new Route(r.begin, r.end, r.color, r.owner, r.cost));
 			}
 			copyMap.put(city, copyRoutes);
@@ -105,7 +114,8 @@ public class Board {
 	}
 
 	/**
-	 *  returns a list of routes from a city to all neighboring cities
+	 * returns a list of routes from a city to all neighboring cities
+	 * 
 	 * @param city
 	 * @return A linked list of all routes whose origin is the city
 	 */
@@ -114,7 +124,8 @@ public class Board {
 	}
 
 	/**
-	 *  return a specific route from start city to end city
+	 * return a specific route from start city to end city
+	 * 
 	 * @param start
 	 * @param end
 	 * @param color
@@ -129,9 +140,12 @@ public class Board {
 		}
 		return null;
 	}
+
 	/**
-	 * Returns a single route from start city to end city whose owner is specified. 
-	 * If none are found, returns the first unowned route. If none found, returns null.
+	 * Returns a single route from start city to end city whose owner is specified.
+	 * If none are found, returns the first unowned route. If none found, returns
+	 * null.
+	 * 
 	 * @param start
 	 * @param end
 	 * @param owner
@@ -139,20 +153,22 @@ public class Board {
 	 */
 	public Route getRoute(String start, String end, Colors.player owner) {
 		LinkedList<Route> routes = board.get(start);
-		for (Route r: routes) {
-			if(r.end.equals(end) && r.owner.equals(owner)) {
+		for (Route r : routes) {
+			if (r.end.equals(end) && r.owner.equals(owner)) {
 				return r;
-			}				
+			}
 		}
-		for (Route r: routes) { 
-			if(r.end.equals(end) && r.owner.equals(Colors.player.NONE))
-					return r;
+		for (Route r : routes) {
+			if (r.end.equals(end) && r.owner.equals(Colors.player.NONE))
+				return r;
 		}
 		return null;
 	}
+
 	/**
 	 * Returns the first route from start city to end city
-	 * @param start 
+	 * 
+	 * @param start
 	 * @param end
 	 * @return a route from begin to end
 	 */
@@ -166,83 +182,102 @@ public class Board {
 		return null;
 	}
 
-	
-	
-	
 	/**
-	 * A convenience method for returning a single route between two neighboring cities.
+	 * Returns all routes from start city to adjacent end city that is owned by the
+	 * player, or that is not owned by anyone
+	 * 
+	 * @param start
+	 * @param end
+	 * @param player
+	 * @return
+	 */
+	public ArrayList<Route> getAllRoutesBetween(String start, String end, Colors.player player) {
+		ArrayList<Route> routes = new ArrayList<Route>();
+		LinkedList<Route> all = board.get(start);
+		for (Route r : all) {
+			if (r.getEnd().equals(end) && (r.getOwner().equals(player) || r.getOwner().equals(Colors.player.NONE))) {
+				routes.add(r);
+			}
+		}
+		return routes;
+	}
+
+	/**
+	 * A convenience method for returning a single route between two neighboring
+	 * cities.
+	 * 
 	 * @param start
 	 * @param end
 	 * @return Route from start to end. Can return null.
 	 */
 	public Route getRouteAnyOwner(String start, String end) {
 		LinkedList<Route> routes = board.get(start);
-		for (Route r: routes) {
+		for (Route r : routes) {
 			if (r.end.equals(end))
 				return r;
 		}
 		return null;
 	}
-	
+
 	public LinkedList<Route> getAllRoutesOfPlayer(Colors.player player) {
 		LinkedList<Route> list = new LinkedList<Route>();
 		Set<String> keys = board.keySet();
-		for (String key: keys) {
+		for (String key : keys) {
 			LinkedList<Route> routes = board.get(key);
-			for (Route r: routes) {
+			for (Route r : routes) {
 				if (r.owner.equals(player))
 					list.add(r);
 			}
 		}
 		return list;
 	}
-	
+
 	public int getNumberRoutes(String start, String end) {
 		int count = 0;
 		LinkedList<Route> routes = board.get(start);
-		for (Route r: routes) {
+		for (Route r : routes) {
 			if (r.end.equals(end))
 				count += 1;
 		}
 		if (count == 0) {
 			Gdx.app.error("City Conections", "City start and end is not signle route.");
 			return count;
-		}
-		else {
+		} else {
 			return count;
 		}
 	}
-	
+
 	public LinkedList<Route> getAllRoutes(String start, String end) {
 		LinkedList<Route> list = new LinkedList<Route>();
 		LinkedList<Route> routes = board.get(start);
-		for (Route r: routes) {
+		for (Route r : routes) {
 			if (r.end.equals(end))
 				list.add(r);
 		}
 		return list;
 	}
-	
+
 	public int getIndexeNotOwned(LinkedList<Route> routes) {
 		int index = 0;
 		for (Route r : routes) {
 			if (r.owner.equals(Colors.player.NONE)) {
-				 return index;
+				return index;
 			}
 			index++;
 		}
 		return index;
 	}
+
 	public int getNumberNotOwned(LinkedList<Route> routes) {
 		int count = 0;
 		for (Route r : routes) {
 			if (r.owner.equals(Colors.player.NONE)) {
-				 count++;
+				count++;
 			}
 		}
 		return count;
 	}
-	
+
 	public int getCountSpendableCards(Route route, ArrayList<TrainCard> spent) {
 		int count  = 0;
 		for (TrainCard card: spent) {
@@ -251,20 +286,19 @@ public class Board {
 				count++;
 			}
 		}
-		System.out.println("count: "+count);
+		System.out.println("count: " + count);
 		return count;
 	}
-	
+
 	public Boolean hasUnOwnedRoute(LinkedList<Route> routes) {
 		for (Route r : routes) {
 			if (r.owner.equals(Colors.player.NONE)) {
-				 return true;
+				return true;
 			}
 		}
 		return false;
 	}
-	
-	
+
 	public static class Route {
 		String begin;
 		String end;
@@ -279,7 +313,7 @@ public class Board {
 			this.cost = cost;
 			this.owner = Colors.player.NONE;
 		}
-		
+
 		private Route(String begin, String end, Colors.route color, Colors.player owner, int cost) {
 			this.begin = begin;
 			this.end = end;

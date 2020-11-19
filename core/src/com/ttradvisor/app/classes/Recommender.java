@@ -30,11 +30,17 @@ public class Recommender {
 	 */
 	public ArrayList<String> calculate(ArrayList<DestinationTicket> tickets) {
 		ArrayList<String> recommendations = new ArrayList<String>();
-
+		// find all routes on shortest path between cities
+		ArrayList<Route> routes = getRoutes(tickets);
+		routes.sort(new Comparator<Route>() {
+			public int compare(Route r1, Route r2) {
+				return r2.getCost() - r1.getCost();
+			}
+		});
 		// calculate the player's train ticket resources
 		HashMap<Colors.route, Integer> resources = getResources();
 
-		// if player has complete all destination tickets
+		// if player has completed all destination tickets
 		if (tickets.isEmpty()) {
 			// the game is still relatively new
 			if (turn <= numPlayers * 10) {
@@ -52,30 +58,28 @@ public class Recommender {
 				}
 
 			}
-		} else {
-			if (turn <= numPlayers * 10) {
+		}
+		// tickets might be impossible to complete
+		else {
+			// try for new destinations ticket as the game is still new
+			if ((turn <= numPlayers * 10) && routes.isEmpty()) {
 				recommendations.add("Draw destination ticket.");
 			} else {
 				// the game is too far along to realistically complete another ticket
-				for (Colors.route c : resources.keySet()) {
-					if (resources.get(c) > 5) {
-						recommendations.add("Claim the most expensive " + c + " or GRAY route.");
-					} else {
-						String s = "Draw train cards. Priority: " + Colors.route.ANY;
-						if (!recommendations.contains(s))
-							recommendations.add(s);
+				if (routes.isEmpty()) {
+					for (Colors.route c : resources.keySet()) {
+						if (resources.get(c) > 5) {
+							recommendations.add("Claim the most expensive " + c + " or GRAY route.");
+						} else {
+							String s = "Draw train cards. Priority: " + Colors.route.ANY;
+							if (!recommendations.contains(s))
+								recommendations.add(s);
+						}
 					}
 				}
 
 			}
 		}
-		// find all routes on shortest path between cities
-		ArrayList<Route> routes = getRoutes(tickets);
-		routes.sort(new Comparator<Route>() {
-			public int compare(Route r1, Route r2) {
-				return r2.getCost() - r1.getCost();
-			}
-		});
 
 		// if can purchase a route in routes, buy it
 		for (Route r : routes) {
@@ -126,10 +130,10 @@ public class Recommender {
 	public ArrayList<Route> getRoutes(ArrayList<DestinationTicket> tickets) {
 		ArrayList<Route> allRoutes = new ArrayList<Route>();
 		for (DestinationTicket dt : tickets) {
-			System.out.println("tickets "+tickets);
-			System.out.println("dt "+dt);
 			ArrayList<Route> routes = shortestPath(dt.getStart(), dt.getEnd());
-			System.out.println("size"+routes.size());
+//			System.out.println("tickets " + tickets);
+//			System.out.println("dt " + dt);
+//			System.out.println("size" + routes.size());
 			for (Route r : routes) {
 				if (!allRoutes.contains(r))
 					allRoutes.add(r);
@@ -173,21 +177,26 @@ public class Recommender {
 				// follow previous until null and add them to routes list
 				// these are the routes to focus on claiming or saving up for
 				while (c.previous != null) {
-					routes.add(board.getRoute(c.current, c.previous.current, player.getColor()));
+					routes.addAll(board.getAllRoutesBetween(c.current, c.previous.current, player.getColor()));
 					c = c.previous;
 				}
 
-				int cost = 0;
-				System.out.println("FINAL ROUTE");
-				for (Route r : routes) {
-					System.out.println("routes"+ routes.size());
-//					if (r !=  null) {
-//					System.out.println(r);
-				    System.out.println(r.toString());
-				    cost += r.getCost();
+//				int cost = 0;
+//				System.out.println("FINAL ROUTE");
+//				Route prev = null;
+//				for (Route r : routes) {
+//					if (prev == null) {
+//						System.out.println(r.toString());
+//						cost += r.getCost();
+//					} else if (prev.getBegin().equals(r.getBegin()) && prev.getEnd().equals(r.getEnd())) {
+//						cost += 0;
+//					} else {
+//						cost += r.getCost();
+//						System.out.println(r.toString());
 //					}
-				}
-				System.out.println("Total route cost: " + cost);
+//					prev = r;
+//				}
+//				System.out.println("Total route cost: " + cost);
 
 				return routes;
 			}
