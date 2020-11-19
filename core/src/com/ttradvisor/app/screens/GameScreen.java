@@ -41,6 +41,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.ttradvisor.app.TTRAdvisorApp;
 import com.ttradvisor.app.classes.Action;
+import com.ttradvisor.app.classes.Board;
 import com.ttradvisor.app.classes.Board.Route;
 import com.ttradvisor.app.classes.CityLocations;
 import com.ttradvisor.app.classes.CityLocations.CityLocation;
@@ -48,6 +49,9 @@ import com.ttradvisor.app.classes.Colors;
 import com.ttradvisor.app.classes.DestinationAction;
 import com.ttradvisor.app.classes.DestinationTicket;
 import com.ttradvisor.app.classes.DestinationTicketList;
+import com.ttradvisor.app.classes.GameState;
+import com.ttradvisor.app.classes.HistoryController;
+import com.ttradvisor.app.classes.InputTurnController;
 import com.ttradvisor.app.classes.Player;
 import com.ttradvisor.app.classes.Recommender;
 import com.ttradvisor.app.classes.RouteAction;
@@ -109,6 +113,8 @@ public class GameScreen implements Screen {
 	private TextButton prevTurn;
 	private TextButton nextTurn;
 	private Label turnNumber;
+	
+	private TextButton quit;
 	
 	private Label errorMessage;
 
@@ -620,6 +626,8 @@ public class GameScreen implements Screen {
 		nextTurn = new TextButton("View \n Next Turn", TTRAdvisorApp.skin, "small");
 		nextTurn.setPosition(Gdx.graphics.getWidth() - nextTurn.getWidth(),
 				Gdx.graphics.getHeight() - nextTurn.getHeight());
+		quit = new TextButton("Quit Game", TTRAdvisorApp.skin, "small");
+		quit.setPosition(nextTurn.getX() - nextTurn.getWidth()*2, Gdx.graphics.getHeight() - quit.getHeight());
 		turnNumber = new Label(Integer.toString(mainApp.hist.getTurnIndex()), TTRAdvisorApp.skin);
 		turnNumber.setPosition(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() - turnNumber.getHeight());
 		prevTurn.addListener(new InputListener() {
@@ -652,9 +660,23 @@ public class GameScreen implements Screen {
 				return true;
 			}
 		});
+		quit.addListener(new InputListener() {
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				mainApp.gameState = new GameState(null, new ArrayList<Player>(), new Board("cities.txt"),
+						new DestinationTicketList("destinations.txt"), new ArrayList<Turn>());
+				mainApp.turnInput = new InputTurnController(mainApp.gameState);
+				mainApp.hist = new HistoryController(mainApp.gameState);
+				mainApp.setScreen(new TitleScreen(mainApp));
+			}
+
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				return true;
+			}
+		});
 		guiStage.addActor(turnNumber);
 		guiStage.addActor(prevTurn);
 		guiStage.addActor(nextTurn);
+		guiStage.addActor(quit);
 	}
 
 	/**
