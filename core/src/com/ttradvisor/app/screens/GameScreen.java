@@ -934,10 +934,15 @@ public class GameScreen implements Screen {
 			}
 	
 			selectedCity = DEFAULT_CITY_LABEL;
+			selectedRoute = DEFAULT_ROUTE_LABEL;
 	
 			trainCardHand.setText(mainApp.gameState.currentPlayer.getTCS().toString());
 			helperReenableUIForActionInput();
 			trainCardHand.setVisible(true);
+			
+			mapTappingDisabled = true;
+			claimRouteTooltip.setText("");
+			cancelClaimRoute.setVisible(false);			
 			return;
 		}
 
@@ -1096,6 +1101,11 @@ public class GameScreen implements Screen {
 		TextButton back = new TextButton("Back", TTRAdvisorApp.skin, "small");
 		back.addListener(new InputListener() {
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				
+				mapTappingDisabled = true;
+				claimRouteTooltip.setText("");
+				cancelClaimRoute.setVisible(false);
+				
 				drawnCards.removeAll(drawnCards);
 				helperReenableUIForActionInput();
 				trainCardHand.setVisible(true);
