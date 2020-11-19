@@ -858,6 +858,10 @@ public class GameScreen implements Screen {
 	 * @param routeOptions the options we've narrowed down to
 	 */
 	private void setupHelperChooseRoute(final LinkedList<Route> routeOptions) {
+		
+		mapTappingDisabled = true;
+		claimRouteTooltip.setText("");
+		cancelClaimRoute.setVisible(false);
 
 		if (routeOptions.get(0).getColor() == routeOptions.get(1).getColor()) {
 			// identical colors, ignore
@@ -898,8 +902,8 @@ public class GameScreen implements Screen {
 				selectedRoute = DEFAULT_ROUTE_LABEL;
 				mapTappingDisabled = true;
 				claimRouteTooltip.setText("");
-				helperReenableUIForActionInput();
 				cancelClaimRoute.setVisible(false);
+				helperReenableUIForActionInput();
 				table.setVisible(false);
 			}
 
@@ -923,6 +927,10 @@ public class GameScreen implements Screen {
 
 		selectedRoute = "Selected: " + route;
 		
+		mapTappingDisabled = true;
+		claimRouteTooltip.setText("");
+		cancelClaimRoute.setVisible(false);
+		
 		if (mainApp.gameState.currentPlayer.getColor() != mainApp.userColor) {
 			
 			boolean isInitial = mainApp.turnInput.isInitialTurn();
@@ -941,11 +949,7 @@ public class GameScreen implements Screen {
 	
 			trainCardHand.setText(mainApp.gameState.currentPlayer.getTCS().toString());
 			helperReenableUIForActionInput();
-			trainCardHand.setVisible(true);
-			
-			mapTappingDisabled = true;
-			claimRouteTooltip.setText("");
-			cancelClaimRoute.setVisible(false);			
+			trainCardHand.setVisible(true);		
 			return;
 		}
 
@@ -1073,9 +1077,6 @@ public class GameScreen implements Screen {
 
 				selectedCity = DEFAULT_CITY_LABEL;
 				selectedRoute = DEFAULT_ROUTE_LABEL;
-				mapTappingDisabled = true;
-				claimRouteTooltip.setText("");
-				cancelClaimRoute.setVisible(false);
 
 				trainCardHand.setText(mainApp.gameState.currentPlayer.getTCS().toString());
 				helperReenableUIForActionInput();
@@ -1105,9 +1106,8 @@ public class GameScreen implements Screen {
 		back.addListener(new InputListener() {
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				
-				mapTappingDisabled = true;
-				claimRouteTooltip.setText("");
-				cancelClaimRoute.setVisible(false);
+				selectedCity = DEFAULT_CITY_LABEL;
+				selectedRoute = DEFAULT_ROUTE_LABEL;
 				
 				drawnCards.removeAll(drawnCards);
 				helperReenableUIForActionInput();
