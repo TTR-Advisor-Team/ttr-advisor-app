@@ -93,7 +93,7 @@ public class GameScreen implements Screen {
 	private float mapWidth;
 	private float mapHeight;
 
-	private boolean mapTappingDisabled = false;
+	private boolean mapTappingDisabled = true;
 	private CityLocations cityLocs;
 
 	private static final String DEFAULT_CITY_LABEL = "No city selected.";
@@ -107,6 +107,10 @@ public class GameScreen implements Screen {
 	private TextButton destButton;
 	private TextButton TCButton;
 	private Label trainCardHand;
+	
+	private TextButton claimRouteButton;
+	private Label claimRouteTooltip;
+	private TextButton cancelClaimRoute;
 
 	// for multiple selection
 	private Array<DestinationTicket> prevSelection;
@@ -161,6 +165,8 @@ public class GameScreen implements Screen {
 		setupMapInputHandling();
 
 		setupTurnView();
+		
+		setupClaimRouteButton();
 
 //		setupClaimedRouteTextures();
 
@@ -297,8 +303,7 @@ public class GameScreen implements Screen {
 		destButton.addListener(new InputListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				destButton.setVisible(false);
-				TCButton.setVisible(false);
+				helperDisableUIForActionInput();
 				trainCardHand.setVisible(false);
 				final Table table = new Table();
 				final ArrayList<DestinationTicket> drawnTickets = new ArrayList<>();
@@ -369,8 +374,7 @@ public class GameScreen implements Screen {
 
 						guiStage.setScrollFocus(null);
 
-						destButton.setVisible(true);
-						TCButton.setVisible(true);
+						helperReenableUIForActionInput();
 						trainCardHand.setVisible(true);
 						listPane.setVisible(false);
 						table.setVisible(false);
@@ -391,8 +395,7 @@ public class GameScreen implements Screen {
 
 						guiStage.setScrollFocus(null);
 
-						destButton.setVisible(true);
-						TCButton.setVisible(true);
+						helperReenableUIForActionInput();
 						trainCardHand.setVisible(true);
 						listPane.setVisible(false);
 						table.setVisible(false);
@@ -425,9 +428,10 @@ public class GameScreen implements Screen {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				final Table table = new Table();
-				destButton.setVisible(false);
-				TCButton.setVisible(false);
+				
+				helperDisableUIForActionInput();
 				trainCardHand.setVisible(false);
+				
 				final ArrayList<TrainCard> drawnCards = new ArrayList<>();
 				final Label drawnCardList = new Label(drawnCards.toString(), TTRAdvisorApp.skin);
 				drawnCardList.setWidth((Gdx.graphics.getWidth() / 5) * 2);
@@ -545,8 +549,7 @@ public class GameScreen implements Screen {
 						}
 
 						trainCardHand.setText(mainApp.gameState.currentPlayer.getTCS().toString());
-						destButton.setVisible(true);
-						TCButton.setVisible(true);
+						helperReenableUIForActionInput();
 						trainCardHand.setVisible(true);
 						table.setVisible(false);
 						drawnCardList.setVisible(false);
@@ -573,8 +576,7 @@ public class GameScreen implements Screen {
 				back.addListener(new InputListener() {
 					public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 						drawnCards.removeAll(drawnCards);
-						destButton.setVisible(true);
-						TCButton.setVisible(true);
+						helperReenableUIForActionInput();
 						trainCardHand.setVisible(true);
 						table.setVisible(false);
 						drawnCardList.setVisible(false);
@@ -621,6 +623,48 @@ public class GameScreen implements Screen {
 		guiStage.addActor(errorMessage);
 	}
 
+	private void setupClaimRouteButton() {
+		claimRouteTooltip = new Label("", TTRAdvisorApp.skin);
+		claimRouteButton = new TextButton("Claim A Route", TTRAdvisorApp.skin, "small");
+		claimRouteTooltip.setColor(Color.BLACK);
+
+		claimRouteButton.setPosition(prevTurn.getX() + prevTurn.getWidth()*2, Gdx.graphics.getHeight() - claimRouteButton.getHeight());
+		claimRouteButton.addListener(new InputListener() {
+			
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				mapTappingDisabled = false;
+				claimRouteTooltip.setText("Click on two cities to select a route between them!");
+				claimRouteTooltip.setPosition(prevTurn.getX() + prevTurn.getWidth()*2, Gdx.graphics.getHeight() - claimRouteButton.getHeight() - claimRouteTooltip.getHeight() - 10);
+				helperDisableUIForActionInput();
+				
+				cancelClaimRoute = new TextButton("Cancel", TTRAdvisorApp.skin, "small");
+				cancelClaimRoute.setPosition(prevTurn.getX() + prevTurn.getWidth()*2, Gdx.graphics.getHeight() - cancelClaimRoute.getHeight());
+				
+				cancelClaimRoute.addListener(new InputListener() {
+					public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+						mapTappingDisabled = true;
+						claimRouteTooltip.setText("");
+						cancelClaimRoute.setVisible(false);
+						helperReenableUIForActionInput();
+					}
+
+					public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+						return true;
+					}
+				});
+				
+				guiStage.addActor(cancelClaimRoute);
+			}
+			
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				return true;
+			}
+		});
+		guiStage.addActor(claimRouteTooltip);
+		guiStage.addActor(claimRouteButton);
+	}
+	
 	private void setupTurnView() {
 		prevTurn = new TextButton("View \n Previous Turn", TTRAdvisorApp.skin, "small");
 		prevTurn.setPosition(0, Gdx.graphics.getHeight() - prevTurn.getHeight());
@@ -639,6 +683,7 @@ public class GameScreen implements Screen {
 							.getTCS().toString());
 					turnNumber.setText(Integer.toString(mainApp.hist.getTurnIndex()));
 					demoCurrPlayer.setText("Current player: " + mainApp.hist.getGameState().getPlayers().get(mainApp.hist.getTurnIndexView()).getColor());
+					helperDisableUIForHistoryLook();
 				}
 			}
 
@@ -654,6 +699,9 @@ public class GameScreen implements Screen {
 							.getTCS().toString());
 					turnNumber.setText(Integer.toString(mainApp.hist.getTurnIndex()));
 					demoCurrPlayer.setText("Current player: " + mainApp.hist.getGameState().getPlayers().get(mainApp.hist.getTurnIndexView()).getColor());
+				}
+				else {
+					helperReenableUIForHistoryLook();
 				}
 			}
 
@@ -741,6 +789,10 @@ public class GameScreen implements Screen {
 							if (routeOptions.isEmpty()) {
 								selectedCity = DEFAULT_CITY_LABEL;
 								selectedRoute = DEFAULT_ROUTE_LABEL;
+								mapTappingDisabled = true;
+								claimRouteTooltip.setText("");
+								helperReenableUIForActionInput();
+								cancelClaimRoute.setVisible(false);
 								super.tap(event, x, y, count, button);
 								return;
 							} else if (routeOptions.size() == 1) {
@@ -814,8 +866,7 @@ public class GameScreen implements Screen {
 		}
 
 		final Table table = new Table();
-		destButton.setVisible(false);
-		TCButton.setVisible(false);
+		helperDisableUIForActionInput();
 		TextButton routeChoice0 = new TextButton("Color: " + routeOptions.get(0).getColor(), TTRAdvisorApp.skin,
 				"small");
 		routeChoice0.addListener(new InputListener() {
@@ -843,8 +894,12 @@ public class GameScreen implements Screen {
 		TextButton back = new TextButton("Cancel", TTRAdvisorApp.skin, "small");
 		back.addListener(new InputListener() {
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				destButton.setVisible(true);
-				TCButton.setVisible(true);
+				selectedCity = DEFAULT_CITY_LABEL;
+				selectedRoute = DEFAULT_ROUTE_LABEL;
+				mapTappingDisabled = true;
+				claimRouteTooltip.setText("");
+				helperReenableUIForActionInput();
+				cancelClaimRoute.setVisible(false);
 				table.setVisible(false);
 			}
 
@@ -881,15 +936,13 @@ public class GameScreen implements Screen {
 			selectedCity = DEFAULT_CITY_LABEL;
 	
 			trainCardHand.setText(mainApp.gameState.currentPlayer.getTCS().toString());
-			destButton.setVisible(true);
-			TCButton.setVisible(true);
+			helperReenableUIForActionInput();
 			trainCardHand.setVisible(true);
 			return;
 		}
 
 		final Table table = new Table();
-		destButton.setVisible(false);
-		TCButton.setVisible(false);
+		helperDisableUIForActionInput();
 		trainCardHand.setVisible(false);
 		final ArrayList<TrainCard> drawnCards = new ArrayList<>();
 		final Label drawnCardList = new Label(drawnCards.toString(), TTRAdvisorApp.skin);
@@ -1011,10 +1064,13 @@ public class GameScreen implements Screen {
 				}
 
 				selectedCity = DEFAULT_CITY_LABEL;
+				selectedRoute = DEFAULT_ROUTE_LABEL;
+				mapTappingDisabled = true;
+				claimRouteTooltip.setText("");
+				cancelClaimRoute.setVisible(false);
 
 				trainCardHand.setText(mainApp.gameState.currentPlayer.getTCS().toString());
-				destButton.setVisible(true);
-				TCButton.setVisible(true);
+				helperReenableUIForActionInput();
 				trainCardHand.setVisible(true);
 				table.setVisible(false);
 				drawnCardList.setVisible(false);
@@ -1041,8 +1097,7 @@ public class GameScreen implements Screen {
 		back.addListener(new InputListener() {
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				drawnCards.removeAll(drawnCards);
-				destButton.setVisible(true);
-				TCButton.setVisible(true);
+				helperReenableUIForActionInput();
 				trainCardHand.setVisible(true);
 				table.setVisible(false);
 				drawnCardList.setVisible(false);
@@ -1122,9 +1177,9 @@ public class GameScreen implements Screen {
 	 * (while in past turns)
 	 */
 	private void helperDisableUIForHistoryLook() {
-		destButton.setDisabled(true);
-		TCButton.setDisabled(true);
-		mapTappingDisabled = true;
+		destButton.setVisible(false);
+		TCButton.setVisible(false);
+		claimRouteButton.setVisible(false);
 	}
 	
 	/**
@@ -1132,25 +1187,25 @@ public class GameScreen implements Screen {
 	 * (while inputting an action using either the train card menu or DT menu)
 	 */
 	private void helperDisableUIForActionInput() {
-		destButton.setDisabled(true);
-		TCButton.setDisabled(true);
-		mapTappingDisabled = true;
-		prevTurn.setDisabled(true);
-		nextTurn.setDisabled(true);
+		destButton.setVisible(false);
+		TCButton.setVisible(false);
+		claimRouteButton.setVisible(false);
+		prevTurn.setVisible(false);
+		nextTurn.setVisible(false);
 	}
 	
 	private void helperReenableUIForHistoryLook() {
-		destButton.setDisabled(false);
-		TCButton.setDisabled(false);
-		mapTappingDisabled = false;
+		destButton.setVisible(true);
+		TCButton.setVisible(true);
+		claimRouteButton.setVisible(true);
 	}
 	
 	private void helperReenableUIForActionInput() {
-		destButton.setDisabled(false);
-		TCButton.setDisabled(false);
-		mapTappingDisabled = false;
-		prevTurn.setDisabled(false);
-		nextTurn.setDisabled(false);
+		destButton.setVisible(true);
+		TCButton.setVisible(true);
+		claimRouteButton.setVisible(true);
+		prevTurn.setVisible(true);
+		nextTurn.setVisible(true);
 	}
 	
 	private void clampCamera() {
