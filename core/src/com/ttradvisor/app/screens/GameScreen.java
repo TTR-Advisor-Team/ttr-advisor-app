@@ -155,7 +155,7 @@ public class GameScreen implements Screen {
 
 		setupTurnView();
 
-		setupClaimedRouteTextures();
+//		setupClaimedRouteTextures();
 
 		Image map = new Image(new Texture("high_res_map.png"));
 
@@ -1084,6 +1084,7 @@ public class GameScreen implements Screen {
 
 	}
 
+	
 	private void clampCamera() {
 
 		camera.zoom = MathUtils.clamp(camera.zoom,
@@ -1102,48 +1103,48 @@ public class GameScreen implements Screen {
 		// camera.position.y);
 	}
 
-	/**
-	 * Initialize textures for all players' colors Call in constructor only
-	 */
-	private void setupClaimedRouteTextures() {
-		playerColors = new ArrayList<TextureRegion>();
-
-		Pixmap tempPix = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
-
-		// for each player: generate a 1x1 texture (using pixmap) of their color
-		for (Player p : mainApp.gameState.getPlayers()) {
-			switch (p.getColor()) {
-			case BLACK:
-				tempPix.setColor(0, 0, 0, 1);
-				break;
-			case BLUE:
-				tempPix.setColor(0, 0, 1, 1);
-				break;
-			case GREEN:
-				tempPix.setColor(0, 1, 0, 1);
-				break;
-			case NONE:
-				Gdx.app.error("GameScreen", "Player of color \"NONE\" exists in game state.");
-				tempPix.setColor(1, 1, 1, 1);
-				// non-fatal error
-				break;
-			case RED:
-				tempPix.setColor(1, 0, 0, 1);
-				break;
-			case YELLOW:
-				tempPix.setColor(1, 1, 0, 1);
-				break;
-			default:
-				Gdx.app.error("GameScreen", "Player of invalid color exists in game state.");
-				tempPix.setColor(1, 1, 1, 1);
-				// non-fatal error
-				break;
-			}
-			tempPix.fill();
-			playerColors.add(new TextureRegion(new Texture(tempPix)));
-		}
-		tempPix.dispose();
-	}
+//	/**
+//	 * Initialize textures for all players' colors Call in constructor only
+//	 */
+//	private void setupClaimedRouteTextures() {
+//		playerColors = new ArrayList<TextureRegion>();
+//
+//		Pixmap tempPix = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
+//
+//		// for each player: generate a 1x1 texture (using pixmap) of their color
+//		for (Player p : mainApp.gameState.getPlayers()) {
+//			switch (p.getColor()) {
+//			case BLACK:
+//				tempPix.setColor(0, 0, 0, 1);
+//				break;
+//			case BLUE:
+//				tempPix.setColor(0, 0, 1, 1);
+//				break;
+//			case GREEN:
+//				tempPix.setColor(0, 1, 0, 1);
+//				break;
+//			case NONE:
+//				Gdx.app.error("GameScreen", "Player of color \"NONE\" exists in game state.");
+//				tempPix.setColor(1, 1, 1, 1);
+//				// non-fatal error
+//				break;
+//			case RED:
+//				tempPix.setColor(1, 0, 0, 1);
+//				break;
+//			case YELLOW:
+//				tempPix.setColor(1, 1, 0, 1);
+//				break;
+//			default:
+//				Gdx.app.error("GameScreen", "Player of invalid color exists in game state.");
+//				tempPix.setColor(1, 1, 1, 1);
+//				// non-fatal error
+//				break;
+//			}
+//			tempPix.fill();
+//			playerColors.add(new TextureRegion(new Texture(tempPix)));
+//		}
+//		tempPix.dispose();
+//	}
 
 	/**
 	 * Call every render cycle instead of mapStage.draw()

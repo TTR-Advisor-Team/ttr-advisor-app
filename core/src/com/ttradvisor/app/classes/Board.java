@@ -247,7 +247,7 @@ public class Board {
 		int count  = 0;
 		for (TrainCard card: spent) {
 			System.out.println("card color: "+card.getColor());
-			if (card.getColor().equals(route.getColor()) || card.getColor().equals(Colors.route.ANY)) {	
+			if (route.getColor().equals(Colors.route.ANY) || card.getColor().equals(route.getColor()) || card.getColor().equals(Colors.route.ANY)) {	
 				count++;
 			}
 		}
