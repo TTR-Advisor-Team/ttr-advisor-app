@@ -931,6 +931,9 @@ public class GameScreen implements Screen {
 	
 			if (mainApp.turnInput.takeAction(routeAction)) {
 				advanceTurn(isInitial, routeAction);
+			} else {
+				errorMessage.setText(mainApp.gameState.getError());
+				errorMessage.setVisible(true);
 			}
 	
 			selectedCity = DEFAULT_CITY_LABEL;
