@@ -93,7 +93,7 @@ public class GameScreen implements Screen {
 	private float mapWidth;
 	private float mapHeight;
 
-	private boolean mapTappingDisabled = true;
+	private boolean mapTappingDisabled = false;
 	private CityLocations cityLocs;
 
 	private static final String DEFAULT_CITY_LABEL = "No city selected.";
