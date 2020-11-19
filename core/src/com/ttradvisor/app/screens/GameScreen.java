@@ -93,6 +93,7 @@ public class GameScreen implements Screen {
 	private float mapWidth;
 	private float mapHeight;
 
+	private boolean mapTappingDisabled = true;
 	private CityLocations cityLocs;
 
 	private static final String DEFAULT_CITY_LABEL = "No city selected.";
@@ -710,6 +711,16 @@ public class GameScreen implements Screen {
 
 			@Override
 			public void tap(InputEvent event, float x, float y, int count, int button) {
+				
+				if (mapTappingDisabled) {
+					// stop processing the tap if it is not allowed right now
+					// Gdx.app.log("City Event", "Tapped on background.");
+					selectedCity = DEFAULT_CITY_LABEL;
+					selectedRoute = DEFAULT_ROUTE_LABEL;
+					super.tap(event, x, y, count, button);
+					return;
+				}
+				
 				// unproject the world coordinates of tap
 				Vector3 tapPos = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 				for (CityLocation loc : cityLocs.getCityLocations()) {
@@ -1106,6 +1117,41 @@ public class GameScreen implements Screen {
 
 	}
 
+	/**
+	 * Disable just the Destination Ticket, Train Card, and Route selection features
+	 * (while in past turns)
+	 */
+	private void helperDisableUIForHistoryLook() {
+		destButton.setDisabled(true);
+		TCButton.setDisabled(true);
+		mapTappingDisabled = true;
+	}
+	
+	/**
+	 * Disable all the Action input features AND the history buttons
+	 * (while inputting an action using either the train card menu or DT menu)
+	 */
+	private void helperDisableUIForActionInput() {
+		destButton.setDisabled(true);
+		TCButton.setDisabled(true);
+		mapTappingDisabled = true;
+		prevTurn.setDisabled(true);
+		nextTurn.setDisabled(true);
+	}
+	
+	private void helperReenableUIForHistoryLook() {
+		destButton.setDisabled(false);
+		TCButton.setDisabled(false);
+		mapTappingDisabled = false;
+	}
+	
+	private void helperReenableUIForActionInput() {
+		destButton.setDisabled(false);
+		TCButton.setDisabled(false);
+		mapTappingDisabled = false;
+		prevTurn.setDisabled(false);
+		nextTurn.setDisabled(false);
+	}
 	
 	private void clampCamera() {
 
