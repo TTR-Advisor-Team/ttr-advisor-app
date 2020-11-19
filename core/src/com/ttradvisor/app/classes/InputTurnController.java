@@ -1,8 +1,6 @@
 package com.ttradvisor.app.classes;
 
 import com.badlogic.gdx.Gdx;
-import com.ttradvisor.app.TTRAdvisorApp;
-import com.ttradvisor.app.classes.Board.Route;
 
 /**
  *	Contains logic and validation for inputting new turns. 
@@ -66,7 +64,6 @@ public class InputTurnController {
 			}
 		}
 		else {
-			// for a future iteration
 			// process with context of normal round turn
 			if (thisTurn instanceof TrainCardAction) {
 				return drawTC((TrainCardAction)thisTurn);
@@ -152,7 +149,7 @@ public class InputTurnController {
 	}
 
 	private boolean drawDT(DestinationAction thisTurn) {
-		if (thisTurn.getDrawnTickets().size() >  3 && thisTurn.getDrawnTickets().size() < 0) {
+		if (thisTurn.getDrawnTickets().size() >  3 || thisTurn.getDrawnTickets().size() < 0) {
 			Gdx.app.error("Turn", "May not draw more than 3 tickets on a turn, and must keep atleast one drawn card.");
 			gameState.setError("May not draw more than 3 tickets on a turn, and must keep atleast one drawn card.");
 			return false;
