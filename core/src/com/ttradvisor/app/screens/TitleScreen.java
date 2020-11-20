@@ -294,7 +294,7 @@ public class TitleScreen implements Screen {
             	else {
             		err2 = true;
             	}
-            	
+            	System.out.println(err1 & err2);
             	if(!(err1 || err2)) {
 	            	// Initialize player colors
 	            	for (int i=0; i<numPlayers.getSelected(); i++) {
@@ -315,6 +315,7 @@ public class TitleScreen implements Screen {
             		error2.setVisible(false);
             	}
             	else {
+            		error2.setPosition(Gdx.graphics.getWidth()/2 - error2.getWidth()/2, Gdx.graphics.getHeight()/8);
             		error1.setVisible(false);
             		error2.setVisible(true);
             	}
