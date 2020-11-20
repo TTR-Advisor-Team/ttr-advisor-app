@@ -298,6 +298,17 @@ public class Board {
 		}
 		return false;
 	}
+	
+	public ArrayList<Route> getAllRoutesBetweenOfPlayer(String start, String end, Colors.player player) {
+		ArrayList<Route> routes = new ArrayList<Route>();
+		LinkedList<Route> all = board.get(start);
+		for (Route r : all) {
+			if (r.getEnd().equals(end) && r.getOwner().equals(player)) {
+				routes.add(r);
+			}
+		}
+		return routes;
+	}
 
 	public static class Route {
 		String begin;
