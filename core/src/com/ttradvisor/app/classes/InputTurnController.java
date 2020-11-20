@@ -154,7 +154,7 @@ public class InputTurnController {
 	}
 
 	private boolean drawDT(DestinationAction thisTurn) {
-		if (thisTurn.getDrawnTickets().size() >  3 || thisTurn.getDrawnTickets().size() < 0) {
+		if (thisTurn.getDrawnTickets().size() >  3 || thisTurn.getDrawnTickets().size() <= 0) {
 			Gdx.app.error("Turn", "May not draw more than 3 tickets on a turn, and must keep atleast one drawn card.");
 			gameState.setError("May not draw more than 3 tickets on a turn, and must keep atleast one drawn card.");
 			return false;
