@@ -39,7 +39,8 @@ public class TTRAdvisorApp extends Game {
 				new DestinationTicketList("destinations.txt"), new ArrayList<Turn>());
 		turnInput = new InputTurnController(gameState);
 		hist = new HistoryController(gameState);
-		skin = new Skin(Gdx.files.internal("ui skin/glassy-ui.json"));
+//		skin = new Skin(Gdx.files.internal("ui skin/glassy-ui.json"));
+		skin = new Skin(Gdx.files.internal("ttr_ui_skin/untitled.json"));
 		this.setScreen(new TitleScreen(this));
 	}
 

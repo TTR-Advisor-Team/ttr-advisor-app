@@ -30,9 +30,11 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
@@ -89,7 +91,7 @@ public class GameScreen implements Screen {
 	private Array<DestinationTicket> multipleTickets;
 
 	private List<Colors.player> demonstration; // TODO delete this after demo
-	private Label demoCurrPlayer;
+//	private Label demoCurrPlayer;
 
 	private float mapWidth;
 	private float mapHeight;
@@ -113,6 +115,8 @@ public class GameScreen implements Screen {
 	private Label claimRouteTooltip;
 	private TextButton cancelClaimRoute;
 
+	private TextButton recommendationsButton;
+	 
 	// for multiple selection
 	private Array<DestinationTicket> prevSelection;
 
@@ -123,13 +127,19 @@ public class GameScreen implements Screen {
 	private TextButton quit;
 	
 	private Label errorMessage;
-//	private List<Label> errorList;
 
 	private ArrayList<TextureRegion> playerColors;
 	
 	private TextureAtlas textureAtlas;
     private Sprite trainImage;
 	private RouteLocations routeLocations;
+	
+	private ImageTextButton itbBlack;
+	private ImageTextButton itbBlue;
+	private ImageTextButton itbGreen;
+	private ImageTextButton itbRed;
+	private ImageTextButton itbYellow;
+	private ImageTextButton itbCurrent;
 
 	public GameScreen(TTRAdvisorApp main) {
 		mainApp = main;
@@ -211,10 +221,10 @@ public class GameScreen implements Screen {
 		rec3 = l3;
 		showHide = true;
 
-		final TextButton t = new TextButton("ShowRecommendations", TTRAdvisorApp.skin, "small");
-		t.setHeight(t.getHeight() / 2);
-		t.setPosition(Gdx.graphics.getWidth() / 5, Gdx.graphics.getHeight() * .15f);
-		t.addListener(new InputListener() {
+		recommendationsButton = new TextButton("ShowRecommendations", TTRAdvisorApp.skin, "small");
+		recommendationsButton.setHeight(recommendationsButton.getHeight() / 2);
+		recommendationsButton.setPosition(Gdx.graphics.getWidth() / 5, Gdx.graphics.getHeight() * .15f);
+		recommendationsButton.addListener(new InputListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 
@@ -222,7 +232,7 @@ public class GameScreen implements Screen {
 					rec1.setVisible(true);
 					rec2.setVisible(true);
 					rec3.setVisible(true);
-					t.setText("HideRecommendations");
+					recommendationsButton.setText("HideRecommendations");
 					showHide = false;
 					return;
 				}
@@ -230,7 +240,7 @@ public class GameScreen implements Screen {
 					rec1.setVisible(false);
 					rec2.setVisible(false);
 					rec3.setVisible(false);
-					t.setText("ShowRecommendations");
+					recommendationsButton.setText("ShowRecommendations");
 					showHide = true;
 					return;
 				}
@@ -253,7 +263,7 @@ public class GameScreen implements Screen {
 		l1.setVisible(false);
 		l2.setVisible(false);
 		l3.setVisible(false);
-		guiStage.addActor(t);
+		guiStage.addActor(recommendationsButton);
 		guiStage.addActor(l1);
 		guiStage.addActor(l2);
 		guiStage.addActor(l3);
@@ -263,33 +273,171 @@ public class GameScreen implements Screen {
 	private void setupDisplayElements() {
 		// MOCKUP to show state internals
 		// Delete this after
-		demonstration = new List<Colors.player>(TTRAdvisorApp.skin);
-		Array<Colors.player> demoColors = new Array<Colors.player>();
+//		demonstration = new List<Colors.player>(TTRAdvisorApp.skin);
+//		Array<Colors.player> demoColors = new Array<Colors.player>();
+//		for (Player p : mainApp.gameState.getPlayers()) {
+//			demoColors.add(p.getColor());
+//		}
+//		demonstration.setItems(demoColors);
+//		demonstration.setSize(200, 100);
+//		demonstration.setPosition(50, 500);
+//		guiStage.addActor(demonstration);
+
+//		demoCurrPlayer = new Label("Current player: " + mainApp.gameState.currentPlayer.getColor(), mainApp.skin);
+//		demoCurrPlayer.setColor(0, 0, 0, 1);
+//		demoCurrPlayer.setSize(100, 30);
+//		demoCurrPlayer.setPosition(50, 400);
+//		guiStage.addActor(demoCurrPlayer);
+
+		//moved demo city and demo route to claim route setup
+		
+//		Skin skin = new Skin(Gdx.files.internal("untitled folder/untitled.json"));
+//		Skin skinStatic = mainApp.skin;
+		itbBlack = new ImageTextButton("", TTRAdvisorApp.skin, "playerBlack");
+		itbBlue = new ImageTextButton("", TTRAdvisorApp.skin, "playerBlue");
+		itbGreen = new ImageTextButton("", TTRAdvisorApp.skin, "playerGreen");
+		itbRed = new ImageTextButton("", TTRAdvisorApp.skin, "playerRed");
+		itbYellow = new ImageTextButton("", TTRAdvisorApp.skin, "playerYellow");
+		itbCurrent = new ImageTextButton("", TTRAdvisorApp.skin,"playerCurrent");
+		
+		itbCurrent.setSize(60,60);
+		
 		for (Player p : mainApp.gameState.getPlayers()) {
-			demoColors.add(p.getColor());
+			switch (p.getColor()) {
+			case BLACK:
+				itbBlack.setText(Integer.toString(p.getScore()));
+				itbBlack.setPosition(Align.left, Gdx.graphics.getHeight()*4/5 - mainApp.gameState.getPlayers().indexOf(p)*itbCurrent.getHeight());
+				itbBlack.setSize(50,50);
+				if (mainApp.gameState.currentPlayer.equals(p)) {
+					itbCurrent.setPosition(itbBlack.getX()-(itbCurrent.getWidth()-itbBlack.getWidth())/2, itbBlack.getY()-((itbCurrent.getHeight()-itbBlack.getHeight())/2));
+					guiStage.addActor(itbCurrent);
+				}
+				guiStage.addActor(itbBlack);
+				break;
+			case BLUE:
+				itbBlue.setText(Integer.toString(p.getScore()));
+				itbBlue.setPosition(Align.left, Gdx.graphics.getHeight()*4/5 - mainApp.gameState.getPlayers().indexOf(p)*itbCurrent.getHeight());
+				itbBlue.setSize(50,50);
+//				itbBlue.setBackground(itbBackground.getBackground());
+				if (mainApp.gameState.currentPlayer.equals(p)) {
+					itbCurrent.setPosition(itbBlue.getX()-((itbCurrent.getWidth()-itbBlue.getWidth())/2), itbBlue.getY()-((itbCurrent.getHeight()-itbBlue.getHeight())/2));
+					guiStage.addActor(itbCurrent);
+					
+				}
+				guiStage.addActor(itbBlue);
+				break;
+			case GREEN:
+				itbGreen.setText(Integer.toString(p.getScore()));
+				itbGreen.setPosition(Align.left, Gdx.graphics.getHeight()*4/5 - mainApp.gameState.getPlayers().indexOf(p)*itbCurrent.getHeight());
+				itbGreen.setSize(50,50);
+				if (mainApp.gameState.currentPlayer.equals(p)) {
+					itbCurrent.setPosition(itbGreen.getX()-((itbCurrent.getWidth()-itbGreen.getWidth())/2), itbGreen.getY()-((itbCurrent.getHeight()-itbGreen.getHeight())/2));
+					guiStage.addActor(itbCurrent);
+
+				}
+				guiStage.addActor(itbGreen);
+				break;
+			case NONE:
+				Gdx.app.error("GameScreen", "Player of color \"NONE\" exists in game state.");
+//				button4.setPosition(mainApp.gameState.getPlayers().indexOf(p)*100+50, 500);
+//				tempPix.setColor(1, 1, 1, 1);
+				// non-fatal error
+				break;
+			case RED:
+				itbRed.setText(Integer.toString(p.getScore()));
+				itbRed.setPosition(Align.left, Gdx.graphics.getHeight()*4/5 - mainApp.gameState.getPlayers().indexOf(p)*itbCurrent.getHeight());
+				itbRed.setSize(50,50);
+//				button4.setSi
+				if (mainApp.gameState.currentPlayer.equals(p)) {
+					itbCurrent.setPosition(itbRed.getX()-((itbCurrent.getWidth()-itbRed.getWidth())/2), itbRed.getY()-((itbCurrent.getHeight()-itbRed.getHeight())/2));
+					guiStage.addActor(itbCurrent);
+					
+				}
+				guiStage.addActor(itbRed);
+				break;
+			case YELLOW:
+				itbYellow.setText(Integer.toString(p.getScore()));
+				itbYellow.setPosition(Align.left, Gdx.graphics.getHeight()*4/5 - mainApp.gameState.getPlayers().indexOf(p)*itbCurrent.getHeight());
+				itbYellow.setSize(50,50);
+				if (mainApp.gameState.currentPlayer.equals(p)) {
+					itbCurrent.setPosition(itbYellow.getX()-((itbCurrent.getWidth()-itbYellow.getWidth())/2), itbYellow.getY()-((itbCurrent.getHeight()-itbYellow.getHeight())/2));
+					guiStage.addActor(itbCurrent);
+				}
+				guiStage.addActor(itbYellow);
+				break;
+			default:
+				Gdx.app.error("GameScreen", "Player of invalid color exists in game state.");
+//				tempPix.setColor(1, 1, 1, 1);
+				// non-fatal error
+				break;
+			}
 		}
-		demonstration.setItems(demoColors);
-		demonstration.setSize(200, 100);
-		demonstration.setPosition(50, 500);
-		guiStage.addActor(demonstration);
+	}
+	
+	
+	private void playerIconUpdate() {
+		for (Player p : mainApp.gameState.getPlayers()) {
+			switch (p.getColor()) {
+			case BLACK:
+				itbBlack.setText(Integer.toString(p.getScore()));
+				if (mainApp.gameState.currentPlayer.equals(p)) {
+					itbCurrent.setPosition(itbBlack.getX()-(itbCurrent.getWidth()-itbBlack.getWidth())/2, itbBlack.getY()-((itbCurrent.getHeight()-itbBlack.getHeight())/2));
+					guiStage.addActor(itbCurrent);
+				}
+				guiStage.addActor(itbBlack);
+				break;
+			case BLUE:
+				itbBlue.setText(Integer.toString(p.getScore()));
+//				itbBlue.setBackground(itbBackground.getBackground());
+				if (mainApp.gameState.currentPlayer.equals(p)) {
+					itbCurrent.setPosition(itbBlue.getX()-((itbCurrent.getWidth()-itbBlue.getWidth())/2), itbBlue.getY()-((itbCurrent.getHeight()-itbBlue.getHeight())/2));
+					guiStage.addActor(itbCurrent);
+					
+				}
+				guiStage.addActor(itbBlue);
+				break;
+			case GREEN:
+				itbGreen.setText(Integer.toString(p.getScore()));
+				if (mainApp.gameState.currentPlayer.equals(p)) {
+					itbCurrent.setPosition(itbGreen.getX()-((itbCurrent.getWidth()-itbGreen.getWidth())/2), itbGreen.getY()-((itbCurrent.getHeight()-itbGreen.getHeight())/2));
+					guiStage.addActor(itbCurrent);
 
-		demoCurrPlayer = new Label("Current player: " + mainApp.gameState.currentPlayer.getColor(), mainApp.skin);
-		demoCurrPlayer.setColor(0, 0, 0, 1);
-		demoCurrPlayer.setSize(100, 30);
-		demoCurrPlayer.setPosition(50, 400);
-		guiStage.addActor(demoCurrPlayer);
-
-		demoSelectedCity = new Label("", mainApp.skin);
-		demoSelectedCity.setColor(0, 0, 0, 1);
-		demoSelectedCity.setSize(100, 30);
-		demoSelectedCity.setPosition(50, 360);
-		guiStage.addActor(demoSelectedCity);
-
-		demoSelectedRoute = new Label("", mainApp.skin);
-		demoSelectedRoute.setColor(0, 0, 0, 1);
-		demoSelectedRoute.setSize(100, 30);
-		demoSelectedRoute.setPosition(50, 320);
-		guiStage.addActor(demoSelectedRoute);
+				}
+				guiStage.addActor(itbGreen);
+				break;
+			case NONE:
+				Gdx.app.error("GameScreen", "Player of color \"NONE\" exists in game state.");
+//				button4.setPosition(mainApp.gameState.getPlayers().indexOf(p)*100+50, 500);
+//				tempPix.setColor(1, 1, 1, 1);
+				// non-fatal error
+				break;
+			case RED:
+				itbRed.setText(Integer.toString(p.getScore()));
+//				button4.setSi
+				if (mainApp.gameState.currentPlayer.equals(p)) {
+					itbCurrent.setPosition(itbRed.getX()-((itbCurrent.getWidth()-itbRed.getWidth())/2), itbRed.getY()-((itbCurrent.getHeight()-itbRed.getHeight())/2));
+					guiStage.addActor(itbCurrent);
+					
+				}
+				guiStage.addActor(itbRed);
+				break;
+			case YELLOW:
+				itbYellow.setText(Integer.toString(p.getScore()));
+				if (mainApp.gameState.currentPlayer.equals(p)) {
+					itbCurrent.setPosition(itbYellow.getX()-((itbCurrent.getWidth()-itbYellow.getWidth())/2), itbYellow.getY()-((itbCurrent.getHeight()-itbYellow.getHeight())/2));
+					guiStage.addActor(itbCurrent);
+				}
+				guiStage.addActor(itbYellow);
+				break;
+			default:
+				Gdx.app.error("GameScreen", "Player of invalid color exists in game state.");
+//				tempPix.setColor(1, 1, 1, 1);
+				// non-fatal error
+				break;
+			}
+		}
+		
+	
 	}
 
 	private void setupCardInputHandling() {
@@ -634,6 +782,20 @@ public class GameScreen implements Screen {
 	}
 
 	private void setupClaimRouteButton() {
+		demoSelectedCity = new Label("", mainApp.skin);
+		demoSelectedCity.setColor(0, 0, 0, 1);
+		demoSelectedCity.setSize(100, 30);
+		demoSelectedCity.setPosition(50, 300);
+		demoSelectedCity.setVisible(false);
+		guiStage.addActor(demoSelectedCity);
+
+		demoSelectedRoute = new Label("", mainApp.skin);
+		demoSelectedRoute.setColor(0, 0, 0, 1);
+		demoSelectedRoute.setSize(100, 30);
+		demoSelectedRoute.setPosition(50, 260);
+		demoSelectedRoute.setVisible(false);
+		guiStage.addActor(demoSelectedRoute);
+		
 		claimRouteTooltip = new Label("", TTRAdvisorApp.skin);
 		claimRouteButton = new TextButton("Claim A Route", TTRAdvisorApp.skin, "small");
 		claimRouteTooltip.setColor(Color.BLACK);
@@ -643,6 +805,8 @@ public class GameScreen implements Screen {
 			
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				demoSelectedCity.setVisible(true);
+				demoSelectedRoute.setVisible(true);
 				mapTappingDisabled = false;
 				claimRouteTooltip.setText("Click on two cities to select a route between them!");
 				claimRouteTooltip.setPosition(prevTurn.getX() + prevTurn.getWidth()*2, Gdx.graphics.getHeight() - claimRouteButton.getHeight() - claimRouteTooltip.getHeight() - 10);
@@ -682,6 +846,7 @@ public class GameScreen implements Screen {
 		nextTurn.setPosition(Gdx.graphics.getWidth() - nextTurn.getWidth(),
 				Gdx.graphics.getHeight() - nextTurn.getHeight());
 		quit = new TextButton("Quit Game", TTRAdvisorApp.skin, "small");
+		
 		quit.setPosition(nextTurn.getX() - nextTurn.getWidth()*2, Gdx.graphics.getHeight() - quit.getHeight());
 		turnNumber = new Label(Integer.toString(mainApp.hist.getTurnIndex()), TTRAdvisorApp.skin);
 		turnNumber.setPosition(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() - turnNumber.getHeight());
@@ -692,8 +857,9 @@ public class GameScreen implements Screen {
 					trainCardHand.setText(mainApp.hist.getGameState().getPlayers().get(mainApp.hist.getTurnIndexView())
 							.getTCS().toString());
 					turnNumber.setText(Integer.toString(mainApp.hist.getTurnIndex()));
-					demoCurrPlayer.setText("Current player: " + mainApp.hist.getGameState().getPlayers().get(mainApp.hist.getTurnIndexView()).getColor());
+//					demoCurrPlayer.setText("Current player: " + mainApp.hist.getGameState().getPlayers().get(mainApp.hist.getTurnIndexView()).getColor());
 					helperDisableUIForHistoryLook();
+					playerIconUpdate();
 				}
 			}
 
@@ -708,7 +874,8 @@ public class GameScreen implements Screen {
 					trainCardHand.setText(mainApp.hist.getGameState().getPlayers().get(mainApp.hist.getTurnIndexView())
 							.getTCS().toString());
 					turnNumber.setText(Integer.toString(mainApp.hist.getTurnIndex()));
-					demoCurrPlayer.setText("Current player: " + mainApp.hist.getGameState().getPlayers().get(mainApp.hist.getTurnIndexView()).getColor());
+//					demoCurrPlayer.setText("Current player: " + mainApp.hist.getGameState().getPlayers().get(mainApp.hist.getTurnIndexView()).getColor());
+					playerIconUpdate();
 				}
 				else {
 					helperReenableUIForHistoryLook();
@@ -721,16 +888,62 @@ public class GameScreen implements Screen {
 		});
 		quit.addListener(new InputListener() {
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				mainApp.gameState = new GameState(null, new ArrayList<Player>(), new Board("cities.txt"),
-						new DestinationTicketList("destinations.txt"), new ArrayList<Turn>());
-				mainApp.turnInput = new InputTurnController(mainApp.gameState);
-				mainApp.hist = new HistoryController(mainApp.gameState);
-				mainApp.setScreen(new TitleScreen(mainApp));
+				
+				
+				helperDisableUIForActionInput();
+				trainCardHand.setVisible(false);
+				recommendationsButton.setVisible(false);
+				
+				final TextButton confirmYes = new TextButton("Yes, quit", TTRAdvisorApp.skin, "small");
+				final TextButton confirmNo = new TextButton("No, return to game", TTRAdvisorApp.skin, "small");
+				
+				confirmYes.setPosition(Gdx.graphics.getWidth()/2- confirmYes.getWidth(), Gdx.graphics.getHeight()/2);
+				confirmNo.setPosition(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
+
+				
+				confirmYes.addListener(new InputListener() {
+					public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+						mainApp.gameState = new GameState(null, new ArrayList<Player>(), new Board("cities.txt"),
+								new DestinationTicketList("destinations.txt"), new ArrayList<Turn>());
+						mainApp.turnInput = new InputTurnController(mainApp.gameState);
+						mainApp.hist = new HistoryController(mainApp.gameState);
+						mainApp.setScreen(new TitleScreen(mainApp));
+						
+						
+					}
+					public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+						return true;
+					}
+				});
+				confirmNo.addListener(new InputListener() {
+					public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+						helperReenableUIForActionInput();
+						trainCardHand.setVisible(true);
+						confirmYes.setVisible(false);
+						confirmNo.setVisible(false);
+						recommendationsButton.setVisible(true);
+					}
+					public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+						return true;
+					}
+				});
+				
+				guiStage.addActor(confirmYes);
+				guiStage.addActor(confirmNo);
+				
+				
+//				mainApp.gameState = new GameState(null, new ArrayList<Player>(), new Board("cities.txt"),
+//						new DestinationTicketList("destinations.txt"), new ArrayList<Turn>());
+//				mainApp.turnInput = new InputTurnController(mainApp.gameState);
+//				mainApp.hist = new HistoryController(mainApp.gameState);
+//				mainApp.setScreen(new TitleScreen(mainApp));
+				
 			}
 
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				return true;
 			}
+			
 		});
 		guiStage.addActor(turnNumber);
 		guiStage.addActor(prevTurn);
@@ -1197,7 +1410,8 @@ public class GameScreen implements Screen {
 			rec2.setText(recs.get(1));
 			rec3.setText(recs.get(2));
 		}
-		demoCurrPlayer.setText("Current player: " + mainApp.gameState.currentPlayer.getColor());
+//		demoCurrPlayer.setText("Current player: " + mainApp.gameState.currentPlayer.getColor());
+		playerIconUpdate();
 		errorMessage.setVisible(false);
 	}
 
@@ -1221,6 +1435,7 @@ public class GameScreen implements Screen {
 		claimRouteButton.setVisible(false);
 		prevTurn.setVisible(false);
 		nextTurn.setVisible(false);
+		quit.setVisible(false);
 	}
 	
 	private void helperReenableUIForHistoryLook() {
@@ -1230,11 +1445,14 @@ public class GameScreen implements Screen {
 	}
 	
 	private void helperReenableUIForActionInput() {
+		demoSelectedCity.setVisible(false);
+		demoSelectedRoute.setVisible(false);
 		destButton.setVisible(true);
 		TCButton.setVisible(true);
 		claimRouteButton.setVisible(true);
 		prevTurn.setVisible(true);
 		nextTurn.setVisible(true);
+		quit.setVisible(true);
 	}
 	
 	private void clampCamera() {
