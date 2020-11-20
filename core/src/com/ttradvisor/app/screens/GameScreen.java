@@ -20,6 +20,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.EarClippingTriangulator;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.utils.ArraySelection;
@@ -122,6 +123,7 @@ public class GameScreen implements Screen {
 	private TextButton quit;
 	
 	private Label errorMessage;
+//	private List<Label> errorList;
 
 	private ArrayList<TextureRegion> playerColors;
 	
@@ -156,6 +158,12 @@ public class GameScreen implements Screen {
 		mapStage = new Stage(new ScreenViewport());
 		inputMult = new InputMultiplexer(guiStage, mapStage);
 
+		errorMessage = new Label("", TTRAdvisorApp.skin);
+		errorMessage.setColor(Color.RED);
+//		errorMessage.setColor(Color.RED);
+		
+//		errorList = new List<Label>(mainApp.skin);
+		
 		setupRecommendations();
 
 		setupDisplayElements();
@@ -285,11 +293,7 @@ public class GameScreen implements Screen {
 	}
 
 	private void setupCardInputHandling() {
-		errorMessage = new Label("", TTRAdvisorApp.skin);
-		errorMessage.setWidth(Gdx.graphics.getWidth()/2);
-		errorMessage.setPosition(Gdx.graphics.getWidth()/2 - errorMessage.getWidth()/2, Gdx.graphics.getHeight()/8);
-		errorMessage.setColor(Color.RED);
-        
+//		errorMessage = new Label("", TTRAdvisorApp.skin);
 		// Button to draw Destination tickets
 		destButton = new TextButton("Draw Destination \n Ticket", TTRAdvisorApp.skin, "small");
 		TCButton = new TextButton("Draw Train \n Card", TTRAdvisorApp.skin, "small");
@@ -368,7 +372,10 @@ public class GameScreen implements Screen {
 							advanceTurn(isInitial,new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets));
 						}
 						else {	
+							Label errorMessageTemp = new Label(mainApp.gameState.getError(), TTRAdvisorApp.skin);
 							errorMessage.setText(mainApp.gameState.getError());
+							errorMessage.setWidth(errorMessageTemp.getWidth());
+							errorMessage.setPosition(Gdx.graphics.getWidth()/2 - errorMessage.getWidth()/2, Gdx.graphics.getHeight()/8);
 							errorMessage.setVisible(true);
 						}
 
@@ -544,7 +551,10 @@ public class GameScreen implements Screen {
 						if (mainApp.turnInput.takeAction(new TrainCardAction(mainApp.gameState.currentPlayer, drawnCards))) {
 							advanceTurn(isInitial, new TrainCardAction(mainApp.gameState.currentPlayer, drawnCards));
 						} else {	
+							Label errorMessageTemp = new Label(mainApp.gameState.getError(), TTRAdvisorApp.skin);
 							errorMessage.setText(mainApp.gameState.getError());
+							errorMessage.setWidth(errorMessageTemp.getWidth());
+							errorMessage.setPosition(Gdx.graphics.getWidth()/2 - errorMessage.getWidth()/2, Gdx.graphics.getHeight()/8);
 							errorMessage.setVisible(true);
 						}
 
@@ -940,7 +950,10 @@ public class GameScreen implements Screen {
 			if (mainApp.turnInput.takeAction(routeAction)) {
 				advanceTurn(isInitial, routeAction);
 			} else {
+				Label errorMessageTemp = new Label(mainApp.gameState.getError(), TTRAdvisorApp.skin);
 				errorMessage.setText(mainApp.gameState.getError());
+				errorMessage.setWidth(errorMessageTemp.getWidth());
+				errorMessage.setPosition(Gdx.graphics.getWidth()/2 - errorMessage.getWidth()/2, Gdx.graphics.getHeight()/8);
 				errorMessage.setVisible(true);
 			}
 	
@@ -1071,7 +1084,10 @@ public class GameScreen implements Screen {
 				if (mainApp.turnInput.takeAction(routeAction)) {
 					advanceTurn(isInitial, routeAction);
 				} else {	
+					Label errorMessageTemp = new Label(mainApp.gameState.getError(), TTRAdvisorApp.skin);
 					errorMessage.setText(mainApp.gameState.getError());
+					errorMessage.setWidth(errorMessageTemp.getWidth());
+					errorMessage.setPosition(Gdx.graphics.getWidth()/2 - errorMessage.getWidth()/2, Gdx.graphics.getHeight()/8);
 					errorMessage.setVisible(true);
 				}
 
@@ -1144,6 +1160,7 @@ public class GameScreen implements Screen {
 //      table.setDebug(true); // turn on all debug lines (table, cell, and widget)
 		guiStage.addActor(table);
 		guiStage.addActor(drawnCardList);
+		guiStage.addActor(errorMessage);
 	}
 
 	/**
@@ -1182,7 +1199,6 @@ public class GameScreen implements Screen {
 		}
 		demoCurrPlayer.setText("Current player: " + mainApp.gameState.currentPlayer.getColor());
 		errorMessage.setVisible(false);
-
 	}
 
 	/**
@@ -1286,38 +1302,6 @@ public class GameScreen implements Screen {
 	 * Call every render cycle instead of mapStage.draw()
 	 */
 	private void drawMapStageManually() {
-
-//		mapStage.getCamera().update();
-//
-//		if (!mapStage.getRoot().isVisible())
-//			return;
-//
-//		Batch batch = mapStage.getBatch();
-//		batch.setProjectionMatrix(camera.combined);
-//
-//		mapStage.getBatch().begin();
-//
-//		mapStage.getRoot().draw(mapStage.getBatch(), 1);
-//
-//		for (Player p : mainApp.gameState.getPlayers()) {
-//			for (Route r : mainApp.gameState.getBoard().getAllRoutesOfPlayer(p.getColor())) {
-//
-//				Vector2 beginLoc = cityLocs.getCityLocation(r.getBegin());
-//				Vector2 endLoc = cityLocs.getCityLocation(r.getEnd());
-//
-//				float dist = beginLoc.dst(endLoc);
-//
-//				double angle = Math.atan2(endLoc.y - beginLoc.y, endLoc.x - beginLoc.x) * 180 / Math.PI;
-//
-//				TextureRegion tex = playerColors.get(mainApp.gameState.getPlayers().indexOf(p));
-//
-//				mapStage.getBatch().draw(tex, beginLoc.x, beginLoc.y, 0, 0, dist, 10, 1, 1, (float) angle);
-//
-//			}
-//		}
-//
-//		// and do the default behavior too
-//		mapStage.getBatch().end();
 		
 		mapStage.getCamera().update();
 
@@ -1329,13 +1313,7 @@ public class GameScreen implements Screen {
 		mapStage.getBatch().begin();
 
 		mapStage.getRoot().draw(mapStage.getBatch(), 1);
-		
-		
-//		for (int i = 0;i < mainApp.gameState.getBoard().getAllRoutes("Atlanta", "Raleigh").size();i++) {
-//			System.out.println( mainApp.gameState.getBoard().getAllRoutes("Atlanta", "Raleigh").get(i).getOwner());
-//		}
-		
-		
+
 		for (Player p : mainApp.gameState.getPlayers()) {
 			if(p.getColor().equals(Colors.player.BLACK)) {
 				trainImage = textureAtlas.createSprite("BlackTrain");
@@ -1375,7 +1353,6 @@ public class GameScreen implements Screen {
 
 			}
 		}
-		
 		mapStage.getBatch().end();
 	
 

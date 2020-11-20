@@ -131,11 +131,16 @@ public class InputTurnController {
 			gameState.setError("May not draw more than 2 train cards on a turn.");
 			return false;
 		}
-		else if (thisTurn.getDrawnCards().size() == 1 && thisTurn.getDrawnCards().get(0).getColor() != Colors.route.ANY) {
-			Gdx.app.error("Turn", "If drawing one card, it must be a wild.");
-			gameState.setError("If drawing one card, it must be a wild.");
+		else if (thisTurn.getDrawnCards().size() == 0) {
+			Gdx.app.error("Turn", "No card was selected to be drawn.");
+			gameState.setError("No card was selected to be drawn.");
 			return false;
 		}
+//		else if (thisTurn.getDrawnCards().size() == 1 && thisTurn.getDrawnCards().get(0).getColor() != Colors.route.ANY) {
+//			Gdx.app.error("Turn", "If drawing one card, it must be a wild.");
+//			gameState.setError("If drawing one card, it must be a wild.");
+//			return false;
+//		}
 //		This is incomplete, it needs to check if there are any train cards available.
 //		else if (thisTurn.getDrawnCards().size() == 1 && thisTurn.getDrawnCards().get(thisTurn.getDrawnCards().size() - 1).getColor() != new TrainCard(Colors.route.ANY).getColor()) {
 //			Gdx.app.error("Turn", "If one card is drawn it must be a card of Any color.");

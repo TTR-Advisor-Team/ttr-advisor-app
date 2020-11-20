@@ -294,7 +294,6 @@ public class TitleScreen implements Screen {
             	else {
             		err2 = true;
             	}
-            	System.out.println(err1 & err2);
             	if(!(err1 || err2)) {
 	            	// Initialize player colors
 	            	for (int i=0; i<numPlayers.getSelected(); i++) {
