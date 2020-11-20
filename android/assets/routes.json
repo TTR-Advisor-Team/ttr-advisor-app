@@ -1858,7 +1858,7 @@
       "start": "Las Vegas",
       "ends": [
          {
-            "end": "Las Angeles",
+            "end": "Los Angeles",
             "routes": [
                {
                   "color": "Any",
@@ -2715,12 +2715,12 @@
                   "trains": [
                      {
                         "x": "1827",
-                        "y": "920",
+                        "y": "880",
                         "r": "0"
                      },
                      {
                         "x": "1900",
-                        "y": "880",
+                        "y": "920",
                         "r": "0"
                      }
                   ]
