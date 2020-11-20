@@ -859,6 +859,7 @@ public class GameScreen implements Screen {
 					turnNumber.setText(Integer.toString(mainApp.hist.getTurnIndex()));
 //					demoCurrPlayer.setText("Current player: " + mainApp.hist.getGameState().getPlayers().get(mainApp.hist.getTurnIndexView()).getColor());
 					helperDisableUIForHistoryLook();
+					calcAllScore();
 					playerIconUpdate();
 				}
 			}
@@ -875,6 +876,7 @@ public class GameScreen implements Screen {
 							.getTCS().toString());
 					turnNumber.setText(Integer.toString(mainApp.hist.getTurnIndex()));
 //					demoCurrPlayer.setText("Current player: " + mainApp.hist.getGameState().getPlayers().get(mainApp.hist.getTurnIndexView()).getColor());
+					calcAllScore();
 					playerIconUpdate();
 				}
 				else {
@@ -1411,6 +1413,7 @@ public class GameScreen implements Screen {
 			rec3.setText(recs.get(2));
 		}
 //		demoCurrPlayer.setText("Current player: " + mainApp.gameState.currentPlayer.getColor());
+		calcAllScore();
 		playerIconUpdate();
 		errorMessage.setVisible(false);
 	}
@@ -1473,6 +1476,39 @@ public class GameScreen implements Screen {
 		// camera.position.y);
 	}
 
+	
+	private void calcAllScore() {
+		
+		for (Player p : mainApp.gameState.getPlayers()) {
+			int newScore = 0;
+			for (Route r : mainApp.gameState.getBoard().getAllRoutesOfPlayer(p.getColor())) {
+				switch (r.getCost()) {
+				case 1:
+					newScore = newScore + 1;
+					break;
+				case 2:
+					newScore = newScore + 2;
+					break;
+				case 3:
+					newScore = newScore + 4;
+					break;
+				case 4:
+					newScore = newScore + 7;
+					break;
+				case 5:
+					newScore = newScore + 10;;
+					break;
+				case 6:
+					newScore = newScore + 15;
+					break;
+				default:
+					Gdx.app.error("GameScreen", "Invalid Route Length");
+					break;
+				}
+			}
+			p.setScore(newScore/2);
+		}	
+	}
 //	/**
 //	 * Initialize textures for all players' colors Call in constructor only
 //	 */
