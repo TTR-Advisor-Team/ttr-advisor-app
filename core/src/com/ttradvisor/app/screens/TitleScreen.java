@@ -222,15 +222,13 @@ public class TitleScreen implements Screen {
 		stage.addActor(numPlayers);
 		
 		final Label error1 = new Label("Error: Can't have duplicate colors", TTRAdvisorApp.skin);
-        error1.setWidth(Gdx.graphics.getWidth()/4);
 		error1.setPosition(Gdx.graphics.getWidth()/2 - error1.getWidth()/2, Gdx.graphics.getHeight()/8);
         error1.setColor(Color.RED);
         stage.addActor(error1);
         error1.setVisible(false);
         
         final Label error2 = new Label("Error: Invalid user color", TTRAdvisorApp.skin);
-        error2.setWidth(Gdx.graphics.getWidth()/4);
-		error2.setPosition(error1.getX(), error1.getY() - error1.getHeight());
+        error2.setPosition(Gdx.graphics.getWidth()/2 - error2.getWidth()/2, Gdx.graphics.getHeight()/8);
         error2.setColor(Color.RED);
         stage.addActor(error2);
         error2.setVisible(false);
@@ -308,6 +306,7 @@ public class TitleScreen implements Screen {
 	            	mainApp.setScreen(new GameScreen(mainApp));
             	}
             	else if(err1 & err2){
+            		error2.setPosition(Gdx.graphics.getWidth()/2 - error2.getWidth()/2, Gdx.graphics.getHeight()/8 - error1.getHeight());
             		error1.setVisible(true);
             		error2.setVisible(true);
             	}
