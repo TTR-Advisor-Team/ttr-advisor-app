@@ -32,6 +32,48 @@ public class Recommender {
 		ArrayList<String> recommendations = new ArrayList<String>();
 		// find all routes on shortest path between cities
 		ArrayList<Route> routes = getRoutes(tickets);
+//		for (Route r : routes) {
+//			System.out.println(r.toString() + " color: " + r.getColor());
+//		}
+//		System.out.println("\n\n\n");
+		// Remove routes already owned by player. Removed transposed routes. Remove
+		// duplicate routes.
+		for (int x = 0; x < routes.size(); ++x) {
+			if (routes.get(x) == null)
+				continue;
+			if (routes.get(x).getOwner().equals(player.getColor())) {
+				routes.set(x, null);
+				continue;
+			}
+			for (int y = 0; y < routes.size(); ++y) {
+				if (routes.get(y) == null)
+					continue;
+				if(x == y)
+					continue;
+				if (routes.get(x).getBegin().equals(routes.get(y).getBegin()) && routes.get(x).getEnd().equals(routes.get(y).getEnd())
+						&& routes.get(x).getColor().equals(routes.get(y).getColor())) {
+					routes.set(y, null);
+				} else if (routes.get(x).getBegin().equals(routes.get(y).getEnd()) && routes.get(x).getEnd().equals(routes.get(y).getBegin())
+						&& routes.get(x).getColor().equals(routes.get(y).getColor())) {
+					routes.set(y, null);
+				} else if (routes.get(y).getOwner().equals(player.getColor())) {
+					routes.set(y, null);
+				}
+			}
+		}
+		if (!routes.isEmpty()) {
+			int i = 0;
+			while(i < routes.size()) {
+				if(routes.get(i) == null)
+					routes.remove(i);
+				else
+					i++;
+			}
+		}
+
+//		for (Route r : routes) {
+//			System.out.println(r.toString() + " color: " + r.getColor());
+//		}
 		routes.sort(new Comparator<Route>() {
 			public int compare(Route r1, Route r2) {
 				return r2.getCost() - r1.getCost();

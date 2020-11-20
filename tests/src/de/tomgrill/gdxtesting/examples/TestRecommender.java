@@ -413,4 +413,19 @@ public class TestRecommender {
 		}
 		assertTrue(recs.contains("Claim ORANGE route from Salt Lake City to San Francisco."));
 	}
+	@Test
+	public void calculateClaimRouteOnPathTest2() {
+		ArrayList<DestinationTicket> dts = new ArrayList<DestinationTicket>();
+		player.setNumTrains(46);
+		dts.add(new DestinationTicket("San Francisco", "New York"));
+		dts.add(new DestinationTicket("New York", "San Francisco"));
+		while (player.getTCS().size() < 10) {
+			player.getTCS().add(new TrainCard(Colors.route.ORANGE));
+		}
+		ArrayList<String> recs = rec.calculate(dts);
+		for (String s : recs) {
+			System.out.println(s);
+		}
+		assertTrue(recs.contains("Claim ORANGE route from Salt Lake City to San Francisco."));
+	}
 }
