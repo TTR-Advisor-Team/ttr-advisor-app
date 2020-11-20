@@ -216,8 +216,6 @@ public class InputTurnController {
         		}
 			} 
 			else {
-				System.out.println(">4 players, double route");
-				System.out.println("number of unowned routes: "+ gameState.getBoard().getNumberNotOwned(gameState.getBoard().getAllRoutes(thisTurn.claimedRoute.getBegin(),thisTurn.claimedRoute.getEnd())));
 				if (!gameState.getBoard().hasUnOwnedRoute(gameState.getBoard().getAllRoutes(thisTurn.claimedRoute.getBegin(),thisTurn.claimedRoute.getEnd()))) {
         			Gdx.app.error("Turn", "2 No route available to be claimed between "+thisTurn.claimedRoute.getBegin()+" and "+ thisTurn.claimedRoute.getEnd()+".");
         			gameState.setError("No routes available to be claimed between "+thisTurn.claimedRoute.getBegin()+" and "+ thisTurn.claimedRoute.getEnd()+".");
