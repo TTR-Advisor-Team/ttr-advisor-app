@@ -380,6 +380,7 @@ public class GameScreen implements Screen {
 			switch (p.getColor()) {
 			case BLACK:
 				itbBlack.setText(Integer.toString(p.getScore()));
+				itbBlack.toFront();
 				if (mainApp.gameState.currentPlayer.equals(p)) {
 					itbCurrent.setPosition(itbBlack.getX()-(itbCurrent.getWidth()-itbBlack.getWidth())/2, itbBlack.getY()-((itbCurrent.getHeight()-itbBlack.getHeight())/2));
 					guiStage.addActor(itbCurrent);
@@ -388,6 +389,7 @@ public class GameScreen implements Screen {
 				break;
 			case BLUE:
 				itbBlue.setText(Integer.toString(p.getScore()));
+				itbBlue.toFront();
 //				itbBlue.setBackground(itbBackground.getBackground());
 				if (mainApp.gameState.currentPlayer.equals(p)) {
 					itbCurrent.setPosition(itbBlue.getX()-((itbCurrent.getWidth()-itbBlue.getWidth())/2), itbBlue.getY()-((itbCurrent.getHeight()-itbBlue.getHeight())/2));
@@ -398,6 +400,7 @@ public class GameScreen implements Screen {
 				break;
 			case GREEN:
 				itbGreen.setText(Integer.toString(p.getScore()));
+				itbGreen.toFront();
 				if (mainApp.gameState.currentPlayer.equals(p)) {
 					itbCurrent.setPosition(itbGreen.getX()-((itbCurrent.getWidth()-itbGreen.getWidth())/2), itbGreen.getY()-((itbCurrent.getHeight()-itbGreen.getHeight())/2));
 					guiStage.addActor(itbCurrent);
@@ -413,6 +416,7 @@ public class GameScreen implements Screen {
 				break;
 			case RED:
 				itbRed.setText(Integer.toString(p.getScore()));
+				itbRed.toFront();
 //				button4.setSi
 				if (mainApp.gameState.currentPlayer.equals(p)) {
 					itbCurrent.setPosition(itbRed.getX()-((itbCurrent.getWidth()-itbRed.getWidth())/2), itbRed.getY()-((itbCurrent.getHeight()-itbRed.getHeight())/2));
@@ -423,6 +427,7 @@ public class GameScreen implements Screen {
 				break;
 			case YELLOW:
 				itbYellow.setText(Integer.toString(p.getScore()));
+				itbYellow.toFront();
 				if (mainApp.gameState.currentPlayer.equals(p)) {
 					itbCurrent.setPosition(itbYellow.getX()-((itbCurrent.getWidth()-itbYellow.getWidth())/2), itbYellow.getY()-((itbCurrent.getHeight()-itbYellow.getHeight())/2));
 					guiStage.addActor(itbCurrent);
