@@ -30,6 +30,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
@@ -140,6 +141,8 @@ public class GameScreen implements Screen {
 	private ImageTextButton itbRed;
 	private ImageTextButton itbYellow;
 	private ImageTextButton itbCurrent;
+	
+	private Image[] trainCardImages;
 
 	public GameScreen(TTRAdvisorApp main) {
 		mainApp = main;
@@ -189,7 +192,18 @@ public class GameScreen implements Screen {
 //		setupClaimedRouteTextures();
 
 		Image map = new Image(new Texture("high_res_map.png"));
-
+		trainCardImages = new Image[Colors.route.values().length];
+		// filenames for images
+		trainCardImages[0] = new Image(new Texture("any.png"));
+		trainCardImages[1] = new Image(new Texture("black.png"));
+		trainCardImages[2] = new Image(new Texture("blue.png"));
+		trainCardImages[3] = new Image(new Texture("green.png"));
+		trainCardImages[4] = new Image(new Texture("orange.png"));
+		trainCardImages[5] = new Image(new Texture("pink.png"));
+		trainCardImages[6] = new Image(new Texture("red.png"));
+		trainCardImages[7] = new Image(new Texture("white.png"));
+		trainCardImages[8] = new Image(new Texture("yellow.png"));
+		
 		// Important note: The assumption here is that we NEVER
 		// scale texture coordinates independently of the world coordinates
 		// So, 1px in texture is always == 1px in world
@@ -596,7 +610,7 @@ public class GameScreen implements Screen {
 				final Label drawnCardList = new Label(drawnCards.toString(), TTRAdvisorApp.skin);
 				drawnCardList.setWidth((Gdx.graphics.getWidth() / 5) * 2);
 				drawnCardList.setPosition(drawnCardList.getWidth(), drawnCardList.getHeight() * 9);
-				TextButton redTrain = new TextButton("Red", TTRAdvisorApp.skin, "small");
+				ImageButton redTrain = new ImageButton(trainCardImages[Colors.route.RED.ordinal()].getDrawable());
 				redTrain.addListener(new InputListener() {
 					public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 						drawnCards.add(new TrainCard(Colors.route.RED));
