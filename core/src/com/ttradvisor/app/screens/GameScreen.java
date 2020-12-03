@@ -1195,7 +1195,8 @@ public class GameScreen implements Screen {
 		final Label drawnCardList = new Label(drawnCards.toString(), TTRAdvisorApp.skin);
 		drawnCardList.setWidth((Gdx.graphics.getWidth() / 5) * 2);
 		drawnCardList.setPosition(drawnCardList.getWidth(), drawnCardList.getHeight() * 9);
-		TextButton redTrain = new TextButton("Red", TTRAdvisorApp.skin, "small");
+		
+		ImageButton redTrain = new ImageButton(TTRAdvisorApp.skin, "TC_red");
 		redTrain.addListener(new InputListener() {
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				drawnCards.add(new TrainCard(Colors.route.RED));
@@ -1206,7 +1207,7 @@ public class GameScreen implements Screen {
 				return true;
 			}
 		});
-		TextButton orangeTrain = new TextButton("Orange", TTRAdvisorApp.skin, "small");
+		ImageButton orangeTrain = new ImageButton(TTRAdvisorApp.skin, "TC_orange");
 		orangeTrain.addListener(new InputListener() {
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				drawnCards.add(new TrainCard(Colors.route.ORANGE));
@@ -1217,7 +1218,7 @@ public class GameScreen implements Screen {
 				return true;
 			}
 		});
-		TextButton yellowTrain = new TextButton("Yellow", TTRAdvisorApp.skin, "small");
+		ImageButton yellowTrain = new ImageButton(TTRAdvisorApp.skin, "TC_yellow");
 		yellowTrain.addListener(new InputListener() {
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				drawnCards.add(new TrainCard(Colors.route.YELLOW));
@@ -1228,7 +1229,7 @@ public class GameScreen implements Screen {
 				return true;
 			}
 		});
-		TextButton greenTrain = new TextButton("Green", TTRAdvisorApp.skin, "small");
+		ImageButton greenTrain = new ImageButton(TTRAdvisorApp.skin, "TC_green");
 		greenTrain.addListener(new InputListener() {
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				drawnCards.add(new TrainCard(Colors.route.GREEN));
@@ -1239,7 +1240,7 @@ public class GameScreen implements Screen {
 				return true;
 			}
 		});
-		TextButton blueTrain = new TextButton("Blue", TTRAdvisorApp.skin, "small");
+		ImageButton blueTrain = new ImageButton(TTRAdvisorApp.skin, "TC_blue");
 		blueTrain.addListener(new InputListener() {
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				drawnCards.add(new TrainCard(Colors.route.BLUE));
@@ -1250,7 +1251,7 @@ public class GameScreen implements Screen {
 				return true;
 			}
 		});
-		TextButton pinkTrain = new TextButton("Pink", TTRAdvisorApp.skin, "small");
+		ImageButton pinkTrain = new ImageButton(TTRAdvisorApp.skin, "TC_pink");
 		pinkTrain.addListener(new InputListener() {
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				drawnCards.add(new TrainCard(Colors.route.PINK));
@@ -1261,7 +1262,7 @@ public class GameScreen implements Screen {
 				return true;
 			}
 		});
-		TextButton blackTrain = new TextButton("Black", TTRAdvisorApp.skin, "small");
+		ImageButton blackTrain = new ImageButton(TTRAdvisorApp.skin, "TC_black");
 		blackTrain.addListener(new InputListener() {
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				drawnCards.add(new TrainCard(Colors.route.BLACK));
@@ -1272,7 +1273,7 @@ public class GameScreen implements Screen {
 				return true;
 			}
 		});
-		TextButton whiteTrain = new TextButton("White", TTRAdvisorApp.skin, "small");
+		ImageButton whiteTrain = new ImageButton(TTRAdvisorApp.skin, "TC_white");
 		whiteTrain.addListener(new InputListener() {
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				drawnCards.add(new TrainCard(Colors.route.WHITE));
@@ -1283,7 +1284,7 @@ public class GameScreen implements Screen {
 				return true;
 			}
 		});
-		TextButton wildTrain = new TextButton("Wild", TTRAdvisorApp.skin, "small");
+		ImageButton wildTrain = new ImageButton(TTRAdvisorApp.skin, "TC_any");
 		wildTrain.addListener(new InputListener() {
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				drawnCards.add(new TrainCard(Colors.route.ANY));
