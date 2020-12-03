@@ -141,8 +141,6 @@ public class GameScreen implements Screen {
 	private ImageTextButton itbRed;
 	private ImageTextButton itbYellow;
 	private ImageTextButton itbCurrent;
-	
-	private Image[] trainCardImages;
 
 	public GameScreen(TTRAdvisorApp main) {
 		mainApp = main;
@@ -192,18 +190,7 @@ public class GameScreen implements Screen {
 //		setupClaimedRouteTextures();
 
 		Image map = new Image(new Texture("high_res_map.png"));
-		trainCardImages = new Image[Colors.route.values().length];
-		// filenames for images
-		trainCardImages[0] = new Image(new Texture("any.png"));
-		trainCardImages[1] = new Image(new Texture("black.png"));
-		trainCardImages[2] = new Image(new Texture("blue.png"));
-		trainCardImages[3] = new Image(new Texture("green.png"));
-		trainCardImages[4] = new Image(new Texture("orange.png"));
-		trainCardImages[5] = new Image(new Texture("pink.png"));
-		trainCardImages[6] = new Image(new Texture("red.png"));
-		trainCardImages[7] = new Image(new Texture("white.png"));
-		trainCardImages[8] = new Image(new Texture("yellow.png"));
-		
+
 		// Important note: The assumption here is that we NEVER
 		// scale texture coordinates independently of the world coordinates
 		// So, 1px in texture is always == 1px in world
@@ -610,7 +597,8 @@ public class GameScreen implements Screen {
 				final Label drawnCardList = new Label(drawnCards.toString(), TTRAdvisorApp.skin);
 				drawnCardList.setWidth((Gdx.graphics.getWidth() / 5) * 2);
 				drawnCardList.setPosition(drawnCardList.getWidth(), drawnCardList.getHeight() * 9);
-				ImageButton redTrain = new ImageButton(trainCardImages[Colors.route.RED.ordinal()].getDrawable());
+				
+				ImageButton redTrain = new ImageButton(TTRAdvisorApp.skin, "TC_red");
 				redTrain.addListener(new InputListener() {
 					public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 						drawnCards.add(new TrainCard(Colors.route.RED));
@@ -621,7 +609,7 @@ public class GameScreen implements Screen {
 						return true;
 					}
 				});
-				ImageButton orangeTrain = new ImageButton(trainCardImages[Colors.route.ORANGE.ordinal()].getDrawable());
+				ImageButton orangeTrain = new ImageButton(TTRAdvisorApp.skin, "TC_orange");
 				orangeTrain.addListener(new InputListener() {
 					public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 						drawnCards.add(new TrainCard(Colors.route.ORANGE));
@@ -632,7 +620,7 @@ public class GameScreen implements Screen {
 						return true;
 					}
 				});
-				ImageButton yellowTrain = new ImageButton(trainCardImages[Colors.route.YELLOW.ordinal()].getDrawable());
+				ImageButton yellowTrain = new ImageButton(TTRAdvisorApp.skin, "TC_yellow");
 				yellowTrain.addListener(new InputListener() {
 					public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 						drawnCards.add(new TrainCard(Colors.route.YELLOW));
@@ -643,7 +631,7 @@ public class GameScreen implements Screen {
 						return true;
 					}
 				});
-				ImageButton greenTrain = new ImageButton(trainCardImages[Colors.route.GREEN.ordinal()].getDrawable());
+				ImageButton greenTrain = new ImageButton(TTRAdvisorApp.skin, "TC_green");
 				greenTrain.addListener(new InputListener() {
 					public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 						drawnCards.add(new TrainCard(Colors.route.GREEN));
@@ -654,7 +642,7 @@ public class GameScreen implements Screen {
 						return true;
 					}
 				});
-				ImageButton blueTrain = new ImageButton(trainCardImages[Colors.route.BLUE.ordinal()].getDrawable());
+				ImageButton blueTrain = new ImageButton(TTRAdvisorApp.skin, "TC_blue");
 				blueTrain.addListener(new InputListener() {
 					public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 						drawnCards.add(new TrainCard(Colors.route.BLUE));
@@ -665,7 +653,7 @@ public class GameScreen implements Screen {
 						return true;
 					}
 				});
-				ImageButton pinkTrain = new ImageButton(trainCardImages[Colors.route.PINK.ordinal()].getDrawable());
+				ImageButton pinkTrain = new ImageButton(TTRAdvisorApp.skin, "TC_pink");
 				pinkTrain.addListener(new InputListener() {
 					public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 						drawnCards.add(new TrainCard(Colors.route.PINK));
@@ -676,7 +664,7 @@ public class GameScreen implements Screen {
 						return true;
 					}
 				});
-				ImageButton blackTrain = new ImageButton(trainCardImages[Colors.route.BLACK.ordinal()].getDrawable());
+				ImageButton blackTrain = new ImageButton(TTRAdvisorApp.skin, "TC_black");
 				blackTrain.addListener(new InputListener() {
 					public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 						drawnCards.add(new TrainCard(Colors.route.BLACK));
@@ -687,7 +675,7 @@ public class GameScreen implements Screen {
 						return true;
 					}
 				});
-				ImageButton whiteTrain = new ImageButton(trainCardImages[Colors.route.WHITE.ordinal()].getDrawable());
+				ImageButton whiteTrain = new ImageButton(TTRAdvisorApp.skin, "TC_white");
 				whiteTrain.addListener(new InputListener() {
 					public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 						drawnCards.add(new TrainCard(Colors.route.WHITE));
@@ -698,7 +686,7 @@ public class GameScreen implements Screen {
 						return true;
 					}
 				});
-				ImageButton wildTrain = new ImageButton(trainCardImages[Colors.route.ANY.ordinal()].getDrawable());
+				ImageButton wildTrain = new ImageButton(TTRAdvisorApp.skin, "TC_any");
 				wildTrain.addListener(new InputListener() {
 					public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 						drawnCards.add(new TrainCard(Colors.route.ANY));
