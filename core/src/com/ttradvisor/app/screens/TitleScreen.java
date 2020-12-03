@@ -221,18 +221,17 @@ public class TitleScreen implements Screen {
         });
 		stage.addActor(numPlayers);
 		
-		final Label error1 = new Label("Error: Can't have duplicate colors", TTRAdvisorApp.skin);
+		
+		final Label error1 = new Label("Error: Can't have duplicate colors", TTRAdvisorApp.skin, "warningLabelSmall");
 		error1.setPosition(Gdx.graphics.getWidth()/2 - error1.getWidth()/2, Gdx.graphics.getHeight()/8);
-        error1.setColor(Color.RED);
         stage.addActor(error1);
         error1.setVisible(false);
         
-        final Label error2 = new Label("Error: Invalid user color", TTRAdvisorApp.skin);
+        final Label error2 = new Label("Error: Invalid user color", TTRAdvisorApp.skin, "warningLabelSmall");
         error2.setPosition(Gdx.graphics.getWidth()/2 - error2.getWidth()/2, Gdx.graphics.getHeight()/8);
-        error2.setColor(Color.RED);
         stage.addActor(error2);
         error2.setVisible(false);
-
+        
         // Button to access GameScreen
         TextButton playButton = new TextButton("Play!", TTRAdvisorApp.skin, "small");
         playButton.setWidth(Gdx.graphics.getWidth()/4);
