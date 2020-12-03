@@ -334,7 +334,7 @@ public class TitleScreen implements Screen {
         tutorialButton.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                
+                mainApp.setScreen(new TutorialScreen(mainApp));
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
