@@ -143,8 +143,7 @@ public class GameScreen implements Screen {
 	private ImageTextButton itbRed;
 	private ImageTextButton itbYellow;
 	private ImageTextButton itbCurrent;
-	
-	private Image[] trainCardImages;
+
 
 	public GameScreen(TTRAdvisorApp main) {
 		mainApp = main;
@@ -194,17 +193,9 @@ public class GameScreen implements Screen {
 //		setupClaimedRouteTextures();
 
 		Image map = new Image(new Texture("high_res_map.png"));
-		trainCardImages = new Image[Colors.route.values().length];
+
 		// filenames for images
-		trainCardImages[0] = new Image(new Texture("any.png"));
-		trainCardImages[1] = new Image(new Texture("black.png"));
-		trainCardImages[2] = new Image(new Texture("blue.png"));
-		trainCardImages[3] = new Image(new Texture("green.png"));
-		trainCardImages[4] = new Image(new Texture("orange.png"));
-		trainCardImages[5] = new Image(new Texture("pink.png"));
-		trainCardImages[6] = new Image(new Texture("red.png"));
-		trainCardImages[7] = new Image(new Texture("white.png"));
-		trainCardImages[8] = new Image(new Texture("yellow.png"));
+
 		// Important note: The assumption here is that we NEVER
 		// scale texture coordinates independently of the world coordinates
 		// So, 1px in texture is always == 1px in world
@@ -615,8 +606,9 @@ public class GameScreen implements Screen {
 				
 				final ArrayList<TrainCard> drawnCards = new ArrayList<>();
 				final Label drawnCardList = new Label(drawnCards.toString(), TTRAdvisorApp.skin);
-				drawnCardList.setWidth((Gdx.graphics.getWidth() / 5) * 2);
-				drawnCardList.setPosition(drawnCardList.getWidth(), drawnCardList.getHeight() * 9);
+//				drawnCardList.setWidth((Gdx.graphics.getWidth() / 5) * 2);
+//				drawnCardList.setPosition(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()/2);
+				drawnCardList.setPosition(Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()/2+20);
 //				ImageButton redTrain = new ImageButton(trainCardImages[Colors.route.RED.ordinal()].getDrawable());
 				final ImageTextButton redTrain = new ImageTextButton("", TTRAdvisorApp.skin, "tcRed");
 				redTrain.addListener(new InputListener() {
@@ -634,26 +626,6 @@ public class GameScreen implements Screen {
 						}
 						redTrain.setText(Integer.toString(drawCount));
 						
-//						int drawCount = 0;
-//						if (drawnCards.get(drawnCards.size()-1).getColor().equals(Colors.route.RED)) {
-//							for (TrainCard tc: drawnCards) {
-//								if (tc.getColor().equals(Colors.route.RED)){
-//									drawCount++;
-//								}
-//							}
-//							System.out.println("drawn"+ drawCount);
-//						}
-//						
-//						
-//						int handCount = 0;
-//						if (drawnCards.get(drawnCards.size()-1).getColor().equals(Colors.route.RED)) {
-//							for (TrainCard tc: mainApp.gameState.currentPlayer.getTCS()) {
-//								if (tc.getColor().equals(Colors.route.RED)){
-//									handCount++;
-//								}
-//							}
-//							System.out.println("hand"+ handCount);
-//						}
 						
 					}
 
@@ -1041,6 +1013,7 @@ public class GameScreen implements Screen {
 				table.setFillParent(true);
 
 //              table.setDebug(true); // turn on all debug lines (table, cell, and widget)
+				drawnCardList.setPosition(Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()/2+20);
 				guiStage.addActor(table);
 				guiStage.addActor(drawnCardList);
 			}
@@ -1469,7 +1442,7 @@ public class GameScreen implements Screen {
 		final ArrayList<TrainCard> drawnCards = new ArrayList<>();
 		final Label drawnCardList = new Label(drawnCards.toString(), TTRAdvisorApp.skin);
 		drawnCardList.setWidth((Gdx.graphics.getWidth() / 5) * 2);
-		drawnCardList.setPosition(drawnCardList.getWidth(), drawnCardList.getHeight() * 9);
+		drawnCardList.setPosition(Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()/2+20);
 		
 		
 		int anyCount = 0;

@@ -251,6 +251,11 @@ com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 		fontColor: Red
 		background: list
 	}
+	handDisplay: {
+		font: font-big
+		fontColor: black
+		background: list
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
 	default: {
@@ -333,6 +338,11 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	error: {
 		font: font
 		fontColor: Red
+		up: list
+	}
+	handDisplay: {
+		font: font-big
+		fontColor: black
 		up: list
 	}
 }
