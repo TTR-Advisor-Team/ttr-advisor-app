@@ -172,7 +172,7 @@ public class Recommender {
 	public ArrayList<Route> getRoutes(ArrayList<DestinationTicket> tickets) {
 		ArrayList<Route> allRoutes = new ArrayList<Route>();
 		for (DestinationTicket dt : tickets) {
-			ArrayList<Route> routes = shortestPath(dt.getStart(), dt.getEnd());
+			ArrayList<Route> routes = shortestPath(dt, player.getColor());
 //			System.out.println("tickets " + tickets);
 //			System.out.println("dt " + dt);
 //			System.out.println("size" + routes.size());
@@ -183,7 +183,7 @@ public class Recommender {
 		}
 		return allRoutes;
 	}
-
+	
 	/**
 	 * Implementation of Dijkstra's Algorithm. Currently there is no termination
 	 * protocol for routes impossible to complete.
@@ -192,8 +192,9 @@ public class Recommender {
 	 * @param end   then ending node of the path
 	 * @return A list of all routes on the shortest path
 	 */
-	public ArrayList<Route> shortestPath(String begin, String end) {
+	public ArrayList<Route> shortestPath(DestinationTicket ticket, Colors.player player) {
 
+		System.out.println("Start: "+ ticket.getStart()+ " End: "+ ticket.getEnd());
 		ArrayList<Route> routes = new ArrayList<Route>();
 		PriorityQueue<City> openSet = new PriorityQueue<City>(new Comparator<City>() {
 			public int compare(City c1, City c2) {
@@ -206,7 +207,7 @@ public class Recommender {
 		});
 
 		LinkedList<City> closed = new LinkedList<City>();
-		openSet.add(new City(begin, null, 0));
+		openSet.add(new City(ticket.getStart(), null, 0));
 
 		while (!openSet.isEmpty()) {
 			City c = openSet.poll();
@@ -215,11 +216,14 @@ public class Recommender {
 				return routes;
 			}
 			// check if goal has been reached
-			if (c.current.equals(end)) {
+			if (c.current.equals(ticket.getEnd())) {
+				if (c.totalCost == 0) {
+					ticket.setCompleted(true);
+				}
 				// follow previous until null and add them to routes list
 				// these are the routes to focus on claiming or saving up for
 				while (c.previous != null) {
-					routes.addAll(board.getAllRoutesBetween(c.current, c.previous.current, player.getColor()));
+					routes.addAll(board.getAllRoutesBetween(c.current, c.previous.current, player));
 					c = c.previous;
 				}
 
@@ -250,7 +254,7 @@ public class Recommender {
 				boolean open = false;
 				boolean close = false;
 
-				City next = new City(r.end, c, calcCost(c, r.end));
+				City next = new City(r.end, c, calcCost(c, r.end, player));
 				// if openSet contains r.end compare totalCost
 				for (City old : openSet) {
 					// if less update totalCost and previous
@@ -292,14 +296,14 @@ public class Recommender {
 	 * @param nextCity
 	 * @return the total cost of traversing to the next city
 	 */
-	private int calcCost(City currentCity, String nextCity) {
+	private int calcCost(City currentCity, String nextCity, Colors.player player) {
 		LinkedList<Route> routes = board.getAllRoutes(currentCity.current);
 		for (Route r : routes) {
 			if (!r.end.equals(nextCity))
 				continue;
 			if (r.owner == Colors.player.NONE)
 				return currentCity.totalCost + r.cost;
-			else if (r.owner == player.getColor())
+			else if (r.owner == player)
 				return currentCity.totalCost + 0;
 			else
 				return currentCity.totalCost + 1000;

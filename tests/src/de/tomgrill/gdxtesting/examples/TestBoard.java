@@ -172,7 +172,7 @@ public class TestBoard {
 	public void boardCopyContinuityTest1() {
 		Board b = new Board("cities.txt");
 		Board copy = b.snapshotBoard();
-		assertNotEquals("Board references should be non-equal", b, copy);
+		assertFalse("Board references should be non-equal", b.equals(copy));
 		Set<String> cities = b.getBoard().keySet();
 		for (String city : cities) {
 			LinkedList<Route> copyRoutes = copy.getAllRoutes(city);

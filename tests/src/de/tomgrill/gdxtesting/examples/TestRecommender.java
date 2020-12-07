@@ -24,6 +24,7 @@ import static org.junit.Assert.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Set;
 
 @RunWith(GdxTestRunner.class)
 public class TestRecommender {
@@ -47,7 +48,8 @@ public class TestRecommender {
 
 	@Test
 	public void shortesSinglePathTest1() {
-		ArrayList<Route> routes = rec.shortestPath("Nashville", "Atlanta");
+		DestinationTicket dt = new DestinationTicket("Nashville", "Atlanta");
+		ArrayList<Route> routes = rec.shortestPath(dt, player.getColor());
 		int cost = 0;
 		Route prev = null;
 		for (Route r : routes) {
@@ -65,7 +67,8 @@ public class TestRecommender {
 
 	@Test
 	public void reverseShortesSinglePathTest1() {
-		ArrayList<Route> routes = rec.shortestPath("Atlanta", "Nashville");
+		DestinationTicket dt = new DestinationTicket("Atlanta", "Nashville");
+		ArrayList<Route> routes = rec.shortestPath(dt, player.getColor());
 		int cost = 0;
 		Route prev = null;
 		for (Route r : routes) {
@@ -83,7 +86,8 @@ public class TestRecommender {
 
 	@Test
 	public void shortestDoublePathTest() {
-		ArrayList<Route> routes = rec.shortestPath("Vancouver", "Portland");
+		DestinationTicket dt = new DestinationTicket("Vancouver", "Portland");
+		ArrayList<Route> routes = rec.shortestPath(dt, player.getColor());
 		int cost = 0;
 		Route prev = null;
 		for (Route r : routes) {
@@ -102,7 +106,8 @@ public class TestRecommender {
 
 	@Test
 	public void reverseShortestDoublePathTest() {
-		ArrayList<Route> routes = rec.shortestPath("Portland", "Vancouver");
+		DestinationTicket dt = new DestinationTicket("Portland", "Vancouver");
+		ArrayList<Route> routes = rec.shortestPath(dt, player.getColor());
 		int cost = 0;
 		Route prev = null;
 		for (Route r : routes) {
@@ -120,7 +125,8 @@ public class TestRecommender {
 
 	@Test
 	public void shortDoublePathTest() {
-		ArrayList<Route> routes = rec.shortestPath("Miami", "Atlanta");
+		DestinationTicket dt = new DestinationTicket("Miami", "Atlanta");
+		ArrayList<Route> routes = rec.shortestPath(dt, player.getColor());
 		int cost = 0;
 		Route prev = null;
 		for (Route r : routes) {
@@ -138,7 +144,8 @@ public class TestRecommender {
 
 	@Test
 	public void reverseShortDoublePathTest() {
-		ArrayList<Route> routes = rec.shortestPath("Atlanta", "Miami");
+		DestinationTicket dt = new DestinationTicket("Atlanta", "Miami");
+		ArrayList<Route> routes = rec.shortestPath(dt, player.getColor());
 		int cost = 0;
 		Route prev = null;
 		for (Route r : routes) {
@@ -156,7 +163,8 @@ public class TestRecommender {
 
 	@Test
 	public void aLongPathTest1() {
-		ArrayList<Route> routes = rec.shortestPath("Seattle", "Toronto");
+		DestinationTicket dt = new DestinationTicket("Seattle", "Toronto");
+		ArrayList<Route> routes = rec.shortestPath(dt, player.getColor());
 		int cost = 0;
 		Route prev = null;
 		for (Route r : routes) {
@@ -174,7 +182,8 @@ public class TestRecommender {
 
 	@Test
 	public void reverseALongPathTest1() {
-		ArrayList<Route> routes = rec.shortestPath("Toronto", "Seattle");
+		DestinationTicket dt = new DestinationTicket("Toronto", "Seattle");
+		ArrayList<Route> routes = rec.shortestPath(dt, player.getColor());
 		int cost = 0;
 		Route prev = null;
 		for (Route r : routes) {
@@ -192,7 +201,8 @@ public class TestRecommender {
 
 	@Test
 	public void aLongPathTest2() {
-		ArrayList<Route> routes = rec.shortestPath("San Francisco", "New York");
+		DestinationTicket dt = new DestinationTicket("San Francisco", "New York");
+		ArrayList<Route> routes = rec.shortestPath(dt, player.getColor());
 		int cost = 0;
 		Route prev = null;
 		for (Route r : routes) {
@@ -211,7 +221,8 @@ public class TestRecommender {
 
 	@Test
 	public void reverseALongPathTest2() {
-		ArrayList<Route> routes = rec.shortestPath("New York", "San Francisco");
+		DestinationTicket dt = new DestinationTicket("New York", "San Francisco");
+		ArrayList<Route> routes = rec.shortestPath(dt, player.getColor());
 		int cost = 0;
 		Route prev = null;
 		for (Route r : routes) {
@@ -230,7 +241,8 @@ public class TestRecommender {
 
 	@Test
 	public void pathTest1() {
-		ArrayList<Route> routes = rec.shortestPath("El Paso", "Duluth");
+		DestinationTicket dt = new DestinationTicket("El Paso", "Duluth");
+		ArrayList<Route> routes = rec.shortestPath(dt, player.getColor());
 		int cost = 0;
 		Route prev = null;
 		for (Route r : routes) {
@@ -248,7 +260,8 @@ public class TestRecommender {
 
 	@Test
 	public void reversePathTest1() {
-		ArrayList<Route> routes = rec.shortestPath("Duluth", "El Paso");
+		DestinationTicket dt = new DestinationTicket("Duluth", "El Paso");
+		ArrayList<Route> routes = rec.shortestPath(dt, player.getColor());
 		int cost = 0;
 		Route prev = null;
 		for (Route r : routes) {
@@ -267,7 +280,8 @@ public class TestRecommender {
 	@Test
 	public void pathingAroundOtherPlayers() {
 		board.claimRoute("Nashville", "Atlanta", Colors.route.ANY, Colors.player.GREEN);
-		ArrayList<Route> routes = rec.shortestPath("Nashville", "Atlanta");
+		DestinationTicket dt = new DestinationTicket("Nashville", "Atlanta");
+		ArrayList<Route> routes = rec.shortestPath(dt, player.getColor());
 		int cost = 0;
 		Route prev = null;
 		for (Route r : routes) {
@@ -287,7 +301,8 @@ public class TestRecommender {
 	@Test
 	public void reversePathingAroundOtherPlayers() {
 		board.claimRoute("Nashville", "Atlanta", Colors.route.ANY, Colors.player.GREEN);
-		ArrayList<Route> routes = rec.shortestPath("Atlanta", "Nashville");
+		DestinationTicket dt = new DestinationTicket("Atlanta", "Nashville");
+		ArrayList<Route> routes = rec.shortestPath(dt, player.getColor());
 		int cost = 0;
 		Route prev = null;
 		for (Route r : routes) {
@@ -324,7 +339,8 @@ public class TestRecommender {
 	@Test
 	public void ownerTest() {
 		board.claimRoute("New Orleans", "Miami", Colors.route.RED, Colors.player.BLACK);
-		ArrayList<Route> routes = rec.shortestPath("New Orleans", "Charleston");
+		DestinationTicket dt = new DestinationTicket("New Orleans", "Charleston");
+		ArrayList<Route> routes = rec.shortestPath(dt, player.getColor());
 		int cost = 0;
 		for (Route r : routes) {
 			cost += r.getCost();
@@ -337,7 +353,8 @@ public class TestRecommender {
 		board.claimRoute("Miami", "Atlanta", Colors.route.BLUE, Colors.player.GREEN);
 		board.claimRoute("Miami", "New Orleans", Colors.route.RED, Colors.player.GREEN);
 		board.claimRoute("Miami", "Charleston", Colors.route.PINK, Colors.player.GREEN);
-		ArrayList<Route> routes = rec.shortestPath("Atlanta", "Miami");
+		DestinationTicket dt = new DestinationTicket("Atlanta", "Miami");
+		ArrayList<Route> routes = rec.shortestPath(dt, player.getColor());
 		assertTrue(routes.isEmpty());
 	}
 
@@ -413,6 +430,7 @@ public class TestRecommender {
 		}
 		assertTrue(recs.contains("Claim ORANGE route from Salt Lake City to San Francisco."));
 	}
+
 	@Test
 	public void calculateClaimRouteOnPathTest2() {
 		ArrayList<DestinationTicket> dts = new ArrayList<DestinationTicket>();
@@ -428,4 +446,39 @@ public class TestRecommender {
 		}
 		assertTrue(recs.contains("Claim ORANGE route from Salt Lake City to San Francisco."));
 	}
+
+	@Test
+	public void graphConsistencyTest() {
+
+		Set<String> keys = board.getBoard().keySet();
+		ArrayList<String> list = new ArrayList<String>(keys);
+		ArrayList<DestinationTicket> dts = new ArrayList<DestinationTicket>();
+
+		for (int i = 0; i < list.size(); ++i) {
+			for (int j = 0; j < list.size(); ++j) {
+				if (i == j)
+					continue;
+				else {
+					DestinationTicket dt = new DestinationTicket(list.get(i), list.get(j));
+					dts.add(dt);
+				}
+			}
+
+		}
+		for(DestinationTicket d: dts) {
+			rec.shortestPath(d, player.getColor());
+		}
+		assertTrue(true);
+	}
+	
+	@Test
+	public void DTListConsistenecyTest() {
+		DestinationTicketList dtl = new DestinationTicketList("destinations.txt");
+		LinkedList<DestinationTicket> dts = dtl.getList();
+		for(DestinationTicket d:dts) {
+			rec.shortestPath(d, player.getColor());			
+		}
+		assertTrue(true);
+	}
+	
 }
