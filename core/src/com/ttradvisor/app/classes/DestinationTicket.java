@@ -6,6 +6,7 @@ import java.util.List;
 public class DestinationTicket {
 	private ArrayList<String> startEnd = new ArrayList<String>();
 	private int value;
+	private boolean completed;
 	
 	
 	public DestinationTicket(String start, String end) {
@@ -19,9 +20,16 @@ public class DestinationTicket {
 		startEnd.add(start);
 		startEnd.add(end);
 	}
+	public void setCompleted(boolean complete) {
+		completed = complete;
+	}
 	
 	public void setValue(int length) {
 		value = length;
+	}
+	
+	public boolean getCompleted() {
+		return completed;
 	}
 	
 	public int getValue() {
