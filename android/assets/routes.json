@@ -426,7 +426,7 @@
             "end": "Raleigh",
             "routes": [
                {
-                  "color": "",
+                  "color": "Any",
                   "trains": [
                      {
                         "x": "1886",
@@ -1881,7 +1881,7 @@
             "end": "Salt Lake City",
             "routes": [
                {
-                  "color": "Any",
+                  "color": "Orange",
                   "trains": [
                      {
                         "x": "448",
@@ -3636,7 +3636,7 @@
             "end": "Charleston",
             "routes": [
                {
-                  "color": "",
+                  "color": "Any",
                   "trains": [
                      {
                         "x": "1886",
@@ -3961,7 +3961,7 @@
             "end": "Las Vegas",
             "routes": [
                {
-                  "color": "Any",
+                  "color": "Orange",
                   "trains": [
                      {
                         "x": "448",
