@@ -1,5 +1,8 @@
 package com.ttradvisor.app.classes;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class HistoryController {
 	
 	private GameState initialGameState;
@@ -7,8 +10,8 @@ public class HistoryController {
 	private int turnIndex;
 	
 	public HistoryController(GameState gameState) {
-		this.initialGameState = gameState;
-		this.gameState = gameState;
+		this.initialGameState = new GameState(gameState.getUserColor(), (ArrayList<Player>) gameState.getPlayers(), gameState.getBoard(), gameState.getDtList(),(ArrayList<Turn>) gameState.getTurns());
+		this.gameState = new GameState(gameState.getUserColor(), (ArrayList<Player>) gameState.getPlayers(), gameState.getBoard(), gameState.getDtList(),(ArrayList<Turn>) gameState.getTurns());
 		this.turnIndex = gameState.getCurrentTurnCounter();
 	}
 	

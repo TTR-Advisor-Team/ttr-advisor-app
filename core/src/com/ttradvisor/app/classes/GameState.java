@@ -30,6 +30,11 @@ public class GameState {
 //		claimedRoutes = new ArrayList<Route>();
 
 	}
+	
+	public Colors.player getUserColor(){
+		return userColor;
+	}
+	
 	public Recommender getRecommender() {
 		return rec;
 	}
