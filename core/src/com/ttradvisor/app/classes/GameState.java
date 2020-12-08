@@ -55,9 +55,6 @@ public class GameState {
 	public List<Turn> getTurns(){
 		return turns;
 	}
-	public void setTurns(ArrayList<Turn> turns) {
-		this.turns = turns;
-	}
 	
 	public void setError(String error) {
 		this.errorMessage = error;

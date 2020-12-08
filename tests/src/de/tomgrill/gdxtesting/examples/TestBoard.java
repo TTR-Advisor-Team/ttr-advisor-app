@@ -119,6 +119,14 @@ public class TestBoard {
 		Route r1 = b.getRoute("Boston", "New York");
 		assertEquals(Colors.route.RED, r1.getColor());
 	}
+	
+	@Test
+	public void getNumberRoutesTest() {
+		Board b = new Board("cities.txt");
+		assertEquals("Check 2 routes", 2, b.getNumberRoutes("Pittsburgh", "New York"));
+		assertEquals("Check 1 route", 1, b.getNumberRoutes("Raleigh", "Charleston"));
+		assertEquals("Check 0 routes", 0, b.getNumberRoutes("Miami", "Los Angeles"));
+	}
 
 	@Test
 	public void getBadRouteTest() {

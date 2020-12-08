@@ -257,16 +257,16 @@ public class Board {
 		return list;
 	}
 
-	public int getIndexeNotOwned(LinkedList<Route> routes) {
-		int index = 0;
-		for (Route r : routes) {
-			if (r.owner.equals(Colors.player.NONE)) {
-				return index;
-			}
-			index++;
-		}
-		return index;
-	}
+//	public int getIndexNotOwned(LinkedList<Route> routes) {
+//		int index = 0;
+//		for (Route r : routes) {
+//			if (r.owner.equals(Colors.player.NONE)) {
+//				return index;
+//			}
+//			index++;
+//		}
+//		return index;
+//	}
 
 	public int getNumberNotOwned(LinkedList<Route> routes) {
 		int count = 0;

@@ -236,6 +236,29 @@ public class TestInputTurnController {
 	}
 	
 	@Test
+	public void generalTurnDrawZeroTrain() {
+		GameState testState = generalTestGameState();
+		InputTurnController testController = new InputTurnController(testState);
+
+		ArrayList<TrainCard> drawnCards2 = new ArrayList<TrainCard>();
+
+		assertFalse("General turn, drawing 0 train cards should fail", testController.takeAction(new TrainCardAction(testState.getPlayers().get(0), drawnCards2)));
+	}
+	
+	@Test
+	public void generalTurnDrawThreeTrain() {
+		GameState testState = generalTestGameState();
+		InputTurnController testController = new InputTurnController(testState);
+
+		ArrayList<TrainCard> drawnCards2 = new ArrayList<TrainCard>();
+		drawnCards2.add(new TrainCard(Colors.route.RED));
+		drawnCards2.add(new TrainCard(Colors.route.BLUE));
+		drawnCards2.add(new TrainCard(Colors.route.BLUE));
+
+		assertFalse("General turn, drawing 3 train cards should fail", testController.takeAction(new TrainCardAction(testState.getPlayers().get(0), drawnCards2)));
+	}
+	
+	@Test
 	public void generalTurnDrawDestinationOneCard() {
 		GameState testState = generalTestGameState();
 		InputTurnController testController = new InputTurnController(testState);
@@ -261,6 +284,16 @@ public class TestInputTurnController {
 		testController.takeAction(new DestinationAction(testState.getPlayers().get(0), drawnTickets2));
 		
 		assertTrue("General turn, add 3 destination tickets", testState.getPlayers().get(0).getDTS().size() == 6 && testState.getPlayers().get(0).getDTS().containsAll(drawnTickets2));
+	}
+	
+	@Test
+	public void generalTurnDrawDestinationZeroCard() {
+		GameState testState = generalTestGameState();
+		InputTurnController testController = new InputTurnController(testState);
+		
+		ArrayList<DestinationTicket> drawnTickets2 = new ArrayList<DestinationTicket>();
+		
+		assertFalse("General turn, shouldn't be possible to draw 0 DTs", testController.takeAction(new DestinationAction(testState.getPlayers().get(0), drawnTickets2)));
 	}
 
 	
