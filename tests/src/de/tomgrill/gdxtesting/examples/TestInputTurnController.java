@@ -38,9 +38,13 @@ public class TestInputTurnController {
 		testPlayerList.add(testP1);
 		testPlayerList.add(testP2);
 		testPlayerList.add(testP3);
-		return new GameState(Colors.player.BLACK, testPlayerList, new Board("cities.txt"),
+		GameState initState = new GameState(Colors.player.BLACK, testPlayerList, new Board("cities.txt"),
 				new DestinationTicketList("destinations.txt"), new ArrayList<Turn>());
+		
+		initState.userColor = Colors.player.RED;
+		return initState;
 	}
+	
 	private GameState generalTestGameState() {
 		GameState testState = initTestGameState();
 		InputTurnController testController = new InputTurnController(testState);
@@ -123,6 +127,84 @@ public class TestInputTurnController {
 		assertTrue("Initial turn should complete", testState.getPlayers().get(0).getTCS().containsAll(drawnCards)
 				&& testState.getPlayers().get(0).getDTS().containsAll(drawnTickets)
 				&& !testController.isInitialTurn());
+
+	}
+	
+	@Test
+	public void initialTurnRouteActionFails() {
+		GameState testState = initTestGameState();
+		InputTurnController testController = new InputTurnController(testState);
+		testController.startInitialTurn();
+		
+		ArrayList<TrainCard> spentCards = new ArrayList<TrainCard>();
+		spentCards.add(new TrainCard(Colors.route.BLUE));
+		spentCards.add(new TrainCard(Colors.route.ORANGE));
+		
+		Route testRoute = testState.getBoard().getRoute("Raleigh", "Charleston");
+		
+		testController.takeAction(new RouteAction(testState.getPlayers().get(0), spentCards, testRoute));
+		
+		assertTrue("Initial turn should not complete & route should not get claimed", 
+				testState.getBoard().getAllRoutesOfPlayer(testState.getPlayers().get(0).getColor()).isEmpty() 
+				&& testController.isInitialTurn());
+
+	}
+	
+	@Test
+	public void initialTurnDuplicateActions() {
+		GameState testState = initTestGameState();
+		InputTurnController testController = new InputTurnController(testState);
+		testController.startInitialTurn();
+		
+		ArrayList<TrainCard> drawnCards = new ArrayList<TrainCard>();
+		drawnCards.add(new TrainCard(Colors.route.BLUE));
+		drawnCards.add(new TrainCard(Colors.route.ORANGE));
+		drawnCards.add(new TrainCard(Colors.route.RED));
+		drawnCards.add(new TrainCard(Colors.route.GREEN));
+		
+		testController.takeAction(new TrainCardAction(testState.getPlayers().get(0), drawnCards));
+		assertFalse("Can't draw cards twice on initial turn!", testController.takeAction(new TrainCardAction(testState.getPlayers().get(0), drawnCards)));
+
+	}
+	
+	@Test
+	public void initialTurnDuplicateActions2() {
+		GameState testState = initTestGameState();
+		InputTurnController testController = new InputTurnController(testState);
+		testController.startInitialTurn();
+		
+		
+		ArrayList<DestinationTicket> drawnTickets = new ArrayList<DestinationTicket>();
+		drawnTickets.add(new DestinationTicket("A", "B", 100));
+		drawnTickets.add(new DestinationTicket("C", "D", 10));
+		drawnTickets.add(new DestinationTicket("E", "F", 10));
+		
+		testController.takeAction(new DestinationAction(testState.getPlayers().get(0), drawnTickets));
+		assertFalse("Can't draw cards twice on initial turn!", testController.takeAction(new DestinationAction(testState.getPlayers().get(0), drawnTickets)));
+
+	}
+	
+	@Test
+	public void initialTurnInvalidActions() {
+		GameState testState = initTestGameState();
+		InputTurnController testController = new InputTurnController(testState);
+		testController.startInitialTurn();
+		
+		ArrayList<TrainCard> drawnCards = new ArrayList<TrainCard>();
+		drawnCards.add(new TrainCard(Colors.route.BLUE));
+		drawnCards.add(new TrainCard(Colors.route.ORANGE));
+		drawnCards.add(new TrainCard(Colors.route.RED));
+		
+		assertFalse("Attempt drawing 3 cards on initial turn", testController.takeAction(new TrainCardAction(testState.getPlayers().get(0), drawnCards)));
+		
+		ArrayList<DestinationTicket> drawnTickets = new ArrayList<DestinationTicket>();
+		drawnTickets.add(new DestinationTicket("A", "B", 100));
+		drawnTickets.add(new DestinationTicket("C", "D", 10));
+		drawnTickets.add(new DestinationTicket("E", "F", 10));
+		drawnTickets.add(new DestinationTicket("F", "G", 10));
+		
+		testController.takeAction(new DestinationAction(testState.getPlayers().get(0), drawnTickets));
+		assertFalse("Attempt drawing 4 DTs on initial turn", testController.takeAction(new TrainCardAction(testState.getPlayers().get(0), drawnCards)));
 
 	}
 	

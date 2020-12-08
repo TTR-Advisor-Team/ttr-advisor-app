@@ -71,13 +71,8 @@ public class InputTurnController {
 			else if (thisTurn instanceof DestinationAction) {
 				return drawDT((DestinationAction)thisTurn);
 			}
-			else if (thisTurn instanceof RouteAction) {
-				return claimRoute((RouteAction)thisTurn);
-			}
 			else {
-				Gdx.app.error("Turn", "No action selected for turn.");
-				gameState.setError("No action selected for turn");
-				return false;
+				return claimRoute((RouteAction)thisTurn);
 			}
 		}
 	}
