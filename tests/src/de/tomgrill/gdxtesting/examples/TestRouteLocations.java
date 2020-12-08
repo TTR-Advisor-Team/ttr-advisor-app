@@ -2,11 +2,13 @@ package de.tomgrill.gdxtesting.examples;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.ttradvisor.app.classes.Board;
+import com.ttradvisor.app.classes.CityLocations;
 import com.ttradvisor.app.classes.Board.Route;
 import com.ttradvisor.app.classes.RouteLocations;
 import com.ttradvisor.app.classes.RouteLocations.RouteLocation;
@@ -27,6 +29,21 @@ public class TestRouteLocations {
 		initTestLocations();
 		assertNotNull("RouteLocations should load from JSON", testLocs);
 	}
+	
+	@Test
+	public void testCityLocationsLoadFails1() {
+		testLocs = new RouteLocations("doesnt_exist.json");
+		
+		assertTrue("File doesn't exist test", testLocs.getList().size() == 0);
+	}
+	
+	@Test
+	public void testCityLocationsLoadFails2() {
+		testLocs = new RouteLocations("invalid.json");
+		
+		assertTrue("Invalid JSON test", testLocs.getList().size() == 0);
+	}
+	
 	
 	@Test
 	public void testAllLocatedRoutesInBoardFile() {

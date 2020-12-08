@@ -75,7 +75,9 @@ public class RouteLocations {
 				Gdx.app.error("Route Locations Parser 1", "Parsed JSON file has unexpected format.");
 				Gdx.app.error("Route Locations Parser 1", e.getClass().toString() + " : " + e.getMessage());
 				
-//				initFallback();
+				// prevent null pointer
+				routeLocs = reader.parse("{}");
+				setList();
 			}
 			
 		}
@@ -83,21 +85,11 @@ public class RouteLocations {
 			Gdx.app.error("Route Locations Parser 2", "Could not read JsonValue from given filename.");
 			Gdx.app.error("Route Locations Parser 2", e.getClass().toString() + " : " + e.getMessage());
 			
-//			initFallback();
+			// preventn null pointer
+			routeLocs = reader.parse("{}");
+			setList();
 		}
 	}
-	
-//	public void initFallback() {
-//		// initialize Vancouver as a fallback
-//		JsonValue mockCity = new JsonValue(ValueType.object);
-//		mockCity.addChild("name", new JsonValue("Vancouver"));
-//		mockCity.addChild("x", new JsonValue(163));
-//		mockCity.addChild("y", new JsonValue(151));
-//		routeLocs = new JsonValue(ValueType.array);
-//		routeLocs.addChild(mockCity);
-//		// refresh the list to have only this, instead
-//		getAllRouteLocations();
-//	}
 
 	public void setList() {
 		routesList = new ArrayList<RouteLocation>();
