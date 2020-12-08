@@ -7,5 +7,9 @@ public abstract class Action {
 	public Action(Player actingPlayer) {
 		this.actingPlayer = actingPlayer;
 	}
+	
+	public void setPlayer(Player player) {
+		actingPlayer = player;
+	}
 
 }

@@ -42,6 +42,18 @@ public class GameState {
 		turns.add(newTurn);
 	}
 	
+	public void removePrevTurn() {
+		int index = curPlayers.indexOf(currentPlayer);
+		turns.remove(getCurrentTurnCounter()-1);
+		ArrayList<Player> deepCopyPlayers = new ArrayList<Player>();
+		for (Player p : turns.get(getCurrentTurnCounter()-1).getPlayerSnapshots()) {
+			deepCopyPlayers.add(p.getDeepCopy());
+		}
+		setPlayers(deepCopyPlayers);
+		setBoard(turns.get(getCurrentTurnCounter()-1).getSnapshot().snapshotBoard());
+		currentPlayer = curPlayers.get(index);
+	}
+	
 	public List<Player> getPlayers() {
 		return curPlayers;
 	}

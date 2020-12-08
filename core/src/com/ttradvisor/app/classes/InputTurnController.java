@@ -1,5 +1,8 @@
 package com.ttradvisor.app.classes;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.badlogic.gdx.Gdx;
 
 /**
@@ -77,6 +80,35 @@ public class InputTurnController {
 		}
 	}
 	
+
+	
+	public boolean makeCorrection(Action replacementAction) {
+		if(gameState.getCurrentTurnCounter() == 1) {
+			isInitialTurnActive = true;
+			initialTurnTCSDrawn = false;
+			initialTurnDTSDrawn = false;
+		}
+		Turn prevTurn = gameState.getTurns().get(gameState.getCurrentTurnCounter()-1);
+		gameState.removePrevTurn();
+		replacementAction.setPlayer(gameState.currentPlayer);
+		if(takeAction(replacementAction)) {
+			System.out.println("action success");
+			return true;
+		}
+		else {
+			int index = gameState.getPlayers().indexOf(gameState.currentPlayer);
+			gameState.addTurn(prevTurn);
+			gameState.setBoard(prevTurn.getSnapshot().snapshotBoard());
+			ArrayList<Player> deepCopyPlayers = new ArrayList<Player>();
+			for (Player p : prevTurn.getPlayerSnapshots()) {
+				deepCopyPlayers.add(p.getDeepCopy());
+			}
+			gameState.setPlayers(deepCopyPlayers);
+			gameState.currentPlayer = gameState.getPlayers().get(index);
+			return false;
+		}
+	}
+	
 	private boolean initialTurnDrawTC(TrainCardAction thisTurn) {
 		if (initialTurnTCSDrawn == true) {
 			Gdx.app.error("Turn", "Have already drawn starting hand");
@@ -143,7 +175,9 @@ public class InputTurnController {
 //			return false;
 //		}
 		else {
+			System.out.println(thisTurn.actingPlayer.getTCS());
 			thisTurn.actingPlayer.getTCS().addAll(thisTurn.getDrawnCards());
+			System.out.println(thisTurn.actingPlayer.getTCS());
 			return true;
 		}
 	}

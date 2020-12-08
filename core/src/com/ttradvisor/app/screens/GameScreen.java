@@ -527,8 +527,28 @@ public class GameScreen implements Screen {
 
 						boolean isInitial = mainApp.turnInput.isInitialTurn();
 
-						if (mainApp.turnInput.takeAction(new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets))) {
-							
+						if(mainApp.hist.getTurnIndex() == mainApp.gameState.getCurrentTurnCounter()-1) {
+							if (mainApp.turnInput.makeCorrection(new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets))) {
+								if(mainApp.hist.getTurnIndex() == 0) {
+									isInitial = true;
+								}
+								advanceTurn(isInitial,new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets));
+							}
+							else {	
+								TextButton errorMessageTemp = new TextButton(mainApp.gameState.getError(), TTRAdvisorApp.skin, "error");
+								errorMessage.setText(mainApp.gameState.getError());
+								errorMessage.setWidth(errorMessageTemp.getWidth());
+								errorMessage.setPosition(Gdx.graphics.getWidth()/2 - errorMessage.getWidth()/2, Gdx.graphics.getHeight()/8);
+								errorMessage.setVisible(true);
+								if (errorMessage.getText().length() !=0) {
+									guiStage.addActor(errorMessage);
+								}else {
+									errorMessage.setVisible(false);
+								}
+							}
+						}
+
+						else if (mainApp.turnInput.takeAction(new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets))) {
 							advanceTurn(isInitial,new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets));
 						}
 						else {	
@@ -799,8 +819,23 @@ public class GameScreen implements Screen {
 					public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 
 						boolean isInitial = mainApp.turnInput.isInitialTurn();
+						
+						if(mainApp.hist.getTurnIndex() == mainApp.gameState.getCurrentTurnCounter()-1) {
+							if (mainApp.turnInput.makeCorrection(new TrainCardAction(mainApp.gameState.currentPlayer, drawnCards))) {
+								if(mainApp.hist.getTurnIndex() == 0) {
+									isInitial = true;
+								}
+								advanceTurn(isInitial, new TrainCardAction(mainApp.gameState.currentPlayer, drawnCards));
+							} else {	
+								Label errorMessageTemp = new Label(mainApp.gameState.getError(), TTRAdvisorApp.skin);
+								errorMessage.setText(mainApp.gameState.getError());
+								errorMessage.setWidth(errorMessageTemp.getWidth());
+								errorMessage.setPosition(Gdx.graphics.getWidth()/2 - errorMessage.getWidth()/2, Gdx.graphics.getHeight()/8);
+								errorMessage.setVisible(true);
+							}
+						}
 
-						if (mainApp.turnInput.takeAction(new TrainCardAction(mainApp.gameState.currentPlayer, drawnCards))) {
+						else if (mainApp.turnInput.takeAction(new TrainCardAction(mainApp.gameState.currentPlayer, drawnCards))) {
 							advanceTurn(isInitial, new TrainCardAction(mainApp.gameState.currentPlayer, drawnCards));
 						} else {	
 							TextButton errorMessageTemp = new TextButton(mainApp.gameState.getError(), TTRAdvisorApp.skin, "error");
@@ -1103,14 +1138,17 @@ public class GameScreen implements Screen {
 		prevTurn.addListener(new InputListener() {
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				if (mainApp.hist.previousTurn()) {
+					mainApp.gameState.currentPlayer = mainApp.hist.getGameState().getPlayers().get(mainApp.hist.getTurnIndexView());
 					mainApp.gameState.setBoard(mainApp.hist.getGameState().getBoard());
 					trainCardHand.setText(mainApp.hist.getGameState().getPlayers().get(mainApp.hist.getTurnIndexView())
 							.getTCS().toString());
 					turnNumber.setText(Integer.toString(mainApp.hist.getTurnIndex()));
 //					demoCurrPlayer.setText("Current player: " + mainApp.hist.getGameState().getPlayers().get(mainApp.hist.getTurnIndexView()).getColor());
-					helperDisableUIForHistoryLook();
+					if(mainApp.hist.getTurnIndex() < mainApp.gameState.getCurrentTurnCounter()-1) {
+						helperDisableUIForHistoryLook();
+					}
 					calcAllScore();
-					playerIconUpdate(mainApp.hist.getGameState().getPlayers().get(mainApp.hist.getTurnIndexView()));
+					playerIconUpdate(mainApp.gameState.currentPlayer);
 				}
 			}
 
@@ -1121,16 +1159,17 @@ public class GameScreen implements Screen {
 		nextTurn.addListener(new InputListener() {
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				if (mainApp.hist.nextTurn()) {
+					mainApp.gameState.currentPlayer = mainApp.hist.getGameState().getPlayers().get(mainApp.hist.getTurnIndexView());
 					mainApp.gameState.setBoard(mainApp.hist.getGameState().getBoard());
 					trainCardHand.setText(mainApp.hist.getGameState().getPlayers().get(mainApp.hist.getTurnIndexView())
 							.getTCS().toString());
 					turnNumber.setText(Integer.toString(mainApp.hist.getTurnIndex()));
 //					demoCurrPlayer.setText("Current player: " + mainApp.hist.getGameState().getPlayers().get(mainApp.hist.getTurnIndexView()).getColor());
 					calcAllScore();
-					playerIconUpdate(mainApp.hist.getGameState().getPlayers().get(mainApp.hist.getTurnIndexView()));
-				}
-				else {
-					helperReenableUIForHistoryLook();
+					playerIconUpdate(mainApp.gameState.currentPlayer);
+					if(mainApp.hist.getTurnIndex() >= mainApp.gameState.getCurrentTurnCounter()-1) {
+						helperReenableUIForHistoryLook();
+					}
 				}
 			}
 
@@ -1407,12 +1446,31 @@ public class GameScreen implements Screen {
 		cancelClaimRoute.setVisible(false);
 		
 		if (mainApp.gameState.currentPlayer.getColor() != mainApp.userColor) {
-			
-			boolean isInitial = mainApp.turnInput.isInitialTurn();
 
 			RouteAction routeAction = new RouteAction(mainApp.gameState.currentPlayer, new ArrayList<TrainCard>(), route);
-	
-			if (mainApp.turnInput.takeAction(routeAction)) {
+
+			boolean isInitial = mainApp.turnInput.isInitialTurn();
+			
+			if(mainApp.hist.getTurnIndex() == mainApp.gameState.getCurrentTurnCounter()-1) {
+				if (mainApp.turnInput.makeCorrection(routeAction)) {
+					if(mainApp.hist.getTurnIndex() == 0) {
+						isInitial = true;
+					}
+					advanceTurn(isInitial, routeAction);
+				} else {
+					TextButton errorMessageTemp = new TextButton(mainApp.gameState.getError(), TTRAdvisorApp.skin, "error");
+					errorMessage.setText(mainApp.gameState.getError());
+					errorMessage.setWidth(errorMessageTemp.getWidth());
+					errorMessage.setPosition(Gdx.graphics.getWidth()/2 - errorMessage.getWidth()/2, Gdx.graphics.getHeight()/8);
+					errorMessage.setVisible(true);
+					if (errorMessage.getText().length() !=0) {
+						guiStage.addActor(errorMessage);
+					}else {
+						errorMessage.setVisible(false);
+					}
+				}
+			}
+			else if (mainApp.turnInput.takeAction(routeAction)) {
 				advanceTurn(isInitial, routeAction);
 			} else {
 				TextButton errorMessageTemp = new TextButton(mainApp.gameState.getError(), TTRAdvisorApp.skin, "error");
@@ -1779,12 +1837,32 @@ public class GameScreen implements Screen {
 		done.addListener(new InputListener() {
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 
-				boolean isInitial = mainApp.turnInput.isInitialTurn();
-
 				// send the selected cards
 				RouteAction routeAction = new RouteAction(mainApp.gameState.currentPlayer, drawnCards, route);
 
-				if (mainApp.turnInput.takeAction(routeAction)) {
+				boolean isInitial = mainApp.turnInput.isInitialTurn();
+				
+				if(mainApp.hist.getTurnIndex() == mainApp.gameState.getCurrentTurnCounter()-1) {
+					if (mainApp.turnInput.makeCorrection(routeAction)) {
+						if(mainApp.hist.getTurnIndex() == 0) {
+							isInitial = true;
+						}
+						advanceTurn(isInitial, routeAction);
+					} else {	
+						TextButton errorMessageTemp = new TextButton(mainApp.gameState.getError(), TTRAdvisorApp.skin, "error");
+						errorMessage.setText(mainApp.gameState.getError());
+						errorMessage.setWidth(errorMessageTemp.getWidth());
+						errorMessage.setPosition(Gdx.graphics.getWidth()/2 - errorMessage.getWidth()/2, Gdx.graphics.getHeight()/8);
+						errorMessage.setVisible(true);
+						if (errorMessage.getText().length() !=0) {
+							guiStage.addActor(errorMessage);
+						}else {
+							errorMessage.setVisible(false);
+						}
+					}
+				}
+				else if (mainApp.turnInput.takeAction(routeAction)) {
+
 					advanceTurn(isInitial, routeAction);
 				} else {	
 					TextButton errorMessageTemp = new TextButton(mainApp.gameState.getError(), TTRAdvisorApp.skin, "error");
