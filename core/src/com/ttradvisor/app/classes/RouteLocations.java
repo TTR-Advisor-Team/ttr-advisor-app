@@ -26,7 +26,7 @@ public class RouteLocations {
 		public String cityEnd;
 		public String color;
 		public ArrayList<TrainLocation> trains;
-		public Boolean isClaimedRoute = false;
+		// public Boolean isClaimedRoute = false;
 		
 		public String toString() {
 			return "Start" + cityStart;
@@ -80,7 +80,7 @@ public class RouteLocations {
 			
 		}
 		catch (Exception e) {
-			Gdx.app.error("Roure Locations Parser 2 ", "Could not read JsonValue from given filename.");
+			Gdx.app.error("Route Locations Parser 2", "Could not read JsonValue from given filename.");
 			Gdx.app.error("Route Locations Parser 2", e.getClass().toString() + " : " + e.getMessage());
 			
 //			initFallback();
@@ -110,9 +110,9 @@ public class RouteLocations {
 					loc.cityStart = val.getString("start");
 					loc.cityEnd = val2.getString("end");
 					loc.color = val3.getString("color");
-					if(val3.size == 3) {
-						loc.isClaimedRoute = val3.getBoolean("isClaimed");
-					}
+//					if(val3.size == 3) {
+//						loc.isClaimedRoute = val3.getBoolean("isClaimed");
+//					}
 //					loc.isClaimedRoute = val3.getBoolean("isClaimed");
 					for(JsonValue val4: val3.get("trains")) {
 						TrainLocation loc2 =  new TrainLocation();
@@ -127,7 +127,8 @@ public class RouteLocations {
 			
 		}
 	}
-	public RouteLocation getRouteLocation(String start, String end, String color){
+	
+	public RouteLocation getRouteLocation(String start, String end, String color) {
 		for (RouteLocation r: routesList) {
 			if (r.cityStart.equalsIgnoreCase(start)) {
 				if (r.cityEnd.equalsIgnoreCase(end)) {
