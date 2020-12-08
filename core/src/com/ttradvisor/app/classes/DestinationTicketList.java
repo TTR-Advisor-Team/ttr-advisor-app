@@ -29,6 +29,14 @@ public class DestinationTicketList {
 		}
 	}
 
+	public void removeTicket(DestinationTicket ticket) {
+		for(DestinationTicket dt: dtList) {
+			if(dt.equals(ticket)) {
+				dtList.remove(dt);
+				return;
+			}
+		}
+	}
 	public DestinationTicket getTicket(int index) {
 		return dtList.get(index);
 	}

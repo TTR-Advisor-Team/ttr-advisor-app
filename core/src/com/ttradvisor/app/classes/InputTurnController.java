@@ -142,6 +142,17 @@ public class InputTurnController {
 			return false;
 		}
 		thisTurn.actingPlayer.getDTS().addAll(thisTurn.getDrawnTickets());
+		ArrayList<DestinationTicket> dts = thisTurn.getDrawnTickets();
+		for(int i = 0; i < dts.size(); ++i) {
+			for(int j = 0; j < gameState.getDtList().getList().size(); ++j) {
+				if(dts.get(i).equals(gameState.getDtList().getTicket(j))) {
+					gameState.getDtList().removeTicket(dts.get(i));
+					break;
+				}
+			}
+			
+		}
+			
 		initialTurnDTSDrawn = true;
 		if (initialTurnDTSDrawn && initialTurnTCSDrawn) {
 			isInitialTurnActive = false;
@@ -189,7 +200,10 @@ public class InputTurnController {
 			return false;
 		}
 		else {
-			thisTurn.actingPlayer.getDTS().addAll(thisTurn.getDrawnTickets());
+			thisTurn.actingPlayer.getDTS().addAll(thisTurn.getDrawnTickets()); 
+			for(DestinationTicket dt: thisTurn.getDrawnTickets()) {
+				gameState.getDtList().removeTicket(dt);
+			}
 			return true;
 		}
 	}
