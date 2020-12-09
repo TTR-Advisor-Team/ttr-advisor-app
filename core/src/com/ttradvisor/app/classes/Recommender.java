@@ -318,8 +318,14 @@ public class Recommender {
 		ArrayList<String> cities = new ArrayList<String>();
 		ArrayList<Integer> lengths = new ArrayList<Integer>();
 
+		for (Route r : routes) {
+			if (!cities.contains(r.begin))
+				cities.add(r.begin);
+
+		}
 		// get longest routes values for all cities found within the routes
 		for (String city : cities) {
+			System.out.println("Starting City: " + city);
 			lengths.add(LRHelper(0, city, routes));
 		}
 
@@ -335,26 +341,17 @@ public class Recommender {
 
 	public int LRHelper(int totalLength, String city, ArrayList<Route> routes) {
 
-		// no more routes in list
-		if (routes.isEmpty())
-			return totalLength;
+		System.out.println("City: " + city + " totalLength: " + totalLength);
 
-		boolean next = false; // flag if we can continue searching for next link
-
-		// routes are in list, may not be connected to current city at all
-		for (Route r : routes) {
-			if (city.equals(r.begin) || city.equals(r.end))
-				next = true;
-		}
-
-		// none of the remaining routes connect to current city
-		if (!next)
-			return totalLength;
-
+		ArrayList<Integer> len = new ArrayList<Integer>();
 		for (Route r : routes) {
 			// find a route that connect to current city
 			if (r.begin.equals(city)) {
-
+				System.out.println("	Current Route: " + r.toString());
+				for (Route sr : routes) {
+					System.out.println("	" + sr.toString());
+				}
+				System.out.println();
 				// make a new list and remove the route, and its inverse from the list
 				ArrayList<Route> newRoutes = new ArrayList<Route>();
 				newRoutes.addAll(routes);
@@ -366,15 +363,31 @@ public class Recommender {
 						newRoutes.remove(i);
 
 				}
+				boolean next = false; // flag if we can continue searching for next link
 
+				// routes are in list, may not be connected to current city at all
+				for (Route nr : newRoutes) {
+					System.out.println("		" + nr.toString());
+					if (r.end.equals(nr.begin) || r.end.equals(nr.end))
+						next = true;
+				}
+				System.out.println();
 				// recursive call, with updated length, and the corresponding routes removed to
 				// the next city
-				int nextLength = LRHelper(totalLength + r.cost, r.end, newRoutes);
+				if (newRoutes.isEmpty())
+					len.add(totalLength);
+				
+				else if (next)
+					len.add(LRHelper(totalLength + r.cost, r.end, newRoutes));
+				
+				else if (!next)
+					len.add(totalLength+r.cost);
 
-				// save the highest value of all route paths searched
-				if (nextLength >= totalLength)
-					totalLength = nextLength;
 			}
+		}
+		for (Integer l : len) {
+			if (l >= totalLength)
+				totalLength = l;
 		}
 		return totalLength;
 	}
