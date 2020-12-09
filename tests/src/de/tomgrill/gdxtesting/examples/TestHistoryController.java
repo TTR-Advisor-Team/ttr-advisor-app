@@ -79,16 +79,4 @@ public class TestHistoryController {
 		assertTrue("Next Turn should return true if it is not the current turn (second call)", hist.nextTurn());
 		assertEquals("Calling Next Turn should change the turn index (two calls)", 2, hist.getTurnIndex());
 	}
-	
-	@Test
-	public void testGoToTurn() {
-		HistoryController hist = initHistoryController();
-		assertFalse("Go To Turn should return false if it is not a valid turn", hist.goToTurn(6));
-		hist.getGameState().addTurn(new Turn(hist.getGameState().getBoard(), null, null));
-		hist.getGameState().addTurn(new Turn(hist.getGameState().getBoard(), null, null));
-		assertTrue("Go To Turn should return true if input is a valid turn (1)", hist.goToTurn(1));
-		assertEquals("Calling Go To Turn should change the turn index (1)", 1, hist.getTurnIndex());
-		assertTrue("Go To Turn should return true if input is a valid turn (2)", hist.goToTurn(2));
-		assertEquals("Calling Go To Turn should change the turn index (2)", 2, hist.getTurnIndex());
-	}
 }

@@ -49,6 +49,7 @@ public class TitleScreen implements Screen {
 
         // Title Screen label
         Label title = new Label("Ticket to Ride Advisor", TTRAdvisorApp.skin,"big-black");
+        title.setHeight((float) (Gdx.graphics.getHeight()*.095));
         title.setAlignment(Align.center);
         title.setY(Gdx.graphics.getHeight() - title.getHeight());
         title.setWidth(Gdx.graphics.getWidth());
@@ -67,7 +68,7 @@ public class TitleScreen implements Screen {
         numTitle.setPosition(numPlayers.getX(),	numPlayers.getY() + numPlayers.getHeight()*3/2);
         numTitle.setWidth(Gdx.graphics.getWidth()/4);
         numTitle.setHeight(title.getHeight()/2);
-        numTitle.setFontScale(5/2);
+        numTitle.setFontScale(TTRAdvisorApp.skin.getFont("font").getScaleX()*(5/2));
         stage.addActor(numTitle);
         
         // Label for selection of colors
@@ -75,7 +76,7 @@ public class TitleScreen implements Screen {
         colorSel.setPosition(numPlayers.getX() , numPlayers.getY() - numPlayers.getHeight());
         colorSel.setWidth(Gdx.graphics.getWidth()/4);
         colorSel.setHeight(numTitle.getHeight());
-        colorSel.setFontScale(5/2);
+        colorSel.setFontScale(TTRAdvisorApp.skin.getFont("font").getScaleX()*(5/2));
         stage.addActor(colorSel);
         
         // Label for user color selection
@@ -83,7 +84,7 @@ public class TitleScreen implements Screen {
         userSel.setPosition(Gdx.graphics.getWidth()/2 , numTitle.getY());
         userSel.setWidth(Gdx.graphics.getWidth()/4);
         userSel.setHeight(numTitle.getHeight());
-        userSel.setFontScale(5/2);
+        userSel.setFontScale(TTRAdvisorApp.skin.getFont("font").getScaleX()*(5/2));
         stage.addActor(userSel);
         
         // user color selection
@@ -99,7 +100,7 @@ public class TitleScreen implements Screen {
         first.setPosition(Gdx.graphics.getWidth()/2- numPlayers.getWidth()*9/5, colorSel.getY() - numPlayers.getHeight()*3/2);
         first.setWidth(Gdx.graphics.getWidth()/4);
         first.setHeight(numTitle.getHeight());
-        first.setFontScale(5/2);
+        first.setFontScale(TTRAdvisorApp.skin.getFont("font").getScaleX()*(5/2));
         stage.addActor(first);
         
         // turn order 1 color selection
@@ -115,7 +116,7 @@ public class TitleScreen implements Screen {
         second.setPosition(first.getX(), first.getY() - numPlayers.getHeight()*3/2);
         second.setWidth(first.getWidth());
         second.setHeight(numTitle.getHeight());
-        second.setFontScale(5/2);
+        second.setFontScale(TTRAdvisorApp.skin.getFont("font").getScaleX()*(5/2));
         stage.addActor(second);
 
         // turn order 2 color selection
@@ -131,7 +132,7 @@ public class TitleScreen implements Screen {
         third.setPosition(first.getX(), second.getY() - numPlayers.getHeight()*3/2);
         third.setWidth(first.getWidth());
         third.setHeight(numTitle.getHeight());
-        third.setFontScale(5/2);
+        third.setFontScale(TTRAdvisorApp.skin.getFont("font").getScaleX()*(5/2));
         stage.addActor(third);
         third.setVisible(false);
 
@@ -149,7 +150,7 @@ public class TitleScreen implements Screen {
         fourth.setPosition(first.getX(), third.getY() - numPlayers.getHeight()*3/2);
         fourth.setWidth(first.getWidth());
         fourth.setHeight(numTitle.getHeight());
-        fourth.setFontScale(5/2);
+        fourth.setFontScale(TTRAdvisorApp.skin.getFont("font").getScaleX()*(5/2));
         stage.addActor(fourth);
         fourth.setVisible(false);
         
@@ -167,7 +168,7 @@ public class TitleScreen implements Screen {
         fifth.setPosition(first.getX(), fourth.getY() - numPlayers.getHeight()*3/2);
         fifth.setWidth(first.getWidth());
         fifth.setHeight(numTitle.getHeight());
-        fifth.setFontScale(5/2);
+        fifth.setFontScale(TTRAdvisorApp.skin.getFont("font").getScaleX()*(5/2));
         stage.addActor(fifth);
         fifth.setVisible(false);
 

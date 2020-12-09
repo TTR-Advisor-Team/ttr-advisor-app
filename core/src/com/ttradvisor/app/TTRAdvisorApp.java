@@ -40,8 +40,11 @@ public class TTRAdvisorApp extends Game {
 		turnInput = new InputTurnController(gameState);
 		hist = new HistoryController(gameState);
 //		skin = new Skin(Gdx.files.internal("ui skin/glassy-ui.json"));
-		skin = new Skin(Gdx.files.internal("ttr_ui_skin/untitled.json"));
+		Skin tempSkin = new Skin(Gdx.files.internal("ttr_ui_skin/untitled.json"));
 //		skin = new Skin(Gdx.files.internal("ttr_ui_skin2/train_cards_included.json"));
+		tempSkin.getFont("font").getData().setScale(Gdx.graphics.getHeight()/720, Gdx.graphics.getHeight()/720);
+		tempSkin.getFont("font-big").getData().setScale(Gdx.graphics.getHeight()/720, Gdx.graphics.getHeight()/720);
+		skin = tempSkin;
 		this.setScreen(new TitleScreen(this));
 	}
 
