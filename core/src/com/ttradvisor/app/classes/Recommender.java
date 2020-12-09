@@ -48,12 +48,14 @@ public class Recommender {
 			for (int y = 0; y < routes.size(); ++y) {
 				if (routes.get(y) == null)
 					continue;
-				if(x == y)
+				if (x == y)
 					continue;
-				if (routes.get(x).getBegin().equals(routes.get(y).getBegin()) && routes.get(x).getEnd().equals(routes.get(y).getEnd())
+				if (routes.get(x).getBegin().equals(routes.get(y).getBegin())
+						&& routes.get(x).getEnd().equals(routes.get(y).getEnd())
 						&& routes.get(x).getColor().equals(routes.get(y).getColor())) {
 					routes.set(y, null);
-				} else if (routes.get(x).getBegin().equals(routes.get(y).getEnd()) && routes.get(x).getEnd().equals(routes.get(y).getBegin())
+				} else if (routes.get(x).getBegin().equals(routes.get(y).getEnd())
+						&& routes.get(x).getEnd().equals(routes.get(y).getBegin())
 						&& routes.get(x).getColor().equals(routes.get(y).getColor())) {
 					routes.set(y, null);
 				} else if (routes.get(y).getOwner().equals(player.getColor())) {
@@ -63,8 +65,8 @@ public class Recommender {
 		}
 		if (!routes.isEmpty()) {
 			int i = 0;
-			while(i < routes.size()) {
-				if(routes.get(i) == null)
+			while (i < routes.size()) {
+				if (routes.get(i) == null)
 					routes.remove(i);
 				else
 					i++;
@@ -183,7 +185,7 @@ public class Recommender {
 		}
 		return allRoutes;
 	}
-	
+
 	/**
 	 * Implementation of Dijkstra's Algorithm. Currently there is no termination
 	 * protocol for routes impossible to complete.
@@ -194,7 +196,7 @@ public class Recommender {
 	 */
 	public ArrayList<Route> shortestPath(DestinationTicket ticket, Colors.player player) {
 
-		System.out.println("Start: "+ ticket.getStart()+ " End: "+ ticket.getEnd());
+		System.out.println("Start: " + ticket.getStart() + " End: " + ticket.getEnd());
 		ArrayList<Route> routes = new ArrayList<Route>();
 		PriorityQueue<City> openSet = new PriorityQueue<City>(new Comparator<City>() {
 			public int compare(City c1, City c2) {
@@ -309,6 +311,72 @@ public class Recommender {
 				return currentCity.totalCost + 1000;
 		}
 		return 100000;
+	}
+
+	public int longestRoute(Colors.player player) {
+		ArrayList<Route> routes = board.getAllRoutesOfPlayer(player);
+		ArrayList<String> cities = new ArrayList<String>();
+		ArrayList<Integer> lengths = new ArrayList<Integer>();
+
+		// get longest routes values for all cities found within the routes
+		for (String city : cities) {
+			lengths.add(LRHelper(0, city, routes));
+		}
+
+		int longestRoute = 0;
+		// find max
+		for (Integer l : lengths) {
+			if (l >= longestRoute)
+				longestRoute = l;
+		}
+		// return maxF
+		return longestRoute;
+	}
+
+	public int LRHelper(int totalLength, String city, ArrayList<Route> routes) {
+
+		// no more routes in list
+		if (routes.isEmpty())
+			return totalLength;
+
+		boolean next = false; // flag if we can continue searching for next link
+
+		// routes are in list, may not be connected to current city at all
+		for (Route r : routes) {
+			if (city.equals(r.begin) || city.equals(r.end))
+				next = true;
+		}
+
+		// none of the remaining routes connect to current city
+		if (!next)
+			return totalLength;
+
+		for (Route r : routes) {
+			// find a route that connect to current city
+			if (r.begin.equals(city)) {
+
+				// make a new list and remove the route, and its inverse from the list
+				ArrayList<Route> newRoutes = new ArrayList<Route>();
+				newRoutes.addAll(routes);
+
+				for (int i = 0; i < newRoutes.size(); ++i) {
+
+					if (newRoutes.get(i).begin.equals(r.begin) && newRoutes.get(i).end.equals(r.end)
+							|| newRoutes.get(i).end.equals(r.begin) && newRoutes.get(i).begin.equals(r.end))
+						newRoutes.remove(i);
+
+				}
+
+				// recursive call, with updated length, and the corresponding routes removed to
+				// the next city
+				int nextLength = LRHelper(totalLength + r.cost, r.end, newRoutes);
+
+				// save the highest value of all route paths searched
+				if (nextLength >= totalLength)
+					totalLength = nextLength;
+			}
+		}
+		return totalLength;
 	}
 
 	static private class City {

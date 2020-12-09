@@ -219,8 +219,8 @@ public class Board {
 		return null;
 	}
 
-	public LinkedList<Route> getAllRoutesOfPlayer(Colors.player player) {
-		LinkedList<Route> list = new LinkedList<Route>();
+	public ArrayList<Route> getAllRoutesOfPlayer(Colors.player player) {
+		ArrayList<Route> list = new ArrayList<Route>();
 		Set<String> keys = board.keySet();
 		for (String key : keys) {
 			LinkedList<Route> routes = board.get(key);

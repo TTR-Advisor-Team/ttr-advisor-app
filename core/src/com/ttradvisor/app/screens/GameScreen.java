@@ -2140,14 +2140,12 @@ public class GameScreen implements Screen {
 			rec2.setText(recs.get(1));
 			rec3.setText(recs.get(2));
 		}
+		
 		destTickets = new List<DestinationTicket>(TTRAdvisorApp.skin);
-		// simple array of the DestinationTickets to pass into the Scrollpane
 		ticketArray = new DestinationTicket[dtList.getList().size()];
-
 		for (int i = 0; i < dtList.getList().size(); i++) {
 			ticketArray[i] = dtList.getTicket(i);
 		}
-		// Set an equivalent List<DestinationTicket> for the scrollpane
 		destTickets.setItems(ticketArray);
 		ticketSelection = destTickets.getSelection();
 		ticketSelection.setMultiple(true);
