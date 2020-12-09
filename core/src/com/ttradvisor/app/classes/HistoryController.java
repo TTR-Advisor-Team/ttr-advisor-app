@@ -5,12 +5,10 @@ import java.util.List;
 
 public class HistoryController {
 	
-	private GameState initialGameState;
 	private GameState gameState;
 	private int turnIndex;
 	
 	public HistoryController(GameState gameState) {
-		this.initialGameState = new GameState(gameState.getUserColor(), (ArrayList<Player>) gameState.getPlayers(), gameState.getBoard(), gameState.getDtList(),(ArrayList<Turn>) gameState.getTurns());
 		this.gameState = new GameState(gameState.getUserColor(), (ArrayList<Player>) gameState.getPlayers(), gameState.getBoard(), gameState.getDtList(),(ArrayList<Turn>) gameState.getTurns());
 		this.turnIndex = gameState.getCurrentTurnCounter();
 	}
@@ -52,25 +50,9 @@ public class HistoryController {
 		}
 		if(turnIndex == gameState.getCurrentTurnCounter()-1) {
 			turnIndex++;
-			gameState = initialGameState;
 			return true;
 		}
 		turnIndex++;
-		gameState.setBoard(gameState.getTurns().get(turnIndex).getSnapshot());
-		gameState.setPlayers(gameState.getTurns().get(turnIndex).getPlayerSnapshots());
-		return true;
-	}
-	
-	public boolean goToTurn(int turnIndex) {
-		if (turnIndex > gameState.getCurrentTurnCounter() || turnIndex < 0) {
-			return false;
-		}
-		else if(turnIndex >= gameState.getCurrentTurnCounter()-1) {
-			this.turnIndex = turnIndex;
-			gameState = initialGameState;
-			return true;
-		}
-		this.turnIndex = turnIndex;
 		gameState.setBoard(gameState.getTurns().get(turnIndex).getSnapshot());
 		gameState.setPlayers(gameState.getTurns().get(turnIndex).getPlayerSnapshots());
 		return true;

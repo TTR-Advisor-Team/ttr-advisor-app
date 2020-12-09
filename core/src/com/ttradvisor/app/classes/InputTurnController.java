@@ -14,7 +14,7 @@ import com.badlogic.gdx.Gdx;
 public class InputTurnController {
 	
 	private GameState gameState; // the GameState paired with this controller
-	
+
 	// context for interpreting Actions
 	private boolean isInitialTurnActive;
 	private boolean initialTurnDTSDrawn;
@@ -92,7 +92,6 @@ public class InputTurnController {
 		gameState.removePrevTurn();
 		replacementAction.setPlayer(gameState.currentPlayer);
 		if(takeAction(replacementAction)) {
-			System.out.println("action success");
 			return true;
 		}
 		else {
@@ -186,9 +185,7 @@ public class InputTurnController {
 //			return false;
 //		}
 		else {
-			System.out.println(thisTurn.actingPlayer.getTCS());
 			thisTurn.actingPlayer.getTCS().addAll(thisTurn.getDrawnCards());
-			System.out.println(thisTurn.actingPlayer.getTCS());
 			return true;
 		}
 	}
