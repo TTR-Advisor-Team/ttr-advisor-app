@@ -1273,6 +1273,10 @@ public class GameScreen implements Screen {
 					}
 					calcAllScore();
 					playerIconUpdate(mainApp.gameState.currentPlayer);
+					Player user = mainApp.hist.getGameState().getUserPlayer();
+					for (int i=0; i<Colors.route.values().length; i++) {
+						handDisplayLabels[i].setText("" + user.getNumberOfColor(Colors.route.values()[i]));
+					}
 				}
 			}
 
@@ -1291,6 +1295,10 @@ public class GameScreen implements Screen {
 //					demoCurrPlayer.setText("Current player: " + mainApp.hist.getGameState().getPlayers().get(mainApp.hist.getTurnIndexView()).getColor());
 					calcAllScore();
 					playerIconUpdate(mainApp.gameState.currentPlayer);
+					Player user = mainApp.hist.getGameState().getUserPlayer();
+					for (int i=0; i<Colors.route.values().length; i++) {
+						handDisplayLabels[i].setText("" + user.getNumberOfColor(Colors.route.values()[i]));
+					}
 					if(mainApp.hist.getTurnIndex() >= mainApp.gameState.getCurrentTurnCounter()-1) {
 						helperReenableUIForHistoryLook();
 					}
