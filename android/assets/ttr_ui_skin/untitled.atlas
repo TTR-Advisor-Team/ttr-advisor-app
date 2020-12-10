@@ -46,6 +46,27 @@ YellowPlayer
   orig: 207, 211
   offset: 0, 0
   index: -1
+any
+  rotate: false
+  xy: 1, 61
+  size: 200, 125
+  orig: 200, 125
+  offset: 0, 0
+  index: -1
+black(1)
+  rotate: false
+  xy: 344, 843
+  size: 200, 125
+  orig: 200, 125
+  offset: 0, 0
+  index: -1
+blue
+  rotate: false
+  xy: 1565, 1916
+  size: 200, 125
+  orig: 200, 125
+  offset: 0, 0
+  index: -1
 button
   rotate: false
   xy: 803, 1674
@@ -143,6 +164,13 @@ font-export
   orig: 116, 117
   offset: 0, 0
   index: -1
+green
+  rotate: false
+  xy: 1767, 1916
+  size: 200, 125
+  orig: 200, 125
+  offset: 0, 0
+  index: -1
 horizontal-scroll-bar
   rotate: false
   xy: 1473, 1912
@@ -184,6 +212,20 @@ minus
   xy: 662, 1257
   size: 25, 20
   orig: 25, 20
+  offset: 0, 0
+  index: -1
+orange
+  rotate: false
+  xy: 765, 1334
+  size: 200, 125
+  orig: 200, 125
+  offset: 0, 0
+  index: -1
+pink
+  rotate: false
+  xy: 765, 1207
+  size: 200, 125
+  orig: 200, 125
   offset: 0, 0
   index: -1
 plus
@@ -241,6 +283,13 @@ radio-button-off
   xy: 1473, 1890
   size: 25, 20
   orig: 25, 20
+  offset: 0, 0
+  index: -1
+red
+  rotate: false
+  xy: 228, 701
+  size: 200, 125
+  orig: 200, 125
   offset: 0, 0
   index: -1
 select-box
@@ -336,6 +385,13 @@ white
   orig: 1, 1
   offset: 0, 0
   index: -1
+white(1)
+  rotate: false
+  xy: 228, 574
+  size: 200, 125
+  orig: 200, 125
+  offset: 0, 0
+  index: -1
 whiteCard
   rotate: false
   xy: 215, 187
@@ -350,62 +406,6 @@ window
   split: 10, 10, 30, 0
   pad: 5, 5, 32, 24
   orig: 63, 272
-  offset: 0, 0
-  index: -1
-any
-  rotate: false
-  xy: 1, 61
-  size: 200, 125
-  orig: 200, 125
-  offset: 0, 0
-  index: -1
-black(1)
-  rotate: false
-  xy: 344, 843
-  size: 200, 125
-  orig: 200, 125
-  offset: 0, 0
-  index: -1
-white(1)
-  rotate: false
-  xy: 228, 574
-  size: 200, 125
-  orig: 200, 125
-  offset: 0, 0
-  index: -1
-blue
-  rotate: false
-  xy: 1565, 1916
-  size: 200, 125
-  orig: 200, 125
-  offset: 0, 0
-  index: -1
-green
-  rotate: false
-  xy: 1767, 1916
-  size: 200, 125
-  orig: 200, 125
-  offset: 0, 0
-  index: -1
-orange
-  rotate: false
-  xy: 765, 1334
-  size: 200, 125
-  orig: 200, 125
-  offset: 0, 0
-  index: -1
-pink
-  rotate: false
-  xy: 765, 1207
-  size: 200, 125
-  orig: 200, 125
-  offset: 0, 0
-  index: -1
-red
-  rotate: false
-  xy: 228, 701
-  size: 200, 125
-  orig: 200, 125
   offset: 0, 0
   index: -1
 yellow

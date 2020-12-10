@@ -1623,6 +1623,7 @@ public class GameScreen implements Screen {
 		if (redCountF == 0) {
 			redTrain.setText("");
 			redTrain.setTouchable(Touchable.disabled);
+			redTrain.setDisabled(true);
 		}else {
 			redTrain.setText(Integer.toString(redCount));
 		}
@@ -1640,6 +1641,7 @@ public class GameScreen implements Screen {
 				if (handCount <= 0) {
 					redTrain.setText("");
 					redTrain.setTouchable(Touchable.disabled);
+					redTrain.setDisabled(true);
 				}else {
 					redTrain.setText(Integer.toString(handCount));
 				}
@@ -1653,6 +1655,7 @@ public class GameScreen implements Screen {
 		if (orangeCountF == 0) {
 			orangeTrain.setText("");
 			orangeTrain.setTouchable(Touchable.disabled);
+			orangeTrain.setDisabled(true);
 		}else {
 			orangeTrain.setText(Integer.toString(orangeCount));
 		}
@@ -1670,6 +1673,7 @@ public class GameScreen implements Screen {
 				if (handCount <= 0) {
 					orangeTrain.setText("");
 					orangeTrain.setTouchable(Touchable.disabled);
+					orangeTrain.setDisabled(true);
 				}else {
 					orangeTrain.setText(Integer.toString(handCount));
 				}
@@ -1684,6 +1688,7 @@ public class GameScreen implements Screen {
 		if (yellowCountF == 0) {
 			yellowTrain.setText("");
 			yellowTrain.setTouchable(Touchable.disabled);
+			yellowTrain.setDisabled(true);
 		}else {
 			yellowTrain.setText(Integer.toString(yellowCount));
 		}
@@ -1701,6 +1706,7 @@ public class GameScreen implements Screen {
 				if (handCount <= 0) {
 					yellowTrain.setText("");
 					yellowTrain.setTouchable(Touchable.disabled);
+					yellowTrain.setDisabled(true);
 				}else {
 					yellowTrain.setText(Integer.toString(handCount));
 				}
@@ -1715,6 +1721,7 @@ public class GameScreen implements Screen {
 		if (greenCountF == 0) {
 			greenTrain.setText("");
 			greenTrain.setTouchable(Touchable.disabled);
+			greenTrain.setDisabled(true);
 		}else {
 			greenTrain.setText(Integer.toString(greenCount));
 		}
@@ -1732,6 +1739,7 @@ public class GameScreen implements Screen {
 				if (handCount <= 0) {
 					greenTrain.setText("");
 					greenTrain.setTouchable(Touchable.disabled);
+					greenTrain.setDisabled(true);
 				}else {
 					greenTrain.setText(Integer.toString(handCount));
 				}
@@ -1746,6 +1754,7 @@ public class GameScreen implements Screen {
 		if (blueCountF == 0) {
 			blueTrain.setText("");
 			blueTrain.setTouchable(Touchable.disabled);
+			blueTrain.setDisabled(true);
 		}else {
 			blueTrain.setText(Integer.toString(blueCount));
 		}
@@ -1763,6 +1772,7 @@ public class GameScreen implements Screen {
 				if (handCount <= 0) {
 					blueTrain.setText("");
 					blueTrain.setTouchable(Touchable.disabled);
+					blueTrain.setDisabled(true);
 				}else {
 					blueTrain.setText(Integer.toString(handCount));
 				}
@@ -1777,6 +1787,7 @@ public class GameScreen implements Screen {
 		if (pinkCountF == 0) {
 			pinkTrain.setText("");
 			pinkTrain.setTouchable(Touchable.disabled);
+			pinkTrain.setDisabled(true);
 		}else {
 			pinkTrain.setText(Integer.toString(pinkCount));
 		}
@@ -1794,6 +1805,7 @@ public class GameScreen implements Screen {
 				if (handCount <= 0) {
 					pinkTrain.setText("");
 					pinkTrain.setTouchable(Touchable.disabled);
+					pinkTrain.setDisabled(true);
 				}else {
 					pinkTrain.setText(Integer.toString(handCount));
 				}
@@ -1805,9 +1817,10 @@ public class GameScreen implements Screen {
 		});
 //		ImageButton blackTrain = new ImageButton(trainCardImages[Colors.route.BLACK.ordinal()].getDrawable());
 		final ImageTextButton blackTrain = new ImageTextButton("", TTRAdvisorApp.skin, "tcBlack");
-		if (redCountF == 0) {
+		if (blackCountF == 0) {
 			blackTrain.setText("");
 			blackTrain.setTouchable(Touchable.disabled);
+			blackTrain.setDisabled(true);
 		}else {
 			blackTrain.setText(Integer.toString(blackCount));
 		}
@@ -1825,6 +1838,7 @@ public class GameScreen implements Screen {
 				if (handCount <= 0) {
 					blackTrain.setText("");
 					blackTrain.setTouchable(Touchable.disabled);
+					blackTrain.setDisabled(true);
 				}else {
 					blackTrain.setText(Integer.toString(handCount));
 				}
@@ -1839,6 +1853,7 @@ public class GameScreen implements Screen {
 		if (whiteCountF == 0) {
 			whiteTrain.setText("");
 			whiteTrain.setTouchable(Touchable.disabled);
+			whiteTrain.setDisabled(true);
 		}else {
 			whiteTrain.setText(Integer.toString(whiteCount));
 		}
@@ -1856,6 +1871,7 @@ public class GameScreen implements Screen {
 				if (handCount <= 0) {
 					whiteTrain.setText("");
 					whiteTrain.setTouchable(Touchable.disabled);
+					whiteTrain.setDisabled(true);
 				}else {
 					whiteTrain.setText(Integer.toString(handCount));
 				}
@@ -1870,6 +1886,7 @@ public class GameScreen implements Screen {
 		if (anyCountF == 0) {
 			wildTrain.setText("");
 			wildTrain.setTouchable(Touchable.disabled);
+			wildTrain.setDisabled(true);
 		}else {
 			wildTrain.setText(Integer.toString(anyCount));
 		}
@@ -1887,6 +1904,7 @@ public class GameScreen implements Screen {
 				if (handCount <= 0) {
 					wildTrain.setText("");
 					wildTrain.setTouchable(Touchable.disabled);
+					wildTrain.setDisabled(true);
 				}else {
 					wildTrain.setText(Integer.toString(handCount));
 				}
@@ -1978,6 +1996,7 @@ public class GameScreen implements Screen {
 							}else {
 								wildTrain.setText(Integer.toString(drawCount));
 								wildTrain.setTouchable(Touchable.enabled);
+								wildTrain.setDisabled(false);
 							}
 							break;
 						case BLACK:
@@ -1994,6 +2013,7 @@ public class GameScreen implements Screen {
 							}else {
 								blackTrain.setText(Integer.toString(drawCount));
 								blackTrain.setTouchable(Touchable.enabled);
+								blackTrain.setDisabled(false);
 							}
 							break;
 						case BLUE:
@@ -2010,6 +2030,7 @@ public class GameScreen implements Screen {
 							}else {
 								blueTrain.setText(Integer.toString(drawCount));
 								blueTrain.setTouchable(Touchable.enabled);
+								blueTrain.setDisabled(false);
 							}
 							break;
 						case GREEN:
@@ -2026,6 +2047,7 @@ public class GameScreen implements Screen {
 							}else {
 								greenTrain.setText(Integer.toString(drawCount));
 								greenTrain.setTouchable(Touchable.enabled);
+								greenTrain.setDisabled(false);
 							}
 							break;
 						case ORANGE:
@@ -2042,6 +2064,7 @@ public class GameScreen implements Screen {
 							}else {
 								orangeTrain.setText(Integer.toString(drawCount));
 								orangeTrain.setTouchable(Touchable.enabled);
+								orangeTrain.setDisabled(false);
 							}
 							break;
 						case PINK:
@@ -2058,6 +2081,7 @@ public class GameScreen implements Screen {
 							}else {
 								pinkTrain.setText(Integer.toString(drawCount));
 								pinkTrain.setTouchable(Touchable.enabled);
+								pinkTrain.setDisabled(false);
 							}
 							break;
 						case RED:
@@ -2074,6 +2098,7 @@ public class GameScreen implements Screen {
 							}else {
 								redTrain.setText(Integer.toString(drawCount));
 								redTrain.setTouchable(Touchable.enabled);
+								redTrain.setDisabled(false);
 							}
 							break;
 						case WHITE:
@@ -2090,6 +2115,7 @@ public class GameScreen implements Screen {
 							}else {
 								whiteTrain.setText(Integer.toString(drawCount));
 								whiteTrain.setTouchable(Touchable.enabled);
+								whiteTrain.setDisabled(false);
 							}
 							break;
 						case YELLOW:
@@ -2106,6 +2132,7 @@ public class GameScreen implements Screen {
 							}else {
 								yellowTrain.setText(Integer.toString(drawCount));
 								yellowTrain.setTouchable(Touchable.enabled);
+								yellowTrain.setDisabled(false);
 							}
 							break;
 						default:

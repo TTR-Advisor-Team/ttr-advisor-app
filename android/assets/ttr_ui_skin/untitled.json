@@ -26,6 +26,12 @@ com.badlogic.gdx.graphics.Color: {
 		b: 0.4333333
 		a: 1
 	}
+	grey: {
+		r: 0.5019608
+		g: 0.5019608
+		b: 0.5019608
+		a: 1
+	}
 	Red: {
 		r: 1
 		g: 0
@@ -102,6 +108,42 @@ com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 			b: 0
 			a: 1
 		}
+	}
+	any_dis: {
+		name: any
+		color: grey
+	}
+	black_dis: {
+		name: black(1)
+		color: grey
+	}
+	blue_dis: {
+		name: blue
+		color: grey
+	}
+	green_dis: {
+		name: green
+		color: grey
+	}
+	orange_dis: {
+		name: orange
+		color: grey
+	}
+	pink_dis: {
+		name: pink
+		color: grey
+	}
+	red_dis: {
+		name: red
+		color: grey
+	}
+	yellow_dis: {
+		name: yellow
+		color: grey
+	}
+	white_dis: {
+		name: white(1)
+		color: grey
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
@@ -192,38 +234,47 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle: {
 		font: font-big
 		fontColor: white
 		up: any
+		disabled: any_dis
 	}
 	tcBlack: {
 		font: font-big
 		up: black(1)
+		disabled: black_dis
 	}
 	tcBlue: {
 		font: font-big
 		up: blue
+		disabled: blue_dis
 	}
 	tcGreen: {
 		font: font-big
 		up: green
+		disabled: green_dis
 	}
 	tcOrange: {
 		font: font-big
 		up: orange
+		disabled: orange_dis
 	}
 	tcPink: {
 		font: font-big
 		up: pink
+		disabled: pink_dis
 	}
 	tcRed: {
 		font: font-big
 		up: red
+		disabled: red_dis
 	}
 	tcWhite: {
 		font: font-big
 		up: white(1)
+		disabled: white_dis
 	}
 	tcYellow: {
 		font: font-big
 		up: yellow
+		disabled: yellow_dis
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
@@ -255,6 +306,10 @@ com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 		font: font-big
 		fontColor: black
 		background: list
+	}
+	handDisplaySmall: {
+		parent: handDisplay
+		font: font
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
