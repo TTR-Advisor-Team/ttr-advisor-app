@@ -467,7 +467,6 @@ public class GameScreen implements Screen {
 		// Button to draw Destination tickets
 		destButton.setWidth(Gdx.graphics.getWidth() / 5);
 		destButton.setPosition(Gdx.graphics.getWidth() - destButton.getWidth(), destButton.getHeight() / 8);
-		// Jake: Still need to add way to choose DTs within this screen
 		destButton.addListener(new InputListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
@@ -519,9 +518,6 @@ public class GameScreen implements Screen {
 						// reset the multiple selection tracking
 						prevSelection = null;
 
-//		    		for (DestinationTicket ticket : destTickets.getSelection().toArray()) {
-//		    			drawnTickets.add(ticket);
-//		    		}
 
 						multipleTickets = destTickets.getSelection().items().orderedItems();
 						while (multipleTickets.notEmpty()) {
@@ -529,6 +525,65 @@ public class GameScreen implements Screen {
 							drawnTickets.add(multipleTickets.pop());
 						}
 
+						boolean isInitial = mainApp.turnInput.isInitialTurn();
+
+						if(mainApp.hist.getTurnIndex() == mainApp.gameState.getCurrentTurnCounter()-1) {
+							if (mainApp.turnInput.makeCorrection(new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets))) {
+								if(mainApp.hist.getTurnIndex() == 0) {
+									isInitial = true;
+								}
+								advanceTurn(isInitial,new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets));
+							}
+							else {	
+								TextButton errorMessageTemp = new TextButton(mainApp.gameState.getError(), TTRAdvisorApp.skin, "error");
+								errorMessage.setText(mainApp.gameState.getError());
+								errorMessage.setWidth(errorMessageTemp.getWidth());
+								errorMessage.setPosition(Gdx.graphics.getWidth()/2 - errorMessage.getWidth()/2, Gdx.graphics.getHeight()/8);
+								errorMessage.setVisible(true);
+								if (errorMessage.getText().length() !=0) {
+									guiStage.addActor(errorMessage);
+								}else {
+									errorMessage.setVisible(false);
+								}
+							}
+						}
+
+						else if (mainApp.turnInput.takeAction(new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets))) {
+							advanceTurn(isInitial,new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets));
+						}
+						else {	
+							TextButton errorMessageTemp = new TextButton(mainApp.gameState.getError(), TTRAdvisorApp.skin, "error");
+							errorMessage.setText(mainApp.gameState.getError());
+							errorMessage.setWidth(errorMessageTemp.getWidth());
+							errorMessage.setPosition(Gdx.graphics.getWidth()/2 - errorMessage.getWidth()/2, Gdx.graphics.getHeight()/8);
+							errorMessage.setVisible(true);
+							if (errorMessage.getText().length() !=0) {
+								guiStage.addActor(errorMessage);
+							}else {
+								errorMessage.setVisible(false);
+							}
+						}
+
+						guiStage.setScrollFocus(null);
+
+						helperReenableUIForActionInput();
+						// trainCardHand.setVisible(true);
+						listPane.setVisible(false);
+						table.setVisible(false);
+					}
+
+					public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+						return true;
+					}
+				});
+				
+				// Button to input non-user DestinationAction
+				TextButton nonUser = new TextButton("Non-User", TTRAdvisorApp.skin, "small");
+				nonUser.addListener(new InputListener() {
+					public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+						drawnTickets.add(new DestinationTicket("sample", "sample", 1));
+						drawnTickets.add(new DestinationTicket("sample", "sample", 1));
+						
 						boolean isInitial = mainApp.turnInput.isInitialTurn();
 
 						if(mainApp.hist.getTurnIndex() == mainApp.gameState.getCurrentTurnCounter()-1) {
@@ -605,6 +660,11 @@ public class GameScreen implements Screen {
 				table.bottom();
 				table.add(back);
 				table.row();
+				// If it is not the user's turn, skip DTAction button appears in table
+				if (!mainApp.gameState.currentPlayer.equals(mainApp.gameState.getUserPlayer())) {
+					table.add(nonUser);
+					table.row();
+				}
 				table.add(done);
 				table.setFillParent(true);
 
