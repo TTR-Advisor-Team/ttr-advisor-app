@@ -688,11 +688,19 @@ public class GameScreen implements Screen {
 				
 				final ArrayList<TrainCard> drawnCards = new ArrayList<>();
 				final Label drawnCardList = new Label(drawnCards.toString(), TTRAdvisorApp.skin);
-//				drawnCardList.setWidth((Gdx.graphics.getWidth() / 5) * 2);
-//				drawnCardList.setPosition(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()/2);
 				drawnCardList.setPosition(Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()/2+20);
-//				ImageButton redTrain = new ImageButton(trainCardImages[Colors.route.RED.ordinal()].getDrawable());
+
 				final ImageTextButton redTrain = new ImageTextButton("", TTRAdvisorApp.skin, "tcRed");
+				final ImageTextButton orangeTrain = new ImageTextButton("", TTRAdvisorApp.skin, "tcOrange");
+				final ImageTextButton yellowTrain = new ImageTextButton("", TTRAdvisorApp.skin, "tcYellow");
+				final ImageTextButton greenTrain = new ImageTextButton("", TTRAdvisorApp.skin, "tcGreen");
+				final ImageTextButton blueTrain = new ImageTextButton("", TTRAdvisorApp.skin, "tcBlue");
+				final ImageTextButton pinkTrain = new ImageTextButton("", TTRAdvisorApp.skin, "tcPink");
+				final ImageTextButton blackTrain = new ImageTextButton("", TTRAdvisorApp.skin, "tcBlack");
+				final ImageTextButton whiteTrain = new ImageTextButton("", TTRAdvisorApp.skin, "tcWhite");
+				final ImageTextButton wildTrain = new ImageTextButton("", TTRAdvisorApp.skin, "tcAny");
+				
+				
 				redTrain.addListener(new InputListener() {
 					public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 						
@@ -708,15 +716,59 @@ public class GameScreen implements Screen {
 						}
 						redTrain.setText(Integer.toString(drawCount));
 						
-						
+						if (mainApp.turnInput.isInitialTurn()) {
+							if (drawnCards.size() >= 4) {
+								redTrain.setTouchable(Touchable.disabled);
+								redTrain.setDisabled(true);
+								orangeTrain.setTouchable(Touchable.disabled);
+								orangeTrain.setDisabled(true);
+								yellowTrain.setTouchable(Touchable.disabled);
+								yellowTrain.setDisabled(true);
+								greenTrain.setTouchable(Touchable.disabled);
+								greenTrain.setDisabled(true);
+								blueTrain.setTouchable(Touchable.disabled);
+								blueTrain.setDisabled(true);
+								pinkTrain.setTouchable(Touchable.disabled);
+								pinkTrain.setDisabled(true);
+								blackTrain.setTouchable(Touchable.disabled);
+								blackTrain.setDisabled(true);
+								whiteTrain.setTouchable(Touchable.disabled);
+								whiteTrain.setDisabled(true);
+								wildTrain.setTouchable(Touchable.disabled);
+								wildTrain.setDisabled(true);
+								
+							}
+						}else {
+							if (drawnCards.size() >= 2) {
+								redTrain.setTouchable(Touchable.disabled);
+								redTrain.setDisabled(true);
+								orangeTrain.setTouchable(Touchable.disabled);
+								orangeTrain.setDisabled(true);
+								yellowTrain.setTouchable(Touchable.disabled);
+								yellowTrain.setDisabled(true);
+								greenTrain.setTouchable(Touchable.disabled);
+								greenTrain.setDisabled(true);
+								blueTrain.setTouchable(Touchable.disabled);
+								blueTrain.setDisabled(true);
+								pinkTrain.setTouchable(Touchable.disabled);
+								pinkTrain.setDisabled(true);
+								blackTrain.setTouchable(Touchable.disabled);
+								blackTrain.setDisabled(true);
+								whiteTrain.setTouchable(Touchable.disabled);
+								whiteTrain.setDisabled(true);
+								wildTrain.setTouchable(Touchable.disabled);
+								wildTrain.setDisabled(true);
+							}	
+						}
+
 					}
 
 					public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 						return true;
 					}
 				});
-//				ImageButton orangeTrain = new ImageButton(trainCardImages[Colors.route.ORANGE.ordinal()].getDrawable());
-				final ImageTextButton orangeTrain = new ImageTextButton("", TTRAdvisorApp.skin, "tcOrange");
+
+				
 				orangeTrain.addListener(new InputListener() {
 					public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 						drawnCards.add(new TrainCard(Colors.route.ORANGE));
@@ -730,14 +782,58 @@ public class GameScreen implements Screen {
 						}
 						orangeTrain.setText(Integer.toString(drawCount));
 						
+						if (mainApp.turnInput.isInitialTurn()) {
+							if (drawnCards.size() >= 4) {
+								redTrain.setTouchable(Touchable.disabled);
+								redTrain.setDisabled(true);
+								orangeTrain.setTouchable(Touchable.disabled);
+								orangeTrain.setDisabled(true);
+								yellowTrain.setTouchable(Touchable.disabled);
+								yellowTrain.setDisabled(true);
+								greenTrain.setTouchable(Touchable.disabled);
+								greenTrain.setDisabled(true);
+								blueTrain.setTouchable(Touchable.disabled);
+								blueTrain.setDisabled(true);
+								pinkTrain.setTouchable(Touchable.disabled);
+								pinkTrain.setDisabled(true);
+								blackTrain.setTouchable(Touchable.disabled);
+								blackTrain.setDisabled(true);
+								whiteTrain.setTouchable(Touchable.disabled);
+								whiteTrain.setDisabled(true);
+								wildTrain.setTouchable(Touchable.disabled);
+								wildTrain.setDisabled(true);
+								
+							}
+						}else {
+							if (drawnCards.size() >= 2) {
+								redTrain.setTouchable(Touchable.disabled);
+								redTrain.setDisabled(true);
+								orangeTrain.setTouchable(Touchable.disabled);
+								orangeTrain.setDisabled(true);
+								yellowTrain.setTouchable(Touchable.disabled);
+								yellowTrain.setDisabled(true);
+								greenTrain.setTouchable(Touchable.disabled);
+								greenTrain.setDisabled(true);
+								blueTrain.setTouchable(Touchable.disabled);
+								blueTrain.setDisabled(true);
+								pinkTrain.setTouchable(Touchable.disabled);
+								pinkTrain.setDisabled(true);
+								blackTrain.setTouchable(Touchable.disabled);
+								blackTrain.setDisabled(true);
+								whiteTrain.setTouchable(Touchable.disabled);
+								whiteTrain.setDisabled(true);
+								wildTrain.setTouchable(Touchable.disabled);
+								wildTrain.setDisabled(true);
+							}	
+						}
 					}
 
 					public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 						return true;
 					}
 				});
-//				ImageButton yellowTrain = new ImageButton(trainCardImages[Colors.route.YELLOW.ordinal()].getDrawable());
-				final ImageTextButton yellowTrain = new ImageTextButton("", TTRAdvisorApp.skin, "tcYellow");
+
+				
 				yellowTrain.addListener(new InputListener() {
 					public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 						drawnCards.add(new TrainCard(Colors.route.YELLOW));
@@ -750,14 +846,59 @@ public class GameScreen implements Screen {
 							}
 						}
 						yellowTrain.setText(Integer.toString(drawCount));
+						
+						if (mainApp.turnInput.isInitialTurn()) {
+							if (drawnCards.size() >= 4) {
+								redTrain.setTouchable(Touchable.disabled);
+								redTrain.setDisabled(true);
+								orangeTrain.setTouchable(Touchable.disabled);
+								orangeTrain.setDisabled(true);
+								yellowTrain.setTouchable(Touchable.disabled);
+								yellowTrain.setDisabled(true);
+								greenTrain.setTouchable(Touchable.disabled);
+								greenTrain.setDisabled(true);
+								blueTrain.setTouchable(Touchable.disabled);
+								blueTrain.setDisabled(true);
+								pinkTrain.setTouchable(Touchable.disabled);
+								pinkTrain.setDisabled(true);
+								blackTrain.setTouchable(Touchable.disabled);
+								blackTrain.setDisabled(true);
+								whiteTrain.setTouchable(Touchable.disabled);
+								whiteTrain.setDisabled(true);
+								wildTrain.setTouchable(Touchable.disabled);
+								wildTrain.setDisabled(true);
+								
+							}
+						}else {
+							if (drawnCards.size() >= 2) {
+								redTrain.setTouchable(Touchable.disabled);
+								redTrain.setDisabled(true);
+								orangeTrain.setTouchable(Touchable.disabled);
+								orangeTrain.setDisabled(true);
+								yellowTrain.setTouchable(Touchable.disabled);
+								yellowTrain.setDisabled(true);
+								greenTrain.setTouchable(Touchable.disabled);
+								greenTrain.setDisabled(true);
+								blueTrain.setTouchable(Touchable.disabled);
+								blueTrain.setDisabled(true);
+								pinkTrain.setTouchable(Touchable.disabled);
+								pinkTrain.setDisabled(true);
+								blackTrain.setTouchable(Touchable.disabled);
+								blackTrain.setDisabled(true);
+								whiteTrain.setTouchable(Touchable.disabled);
+								whiteTrain.setDisabled(true);
+								wildTrain.setTouchable(Touchable.disabled);
+								wildTrain.setDisabled(true);
+							}	
+						}
 					}
 
 					public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 						return true;
 					}
 				});
-//				ImageButton greenTrain = new ImageButton(trainCardImages[Colors.route.GREEN.ordinal()].getDrawable());
-				final ImageTextButton greenTrain = new ImageTextButton("", TTRAdvisorApp.skin, "tcGreen");
+
+				
 				greenTrain.addListener(new InputListener() {
 					public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 						drawnCards.add(new TrainCard(Colors.route.GREEN));
@@ -770,14 +911,59 @@ public class GameScreen implements Screen {
 							}
 						}
 						greenTrain.setText(Integer.toString(drawCount));
+						
+						if (mainApp.turnInput.isInitialTurn()) {
+							if (drawnCards.size() >= 4) {
+								redTrain.setTouchable(Touchable.disabled);
+								redTrain.setDisabled(true);
+								orangeTrain.setTouchable(Touchable.disabled);
+								orangeTrain.setDisabled(true);
+								yellowTrain.setTouchable(Touchable.disabled);
+								yellowTrain.setDisabled(true);
+								greenTrain.setTouchable(Touchable.disabled);
+								greenTrain.setDisabled(true);
+								blueTrain.setTouchable(Touchable.disabled);
+								blueTrain.setDisabled(true);
+								pinkTrain.setTouchable(Touchable.disabled);
+								pinkTrain.setDisabled(true);
+								blackTrain.setTouchable(Touchable.disabled);
+								blackTrain.setDisabled(true);
+								whiteTrain.setTouchable(Touchable.disabled);
+								whiteTrain.setDisabled(true);
+								wildTrain.setTouchable(Touchable.disabled);
+								wildTrain.setDisabled(true);
+								
+							}
+						}else {
+							if (drawnCards.size() >= 2) {
+								redTrain.setTouchable(Touchable.disabled);
+								redTrain.setDisabled(true);
+								orangeTrain.setTouchable(Touchable.disabled);
+								orangeTrain.setDisabled(true);
+								yellowTrain.setTouchable(Touchable.disabled);
+								yellowTrain.setDisabled(true);
+								greenTrain.setTouchable(Touchable.disabled);
+								greenTrain.setDisabled(true);
+								blueTrain.setTouchable(Touchable.disabled);
+								blueTrain.setDisabled(true);
+								pinkTrain.setTouchable(Touchable.disabled);
+								pinkTrain.setDisabled(true);
+								blackTrain.setTouchable(Touchable.disabled);
+								blackTrain.setDisabled(true);
+								whiteTrain.setTouchable(Touchable.disabled);
+								whiteTrain.setDisabled(true);
+								wildTrain.setTouchable(Touchable.disabled);
+								wildTrain.setDisabled(true);
+							}	
+						}
 					}
 
 					public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 						return true;
 					}
 				});
-//				ImageButton blueTrain = new ImageButton(trainCardImages[Colors.route.BLUE.ordinal()].getDrawable());
-				final ImageTextButton blueTrain = new ImageTextButton("", TTRAdvisorApp.skin, "tcBlue");
+
+				
 				blueTrain.addListener(new InputListener() {
 					public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 						drawnCards.add(new TrainCard(Colors.route.BLUE));
@@ -790,14 +976,59 @@ public class GameScreen implements Screen {
 							}
 						}
 						blueTrain.setText(Integer.toString(drawCount));
+						
+						if (mainApp.turnInput.isInitialTurn()) {
+							if (drawnCards.size() >= 4) {
+								redTrain.setTouchable(Touchable.disabled);
+								redTrain.setDisabled(true);
+								orangeTrain.setTouchable(Touchable.disabled);
+								orangeTrain.setDisabled(true);
+								yellowTrain.setTouchable(Touchable.disabled);
+								yellowTrain.setDisabled(true);
+								greenTrain.setTouchable(Touchable.disabled);
+								greenTrain.setDisabled(true);
+								blueTrain.setTouchable(Touchable.disabled);
+								blueTrain.setDisabled(true);
+								pinkTrain.setTouchable(Touchable.disabled);
+								pinkTrain.setDisabled(true);
+								blackTrain.setTouchable(Touchable.disabled);
+								blackTrain.setDisabled(true);
+								whiteTrain.setTouchable(Touchable.disabled);
+								whiteTrain.setDisabled(true);
+								wildTrain.setTouchable(Touchable.disabled);
+								wildTrain.setDisabled(true);
+								
+							}
+						}else {
+							if (drawnCards.size() >= 2) {
+								redTrain.setTouchable(Touchable.disabled);
+								redTrain.setDisabled(true);
+								orangeTrain.setTouchable(Touchable.disabled);
+								orangeTrain.setDisabled(true);
+								yellowTrain.setTouchable(Touchable.disabled);
+								yellowTrain.setDisabled(true);
+								greenTrain.setTouchable(Touchable.disabled);
+								greenTrain.setDisabled(true);
+								blueTrain.setTouchable(Touchable.disabled);
+								blueTrain.setDisabled(true);
+								pinkTrain.setTouchable(Touchable.disabled);
+								pinkTrain.setDisabled(true);
+								blackTrain.setTouchable(Touchable.disabled);
+								blackTrain.setDisabled(true);
+								whiteTrain.setTouchable(Touchable.disabled);
+								whiteTrain.setDisabled(true);
+								wildTrain.setTouchable(Touchable.disabled);
+								wildTrain.setDisabled(true);
+							}	
+						}
 					}
 
 					public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 						return true;
 					}
 				});
-//				ImageButton pinkTrain = new ImageButton(trainCardImages[Colors.route.PINK.ordinal()].getDrawable());
-				final ImageTextButton pinkTrain = new ImageTextButton("", TTRAdvisorApp.skin, "tcPink");
+				
+				
 				pinkTrain.addListener(new InputListener() {
 					public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 						drawnCards.add(new TrainCard(Colors.route.PINK));
@@ -810,14 +1041,58 @@ public class GameScreen implements Screen {
 							}
 						}
 						pinkTrain.setText(Integer.toString(drawCount));
+						
+						if (mainApp.turnInput.isInitialTurn()) {
+							if (drawnCards.size() >= 4) {
+								redTrain.setTouchable(Touchable.disabled);
+								redTrain.setDisabled(true);
+								orangeTrain.setTouchable(Touchable.disabled);
+								orangeTrain.setDisabled(true);
+								yellowTrain.setTouchable(Touchable.disabled);
+								yellowTrain.setDisabled(true);
+								greenTrain.setTouchable(Touchable.disabled);
+								greenTrain.setDisabled(true);
+								blueTrain.setTouchable(Touchable.disabled);
+								blueTrain.setDisabled(true);
+								pinkTrain.setTouchable(Touchable.disabled);
+								pinkTrain.setDisabled(true);
+								blackTrain.setTouchable(Touchable.disabled);
+								blackTrain.setDisabled(true);
+								whiteTrain.setTouchable(Touchable.disabled);
+								whiteTrain.setDisabled(true);
+								wildTrain.setTouchable(Touchable.disabled);
+								wildTrain.setDisabled(true);
+								
+							}
+						}else {
+							if (drawnCards.size() >= 2) {
+								redTrain.setTouchable(Touchable.disabled);
+								redTrain.setDisabled(true);
+								orangeTrain.setTouchable(Touchable.disabled);
+								orangeTrain.setDisabled(true);
+								yellowTrain.setTouchable(Touchable.disabled);
+								yellowTrain.setDisabled(true);
+								greenTrain.setTouchable(Touchable.disabled);
+								greenTrain.setDisabled(true);
+								blueTrain.setTouchable(Touchable.disabled);
+								blueTrain.setDisabled(true);
+								pinkTrain.setTouchable(Touchable.disabled);
+								pinkTrain.setDisabled(true);
+								blackTrain.setTouchable(Touchable.disabled);
+								blackTrain.setDisabled(true);
+								whiteTrain.setTouchable(Touchable.disabled);
+								whiteTrain.setDisabled(true);
+								wildTrain.setTouchable(Touchable.disabled);
+								wildTrain.setDisabled(true);
+							}	
+						}
 					}
 
 					public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 						return true;
 					}
 				});
-//				ImageButton blackTrain = new ImageButton(trainCardImages[Colors.route.BLACK.ordinal()].getDrawable());
-				final ImageTextButton blackTrain = new ImageTextButton("", TTRAdvisorApp.skin, "tcBlack");
+				
 				blackTrain.addListener(new InputListener() {
 					public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 						drawnCards.add(new TrainCard(Colors.route.BLACK));
@@ -830,14 +1105,58 @@ public class GameScreen implements Screen {
 							}
 						}
 						blackTrain.setText(Integer.toString(drawCount));
+						
+						if (mainApp.turnInput.isInitialTurn()) {
+							if (drawnCards.size() >= 4) {
+								redTrain.setTouchable(Touchable.disabled);
+								redTrain.setDisabled(true);
+								orangeTrain.setTouchable(Touchable.disabled);
+								orangeTrain.setDisabled(true);
+								yellowTrain.setTouchable(Touchable.disabled);
+								yellowTrain.setDisabled(true);
+								greenTrain.setTouchable(Touchable.disabled);
+								greenTrain.setDisabled(true);
+								blueTrain.setTouchable(Touchable.disabled);
+								blueTrain.setDisabled(true);
+								pinkTrain.setTouchable(Touchable.disabled);
+								pinkTrain.setDisabled(true);
+								blackTrain.setTouchable(Touchable.disabled);
+								blackTrain.setDisabled(true);
+								whiteTrain.setTouchable(Touchable.disabled);
+								whiteTrain.setDisabled(true);
+								wildTrain.setTouchable(Touchable.disabled);
+								wildTrain.setDisabled(true);
+								
+							}
+						}else {
+							if (drawnCards.size() >= 2) {
+								redTrain.setTouchable(Touchable.disabled);
+								redTrain.setDisabled(true);
+								orangeTrain.setTouchable(Touchable.disabled);
+								orangeTrain.setDisabled(true);
+								yellowTrain.setTouchable(Touchable.disabled);
+								yellowTrain.setDisabled(true);
+								greenTrain.setTouchable(Touchable.disabled);
+								greenTrain.setDisabled(true);
+								blueTrain.setTouchable(Touchable.disabled);
+								blueTrain.setDisabled(true);
+								pinkTrain.setTouchable(Touchable.disabled);
+								pinkTrain.setDisabled(true);
+								blackTrain.setTouchable(Touchable.disabled);
+								blackTrain.setDisabled(true);
+								whiteTrain.setTouchable(Touchable.disabled);
+								whiteTrain.setDisabled(true);
+								wildTrain.setTouchable(Touchable.disabled);
+								wildTrain.setDisabled(true);
+							}	
+						}
 					}
 
 					public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 						return true;
 					}
 				});
-//				ImageButton whiteTrain = new ImageButton(trainCardImages[Colors.route.WHITE.ordinal()].getDrawable());
-				final ImageTextButton whiteTrain = new ImageTextButton("", TTRAdvisorApp.skin, "tcWhite");
+
 				whiteTrain.addListener(new InputListener() {
 					public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 						drawnCards.add(new TrainCard(Colors.route.WHITE));
@@ -850,14 +1169,58 @@ public class GameScreen implements Screen {
 							}
 						}
 						whiteTrain.setText(Integer.toString(drawCount));
+						
+						if (mainApp.turnInput.isInitialTurn()) {
+							if (drawnCards.size() >= 4) {
+								redTrain.setTouchable(Touchable.disabled);
+								redTrain.setDisabled(true);
+								orangeTrain.setTouchable(Touchable.disabled);
+								orangeTrain.setDisabled(true);
+								yellowTrain.setTouchable(Touchable.disabled);
+								yellowTrain.setDisabled(true);
+								greenTrain.setTouchable(Touchable.disabled);
+								greenTrain.setDisabled(true);
+								blueTrain.setTouchable(Touchable.disabled);
+								blueTrain.setDisabled(true);
+								pinkTrain.setTouchable(Touchable.disabled);
+								pinkTrain.setDisabled(true);
+								blackTrain.setTouchable(Touchable.disabled);
+								blackTrain.setDisabled(true);
+								whiteTrain.setTouchable(Touchable.disabled);
+								whiteTrain.setDisabled(true);
+								wildTrain.setTouchable(Touchable.disabled);
+								wildTrain.setDisabled(true);
+								
+							}
+						}else {
+							if (drawnCards.size() >= 2) {
+								redTrain.setTouchable(Touchable.disabled);
+								redTrain.setDisabled(true);
+								orangeTrain.setTouchable(Touchable.disabled);
+								orangeTrain.setDisabled(true);
+								yellowTrain.setTouchable(Touchable.disabled);
+								yellowTrain.setDisabled(true);
+								greenTrain.setTouchable(Touchable.disabled);
+								greenTrain.setDisabled(true);
+								blueTrain.setTouchable(Touchable.disabled);
+								blueTrain.setDisabled(true);
+								pinkTrain.setTouchable(Touchable.disabled);
+								pinkTrain.setDisabled(true);
+								blackTrain.setTouchable(Touchable.disabled);
+								blackTrain.setDisabled(true);
+								whiteTrain.setTouchable(Touchable.disabled);
+								whiteTrain.setDisabled(true);
+								wildTrain.setTouchable(Touchable.disabled);
+								wildTrain.setDisabled(true);
+							}	
+						}
 					}
 
 					public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 						return true;
 					}
 				});
-//				ImageButton wildTrain = new ImageButton(trainCardImages[Colors.route.ANY.ordinal()].getDrawable());
-				final ImageTextButton wildTrain = new ImageTextButton("", TTRAdvisorApp.skin, "tcAny");
+
 				wildTrain.addListener(new InputListener() {
 					public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 						drawnCards.add(new TrainCard(Colors.route.ANY));
@@ -870,6 +1233,51 @@ public class GameScreen implements Screen {
 							}
 						}
 						wildTrain.setText(Integer.toString(drawCount));
+						
+						if (mainApp.turnInput.isInitialTurn()) {
+							if (drawnCards.size() >= 4) {
+								redTrain.setTouchable(Touchable.disabled);
+								redTrain.setDisabled(true);
+								orangeTrain.setTouchable(Touchable.disabled);
+								orangeTrain.setDisabled(true);
+								yellowTrain.setTouchable(Touchable.disabled);
+								yellowTrain.setDisabled(true);
+								greenTrain.setTouchable(Touchable.disabled);
+								greenTrain.setDisabled(true);
+								blueTrain.setTouchable(Touchable.disabled);
+								blueTrain.setDisabled(true);
+								pinkTrain.setTouchable(Touchable.disabled);
+								pinkTrain.setDisabled(true);
+								blackTrain.setTouchable(Touchable.disabled);
+								blackTrain.setDisabled(true);
+								whiteTrain.setTouchable(Touchable.disabled);
+								whiteTrain.setDisabled(true);
+								wildTrain.setTouchable(Touchable.disabled);
+								wildTrain.setDisabled(true);
+								
+							}
+						}else {
+							if (drawnCards.size() >= 2) {
+								redTrain.setTouchable(Touchable.disabled);
+								redTrain.setDisabled(true);
+								orangeTrain.setTouchable(Touchable.disabled);
+								orangeTrain.setDisabled(true);
+								yellowTrain.setTouchable(Touchable.disabled);
+								yellowTrain.setDisabled(true);
+								greenTrain.setTouchable(Touchable.disabled);
+								greenTrain.setDisabled(true);
+								blueTrain.setTouchable(Touchable.disabled);
+								blueTrain.setDisabled(true);
+								pinkTrain.setTouchable(Touchable.disabled);
+								pinkTrain.setDisabled(true);
+								blackTrain.setTouchable(Touchable.disabled);
+								blackTrain.setDisabled(true);
+								whiteTrain.setTouchable(Touchable.disabled);
+								whiteTrain.setDisabled(true);
+								wildTrain.setTouchable(Touchable.disabled);
+								wildTrain.setDisabled(true);
+							}	
+						}
 					}
 
 					public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -923,6 +1331,7 @@ public class GameScreen implements Screen {
 						return true;
 					}
 				});
+				
 				TextButton undo = new TextButton("Undo", TTRAdvisorApp.skin, "small");
 				undo.addListener(new InputListener() {
 					public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
@@ -1066,7 +1475,52 @@ public class GameScreen implements Screen {
 							}
 							drawnCards.remove(drawnCards.size() - 1);
 							drawnCardList.setText(drawnCards.toString());
-							
+
+							if (mainApp.turnInput.isInitialTurn()) {
+								if (drawnCards.size() < 4) {
+									redTrain.setTouchable(Touchable.enabled);
+									redTrain.setDisabled(false);
+									orangeTrain.setTouchable(Touchable.enabled);
+									orangeTrain.setDisabled(false);
+									yellowTrain.setTouchable(Touchable.enabled);
+									yellowTrain.setDisabled(false);
+									greenTrain.setTouchable(Touchable.enabled);
+									greenTrain.setDisabled(false);
+									blueTrain.setTouchable(Touchable.enabled);
+									blueTrain.setDisabled(false);
+									pinkTrain.setTouchable(Touchable.enabled);
+									pinkTrain.setDisabled(false);
+									blackTrain.setTouchable(Touchable.enabled);
+									blackTrain.setDisabled(false);
+									whiteTrain.setTouchable(Touchable.enabled);
+									whiteTrain.setDisabled(false);
+									wildTrain.setTouchable(Touchable.enabled);
+									wildTrain.setDisabled(false);
+									
+								}
+							}else {
+								if (drawnCards.size() < 2) {
+									redTrain.setTouchable(Touchable.enabled);
+									redTrain.setDisabled(false);
+									orangeTrain.setTouchable(Touchable.enabled);
+									orangeTrain.setDisabled(false);
+									yellowTrain.setTouchable(Touchable.enabled);
+									yellowTrain.setDisabled(false);
+									greenTrain.setTouchable(Touchable.enabled);
+									greenTrain.setDisabled(false);
+									blueTrain.setTouchable(Touchable.enabled);
+									blueTrain.setDisabled(false);
+									pinkTrain.setTouchable(Touchable.enabled);
+									pinkTrain.setDisabled(false);
+									blackTrain.setTouchable(Touchable.enabled);
+									blackTrain.setDisabled(false);
+									whiteTrain.setTouchable(Touchable.enabled);
+									whiteTrain.setDisabled(false);
+									wildTrain.setTouchable(Touchable.enabled);
+									wildTrain.setDisabled(false);
+								}	
+							}
+
 						}
 					}
 
@@ -1088,6 +1542,8 @@ public class GameScreen implements Screen {
 						return true;
 					}
 				});
+
+				
 				TextButton invis = new TextButton("", TTRAdvisorApp.skin, "small");
 				invis.setVisible(false);
 				table.bottom();
