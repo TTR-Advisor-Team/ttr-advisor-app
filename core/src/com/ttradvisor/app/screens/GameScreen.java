@@ -1501,6 +1501,8 @@ public class GameScreen implements Screen {
 	 * @param route the one route we've narrowed down to
 	 */
 	private void setupHelperChooseCards(final Route route) {
+		System.out.println("cost:::::::"+   route.getCost());
+		System.out.println("player:::::::"+   mainApp.gameState.currentPlayer.getColor());
 
 		selectedRoute = "Selected: " + route;
 		
@@ -1943,7 +1945,6 @@ public class GameScreen implements Screen {
 					}
 				}
 				else if (mainApp.turnInput.takeAction(routeAction)) {
-
 					advanceTurn(isInitial, routeAction);
 				} else {	
 					TextButton errorMessageTemp = new TextButton(mainApp.gameState.getError(), TTRAdvisorApp.skin, "error");
@@ -1957,6 +1958,7 @@ public class GameScreen implements Screen {
 						errorMessage.setVisible(false);
 					}
 				}
+				
 
 				selectedCity = DEFAULT_CITY_LABEL;
 				selectedRoute = DEFAULT_ROUTE_LABEL;
@@ -2213,7 +2215,7 @@ public class GameScreen implements Screen {
 				mainApp.gameState.currentPlayer = mainApp.gameState.getPlayers().get(0);
 			}
 		}
-
+		
 		ArrayList<Player> deepCopyPlayers = new ArrayList<Player>();
 		for (Player p : mainApp.gameState.getPlayers()) {
 			deepCopyPlayers.add(p.getDeepCopy());
@@ -2241,6 +2243,8 @@ public class GameScreen implements Screen {
 		ticketSelection.setMultiple(true);
 		destTickets.setSelection(ticketSelection);
 //		demoCurrPlayer.setText("Current player: " + mainApp.gameState.currentPlayer.getColor());
+		
+		
 		calcAllScore();
 		playerIconUpdate(mainApp.gameState.currentPlayer);
 		refreshHandDisplay();
@@ -2310,20 +2314,19 @@ public class GameScreen implements Screen {
 
 	
 	private void calcAllScore() {
-		
-		//last turn condition here  *******
-		
-		Recommender rec = new Recommender(mainApp.gameState.getBoard(), mainApp.gameState.currentPlayer,
-				mainApp.gameState.getCurrentTurnCounter(), mainApp.gameState.getPlayers().size());
 		int longestRoute = 0;
 		int longestBounus = 10;
-		//find longest route
-		for (Player p : mainApp.gameState.getPlayers()) {
-			if (longestRoute < rec.longestRoute(p.getColor())) {
-				longestRoute = rec.longestRoute(p.getColor());
-			}		
+		Recommender rec = new Recommender(mainApp.gameState.getBoard(), mainApp.gameState.currentPlayer,
+				mainApp.gameState.getCurrentTurnCounter(), mainApp.gameState.getPlayers().size());
+
+		if (mainApp.gameState.getLastTurn()) {
+			//find longest route
+			for (Player p : mainApp.gameState.getPlayers()) {
+				if (longestRoute < rec.longestRoute(p.getColor())) {
+					longestRoute = rec.longestRoute(p.getColor());
+				}		
+			}
 		}
-		
 		
 		//add score 
 		for (Player p : mainApp.gameState.getPlayers()) {
@@ -2358,20 +2361,19 @@ public class GameScreen implements Screen {
 			score = score/2;
 			
 			
-			//last turn condition here  *******
-			
-			//completed destination cards
-			for (DestinationTicket ticket: p.getDTS()) {
-				if (ticket.getCompleted()) {
-					score = score + ticket.getValue();
+			if (mainApp.gameState.getLastTurn()) {
+				//completed destination cards
+				for (DestinationTicket ticket: p.getDTS()) {
+					if (ticket.getCompleted()) {
+						score = score + ticket.getValue();
+					}
+				}
+				
+				//longest route bonus
+				if (longestRoute == rec.longestRoute(p.getColor())) {
+					score =  score + longestBounus;
 				}
 			}
-			
-			//longest route bonus
-			if (longestRoute == rec.longestRoute(p.getColor())) {
-				score =  score + longestBounus;
-			}
-			
 			
 			
 			

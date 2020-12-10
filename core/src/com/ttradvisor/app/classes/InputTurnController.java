@@ -206,6 +206,13 @@ public class InputTurnController {
 	}
 
     private boolean claimRoute(RouteAction thisTurn) {	
+    	
+    	
+    	if (thisTurn.actingPlayer.getNumTrains() - thisTurn.claimedRoute.getCost() < 0) {
+    		Gdx.app.error("Turn", "Do not have enough trains to claim route");
+    		gameState.setError("Do not have enough trains to claim route.");
+    		return false;
+    	}
 
     	// THESE CHECKS ONLY APPLY TO THE USER
     	
@@ -237,6 +244,10 @@ public class InputTurnController {
     			return false;
     		}
     		else {
+    	    	if (thisTurn.actingPlayer.getNumTrains() - thisTurn.claimedRoute.getCost() <= 2) {
+    	    		gameState.setLastTurn(true);
+    	    	}
+    	    	thisTurn.actingPlayer.setNumTrains(thisTurn.actingPlayer.getNumTrains() - thisTurn.claimedRoute.getCost());
     			thisTurn.actingPlayer.spendCards(thisTurn.spentCards);
     			gameState.getBoard().claimRoute(thisTurn.claimedRoute.getBegin(), thisTurn.claimedRoute.getEnd(), thisTurn.claimedRoute.getColor(), thisTurn.actingPlayer.getColor());
     			return true;
@@ -250,6 +261,10 @@ public class InputTurnController {
         			return false;
 				}
 				else {
+					if (thisTurn.actingPlayer.getNumTrains() - thisTurn.claimedRoute.getCost() <= 2) {
+	    	    		gameState.setLastTurn(true);
+	    	    	}
+	    	    	thisTurn.actingPlayer.setNumTrains(thisTurn.actingPlayer.getNumTrains() - thisTurn.claimedRoute.getCost());
 					thisTurn.actingPlayer.spendCards(thisTurn.spentCards);
         			gameState.getBoard().claimRoute(thisTurn.claimedRoute.getBegin(), thisTurn.claimedRoute.getEnd(), thisTurn.claimedRoute.getColor(), thisTurn.actingPlayer.getColor());
         			return true;
@@ -278,6 +293,10 @@ public class InputTurnController {
         		}
 				
         		else {
+        			if (thisTurn.actingPlayer.getNumTrains() - thisTurn.claimedRoute.getCost() <= 2) {
+        	    		gameState.setLastTurn(true);
+        	    	}
+        	    	thisTurn.actingPlayer.setNumTrains(thisTurn.actingPlayer.getNumTrains() - thisTurn.claimedRoute.getCost());
         			thisTurn.actingPlayer.spendCards(thisTurn.spentCards);
         			gameState.getBoard().claimRoute(thisTurn.claimedRoute.getBegin(), thisTurn.claimedRoute.getEnd(), thisTurn.claimedRoute.getColor(), thisTurn.actingPlayer.getColor());
         			return true;

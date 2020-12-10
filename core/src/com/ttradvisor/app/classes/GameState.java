@@ -15,6 +15,7 @@ public class GameState {
 	private ArrayList<Turn> turns;
 	public Player currentPlayer;
 	private String errorMessage;
+	public Boolean lastTurn;
 
 	public Colors.player userColor;
 //	private ArrayList<Route> claimedRoutes;
@@ -28,6 +29,7 @@ public class GameState {
 		this.dtList = dtList;
 		currentPlayer = null;
 		errorMessage  = "";
+		this.lastTurn = false;
 //		claimedRoutes = new ArrayList<Route>();
 
 	}
@@ -109,4 +111,13 @@ public class GameState {
 	public int getCurrentRoundCounter() {
 		return turns.size() / curPlayers.size() + 1;
 	}
+	
+	public void setLastTurn(Boolean turn){
+		this.lastTurn = turn;
+	}
+	
+	public Boolean getLastTurn(){
+		return lastTurn;
+	}
+	
 }
