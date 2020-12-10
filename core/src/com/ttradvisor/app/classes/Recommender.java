@@ -38,10 +38,12 @@ public class Recommender {
 //		System.out.println("\n\n\n");
 		// Remove routes already owned by player. Removed transposed routes. Remove
 		// duplicate routes.
+		ArrayList<Route> dup = new ArrayList<Route>();
 		for (int x = 0; x < routes.size(); ++x) {
 			if (routes.get(x) == null)
 				continue;
 			if (routes.get(x).getOwner().equals(player.getColor())) {
+				dup.add(routes.get(x));
 				routes.set(x, null);
 				continue;
 			}
@@ -59,7 +61,21 @@ public class Recommender {
 						&& routes.get(x).getColor().equals(routes.get(y).getColor())) {
 					routes.set(y, null);
 				} else if (routes.get(y).getOwner().equals(player.getColor())) {
+					dup.add(routes.get(y));
 					routes.set(y, null);
+					
+				}
+			}
+		}
+		for(Route r: dup) {
+			for(int i = 0; i < routes.size();) {
+				if(r.begin.equals(routes.get(i).begin) && r.end.equals(routes.get(i).end)) {
+					routes.set(i, null);
+					break;
+				}
+				else {
+					i++;
+					
 				}
 			}
 		}
