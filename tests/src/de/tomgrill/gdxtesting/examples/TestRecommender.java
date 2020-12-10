@@ -489,17 +489,20 @@ public class TestRecommender {
 		board.claimRoute("Seattle", "Portland", Colors.route.ANY, Colors.player.BLACK);
 		board.claimRoute("Calgary", "Helena", Colors.route.ANY, Colors.player.BLACK);
 
+		
+		assertEquals(12, rec.longestRoute(Colors.player.BLACK));	
+		
+	}
+	
+	@Test
+	public void LRHelperTest2() {
 		board.claimRoute("Los Angeles", "El Paso", Colors.route.BLACK, Colors.player.RED);
 		board.claimRoute("El Paso", "Houston", Colors.route.GREEN, Colors.player.RED);
 		board.claimRoute("Houston", "New Orleans", Colors.route.ANY, Colors.player.RED);
 		board.claimRoute("New Orleans", "Miami", Colors.route.RED, Colors.player.RED);
 		board.claimRoute("New Orleans", "Atlanta", Colors.route.ORANGE, Colors.player.RED);
 		board.claimRoute("Atlanta", "Miami", Colors.route.BLUE, Colors.player.RED);
-		
-		assertEquals(12, rec.longestRoute(Colors.player.BLACK));
 		assertEquals(29, rec.longestRoute(Colors.player.RED));
-		
-		
 	}
 	
 }

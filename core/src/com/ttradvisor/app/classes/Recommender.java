@@ -325,8 +325,9 @@ public class Recommender {
 		}
 		// get longest routes values for all cities found within the routes
 		for (String city : cities) {
-			System.out.println("Starting City: " + city);
-			lengths.add(LRHelper(0, city, routes));
+			int l = LRHelper(0, city, routes);
+			LRHelper(0, city, routes);
+			lengths.add(l);
 		}
 
 		int longestRoute = 0;
@@ -341,55 +342,50 @@ public class Recommender {
 
 	public int LRHelper(int totalLength, String city, ArrayList<Route> routes) {
 
-		System.out.println("City: " + city + " totalLength: " + totalLength);
+		boolean next = false;
+		if (routes.isEmpty()) {
 
-		ArrayList<Integer> len = new ArrayList<Integer>();
-		for (Route r : routes) {
-			// find a route that connect to current city
-			if (r.begin.equals(city)) {
-				System.out.println("	Current Route: " + r.toString());
-				for (Route sr : routes) {
-					System.out.println("	" + sr.toString());
-				}
-				System.out.println();
-				// make a new list and remove the route, and its inverse from the list
-				ArrayList<Route> newRoutes = new ArrayList<Route>();
-				newRoutes.addAll(routes);
-
-				for (int i = 0; i < newRoutes.size(); ++i) {
-
-					if (newRoutes.get(i).begin.equals(r.begin) && newRoutes.get(i).end.equals(r.end)
-							|| newRoutes.get(i).end.equals(r.begin) && newRoutes.get(i).begin.equals(r.end))
-						newRoutes.remove(i);
-
-				}
-				boolean next = false; // flag if we can continue searching for next link
-
-				// routes are in list, may not be connected to current city at all
-				for (Route nr : newRoutes) {
-					System.out.println("		" + nr.toString());
-					if (r.end.equals(nr.begin) || r.end.equals(nr.end))
-						next = true;
-				}
-				System.out.println();
-				// recursive call, with updated length, and the corresponding routes removed to
-				// the next city
-				if (newRoutes.isEmpty())
-					len.add(totalLength);
-				
-				else if (next)
-					len.add(LRHelper(totalLength + r.cost, r.end, newRoutes));
-				
-				else if (!next)
-					len.add(totalLength+r.cost);
-
+		} else {
+			for (Route r : routes) {
+				if (r.begin.equals(city))
+					next = true;
 			}
 		}
-		for (Integer l : len) {
-			if (l >= totalLength)
-				totalLength = l;
+		if (!next) {
+			System.out.println();
+			return totalLength;
+		} else {
+			ArrayList<Integer> len = new ArrayList<Integer>();
+			for (Route r : routes) {
+				// find a route that connect to current city
+				if (r.begin.equals(city)) {
+					System.out.println("Next city: " + r.end);
+					// make a new list and remove the route, and its inverse from the list
+					ArrayList<Route> newRoutes = new ArrayList<Route>();
+					newRoutes.addAll(routes);
+
+					for (int j = 0; j < 2; ++j) {
+						for (int i = 0; i < newRoutes.size(); ++i) {
+
+							if (newRoutes.get(i).begin.equals(r.begin) && newRoutes.get(i).end.equals(r.end)
+									|| newRoutes.get(i).end.equals(r.begin) && newRoutes.get(i).begin.equals(r.end)) {
+								newRoutes.remove(i);
+								break;
+							}
+
+						}
+					}
+					int l = LRHelper(totalLength + r.cost, r.end, newRoutes);
+					len.add(l);
+				}
+			}
+			int l = 0;
+			for (Integer i : len) {
+				if (i >= l)
+					l = i;
+			}
+			return l;
 		}
-		return totalLength;
 	}
 
 	static private class City {
