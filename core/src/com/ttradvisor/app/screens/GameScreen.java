@@ -1567,9 +1567,6 @@ public class GameScreen implements Screen {
 	 * @param route the one route we've narrowed down to
 	 */
 	private void setupHelperChooseCards(final Route route) {
-		System.out.println("cost:::::::"+   route.getCost());
-		System.out.println("player:::::::"+   mainApp.gameState.currentPlayer.getColor());
-
 		selectedRoute = "Selected: " + route;
 		
 		mapTappingDisabled = true;
@@ -2494,16 +2491,18 @@ public class GameScreen implements Screen {
 								mapStage.getBatch().draw(trainImage, t.x - 33, t.y - 15, 33, 15, 66, 30, 1, 1, t.r);
 							}
 						}
-					}else {
-						int secondANYIndex = 1 + routeLocations.getList().indexOf(routeLocations.getRouteLocation(r.getBegin(), r.getEnd(), r.getColor().toString()));
-						RouteLocation rL = routeLocations.getList().get(secondANYIndex);
-						if (null != rL) {
-							for (TrainLocation t: rL.trains){
-								mapStage.getBatch().draw(trainImage, t.x - 33, t.y - 15, 33, 15, 66, 30, 1, 1, t.r);
+					} else {
+						if (-1 != routeLocations.getList().indexOf(routeLocations.getRouteLocation(r.getBegin(), r.getEnd(), r.getColor().toString()))) {
+							int secondANYIndex = 1 + routeLocations.getList().indexOf(
+									routeLocations.getRouteLocation(r.getBegin(), r.getEnd(), r.getColor().toString()));
+							RouteLocation rL = routeLocations.getList().get(secondANYIndex);
+							if (null != rL) {
+								for (TrainLocation t : rL.trains) {
+									mapStage.getBatch().draw(trainImage, t.x - 33, t.y - 15, 33, 15, 66, 30, 1, 1, t.r);
+								}
 							}
 						}
 					}
-					
 				}
 				else {
 					if (null != routeLocations.getRouteLocation(r.getBegin(), r.getEnd(), r.getColor().toString())) {
