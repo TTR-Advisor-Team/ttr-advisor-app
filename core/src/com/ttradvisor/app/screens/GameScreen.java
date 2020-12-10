@@ -2311,35 +2311,77 @@ public class GameScreen implements Screen {
 	
 	private void calcAllScore() {
 		
+		//last turn condition here  *******
+		
+		Recommender rec = new Recommender(mainApp.gameState.getBoard(), mainApp.gameState.currentPlayer,
+				mainApp.gameState.getCurrentTurnCounter(), mainApp.gameState.getPlayers().size());
+		int longestRoute = 0;
+		int longestBounus = 10;
+		//find longest route
 		for (Player p : mainApp.gameState.getPlayers()) {
-			int newScore = 0;
+			if (longestRoute < rec.longestRoute(p.getColor())) {
+				longestRoute = rec.longestRoute(p.getColor());
+			}		
+		}
+		
+		
+		//add score 
+		for (Player p : mainApp.gameState.getPlayers()) {
+			int score = 0;
+			
+			//claimed routes
 			for (Route r : mainApp.gameState.getBoard().getAllRoutesOfPlayer(p.getColor())) {
 				switch (r.getCost()) {
 				case 1:
-					newScore = newScore + 1;
+					score = score + 1;
 					break;
 				case 2:
-					newScore = newScore + 2;
+					score = score + 2;
 					break;
 				case 3:
-					newScore = newScore + 4;
+					score = score + 4;
 					break;
 				case 4:
-					newScore = newScore + 7;
+					score = score + 7;
 					break;
 				case 5:
-					newScore = newScore + 10;;
+					score = score + 10;;
 					break;
 				case 6:
-					newScore = newScore + 15;
+					score = score + 15;
 					break;
 				default:
 					Gdx.app.error("GameScreen", "Invalid Route Length");
 					break;
 				}
 			}
-			p.setScore(newScore/2);
+			score = score/2;
+			
+			
+			//last turn condition here  *******
+			
+			//completed destination cards
+			for (DestinationTicket ticket: p.getDTS()) {
+				if (ticket.getCompleted()) {
+					score = score + ticket.getValue();
+				}
+			}
+			
+			//longest route bonus
+			if (longestRoute == rec.longestRoute(p.getColor())) {
+				score =  score + longestBounus;
+			}
+			
+			
+			
+			
+			p.setScore(score);
 		}	
+		
+		
+		
+		
+		
 	}
 //	/**
 //	 * Initialize textures for all players' colors Call in constructor only
