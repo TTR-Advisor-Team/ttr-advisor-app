@@ -10,15 +10,10 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.PolygonRegion;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.EarClippingTriangulator;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector2;
@@ -119,6 +114,10 @@ public class GameScreen implements Screen {
 	private TextButton handDisplayButton;
 	private Table handDisplay;
 	private Label[] handDisplayLabels;
+	
+	private ScrollPane handDisplayPane;
+	private List<DestinationTicket> handDisplayTicketList;
+	private TextButton handDisplayDTsButton;
 	 
 	// for multiple selection
 	private Array<DestinationTicket> prevSelection;
@@ -131,8 +130,6 @@ public class GameScreen implements Screen {
 	
 //	private Label errorMessage;
 	private TextButton errorMessage;
-
-	private ArrayList<TextureRegion> playerColors;
 	
 	private TextureAtlas textureAtlas;
     private Sprite trainImage;
@@ -1132,14 +1129,14 @@ public class GameScreen implements Screen {
 	}
 
 	private void setupClaimRouteButton() {
-		demoSelectedCity = new Label("", mainApp.skin, "handDisplaySmall");
+		demoSelectedCity = new Label("", TTRAdvisorApp.skin, "handDisplaySmall");
 		demoSelectedCity.setColor(0, 0, 0, 1);
 		demoSelectedCity.setSize(100, 30);
 		demoSelectedCity.setPosition(50, 300);
 		demoSelectedCity.setVisible(false);
 		guiStage.addActor(demoSelectedCity);
 
-		demoSelectedRoute = new Label("", mainApp.skin, "handDisplaySmall");
+		demoSelectedRoute = new Label("", TTRAdvisorApp.skin, "handDisplaySmall");
 		demoSelectedRoute.setColor(0, 0, 0, 1);
 		demoSelectedRoute.setSize(100, 30);
 		demoSelectedRoute.setPosition(50, 260);
@@ -2456,48 +2453,6 @@ public class GameScreen implements Screen {
 		
 		
 	}
-//	/**
-//	 * Initialize textures for all players' colors Call in constructor only
-//	 */
-//	private void setupClaimedRouteTextures() {
-//		playerColors = new ArrayList<TextureRegion>();
-//
-//		Pixmap tempPix = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
-//
-//		// for each player: generate a 1x1 texture (using pixmap) of their color
-//		for (Player p : mainApp.gameState.getPlayers()) {
-//			switch (p.getColor()) {
-//			case BLACK:
-//				tempPix.setColor(0, 0, 0, 1);
-//				break;
-//			case BLUE:
-//				tempPix.setColor(0, 0, 1, 1);
-//				break;
-//			case GREEN:
-//				tempPix.setColor(0, 1, 0, 1);
-//				break;
-//			case NONE:
-//				Gdx.app.error("GameScreen", "Player of color \"NONE\" exists in game state.");
-//				tempPix.setColor(1, 1, 1, 1);
-//				// non-fatal error
-//				break;
-//			case RED:
-//				tempPix.setColor(1, 0, 0, 1);
-//				break;
-//			case YELLOW:
-//				tempPix.setColor(1, 1, 0, 1);
-//				break;
-//			default:
-//				Gdx.app.error("GameScreen", "Player of invalid color exists in game state.");
-//				tempPix.setColor(1, 1, 1, 1);
-//				// non-fatal error
-//				break;
-//			}
-//			tempPix.fill();
-//			playerColors.add(new TextureRegion(new Texture(tempPix)));
-//		}
-//		tempPix.dispose();
-//	}
 
 	/**
 	 * Call every render cycle instead of mapStage.draw()
@@ -2604,9 +2559,6 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void dispose() {
-		for (TextureRegion tr : playerColors) {
-			tr.getTexture().dispose();
-		}
 		mapStage.dispose();
 		guiStage.dispose();
 	}
