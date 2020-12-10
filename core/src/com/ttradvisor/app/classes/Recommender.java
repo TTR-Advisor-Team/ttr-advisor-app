@@ -364,17 +364,28 @@ public class Recommender {
 					ArrayList<Route> newRoutes = new ArrayList<Route>();
 					newRoutes.addAll(routes);
 
-					for (int j = 0; j < 2; ++j) {
-						for (int i = 0; i < newRoutes.size(); ++i) {
-
-							if (newRoutes.get(i).begin.equals(r.begin) && newRoutes.get(i).end.equals(r.end)
-									|| newRoutes.get(i).end.equals(r.begin) && newRoutes.get(i).begin.equals(r.end)) {
-								newRoutes.remove(i);
-								break;
-							}
-
+//					for (int j = 0; j < 2; ++j) {
+//						for (int i = 0; i < newRoutes.size(); ++i) {
+//
+//							if (newRoutes.get(i).begin.equals(r.begin) && newRoutes.get(i).end.equals(r.end)
+//									|| newRoutes.get(i).end.equals(r.begin) && newRoutes.get(i).begin.equals(r.end)) {
+//								newRoutes.remove(i);
+//								break;
+//							}
+//
+//						}
+//					}
+					
+					ArrayList<Route> removeRoutes = new ArrayList<Route>();				
+					for (Route nr: routes) {					
+						if (nr.begin.equals(r.begin) && nr.end.equals(r.end) || nr.end.equals(r.begin) && nr.begin.equals(r.end)) {
+							removeRoutes.add(nr);
 						}
 					}
+					for (Route rr: removeRoutes) {
+						newRoutes.remove(rr);
+					}
+
 					int l = LRHelper(totalLength + r.cost, r.end, newRoutes);
 					len.add(l);
 				}
