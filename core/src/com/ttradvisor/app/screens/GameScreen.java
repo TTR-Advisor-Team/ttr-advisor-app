@@ -1647,7 +1647,9 @@ public class GameScreen implements Screen {
 		int whiteCount = 0;
 		int yellowCount = 0;
 		
-		for (TrainCard tc: mainApp.gameState.currentPlayer.getTCS()) {
+		int userIndex = mainApp.gameState.getPlayers().indexOf(mainApp.gameState.getUserPlayer());
+		
+		for (TrainCard tc: mainApp.gameState.getTurns().get(mainApp.hist.getTurnIndex()-1).getPlayerSnapshots().get(userIndex).getTCS()) {
 			switch (tc.getColor()) {
 			case ANY:
 						anyCount++;
