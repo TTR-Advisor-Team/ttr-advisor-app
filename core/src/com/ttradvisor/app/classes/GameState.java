@@ -3,6 +3,7 @@ package com.ttradvisor.app.classes;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.badlogic.gdx.Gdx;
 import com.ttradvisor.app.classes.Board.Route;
 
 public class GameState {
@@ -33,6 +34,17 @@ public class GameState {
 	
 	public Colors.player getUserColor(){
 		return userColor;
+	}
+	
+	public Player getUserPlayer() {
+		for (Player p : curPlayers) {
+			if (p.getColor() == userColor) {
+				return p;
+			}
+		}
+		// shouldn't happen, but avoid a null pointer anyway
+		Gdx.app.error("GameState", "Could not look up the user player.");
+		return curPlayers.get(0);
 	}
 	
 	public Recommender getRecommender() {

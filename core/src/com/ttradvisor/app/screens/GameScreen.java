@@ -118,6 +118,10 @@ public class GameScreen implements Screen {
 	private TextButton cancelClaimRoute;
 
 	private TextButton recommendationsButton;
+	
+	private TextButton handDisplayButton;
+	private Table handDisplay;
+	private Label[] handDisplayLabels;
 	 
 	// for multiple selection
 	private Array<DestinationTicket> prevSelection;
@@ -143,6 +147,7 @@ public class GameScreen implements Screen {
 	private ImageTextButton itbRed;
 	private ImageTextButton itbYellow;
 	private ImageTextButton itbCurrent;
+
 
 
 	public GameScreen(TTRAdvisorApp main) {
@@ -189,6 +194,8 @@ public class GameScreen implements Screen {
 		setupTurnView();
 		
 		setupClaimRouteButton();
+		
+		setupHandDisplayButton();
 
 //		setupClaimedRouteTextures();
 
@@ -1122,6 +1129,65 @@ public class GameScreen implements Screen {
 		});
 		guiStage.addActor(claimRouteTooltip);
 		guiStage.addActor(claimRouteButton);
+	}
+	
+	private void setupHandDisplayButton() {
+
+		handDisplay = new Table(TTRAdvisorApp.skin);
+		handDisplayLabels = new Label[Colors.route.values().length];
+		for (int i=0; i<handDisplayLabels.length; i++) {
+			handDisplayLabels[i] = new Label("0", TTRAdvisorApp.skin);
+		}
+		refreshHandDisplay();
+		
+		String[] hardcodedStuff = {"tcAny", "tcBlack", "tcBlue", "tcGreen", "tcOrange", "tcPink", "tcRed", "tcWhite", "tcYellow"};
+		
+		for (int i=0; i<Colors.route.values().length; i++) {
+			handDisplay.add(handDisplayLabels[i]).padRight(15f);
+			ImageTextButton train = new ImageTextButton("", TTRAdvisorApp.skin, hardcodedStuff[i]);
+			handDisplay.add(train).width(75f).height(46.875f);
+			handDisplay.row();
+		}
+		handDisplay.right();
+		handDisplay.setFillParent(true);
+		handDisplay.setVisible(false);
+
+		handDisplayButton = new TextButton("Show My Hand", TTRAdvisorApp.skin, "small");
+		handDisplayButton.setPosition(Gdx.graphics.getWidth() - handDisplayButton.getWidth(), Gdx.graphics.getHeight() - nextTurn.getHeight() - 5 - handDisplayButton.getHeight());
+		handDisplayButton.addListener(new InputListener() {
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				if (handDisplay.isVisible()) {
+					handDisplay.setVisible(false);
+					handDisplayButton.setText("Show My Hand");
+				} else {
+					refreshHandDisplay();
+					handDisplay.setVisible(true);
+					handDisplayButton.setText("Hide My Hand");
+				}
+			}
+			
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				return true;
+			}
+
+		});
+
+		
+		guiStage.addActor(handDisplayButton);
+		guiStage.addActor(handDisplay);
+		
+	}
+	
+	/**
+	 * Helper - refresh the counts of each card in the displayed hand.
+	 */
+	private void refreshHandDisplay() {
+		Player user = mainApp.gameState.getUserPlayer();
+		for (int i=0; i<Colors.route.values().length; i++) {
+			handDisplayLabels[i].setText("" + user.getNumberOfColor(Colors.route.values()[i]));
+		}
 	}
 	
 	private void setupTurnView() {
@@ -2153,6 +2219,7 @@ public class GameScreen implements Screen {
 //		demoCurrPlayer.setText("Current player: " + mainApp.gameState.currentPlayer.getColor());
 		calcAllScore();
 		playerIconUpdate(mainApp.gameState.currentPlayer);
+		refreshHandDisplay();
 		errorMessage.setVisible(false);
 	}
 
