@@ -48,7 +48,7 @@ import com.ttradvisor.app.classes.RouteLocations.TrainLocation;
 public class TutorialScreen implements Screen {
 
 	private TTRAdvisorApp mainApp;
-	private InputMultiplexer inputMult;
+	// private InputMultiplexer inputMult;
 	private Stage mapStage;
 	private OrthographicCamera camera;
 	private Stage guiStage;
@@ -135,7 +135,7 @@ public class TutorialScreen implements Screen {
 
 		guiStage = new Stage(new ScreenViewport());
 		mapStage = new Stage(new ScreenViewport());
-		inputMult = new InputMultiplexer(guiStage, mapStage);
+		// inputMult = new InputMultiplexer(guiStage, mapStage);
 
 		errorMessage = new Label("", TTRAdvisorApp.skin);
 		errorMessage.setColor(Color.RED);
@@ -196,7 +196,7 @@ public class TutorialScreen implements Screen {
 		cr.setAlignment(Align.topLeft);
 		
 		
-		tutorialStart = new Dialog("Welocome to the Ticket to Ride Advisor Tutorial", TTRAdvisorApp.skin);
+		tutorialStart = new Dialog("Welcome to the Ticket to Ride Advisor Tutorial", TTRAdvisorApp.skin);
 		tutorialStart.setWidth(Gdx.graphics.getWidth()/2);
 		tutorialStart.setHeight(Gdx.graphics.getHeight()/2);
 		tutorialStart.setPosition(Gdx.graphics.getWidth()/2 - tutorialStart.getWidth()/2, 
@@ -205,7 +205,7 @@ public class TutorialScreen implements Screen {
 		tutorialStart.setMovable(false);
 		guiStage.addActor(tutorialStart);
 		
-		tutorialDTC = new Dialog("Welocome to the Ticket to Ride Advisor Tutorial", TTRAdvisorApp.skin);
+		tutorialDTC = new Dialog("Welcome to the Ticket to Ride Advisor Tutorial", TTRAdvisorApp.skin);
 		tutorialDTC.setWidth(Gdx.graphics.getWidth()/2);
 		tutorialDTC.setHeight(Gdx.graphics.getHeight()/2);
 		tutorialDTC.setPosition(Gdx.graphics.getWidth()/2 - tutorialStart.getWidth()/2, 
@@ -215,7 +215,7 @@ public class TutorialScreen implements Screen {
 		tutorialDTC.setMovable(false);
 		guiStage.addActor(tutorialDTC);
 		
-		tutorialRec = new Dialog("Welocome to the Ticket to Ride Advisor Tutorial", TTRAdvisorApp.skin);
+		tutorialRec = new Dialog("Welcome to the Ticket to Ride Advisor Tutorial", TTRAdvisorApp.skin);
 		tutorialRec.setWidth(Gdx.graphics.getWidth()/2);
 		tutorialRec.setHeight(Gdx.graphics.getHeight()/2);
 		tutorialRec.setPosition(Gdx.graphics.getWidth()/2 - tutorialStart.getWidth()/2, 
@@ -225,7 +225,7 @@ public class TutorialScreen implements Screen {
 		tutorialRec.setMovable(false);
 		guiStage.addActor(tutorialRec);
 		
-		tutorialDDT = new Dialog("Welocome to the Ticket to Ride Advisor Tutorial", TTRAdvisorApp.skin);
+		tutorialDDT = new Dialog("Welcome to the Ticket to Ride Advisor Tutorial", TTRAdvisorApp.skin);
 		tutorialDDT.setWidth(Gdx.graphics.getWidth()/2);
 		tutorialDDT.setHeight(Gdx.graphics.getHeight()/2);
 		tutorialDDT.setPosition(Gdx.graphics.getWidth()/2 - tutorialStart.getWidth()/2, 
@@ -235,7 +235,7 @@ public class TutorialScreen implements Screen {
 		tutorialDDT.setMovable(false);
 		guiStage.addActor(tutorialDDT);
 		
-		tutorialPT = new Dialog("Welocome to the Ticket to Ride Advisor Tutorial", TTRAdvisorApp.skin);
+		tutorialPT = new Dialog("Welcome to the Ticket to Ride Advisor Tutorial", TTRAdvisorApp.skin);
 		tutorialPT.setWidth(Gdx.graphics.getWidth()/2);
 		tutorialPT.setHeight(Gdx.graphics.getHeight()/2);
 		tutorialPT.setPosition(Gdx.graphics.getWidth()/2 - tutorialStart.getWidth()/2, 
@@ -245,7 +245,7 @@ public class TutorialScreen implements Screen {
 		tutorialPT.setMovable(false);
 		guiStage.addActor(tutorialPT);
 		
-		tutorialCR = new Dialog("Welocome to the Ticket to Ride Advisor Tutorial", TTRAdvisorApp.skin);
+		tutorialCR = new Dialog("Welcome to the Ticket to Ride Advisor Tutorial", TTRAdvisorApp.skin);
 		tutorialCR.setWidth(Gdx.graphics.getWidth()/2);
 		tutorialCR.setHeight(Gdx.graphics.getHeight()/2);
 		tutorialCR.setPosition(Gdx.graphics.getWidth()/2 - tutorialStart.getWidth()/2, 
@@ -259,7 +259,7 @@ public class TutorialScreen implements Screen {
 
 		setupCardInputHandling();
 
-		setupMapInputHandling();
+//		setupMapInputHandling();
 
 		setupTurnView();
 		
@@ -479,79 +479,6 @@ public class TutorialScreen implements Screen {
 		guiStage.addActor(quit);
 	}
 
-	/**
-	 * Handlers for mapStage ActorGestureListener used here for sake of identifying
-	 * zooms/pans on android
-	 */
-	private void setupMapInputHandling() {
-
-		// enable scrolling with scroll wheel for desktop
-		mapStage.addListener(new InputListener() {
-
-			@Override
-			public boolean scrolled(InputEvent event, float x, float y, int amount) {
-				camera.zoom += (float) amount / 10f;
-				clampCamera();
-				// Gdx.app.log("Camera", "Zoomed to: " + camera.zoom);
-				return super.scrolled(event, x, y, amount);
-			}
-
-		});
-
-		// android gestures
-		mapStage.addListener(new ActorGestureListener() {
-
-			// screen (not world) coordinates of the start of the pan and current pan
-			private Vector3 panOriginScreen;
-			private Vector3 panCurrentScreen;
-			private Vector3 trueScreenDelta;
-			// world coordinates of camera when starting the pan
-			private Vector3 panOriginCamera;
-
-			@Override
-			public void tap(InputEvent event, float x, float y, int count, int button) {
-
-			}
-
-			@Override
-			public void pan(InputEvent event, float x, float y, float deltaX, float deltaY) {
-
-				if (panOriginScreen == null) {
-					panOriginScreen = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-					panOriginCamera = new Vector3(camera.position);
-				}
-				panCurrentScreen = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-
-				trueScreenDelta = new Vector3((panOriginScreen.x - panCurrentScreen.x) * camera.zoom,
-						(panOriginScreen.y - panCurrentScreen.y) * camera.zoom, 0);
-
-				camera.position.set(panOriginCamera.x + trueScreenDelta.x, panOriginCamera.y - trueScreenDelta.y,
-						camera.position.z);
-				// Gdx.app.log("Camera", "Translated to coords: " + camera.position.x + ", " +
-				// camera.position.y);
-				super.pan(event, x, y, deltaX, deltaY);
-			}
-
-			@Override
-			public void panStop(InputEvent event, float x, float y, int pointer, int button) {
-				clampCamera();
-				panOriginScreen = null;
-				super.panStop(event, x, y, pointer, button);
-			}
-
-			@Override
-			public void zoom(InputEvent event, float initialDistance, float distance) {
-				float ratio = (initialDistance / distance) * camera.zoom;
-				camera.zoom = ratio;
-				clampCamera();
-				// Gdx.app.log("Camera", "Zoomed to: " + camera.zoom);
-				super.zoom(event, initialDistance, distance);
-			}
-
-		});
-
-	}
-	
 	private void clampCamera() {
 
 		camera.zoom = MathUtils.clamp(camera.zoom,
@@ -570,48 +497,6 @@ public class TutorialScreen implements Screen {
 		// camera.position.y);
 	}
 
-//	/**
-//	 * Initialize textures for all players' colors Call in constructor only
-//	 */
-//	private void setupClaimedRouteTextures() {
-//		playerColors = new ArrayList<TextureRegion>();
-//
-//		Pixmap tempPix = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
-//
-//		// for each player: generate a 1x1 texture (using pixmap) of their color
-//		for (Player p : mainApp.gameState.getPlayers()) {
-//			switch (p.getColor()) {
-//			case BLACK:
-//				tempPix.setColor(0, 0, 0, 1);
-//				break;
-//			case BLUE:
-//				tempPix.setColor(0, 0, 1, 1);
-//				break;
-//			case GREEN:
-//				tempPix.setColor(0, 1, 0, 1);
-//				break;
-//			case NONE:
-//				Gdx.app.error("GameScreen", "Player of color \"NONE\" exists in game state.");
-//				tempPix.setColor(1, 1, 1, 1);
-//				// non-fatal error
-//				break;
-//			case RED:
-//				tempPix.setColor(1, 0, 0, 1);
-//				break;
-//			case YELLOW:
-//				tempPix.setColor(1, 1, 0, 1);
-//				break;
-//			default:
-//				Gdx.app.error("GameScreen", "Player of invalid color exists in game state.");
-//				tempPix.setColor(1, 1, 1, 1);
-//				// non-fatal error
-//				break;
-//			}
-//			tempPix.fill();
-//			playerColors.add(new TextureRegion(new Texture(tempPix)));
-//		}
-//		tempPix.dispose();
-//	}
 
 	/**
 	 * Call every render cycle instead of mapStage.draw()
@@ -676,7 +561,7 @@ public class TutorialScreen implements Screen {
 	@Override
 	public void show() {
 		Gdx.app.log("MainScreen", "show");
-		Gdx.input.setInputProcessor(inputMult);
+		Gdx.input.setInputProcessor(guiStage);
 
 	}
 
