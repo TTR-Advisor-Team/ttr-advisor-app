@@ -133,33 +133,6 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 		up: button
 		down: button-down
 	}
-	TC_red: {
-		up: TC_red
-	}
-	TC_orange: {
-		up: TC_orange
-	}
-	TC_yellow: {
-		up: TC_yellow
-	}
-	TC_green: {
-		up: TC_green
-	}
-	TC_blue: {
-		up: TC_blue
-	}
-	TC_pink: {
-		up: TC_purple
-	}
-	TC_black: {
-		up: TC_black
-	}
-	TC_white: {
-		up: TC_white
-	}
-	TC_any: {
-		up: TC_any
-	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle: {
 	default: {
@@ -211,6 +184,47 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle: {
 		font: font
 		up: ff4c139e-a562-40f1-8642-ca7ef078f87d copy
 	}
+	testButton: {
+		font: font-big
+		up: button-small
+	}
+	tcAny: {
+		font: font-big
+		fontColor: white
+		up: any
+	}
+	tcBlack: {
+		font: font-big
+		up: black(1)
+	}
+	tcBlue: {
+		font: font-big
+		up: blue
+	}
+	tcGreen: {
+		font: font-big
+		up: green
+	}
+	tcOrange: {
+		font: font-big
+		up: orange
+	}
+	tcPink: {
+		font: font-big
+		up: pink
+	}
+	tcRed: {
+		font: font-big
+		up: red
+	}
+	tcWhite: {
+		font: font-big
+		up: white(1)
+	}
+	tcYellow: {
+		font: font-big
+		up: yellow
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	default: {
@@ -236,6 +250,15 @@ com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 		font: font
 		fontColor: Red
 		background: list
+	}
+	handDisplay: {
+		font: font-big
+		fontColor: black
+		background: list
+	}
+	handDisplaySmall: {
+		parent: handDisplay
+		font: font
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
@@ -315,6 +338,16 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 		font: font
 		up: button-small
 		down: button-small-down
+	}
+	error: {
+		font: font
+		fontColor: Red
+		up: list
+	}
+	handDisplay: {
+		font: font-big
+		fontColor: black
+		up: list
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {

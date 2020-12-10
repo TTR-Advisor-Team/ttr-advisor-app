@@ -226,9 +226,9 @@ public class GameScreen implements Screen {
 	}
 
 	private void setupRecommendations() {
-		Label l1 = new Label("First Recommendation", TTRAdvisorApp.skin);
-		Label l2 = new Label("Second Recommendation", TTRAdvisorApp.skin);
-		Label l3 = new Label("Third Recommendation", TTRAdvisorApp.skin);
+		Label l1 = new Label("First Recommendation", TTRAdvisorApp.skin, "handDisplaySmall");
+		Label l2 = new Label("Second Recommendation", TTRAdvisorApp.skin, "handDisplaySmall");
+		Label l3 = new Label("Third Recommendation", TTRAdvisorApp.skin, "handDisplaySmall");
 		rec1 = l1;
 		rec2 = l2;
 		rec3 = l3;
@@ -1074,14 +1074,14 @@ public class GameScreen implements Screen {
 	}
 
 	private void setupClaimRouteButton() {
-		demoSelectedCity = new Label("", mainApp.skin);
+		demoSelectedCity = new Label("", mainApp.skin, "handDisplaySmall");
 		demoSelectedCity.setColor(0, 0, 0, 1);
 		demoSelectedCity.setSize(100, 30);
 		demoSelectedCity.setPosition(50, 300);
 		demoSelectedCity.setVisible(false);
 		guiStage.addActor(demoSelectedCity);
 
-		demoSelectedRoute = new Label("", mainApp.skin);
+		demoSelectedRoute = new Label("", mainApp.skin, "handDisplaySmall");
 		demoSelectedRoute.setColor(0, 0, 0, 1);
 		demoSelectedRoute.setSize(100, 30);
 		demoSelectedRoute.setPosition(50, 260);
@@ -1136,16 +1136,16 @@ public class GameScreen implements Screen {
 		handDisplay = new Table(TTRAdvisorApp.skin);
 		handDisplayLabels = new Label[Colors.route.values().length];
 		for (int i=0; i<handDisplayLabels.length; i++) {
-			handDisplayLabels[i] = new Label("0", TTRAdvisorApp.skin);
+			handDisplayLabels[i] = new Label("0", TTRAdvisorApp.skin, "handDisplaySmall");
 		}
 		refreshHandDisplay();
 		
 		String[] hardcodedStuff = {"tcAny", "tcBlack", "tcBlue", "tcGreen", "tcOrange", "tcPink", "tcRed", "tcWhite", "tcYellow"};
 		
 		for (int i=0; i<Colors.route.values().length; i++) {
-			handDisplay.add(handDisplayLabels[i]).padRight(15f);
+			handDisplay.add(handDisplayLabels[i]).padRight(15f).height(35f);
 			ImageTextButton train = new ImageTextButton("", TTRAdvisorApp.skin, hardcodedStuff[i]);
-			handDisplay.add(train).width(75f).height(46.875f);
+			handDisplay.add(train).width(75f).height(45f);
 			handDisplay.row();
 		}
 		handDisplay.right();
@@ -1199,7 +1199,7 @@ public class GameScreen implements Screen {
 		quit = new TextButton("Quit Game", TTRAdvisorApp.skin, "small");
 		
 		quit.setPosition(nextTurn.getX() - nextTurn.getWidth()*2, Gdx.graphics.getHeight() - quit.getHeight());
-		turnNumber = new Label(Integer.toString(mainApp.hist.getTurnIndex()), TTRAdvisorApp.skin);
+		turnNumber = new Label(Integer.toString(mainApp.hist.getTurnIndex()), TTRAdvisorApp.skin, "big-black");
 		turnNumber.setPosition(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() - turnNumber.getHeight());
 		prevTurn.addListener(new InputListener() {
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
