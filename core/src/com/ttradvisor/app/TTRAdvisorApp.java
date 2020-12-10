@@ -43,8 +43,8 @@ public class TTRAdvisorApp extends Game {
 //		skin = new Skin(Gdx.files.internal("ttr_ui_skin2/train_cards_included.json"));
 //		Skin tempSkin = new Skin(Gdx.files.internal("ttr_ui_skin_plus/ttr_skin.json"));
 		Skin tempSkin = new Skin(Gdx.files.internal("ttr_ui_skin/untitled.json"));
-		tempSkin.getFont("font").getData().setScale(Gdx.graphics.getHeight()/720, Gdx.graphics.getHeight()/720);
-		tempSkin.getFont("font-big").getData().setScale(Gdx.graphics.getHeight()/720, Gdx.graphics.getHeight()/720);
+		tempSkin.getFont("font").getData().setScale((float) (Math.pow((Gdx.graphics.getHeight()/720), 1.5)));
+		tempSkin.getFont("font-big").getData().setScale((float) (Math.pow((Gdx.graphics.getHeight()/720), 1.5)));
 		skin = tempSkin;
 		this.setScreen(new TitleScreen(this));
 	}
