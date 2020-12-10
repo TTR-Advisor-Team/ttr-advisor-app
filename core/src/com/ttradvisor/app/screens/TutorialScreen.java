@@ -169,9 +169,9 @@ public class TutorialScreen implements Screen {
 		ddt = new Label("When it is your turn, you can click the Draw Destination\n" + 
 				"Tickets button to input the (2-3) destination tickets that you\n" + 
 				"selected on your turn. If it is not your turn, clicking\n" +
-				"the button will advance the turn and you do not input the\n" +
-				"the cards that other players pick up. Click the View\n" +
-				"Prev Turn button to continue the tutorial.", TTRAdvisorApp.skin);
+				"the Non-User button will advance the turn and you do not\n" +
+				"input the cards that other players pick up. Click the\n" +
+				"View Prev Turn button to continue the tutorial.", TTRAdvisorApp.skin);
 		ddt.setColor(Color.BLACK);
 		ddt.setAlignment(Align.topLeft);
 		

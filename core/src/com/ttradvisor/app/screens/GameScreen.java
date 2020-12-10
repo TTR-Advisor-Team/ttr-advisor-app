@@ -581,6 +581,7 @@ public class GameScreen implements Screen {
 				TextButton nonUser = new TextButton("Non-User", TTRAdvisorApp.skin, "small");
 				nonUser.addListener(new InputListener() {
 					public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+						//Adds sample DTs since user can't see what they draw
 						drawnTickets.add(new DestinationTicket("sample", "sample", 1));
 						drawnTickets.add(new DestinationTicket("sample", "sample", 1));
 						
