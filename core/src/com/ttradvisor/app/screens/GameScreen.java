@@ -92,9 +92,6 @@ public class GameScreen implements Screen {
 	private ArraySelection<DestinationTicket> ticketSelection;
 	private Array<DestinationTicket> multipleTickets;
 
-	private List<Colors.player> demonstration; // TODO delete this after demo
-//	private Label demoCurrPlayer;
-
 	private float mapWidth;
 	private float mapHeight;
 
@@ -111,7 +108,7 @@ public class GameScreen implements Screen {
 
 	private TextButton destButton;
 	private TextButton TCButton;
-	private Label trainCardHand;
+	// private Label trainCardHand;
 	
 	private TextButton claimRouteButton;
 	private Label claimRouteTooltip;
@@ -464,9 +461,9 @@ public class GameScreen implements Screen {
 		// Button to draw Destination tickets
 		destButton = new TextButton("Draw Destination \n Ticket", TTRAdvisorApp.skin, "small");
 		TCButton = new TextButton("Draw Train \n Card", TTRAdvisorApp.skin, "small");
-		trainCardHand = new Label(mainApp.gameState.currentPlayer.getTCS().toString(), TTRAdvisorApp.skin);
-		trainCardHand.setWidth(Gdx.graphics.getWidth() / 5);
-		trainCardHand.setPosition(trainCardHand.getWidth(), trainCardHand.getHeight() / 8);
+//		trainCardHand = new Label(mainApp.gameState.currentPlayer.getTCS().toString(), TTRAdvisorApp.skin);
+//		trainCardHand.setWidth(Gdx.graphics.getWidth() / 5);
+//		trainCardHand.setPosition(trainCardHand.getWidth(), trainCardHand.getHeight() / 8);
 		// Button to draw Destination tickets
 		destButton.setWidth(Gdx.graphics.getWidth() / 5);
 		destButton.setPosition(Gdx.graphics.getWidth() - destButton.getWidth(), destButton.getHeight() / 8);
@@ -475,7 +472,7 @@ public class GameScreen implements Screen {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				helperDisableUIForActionInput();
-				trainCardHand.setVisible(false);
+				// trainCardHand.setVisible(false);
 				final Table table = new Table();
 				final ArrayList<DestinationTicket> drawnTickets = new ArrayList<>();
 				// Initialize ScrollPane that holds the list of DTs
@@ -574,7 +571,7 @@ public class GameScreen implements Screen {
 						guiStage.setScrollFocus(null);
 
 						helperReenableUIForActionInput();
-						trainCardHand.setVisible(true);
+						// trainCardHand.setVisible(true);
 						listPane.setVisible(false);
 						table.setVisible(false);
 					}
@@ -595,7 +592,7 @@ public class GameScreen implements Screen {
 						guiStage.setScrollFocus(null);
 
 						helperReenableUIForActionInput();
-						trainCardHand.setVisible(true);
+						// trainCardHand.setVisible(true);
 						listPane.setVisible(false);
 						table.setVisible(false);
 					}
@@ -629,7 +626,7 @@ public class GameScreen implements Screen {
 				final Table table = new Table();
 				
 				helperDisableUIForActionInput();
-				trainCardHand.setVisible(false);
+				// trainCardHand.setVisible(false);
 				
 				final ArrayList<TrainCard> drawnCards = new ArrayList<>();
 				final Label drawnCardList = new Label(drawnCards.toString(), TTRAdvisorApp.skin);
@@ -857,9 +854,9 @@ public class GameScreen implements Screen {
 							}
 						}
 
-						trainCardHand.setText(mainApp.gameState.currentPlayer.getTCS().toString());
+						// trainCardHand.setText(mainApp.gameState.currentPlayer.getTCS().toString());
 						helperReenableUIForActionInput();
-						trainCardHand.setVisible(true);
+						// trainCardHand.setVisible(true);
 						table.setVisible(false);
 						drawnCardList.setVisible(false);
 					}
@@ -1024,7 +1021,7 @@ public class GameScreen implements Screen {
 					public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 						drawnCards.removeAll(drawnCards);
 						helperReenableUIForActionInput();
-						trainCardHand.setVisible(true);
+						// trainCardHand.setVisible(true);
 						table.setVisible(false);
 						drawnCardList.setVisible(false);
 					}
@@ -1067,7 +1064,7 @@ public class GameScreen implements Screen {
 		});
 
 		guiStage.addActor(TCButton);
-		guiStage.addActor(trainCardHand);
+		// guiStage.addActor(trainCardHand);
 		if (errorMessage.getText().length() !=0) {
 			guiStage.addActor(errorMessage);
 		}
@@ -1206,8 +1203,8 @@ public class GameScreen implements Screen {
 				if (mainApp.hist.previousTurn()) {
 					mainApp.gameState.currentPlayer = mainApp.hist.getGameState().getPlayers().get(mainApp.hist.getTurnIndexView());
 					mainApp.gameState.setBoard(mainApp.hist.getGameState().getBoard());
-					trainCardHand.setText(mainApp.hist.getGameState().getPlayers().get(mainApp.hist.getTurnIndexView())
-							.getTCS().toString());
+					// trainCardHand.setText(mainApp.hist.getGameState().getPlayers().get(mainApp.hist.getTurnIndexView())
+							// .getTCS().toString());
 					turnNumber.setText(Integer.toString(mainApp.hist.getTurnIndex()));
 //					demoCurrPlayer.setText("Current player: " + mainApp.hist.getGameState().getPlayers().get(mainApp.hist.getTurnIndexView()).getColor());
 					if(mainApp.hist.getTurnIndex() < mainApp.gameState.getCurrentTurnCounter()-1) {
@@ -1227,8 +1224,8 @@ public class GameScreen implements Screen {
 				if (mainApp.hist.nextTurn()) {
 					mainApp.gameState.currentPlayer = mainApp.hist.getGameState().getPlayers().get(mainApp.hist.getTurnIndexView());
 					mainApp.gameState.setBoard(mainApp.hist.getGameState().getBoard());
-					trainCardHand.setText(mainApp.hist.getGameState().getPlayers().get(mainApp.hist.getTurnIndexView())
-							.getTCS().toString());
+					// trainCardHand.setText(mainApp.hist.getGameState().getPlayers().get(mainApp.hist.getTurnIndexView())
+						// 	.getTCS().toString());
 					turnNumber.setText(Integer.toString(mainApp.hist.getTurnIndex()));
 //					demoCurrPlayer.setText("Current player: " + mainApp.hist.getGameState().getPlayers().get(mainApp.hist.getTurnIndexView()).getColor());
 					calcAllScore();
@@ -1248,7 +1245,7 @@ public class GameScreen implements Screen {
 				
 				
 				helperDisableUIForActionInput();
-				trainCardHand.setVisible(false);
+				// trainCardHand.setVisible(false);
 				recommendationsButton.setVisible(false);
 				
 				final TextButton confirmYes = new TextButton("Yes, quit", TTRAdvisorApp.skin, "small");
@@ -1275,7 +1272,7 @@ public class GameScreen implements Screen {
 				confirmNo.addListener(new InputListener() {
 					public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 						helperReenableUIForActionInput();
-						trainCardHand.setVisible(true);
+						// trainCardHand.setVisible(true);
 						confirmYes.setVisible(false);
 						confirmNo.setVisible(false);
 						recommendationsButton.setVisible(true);
@@ -1554,15 +1551,15 @@ public class GameScreen implements Screen {
 			selectedCity = DEFAULT_CITY_LABEL;
 			selectedRoute = DEFAULT_ROUTE_LABEL;
 	
-			trainCardHand.setText(mainApp.gameState.currentPlayer.getTCS().toString());
+			// trainCardHand.setText(mainApp.gameState.currentPlayer.getTCS().toString());
 			helperReenableUIForActionInput();
-			trainCardHand.setVisible(true);		
+			// trainCardHand.setVisible(true);		
 			return;
 		}
 
 		final Table table = new Table();
 		helperDisableUIForActionInput();
-		trainCardHand.setVisible(false);
+		// trainCardHand.setVisible(false);
 		final ArrayList<TrainCard> drawnCards = new ArrayList<>();
 		final Label drawnCardList = new Label(drawnCards.toString(), TTRAdvisorApp.skin);
 		drawnCardList.setWidth((Gdx.graphics.getWidth() / 5) * 2);
@@ -1946,9 +1943,9 @@ public class GameScreen implements Screen {
 				selectedCity = DEFAULT_CITY_LABEL;
 				selectedRoute = DEFAULT_ROUTE_LABEL;
 
-				trainCardHand.setText(mainApp.gameState.currentPlayer.getTCS().toString());
+				// trainCardHand.setText(mainApp.gameState.currentPlayer.getTCS().toString());
 				helperReenableUIForActionInput();
-				trainCardHand.setVisible(true);
+				// trainCardHand.setVisible(true);
 				table.setVisible(false);
 				drawnCardList.setVisible(false);
 			}
@@ -2134,7 +2131,7 @@ public class GameScreen implements Screen {
 				
 				drawnCards.removeAll(drawnCards);
 				helperReenableUIForActionInput();
-				trainCardHand.setVisible(true);
+				// trainCardHand.setVisible(true);
 				table.setVisible(false);
 				drawnCardList.setVisible(false);
 			}
