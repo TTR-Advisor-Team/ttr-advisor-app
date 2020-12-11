@@ -1318,7 +1318,7 @@ public class GameScreen implements Screen {
 						// Adds sample DTs since user can't see what they draw
 						drawnCards.add(new TrainCard(Colors.route.ANY));
 						drawnCards.add(new TrainCard(Colors.route.ANY));
-
+						drawnCardList.setVisible(false);
 						boolean isInitial = mainApp.turnInput.isInitialTurn();
 
 						if (mainApp.hist.getTurnIndex() == mainApp.gameState.getCurrentTurnCounter() - 1) {
