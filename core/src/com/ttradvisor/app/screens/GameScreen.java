@@ -115,6 +115,7 @@ public class GameScreen implements Screen {
 	private Table handDisplay;
 	private Label[] handDisplayLabels;
 
+	private Table organizer;
 	private ScrollPane handDisplayPane;
 	private List<DestinationTicket> handDisplayTicketList;
 
@@ -140,6 +141,7 @@ public class GameScreen implements Screen {
 	private ImageTextButton itbRed;
 	private ImageTextButton itbYellow;
 	private ImageTextButton itbCurrent;
+
 
 	public GameScreen(TTRAdvisorApp main) {
 		mainApp = main;
@@ -1662,8 +1664,12 @@ public class GameScreen implements Screen {
 
 	private void setupHandDisplayButton() {
 		
-		// train card list
 		int flag;
+		
+		organizer = new Table(TTRAdvisorApp.skin);
+		
+		handDisplayTicketList = new List<DestinationTicket>(TTRAdvisorApp.skin);
+		handDisplayTicketList.setAlignment(Align.left);
 
 		handDisplay = new Table(TTRAdvisorApp.skin);
 		handDisplayLabels = new Label[Colors.route.values().length];
@@ -1675,10 +1681,6 @@ public class GameScreen implements Screen {
 		String[] hardcodedStuff = { "tcAny", "tcBlack", "tcBlue", "tcGreen", "tcOrange", "tcPink", "tcRed", "tcWhite",
 				"tcYellow" };
 
-		// a hack to move the table down a little
-		handDisplay.add(new Label("", TTRAdvisorApp.skin)); handDisplay.add(new Label("", TTRAdvisorApp.skin)); handDisplay.row();		
-		handDisplay.add(new Label("", TTRAdvisorApp.skin)); handDisplay.add(new Label("", TTRAdvisorApp.skin)); handDisplay.row();
-
 		for (int i = 0; i < Colors.route.values().length; i++) {
 			handDisplay.add(handDisplayLabels[i]).padRight(15f).height(35f);
 			ImageTextButton train = new ImageTextButton("", TTRAdvisorApp.skin, hardcodedStuff[i]);
@@ -1688,10 +1690,19 @@ public class GameScreen implements Screen {
 			handDisplay.row();
 		}
 		handDisplay.right();
-		handDisplay.setFillParent(true);
-		handDisplay.setVisible(false);
 		
-		// destination ticket list
+		organizer.add(handDisplayTicketList).padTop(50f).padRight(15f).top(); organizer.add(handDisplay).padTop(50f);
+		organizer.right();
+		organizer.setFillParent(true);
+		organizer.setVisible(false);
+		
+//		handDisplayPane = new ScrollPane(handDisplayTicketList, TTRAdvisorApp.skin);
+//		handDisplayPane.setX(Gdx.graphics.getWidth() * 2 / 5);
+//		handDisplayPane.setY(Gdx.graphics.getHeight() * 1 / 100);
+//		handDisplayPane.setHeight(Gdx.graphics.getHeight() * 1 / 2);
+//		handDisplayPane.setWidth(Gdx.graphics.getWidth() * 1 / 3);
+//
+//		guiStage.addActor(handDisplayPane);
 
 		handDisplayButton = new TextButton("Show My Hand", TTRAdvisorApp.skin, "small");
 		handDisplayButton.setPosition(Gdx.graphics.getWidth() - handDisplayButton.getWidth(),
@@ -1699,12 +1710,12 @@ public class GameScreen implements Screen {
 		handDisplayButton.addListener(new InputListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				if (handDisplay.isVisible()) {
-					handDisplay.setVisible(false);
+				if (organizer.isVisible()) {
+					organizer.setVisible(false);
 					handDisplayButton.setText("Show My Hand");
 				} else {
 					refreshHandDisplay();
-					handDisplay.setVisible(true);
+					organizer.setVisible(true);
 					handDisplayButton.setText("Hide My Hand");
 				}
 			}
@@ -1717,7 +1728,7 @@ public class GameScreen implements Screen {
 		});
 
 		guiStage.addActor(handDisplayButton);
-		guiStage.addActor(handDisplay);
+		guiStage.addActor(organizer);
 
 	}
 
@@ -1728,6 +1739,24 @@ public class GameScreen implements Screen {
 		Player user = mainApp.gameState.getUserPlayer();
 		for (int i = 0; i < Colors.route.values().length; i++) {
 			handDisplayLabels[i].setText("" + user.getNumberOfColor(Colors.route.values()[i]));
+		}
+		
+		ArrayList<DestinationTicket> userTickets = mainApp.gameState.getUserPlayer().getDTS();
+		
+		// simple array to give to ScrollPane
+		DestinationTicket[] tempArray = new DestinationTicket[userTickets.size()];
+
+		for (int i = 0; i < userTickets.size(); i++) {
+			tempArray[i] = userTickets.get(i);
+		}
+
+		handDisplayTicketList.setItems(tempArray);
+		handDisplayTicketList.invalidate();
+		
+		if (tempArray.length == 0) {
+			handDisplayTicketList.setVisible(false);
+		} else {
+			handDisplayTicketList.setVisible(true);
 		}
 	}
 
