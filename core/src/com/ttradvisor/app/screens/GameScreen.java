@@ -493,6 +493,10 @@ public class GameScreen implements Screen {
 
 				// multiple selection for android only
 				if (Gdx.app.getType() == ApplicationType.Android) {
+					
+					prevSelection = null;
+					// listPane.
+					
 					destTickets.addListener(new ClickListener() {
 
 						@Override

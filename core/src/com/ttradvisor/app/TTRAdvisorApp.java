@@ -2,6 +2,7 @@ package com.ttradvisor.app;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -43,8 +44,10 @@ public class TTRAdvisorApp extends Game {
 //		skin = new Skin(Gdx.files.internal("ttr_ui_skin2/train_cards_included.json"));
 //		Skin tempSkin = new Skin(Gdx.files.internal("ttr_ui_skin_plus/ttr_skin.json"));
 		Skin tempSkin = new Skin(Gdx.files.internal("ttr_ui_skin/untitled.json"));
-		tempSkin.getFont("font").getData().setScale((float) (Math.pow((Gdx.graphics.getHeight()/720), 1.5)));
-		tempSkin.getFont("font-big").getData().setScale((float) (Math.pow((Gdx.graphics.getHeight()/720), 1.5)));
+		if (Gdx.app.getType() == ApplicationType.Android) {
+			tempSkin.getFont("font").getData().setScale(2.5f);
+			tempSkin.getFont("font-big").getData().setScale(2.5f);
+		}
 		skin = tempSkin;
 		this.setScreen(new TitleScreen(this));
 	}
