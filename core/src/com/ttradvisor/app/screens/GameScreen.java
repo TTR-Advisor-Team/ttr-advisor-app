@@ -104,45 +104,43 @@ public class GameScreen implements Screen {
 	private TextButton destButton;
 	private TextButton TCButton;
 	// private Label trainCardHand;
-	
+
 	private TextButton claimRouteButton;
 	private Label claimRouteTooltip;
 	private TextButton cancelClaimRoute;
 
 	private TextButton recommendationsButton;
-	
+
 	private TextButton handDisplayButton;
 	private Table handDisplay;
 	private Label[] handDisplayLabels;
-	
+
 	private ScrollPane handDisplayPane;
 	private List<DestinationTicket> handDisplayTicketList;
 	private TextButton handDisplayDTsButton;
-	 
+
 	// for multiple selection
 	private Array<DestinationTicket> prevSelection;
 
 	private TextButton prevTurn;
 	private TextButton nextTurn;
 	private Label turnNumber;
-	
+
 	private TextButton quit;
-	
+
 //	private Label errorMessage;
 	private TextButton errorMessage;
-	
+
 	private TextureAtlas textureAtlas;
-    private Sprite trainImage;
+	private Sprite trainImage;
 	private RouteLocations routeLocations;
-	
+
 	private ImageTextButton itbBlack;
 	private ImageTextButton itbBlue;
 	private ImageTextButton itbGreen;
 	private ImageTextButton itbRed;
 	private ImageTextButton itbYellow;
 	private ImageTextButton itbCurrent;
-
-
 
 	public GameScreen(TTRAdvisorApp main) {
 		mainApp = main;
@@ -174,9 +172,9 @@ public class GameScreen implements Screen {
 //		errorMessage = new Label("", TTRAdvisorApp.skin);
 //		errorMessage.setColor(Color.RED);
 
-		errorMessage = new TextButton("",TTRAdvisorApp.skin,"error");
+		errorMessage = new TextButton("", TTRAdvisorApp.skin, "error");
 		errorMessage.setVisible(false);
-		
+
 		setupRecommendations();
 
 		setupDisplayElements();
@@ -186,9 +184,9 @@ public class GameScreen implements Screen {
 		setupMapInputHandling();
 
 		setupTurnView();
-		
+
 		setupClaimRouteButton();
-		
+
 		setupHandDisplayButton();
 
 //		setupClaimedRouteTextures();
@@ -216,7 +214,7 @@ public class GameScreen implements Screen {
 
 		textureAtlas = new TextureAtlas("trains.txt");
 		routeLocations = new RouteLocations("routes.json");
-	
+
 	}
 
 	private void setupRecommendations() {
@@ -296,8 +294,8 @@ public class GameScreen implements Screen {
 //		demoCurrPlayer.setPosition(50, 400);
 //		guiStage.addActor(demoCurrPlayer);
 
-		//moved demo city and demo route to claim route setup
-		
+		// moved demo city and demo route to claim route setup
+
 //		Skin skin = new Skin(Gdx.files.internal("untitled folder/untitled.json"));
 //		Skin skinStatic = mainApp.skin;
 		itbBlack = new ImageTextButton("", TTRAdvisorApp.skin, "playerBlack");
@@ -305,40 +303,46 @@ public class GameScreen implements Screen {
 		itbGreen = new ImageTextButton("", TTRAdvisorApp.skin, "playerGreen");
 		itbRed = new ImageTextButton("", TTRAdvisorApp.skin, "playerRed");
 		itbYellow = new ImageTextButton("", TTRAdvisorApp.skin, "playerYellow");
-		itbCurrent = new ImageTextButton("", TTRAdvisorApp.skin,"playerCurrent");
-		
-		itbCurrent.setSize(60,60);
-		
+		itbCurrent = new ImageTextButton("", TTRAdvisorApp.skin, "playerCurrent");
+
+		itbCurrent.setSize(60, 60);
+
 		for (Player p : mainApp.gameState.getPlayers()) {
 			switch (p.getColor()) {
 			case BLACK:
 				itbBlack.setText(Integer.toString(p.getScore()));
-				itbBlack.setPosition(Align.left, Gdx.graphics.getHeight()*4/5 - mainApp.gameState.getPlayers().indexOf(p)*itbCurrent.getHeight());
-				itbBlack.setSize(50,50);
+				itbBlack.setPosition(Align.left, Gdx.graphics.getHeight() * 4 / 5
+						- mainApp.gameState.getPlayers().indexOf(p) * itbCurrent.getHeight());
+				itbBlack.setSize(50, 50);
 				if (mainApp.gameState.currentPlayer.equals(p)) {
-					itbCurrent.setPosition(itbBlack.getX()-(itbCurrent.getWidth()-itbBlack.getWidth())/2, itbBlack.getY()-((itbCurrent.getHeight()-itbBlack.getHeight())/2));
+					itbCurrent.setPosition(itbBlack.getX() - (itbCurrent.getWidth() - itbBlack.getWidth()) / 2,
+							itbBlack.getY() - ((itbCurrent.getHeight() - itbBlack.getHeight()) / 2));
 					guiStage.addActor(itbCurrent);
 				}
 				guiStage.addActor(itbBlack);
 				break;
 			case BLUE:
 				itbBlue.setText(Integer.toString(p.getScore()));
-				itbBlue.setPosition(Align.left, Gdx.graphics.getHeight()*4/5 - mainApp.gameState.getPlayers().indexOf(p)*itbCurrent.getHeight());
-				itbBlue.setSize(50,50);
+				itbBlue.setPosition(Align.left, Gdx.graphics.getHeight() * 4 / 5
+						- mainApp.gameState.getPlayers().indexOf(p) * itbCurrent.getHeight());
+				itbBlue.setSize(50, 50);
 //				itbBlue.setBackground(itbBackground.getBackground());
 				if (mainApp.gameState.currentPlayer.equals(p)) {
-					itbCurrent.setPosition(itbBlue.getX()-((itbCurrent.getWidth()-itbBlue.getWidth())/2), itbBlue.getY()-((itbCurrent.getHeight()-itbBlue.getHeight())/2));
+					itbCurrent.setPosition(itbBlue.getX() - ((itbCurrent.getWidth() - itbBlue.getWidth()) / 2),
+							itbBlue.getY() - ((itbCurrent.getHeight() - itbBlue.getHeight()) / 2));
 					guiStage.addActor(itbCurrent);
-					
+
 				}
 				guiStage.addActor(itbBlue);
 				break;
 			case GREEN:
 				itbGreen.setText(Integer.toString(p.getScore()));
-				itbGreen.setPosition(Align.left, Gdx.graphics.getHeight()*4/5 - mainApp.gameState.getPlayers().indexOf(p)*itbCurrent.getHeight());
-				itbGreen.setSize(50,50);
+				itbGreen.setPosition(Align.left, Gdx.graphics.getHeight() * 4 / 5
+						- mainApp.gameState.getPlayers().indexOf(p) * itbCurrent.getHeight());
+				itbGreen.setSize(50, 50);
 				if (mainApp.gameState.currentPlayer.equals(p)) {
-					itbCurrent.setPosition(itbGreen.getX()-((itbCurrent.getWidth()-itbGreen.getWidth())/2), itbGreen.getY()-((itbCurrent.getHeight()-itbGreen.getHeight())/2));
+					itbCurrent.setPosition(itbGreen.getX() - ((itbCurrent.getWidth() - itbGreen.getWidth()) / 2),
+							itbGreen.getY() - ((itbCurrent.getHeight() - itbGreen.getHeight()) / 2));
 					guiStage.addActor(itbCurrent);
 
 				}
@@ -352,22 +356,26 @@ public class GameScreen implements Screen {
 				break;
 			case RED:
 				itbRed.setText(Integer.toString(p.getScore()));
-				itbRed.setPosition(Align.left, Gdx.graphics.getHeight()*4/5 - mainApp.gameState.getPlayers().indexOf(p)*itbCurrent.getHeight());
-				itbRed.setSize(50,50);
+				itbRed.setPosition(Align.left, Gdx.graphics.getHeight() * 4 / 5
+						- mainApp.gameState.getPlayers().indexOf(p) * itbCurrent.getHeight());
+				itbRed.setSize(50, 50);
 //				button4.setSi
 				if (mainApp.gameState.currentPlayer.equals(p)) {
-					itbCurrent.setPosition(itbRed.getX()-((itbCurrent.getWidth()-itbRed.getWidth())/2), itbRed.getY()-((itbCurrent.getHeight()-itbRed.getHeight())/2));
+					itbCurrent.setPosition(itbRed.getX() - ((itbCurrent.getWidth() - itbRed.getWidth()) / 2),
+							itbRed.getY() - ((itbCurrent.getHeight() - itbRed.getHeight()) / 2));
 					guiStage.addActor(itbCurrent);
-					
+
 				}
 				guiStage.addActor(itbRed);
 				break;
 			case YELLOW:
 				itbYellow.setText(Integer.toString(p.getScore()));
-				itbYellow.setPosition(Align.left, Gdx.graphics.getHeight()*4/5 - mainApp.gameState.getPlayers().indexOf(p)*itbCurrent.getHeight());
-				itbYellow.setSize(50,50);
+				itbYellow.setPosition(Align.left, Gdx.graphics.getHeight() * 4 / 5
+						- mainApp.gameState.getPlayers().indexOf(p) * itbCurrent.getHeight());
+				itbYellow.setSize(50, 50);
 				if (mainApp.gameState.currentPlayer.equals(p)) {
-					itbCurrent.setPosition(itbYellow.getX()-((itbCurrent.getWidth()-itbYellow.getWidth())/2), itbYellow.getY()-((itbCurrent.getHeight()-itbYellow.getHeight())/2));
+					itbCurrent.setPosition(itbYellow.getX() - ((itbCurrent.getWidth() - itbYellow.getWidth()) / 2),
+							itbYellow.getY() - ((itbCurrent.getHeight() - itbYellow.getHeight()) / 2));
 					guiStage.addActor(itbCurrent);
 				}
 				guiStage.addActor(itbYellow);
@@ -380,18 +388,19 @@ public class GameScreen implements Screen {
 			}
 		}
 	}
-	
-	
+
 	private void playerIconUpdate(Player currentPlayerInHistory) {
-		Player curPLayerIcon  = currentPlayerInHistory;;
-		System.out.println("curr player color"+curPLayerIcon.getColor());
+		Player curPLayerIcon = currentPlayerInHistory;
+		;
+		System.out.println("curr player color" + curPLayerIcon.getColor());
 		for (Player p : mainApp.gameState.getPlayers()) {
 			switch (p.getColor()) {
 			case BLACK:
 				itbBlack.setText(Integer.toString(p.getScore()));
 				itbBlack.toFront();
 				if (curPLayerIcon.equals(p)) {
-					itbCurrent.setPosition(itbBlack.getX()-(itbCurrent.getWidth()-itbBlack.getWidth())/2, itbBlack.getY()-((itbCurrent.getHeight()-itbBlack.getHeight())/2));
+					itbCurrent.setPosition(itbBlack.getX() - (itbCurrent.getWidth() - itbBlack.getWidth()) / 2,
+							itbBlack.getY() - ((itbCurrent.getHeight() - itbBlack.getHeight()) / 2));
 					guiStage.addActor(itbCurrent);
 				}
 				guiStage.addActor(itbBlack);
@@ -401,9 +410,10 @@ public class GameScreen implements Screen {
 				itbBlue.toFront();
 //				itbBlue.setBackground(itbBackground.getBackground());
 				if (curPLayerIcon.equals(p)) {
-					itbCurrent.setPosition(itbBlue.getX()-((itbCurrent.getWidth()-itbBlue.getWidth())/2), itbBlue.getY()-((itbCurrent.getHeight()-itbBlue.getHeight())/2));
+					itbCurrent.setPosition(itbBlue.getX() - ((itbCurrent.getWidth() - itbBlue.getWidth()) / 2),
+							itbBlue.getY() - ((itbCurrent.getHeight() - itbBlue.getHeight()) / 2));
 					guiStage.addActor(itbCurrent);
-					
+
 				}
 				guiStage.addActor(itbBlue);
 				break;
@@ -411,7 +421,8 @@ public class GameScreen implements Screen {
 				itbGreen.setText(Integer.toString(p.getScore()));
 				itbGreen.toFront();
 				if (curPLayerIcon.equals(p)) {
-					itbCurrent.setPosition(itbGreen.getX()-((itbCurrent.getWidth()-itbGreen.getWidth())/2), itbGreen.getY()-((itbCurrent.getHeight()-itbGreen.getHeight())/2));
+					itbCurrent.setPosition(itbGreen.getX() - ((itbCurrent.getWidth() - itbGreen.getWidth()) / 2),
+							itbGreen.getY() - ((itbCurrent.getHeight() - itbGreen.getHeight()) / 2));
 					guiStage.addActor(itbCurrent);
 
 				}
@@ -428,9 +439,10 @@ public class GameScreen implements Screen {
 				itbRed.toFront();
 //				button4.setSi
 				if (curPLayerIcon.equals(p)) {
-					itbCurrent.setPosition(itbRed.getX()-((itbCurrent.getWidth()-itbRed.getWidth())/2), itbRed.getY()-((itbCurrent.getHeight()-itbRed.getHeight())/2));
+					itbCurrent.setPosition(itbRed.getX() - ((itbCurrent.getWidth() - itbRed.getWidth()) / 2),
+							itbRed.getY() - ((itbCurrent.getHeight() - itbRed.getHeight()) / 2));
 					guiStage.addActor(itbCurrent);
-					
+
 				}
 				guiStage.addActor(itbRed);
 				break;
@@ -438,7 +450,8 @@ public class GameScreen implements Screen {
 				itbYellow.setText(Integer.toString(p.getScore()));
 				itbYellow.toFront();
 				if (curPLayerIcon.equals(p)) {
-					itbCurrent.setPosition(itbYellow.getX()-((itbCurrent.getWidth()-itbYellow.getWidth())/2), itbYellow.getY()-((itbCurrent.getHeight()-itbYellow.getHeight())/2));
+					itbCurrent.setPosition(itbYellow.getX() - ((itbCurrent.getWidth() - itbYellow.getWidth()) / 2),
+							itbYellow.getY() - ((itbCurrent.getHeight() - itbYellow.getHeight()) / 2));
 					guiStage.addActor(itbCurrent);
 				}
 				guiStage.addActor(itbYellow);
@@ -450,8 +463,7 @@ public class GameScreen implements Screen {
 				break;
 			}
 		}
-		
-	
+
 	}
 
 	private void setupCardInputHandling() {
@@ -515,7 +527,6 @@ public class GameScreen implements Screen {
 						// reset the multiple selection tracking
 						prevSelection = null;
 
-
 						multipleTickets = destTickets.getSelection().items().orderedItems();
 						while (multipleTickets.notEmpty()) {
 							System.out.println(multipleTickets.peek().toString());
@@ -524,39 +535,45 @@ public class GameScreen implements Screen {
 
 						boolean isInitial = mainApp.turnInput.isInitialTurn();
 
-						if(mainApp.hist.getTurnIndex() == mainApp.gameState.getCurrentTurnCounter()-1) {
-							if (mainApp.turnInput.makeCorrection(new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets))) {
-								if(mainApp.hist.getTurnIndex() == 0) {
+						if (mainApp.hist.getTurnIndex() == mainApp.gameState.getCurrentTurnCounter() - 1) {
+							if (mainApp.turnInput.makeCorrection(
+									new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets))) {
+								if (mainApp.hist.getTurnIndex() == 0) {
 									isInitial = true;
 								}
-								advanceTurn(isInitial,new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets));
-							}
-							else {	
-								TextButton errorMessageTemp = new TextButton(mainApp.gameState.getError(), TTRAdvisorApp.skin, "error");
+								advanceTurn(isInitial,
+										new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets));
+							} else {
+								TextButton errorMessageTemp = new TextButton(mainApp.gameState.getError(),
+										TTRAdvisorApp.skin, "error");
 								errorMessage.setText(mainApp.gameState.getError());
 								errorMessage.setWidth(errorMessageTemp.getWidth());
-								errorMessage.setPosition(Gdx.graphics.getWidth()/2 - errorMessage.getWidth()/2, Gdx.graphics.getHeight()/8);
+								errorMessage.setPosition(Gdx.graphics.getWidth() / 2 - errorMessage.getWidth() / 2,
+										Gdx.graphics.getHeight() / 8);
 								errorMessage.setVisible(true);
-								if (errorMessage.getText().length() !=0) {
+								if (errorMessage.getText().length() != 0) {
 									guiStage.addActor(errorMessage);
-								}else {
+								} else {
 									errorMessage.setVisible(false);
 								}
 							}
 						}
 
-						else if (mainApp.turnInput.takeAction(new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets))) {
-							advanceTurn(isInitial,new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets));
-						}
-						else {	
-							TextButton errorMessageTemp = new TextButton(mainApp.gameState.getError(), TTRAdvisorApp.skin, "error");
+						else if (mainApp.turnInput
+								.takeAction(new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets))) {
+							advanceTurn(isInitial,
+									new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets));
+						} else {
+							TextButton errorMessageTemp = new TextButton(mainApp.gameState.getError(),
+									TTRAdvisorApp.skin, "error");
 							errorMessage.setText(mainApp.gameState.getError());
 							errorMessage.setWidth(errorMessageTemp.getWidth());
-							errorMessage.setPosition(Gdx.graphics.getWidth()/2 - errorMessage.getWidth()/2, Gdx.graphics.getHeight()/8);
+							errorMessage.setPosition(Gdx.graphics.getWidth() / 2 - errorMessage.getWidth() / 2,
+									Gdx.graphics.getHeight() / 8);
 							errorMessage.setVisible(true);
-							if (errorMessage.getText().length() !=0) {
+							if (errorMessage.getText().length() != 0) {
 								guiStage.addActor(errorMessage);
-							}else {
+							} else {
 								errorMessage.setVisible(false);
 							}
 						}
@@ -573,50 +590,56 @@ public class GameScreen implements Screen {
 						return true;
 					}
 				});
-				
+
 				// Button to input non-user DestinationAction
 				TextButton nonUser = new TextButton("Non-User", TTRAdvisorApp.skin, "small");
 				nonUser.addListener(new InputListener() {
 					public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-						//Adds sample DTs since user can't see what they draw
+						// Adds sample DTs since user can't see what they draw
 						drawnTickets.add(new DestinationTicket("sample", "sample", 1));
 						drawnTickets.add(new DestinationTicket("sample", "sample", 1));
-						
+
 						boolean isInitial = mainApp.turnInput.isInitialTurn();
 
-						if(mainApp.hist.getTurnIndex() == mainApp.gameState.getCurrentTurnCounter()-1) {
-							if (mainApp.turnInput.makeCorrection(new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets))) {
-								if(mainApp.hist.getTurnIndex() == 0) {
+						if (mainApp.hist.getTurnIndex() == mainApp.gameState.getCurrentTurnCounter() - 1) {
+							if (mainApp.turnInput.makeCorrection(
+									new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets))) {
+								if (mainApp.hist.getTurnIndex() == 0) {
 									isInitial = true;
 								}
-								advanceTurn(isInitial,new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets));
-							}
-							else {	
-								TextButton errorMessageTemp = new TextButton(mainApp.gameState.getError(), TTRAdvisorApp.skin, "error");
+								advanceTurn(isInitial,
+										new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets));
+							} else {
+								TextButton errorMessageTemp = new TextButton(mainApp.gameState.getError(),
+										TTRAdvisorApp.skin, "error");
 								errorMessage.setText(mainApp.gameState.getError());
 								errorMessage.setWidth(errorMessageTemp.getWidth());
-								errorMessage.setPosition(Gdx.graphics.getWidth()/2 - errorMessage.getWidth()/2, Gdx.graphics.getHeight()/8);
+								errorMessage.setPosition(Gdx.graphics.getWidth() / 2 - errorMessage.getWidth() / 2,
+										Gdx.graphics.getHeight() / 8);
 								errorMessage.setVisible(true);
-								if (errorMessage.getText().length() !=0) {
+								if (errorMessage.getText().length() != 0) {
 									guiStage.addActor(errorMessage);
-								}else {
+								} else {
 									errorMessage.setVisible(false);
 								}
 							}
 						}
 
-						else if (mainApp.turnInput.takeAction(new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets))) {
-							advanceTurn(isInitial,new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets));
-						}
-						else {	
-							TextButton errorMessageTemp = new TextButton(mainApp.gameState.getError(), TTRAdvisorApp.skin, "error");
+						else if (mainApp.turnInput
+								.takeAction(new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets))) {
+							advanceTurn(isInitial,
+									new DestinationAction(mainApp.gameState.currentPlayer, drawnTickets));
+						} else {
+							TextButton errorMessageTemp = new TextButton(mainApp.gameState.getError(),
+									TTRAdvisorApp.skin, "error");
 							errorMessage.setText(mainApp.gameState.getError());
 							errorMessage.setWidth(errorMessageTemp.getWidth());
-							errorMessage.setPosition(Gdx.graphics.getWidth()/2 - errorMessage.getWidth()/2, Gdx.graphics.getHeight()/8);
+							errorMessage.setPosition(Gdx.graphics.getWidth() / 2 - errorMessage.getWidth() / 2,
+									Gdx.graphics.getHeight() / 8);
 							errorMessage.setVisible(true);
-							if (errorMessage.getText().length() !=0) {
+							if (errorMessage.getText().length() != 0) {
 								guiStage.addActor(errorMessage);
-							}else {
+							} else {
 								errorMessage.setVisible(false);
 							}
 						}
@@ -682,13 +705,13 @@ public class GameScreen implements Screen {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				final Table table = new Table();
-				
+
 				helperDisableUIForActionInput();
 				// trainCardHand.setVisible(false);
-				
+
 				final ArrayList<TrainCard> drawnCards = new ArrayList<>();
 				final Label drawnCardList = new Label(drawnCards.toString(), TTRAdvisorApp.skin);
-				drawnCardList.setPosition(Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()/2+20);
+				drawnCardList.setPosition(Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 2 + 20);
 
 				final ImageTextButton redTrain = new ImageTextButton("", TTRAdvisorApp.skin, "tcRed");
 				final ImageTextButton orangeTrain = new ImageTextButton("", TTRAdvisorApp.skin, "tcOrange");
@@ -699,23 +722,21 @@ public class GameScreen implements Screen {
 				final ImageTextButton blackTrain = new ImageTextButton("", TTRAdvisorApp.skin, "tcBlack");
 				final ImageTextButton whiteTrain = new ImageTextButton("", TTRAdvisorApp.skin, "tcWhite");
 				final ImageTextButton wildTrain = new ImageTextButton("", TTRAdvisorApp.skin, "tcAny");
-				
-				
+
 				redTrain.addListener(new InputListener() {
 					public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-						
-						
+
 						drawnCards.add(new TrainCard(Colors.route.RED));
 						drawnCardList.setText(drawnCards.toString());
 						int drawCount = 0;
-		
-						for (TrainCard tc: drawnCards) {
-							if (tc.getColor().equals(Colors.route.RED)){
+
+						for (TrainCard tc : drawnCards) {
+							if (tc.getColor().equals(Colors.route.RED)) {
 								drawCount++;
 							}
 						}
 						redTrain.setText(Integer.toString(drawCount));
-						
+
 						if (mainApp.turnInput.isInitialTurn()) {
 							if (drawnCards.size() >= 4) {
 								redTrain.setTouchable(Touchable.disabled);
@@ -736,9 +757,9 @@ public class GameScreen implements Screen {
 								whiteTrain.setDisabled(true);
 								wildTrain.setTouchable(Touchable.disabled);
 								wildTrain.setDisabled(true);
-								
+
 							}
-						}else {
+						} else {
 							if (drawnCards.size() >= 2) {
 								redTrain.setTouchable(Touchable.disabled);
 								redTrain.setDisabled(true);
@@ -758,7 +779,7 @@ public class GameScreen implements Screen {
 								whiteTrain.setDisabled(true);
 								wildTrain.setTouchable(Touchable.disabled);
 								wildTrain.setDisabled(true);
-							}	
+							}
 						}
 
 					}
@@ -768,20 +789,19 @@ public class GameScreen implements Screen {
 					}
 				});
 
-				
 				orangeTrain.addListener(new InputListener() {
 					public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 						drawnCards.add(new TrainCard(Colors.route.ORANGE));
 						drawnCardList.setText(drawnCards.toString());
-						
+
 						int drawCount = 0;
-						for (TrainCard tc: drawnCards) {
-							if (tc.getColor().equals(Colors.route.ORANGE)){
+						for (TrainCard tc : drawnCards) {
+							if (tc.getColor().equals(Colors.route.ORANGE)) {
 								drawCount++;
 							}
 						}
 						orangeTrain.setText(Integer.toString(drawCount));
-						
+
 						if (mainApp.turnInput.isInitialTurn()) {
 							if (drawnCards.size() >= 4) {
 								redTrain.setTouchable(Touchable.disabled);
@@ -802,9 +822,9 @@ public class GameScreen implements Screen {
 								whiteTrain.setDisabled(true);
 								wildTrain.setTouchable(Touchable.disabled);
 								wildTrain.setDisabled(true);
-								
+
 							}
-						}else {
+						} else {
 							if (drawnCards.size() >= 2) {
 								redTrain.setTouchable(Touchable.disabled);
 								redTrain.setDisabled(true);
@@ -824,7 +844,7 @@ public class GameScreen implements Screen {
 								whiteTrain.setDisabled(true);
 								wildTrain.setTouchable(Touchable.disabled);
 								wildTrain.setDisabled(true);
-							}	
+							}
 						}
 					}
 
@@ -833,20 +853,19 @@ public class GameScreen implements Screen {
 					}
 				});
 
-				
 				yellowTrain.addListener(new InputListener() {
 					public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 						drawnCards.add(new TrainCard(Colors.route.YELLOW));
 						drawnCardList.setText(drawnCards.toString());
-						
+
 						int drawCount = 0;
-						for (TrainCard tc: drawnCards) {
-							if (tc.getColor().equals(Colors.route.YELLOW)){
+						for (TrainCard tc : drawnCards) {
+							if (tc.getColor().equals(Colors.route.YELLOW)) {
 								drawCount++;
 							}
 						}
 						yellowTrain.setText(Integer.toString(drawCount));
-						
+
 						if (mainApp.turnInput.isInitialTurn()) {
 							if (drawnCards.size() >= 4) {
 								redTrain.setTouchable(Touchable.disabled);
@@ -867,9 +886,9 @@ public class GameScreen implements Screen {
 								whiteTrain.setDisabled(true);
 								wildTrain.setTouchable(Touchable.disabled);
 								wildTrain.setDisabled(true);
-								
+
 							}
-						}else {
+						} else {
 							if (drawnCards.size() >= 2) {
 								redTrain.setTouchable(Touchable.disabled);
 								redTrain.setDisabled(true);
@@ -889,7 +908,7 @@ public class GameScreen implements Screen {
 								whiteTrain.setDisabled(true);
 								wildTrain.setTouchable(Touchable.disabled);
 								wildTrain.setDisabled(true);
-							}	
+							}
 						}
 					}
 
@@ -898,20 +917,19 @@ public class GameScreen implements Screen {
 					}
 				});
 
-				
 				greenTrain.addListener(new InputListener() {
 					public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 						drawnCards.add(new TrainCard(Colors.route.GREEN));
 						drawnCardList.setText(drawnCards.toString());
-						
+
 						int drawCount = 0;
-						for (TrainCard tc: drawnCards) {
-							if (tc.getColor().equals(Colors.route.GREEN)){
+						for (TrainCard tc : drawnCards) {
+							if (tc.getColor().equals(Colors.route.GREEN)) {
 								drawCount++;
 							}
 						}
 						greenTrain.setText(Integer.toString(drawCount));
-						
+
 						if (mainApp.turnInput.isInitialTurn()) {
 							if (drawnCards.size() >= 4) {
 								redTrain.setTouchable(Touchable.disabled);
@@ -932,9 +950,9 @@ public class GameScreen implements Screen {
 								whiteTrain.setDisabled(true);
 								wildTrain.setTouchable(Touchable.disabled);
 								wildTrain.setDisabled(true);
-								
+
 							}
-						}else {
+						} else {
 							if (drawnCards.size() >= 2) {
 								redTrain.setTouchable(Touchable.disabled);
 								redTrain.setDisabled(true);
@@ -954,7 +972,7 @@ public class GameScreen implements Screen {
 								whiteTrain.setDisabled(true);
 								wildTrain.setTouchable(Touchable.disabled);
 								wildTrain.setDisabled(true);
-							}	
+							}
 						}
 					}
 
@@ -963,20 +981,19 @@ public class GameScreen implements Screen {
 					}
 				});
 
-				
 				blueTrain.addListener(new InputListener() {
 					public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 						drawnCards.add(new TrainCard(Colors.route.BLUE));
 						drawnCardList.setText(drawnCards.toString());
-						
+
 						int drawCount = 0;
-						for (TrainCard tc: drawnCards) {
-							if (tc.getColor().equals(Colors.route.BLUE)){
+						for (TrainCard tc : drawnCards) {
+							if (tc.getColor().equals(Colors.route.BLUE)) {
 								drawCount++;
 							}
 						}
 						blueTrain.setText(Integer.toString(drawCount));
-						
+
 						if (mainApp.turnInput.isInitialTurn()) {
 							if (drawnCards.size() >= 4) {
 								redTrain.setTouchable(Touchable.disabled);
@@ -997,9 +1014,9 @@ public class GameScreen implements Screen {
 								whiteTrain.setDisabled(true);
 								wildTrain.setTouchable(Touchable.disabled);
 								wildTrain.setDisabled(true);
-								
+
 							}
-						}else {
+						} else {
 							if (drawnCards.size() >= 2) {
 								redTrain.setTouchable(Touchable.disabled);
 								redTrain.setDisabled(true);
@@ -1019,7 +1036,7 @@ public class GameScreen implements Screen {
 								whiteTrain.setDisabled(true);
 								wildTrain.setTouchable(Touchable.disabled);
 								wildTrain.setDisabled(true);
-							}	
+							}
 						}
 					}
 
@@ -1027,21 +1044,20 @@ public class GameScreen implements Screen {
 						return true;
 					}
 				});
-				
-				
+
 				pinkTrain.addListener(new InputListener() {
 					public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 						drawnCards.add(new TrainCard(Colors.route.PINK));
 						drawnCardList.setText(drawnCards.toString());
-						
+
 						int drawCount = 0;
-						for (TrainCard tc: drawnCards) {
-							if (tc.getColor().equals(Colors.route.PINK)){
+						for (TrainCard tc : drawnCards) {
+							if (tc.getColor().equals(Colors.route.PINK)) {
 								drawCount++;
 							}
 						}
 						pinkTrain.setText(Integer.toString(drawCount));
-						
+
 						if (mainApp.turnInput.isInitialTurn()) {
 							if (drawnCards.size() >= 4) {
 								redTrain.setTouchable(Touchable.disabled);
@@ -1062,9 +1078,9 @@ public class GameScreen implements Screen {
 								whiteTrain.setDisabled(true);
 								wildTrain.setTouchable(Touchable.disabled);
 								wildTrain.setDisabled(true);
-								
+
 							}
-						}else {
+						} else {
 							if (drawnCards.size() >= 2) {
 								redTrain.setTouchable(Touchable.disabled);
 								redTrain.setDisabled(true);
@@ -1084,7 +1100,7 @@ public class GameScreen implements Screen {
 								whiteTrain.setDisabled(true);
 								wildTrain.setTouchable(Touchable.disabled);
 								wildTrain.setDisabled(true);
-							}	
+							}
 						}
 					}
 
@@ -1092,20 +1108,20 @@ public class GameScreen implements Screen {
 						return true;
 					}
 				});
-				
+
 				blackTrain.addListener(new InputListener() {
 					public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 						drawnCards.add(new TrainCard(Colors.route.BLACK));
 						drawnCardList.setText(drawnCards.toString());
-						
+
 						int drawCount = 0;
-						for (TrainCard tc: drawnCards) {
-							if (tc.getColor().equals(Colors.route.BLACK)){
+						for (TrainCard tc : drawnCards) {
+							if (tc.getColor().equals(Colors.route.BLACK)) {
 								drawCount++;
 							}
 						}
 						blackTrain.setText(Integer.toString(drawCount));
-						
+
 						if (mainApp.turnInput.isInitialTurn()) {
 							if (drawnCards.size() >= 4) {
 								redTrain.setTouchable(Touchable.disabled);
@@ -1126,9 +1142,9 @@ public class GameScreen implements Screen {
 								whiteTrain.setDisabled(true);
 								wildTrain.setTouchable(Touchable.disabled);
 								wildTrain.setDisabled(true);
-								
+
 							}
-						}else {
+						} else {
 							if (drawnCards.size() >= 2) {
 								redTrain.setTouchable(Touchable.disabled);
 								redTrain.setDisabled(true);
@@ -1148,7 +1164,7 @@ public class GameScreen implements Screen {
 								whiteTrain.setDisabled(true);
 								wildTrain.setTouchable(Touchable.disabled);
 								wildTrain.setDisabled(true);
-							}	
+							}
 						}
 					}
 
@@ -1161,15 +1177,15 @@ public class GameScreen implements Screen {
 					public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 						drawnCards.add(new TrainCard(Colors.route.WHITE));
 						drawnCardList.setText(drawnCards.toString());
-						
+
 						int drawCount = 0;
-						for (TrainCard tc: drawnCards) {
-							if (tc.getColor().equals(Colors.route.WHITE)){
+						for (TrainCard tc : drawnCards) {
+							if (tc.getColor().equals(Colors.route.WHITE)) {
 								drawCount++;
 							}
 						}
 						whiteTrain.setText(Integer.toString(drawCount));
-						
+
 						if (mainApp.turnInput.isInitialTurn()) {
 							if (drawnCards.size() >= 4) {
 								redTrain.setTouchable(Touchable.disabled);
@@ -1190,9 +1206,9 @@ public class GameScreen implements Screen {
 								whiteTrain.setDisabled(true);
 								wildTrain.setTouchable(Touchable.disabled);
 								wildTrain.setDisabled(true);
-								
+
 							}
-						}else {
+						} else {
 							if (drawnCards.size() >= 2) {
 								redTrain.setTouchable(Touchable.disabled);
 								redTrain.setDisabled(true);
@@ -1212,7 +1228,7 @@ public class GameScreen implements Screen {
 								whiteTrain.setDisabled(true);
 								wildTrain.setTouchable(Touchable.disabled);
 								wildTrain.setDisabled(true);
-							}	
+							}
 						}
 					}
 
@@ -1225,15 +1241,15 @@ public class GameScreen implements Screen {
 					public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 						drawnCards.add(new TrainCard(Colors.route.ANY));
 						drawnCardList.setText(drawnCards.toString());
-						
+
 						int drawCount = 0;
-						for (TrainCard tc: drawnCards) {
-							if (tc.getColor().equals(Colors.route.ANY)){
+						for (TrainCard tc : drawnCards) {
+							if (tc.getColor().equals(Colors.route.ANY)) {
 								drawCount++;
 							}
 						}
 						wildTrain.setText(Integer.toString(drawCount));
-						
+
 						if (mainApp.turnInput.isInitialTurn()) {
 							if (drawnCards.size() >= 4) {
 								redTrain.setTouchable(Touchable.disabled);
@@ -1254,9 +1270,9 @@ public class GameScreen implements Screen {
 								whiteTrain.setDisabled(true);
 								wildTrain.setTouchable(Touchable.disabled);
 								wildTrain.setDisabled(true);
-								
+
 							}
-						}else {
+						} else {
 							if (drawnCards.size() >= 2) {
 								redTrain.setTouchable(Touchable.disabled);
 								redTrain.setDisabled(true);
@@ -1276,7 +1292,7 @@ public class GameScreen implements Screen {
 								whiteTrain.setDisabled(true);
 								wildTrain.setTouchable(Touchable.disabled);
 								wildTrain.setDisabled(true);
-							}	
+							}
 						}
 					}
 
@@ -1289,31 +1305,37 @@ public class GameScreen implements Screen {
 					public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 
 						boolean isInitial = mainApp.turnInput.isInitialTurn();
-						
-						if(mainApp.hist.getTurnIndex() == mainApp.gameState.getCurrentTurnCounter()-1) {
-							if (mainApp.turnInput.makeCorrection(new TrainCardAction(mainApp.gameState.currentPlayer, drawnCards))) {
-								if(mainApp.hist.getTurnIndex() == 0) {
+
+						if (mainApp.hist.getTurnIndex() == mainApp.gameState.getCurrentTurnCounter() - 1) {
+							if (mainApp.turnInput
+									.makeCorrection(new TrainCardAction(mainApp.gameState.currentPlayer, drawnCards))) {
+								if (mainApp.hist.getTurnIndex() == 0) {
 									isInitial = true;
 								}
-								advanceTurn(isInitial, new TrainCardAction(mainApp.gameState.currentPlayer, drawnCards));
-							} else {	
+								advanceTurn(isInitial,
+										new TrainCardAction(mainApp.gameState.currentPlayer, drawnCards));
+							} else {
 								Label errorMessageTemp = new Label(mainApp.gameState.getError(), TTRAdvisorApp.skin);
 								errorMessage.setText(mainApp.gameState.getError());
 								errorMessage.setWidth(errorMessageTemp.getWidth());
-								errorMessage.setPosition(Gdx.graphics.getWidth()/2 - errorMessage.getWidth()/2, Gdx.graphics.getHeight()/8);
+								errorMessage.setPosition(Gdx.graphics.getWidth() / 2 - errorMessage.getWidth() / 2,
+										Gdx.graphics.getHeight() / 8);
 								errorMessage.setVisible(true);
 							}
 						}
 
-						else if (mainApp.turnInput.takeAction(new TrainCardAction(mainApp.gameState.currentPlayer, drawnCards))) {
+						else if (mainApp.turnInput
+								.takeAction(new TrainCardAction(mainApp.gameState.currentPlayer, drawnCards))) {
 							advanceTurn(isInitial, new TrainCardAction(mainApp.gameState.currentPlayer, drawnCards));
-						} else {	
-							TextButton errorMessageTemp = new TextButton(mainApp.gameState.getError(), TTRAdvisorApp.skin, "error");
+						} else {
+							TextButton errorMessageTemp = new TextButton(mainApp.gameState.getError(),
+									TTRAdvisorApp.skin, "error");
 							errorMessage.setText(mainApp.gameState.getError());
 							errorMessage.setWidth(errorMessageTemp.getWidth());
-							errorMessage.setPosition(Gdx.graphics.getWidth()/2 - errorMessage.getWidth()/2, Gdx.graphics.getHeight()/8);
+							errorMessage.setPosition(Gdx.graphics.getWidth() / 2 - errorMessage.getWidth() / 2,
+									Gdx.graphics.getHeight() / 8);
 							errorMessage.setVisible(true);
-							if (errorMessage.getText().length() !=0) {
+							if (errorMessage.getText().length() != 0) {
 								guiStage.addActor(errorMessage);
 							} else {
 								errorMessage.setVisible(false);
@@ -1331,147 +1353,146 @@ public class GameScreen implements Screen {
 						return true;
 					}
 				});
-				
+
 				TextButton undo = new TextButton("Undo", TTRAdvisorApp.skin, "small");
 				undo.addListener(new InputListener() {
 					public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 						if (!drawnCards.isEmpty()) {
-							
-							
+
 							int drawCount = 0;
-							int index= 0;
-							if (drawnCards.size()-1 >= 0) {
-								index = drawnCards.size()-1;
-								System.out.println("index"+index);
+							int index = 0;
+							if (drawnCards.size() - 1 >= 0) {
+								index = drawnCards.size() - 1;
+								System.out.println("index" + index);
 								switch (drawnCards.get(index).getColor()) {
 								case ANY:
-									for (TrainCard tc: drawnCards) {
-										if (tc.getColor().equals(Colors.route.ANY)){
+									for (TrainCard tc : drawnCards) {
+										if (tc.getColor().equals(Colors.route.ANY)) {
 											drawCount++;
 										}
 									}
 									drawCount--;
 									if (drawCount == 0) {
 										wildTrain.setText("");
-									}else {
+									} else {
 										wildTrain.setText(Integer.toString(drawCount));
 									}
 									break;
 								case BLACK:
-									for (TrainCard tc: drawnCards) {
-										if (tc.getColor().equals(Colors.route.BLACK)){
+									for (TrainCard tc : drawnCards) {
+										if (tc.getColor().equals(Colors.route.BLACK)) {
 											drawCount++;
 										}
 									}
 									drawCount--;
 									if (drawCount == 0) {
 										blackTrain.setText("");
-									}else {
+									} else {
 										blackTrain.setText(Integer.toString(drawCount));
 									}
-									
+
 									break;
 								case BLUE:
-									for (TrainCard tc: drawnCards) {
-										if (tc.getColor().equals(Colors.route.BLUE)){
+									for (TrainCard tc : drawnCards) {
+										if (tc.getColor().equals(Colors.route.BLUE)) {
 											drawCount++;
 										}
 									}
 									drawCount--;
 									if (drawCount == 0) {
 										blueTrain.setText("");
-									}else {
+									} else {
 										blueTrain.setText(Integer.toString(drawCount));
 									}
-									
+
 									break;
 								case GREEN:
-									for (TrainCard tc: drawnCards) {
-										if (tc.getColor().equals(Colors.route.GREEN)){
+									for (TrainCard tc : drawnCards) {
+										if (tc.getColor().equals(Colors.route.GREEN)) {
 											drawCount++;
 										}
 									}
 									drawCount--;
 									if (drawCount == 0) {
 										greenTrain.setText("");
-									}else {
+									} else {
 										greenTrain.setText(Integer.toString(drawCount));
 									}
-									
+
 									break;
 								case ORANGE:
-									for (TrainCard tc: drawnCards) {
-										if (tc.getColor().equals(Colors.route.ORANGE)){
+									for (TrainCard tc : drawnCards) {
+										if (tc.getColor().equals(Colors.route.ORANGE)) {
 											drawCount++;
 										}
 									}
 									drawCount--;
 									if (drawCount == 0) {
 										orangeTrain.setText("");
-									}else {
+									} else {
 										orangeTrain.setText(Integer.toString(drawCount));
 									}
-									
+
 									break;
 								case PINK:
-									for (TrainCard tc: drawnCards) {
-										if (tc.getColor().equals(Colors.route.PINK)){
+									for (TrainCard tc : drawnCards) {
+										if (tc.getColor().equals(Colors.route.PINK)) {
 											drawCount++;
 										}
 									}
 									drawCount--;
 									if (drawCount == 0) {
 										pinkTrain.setText("");
-									}else {
+									} else {
 										pinkTrain.setText(Integer.toString(drawCount));
 									}
-									
+
 									break;
 								case RED:
-									for (TrainCard tc: drawnCards) {
-										if (tc.getColor().equals(Colors.route.RED)){
+									for (TrainCard tc : drawnCards) {
+										if (tc.getColor().equals(Colors.route.RED)) {
 											drawCount++;
 										}
 									}
 									drawCount--;
 									if (drawCount == 0) {
 										redTrain.setText("");
-									}else {
+									} else {
 										redTrain.setText(Integer.toString(drawCount));
 									}
 									break;
 								case WHITE:
-									for (TrainCard tc: drawnCards) {
-										if (tc.getColor().equals(Colors.route.WHITE)){
+									for (TrainCard tc : drawnCards) {
+										if (tc.getColor().equals(Colors.route.WHITE)) {
 											drawCount++;
 										}
 									}
 									drawCount--;
 									if (drawCount == 0) {
 										whiteTrain.setText("");
-									}else {
+									} else {
 										whiteTrain.setText(Integer.toString(drawCount));
 									}
-									
+
 									break;
 								case YELLOW:
-									for (TrainCard tc: drawnCards) {
-										if (tc.getColor().equals(Colors.route.YELLOW)){
+									for (TrainCard tc : drawnCards) {
+										if (tc.getColor().equals(Colors.route.YELLOW)) {
 											drawCount++;
 										}
 									}
 									drawCount--;
 									if (drawCount == 0) {
 										yellowTrain.setText("");
-									}else {
+									} else {
 										yellowTrain.setText(Integer.toString(drawCount));
 									}
-									
+
 									break;
 								default:
 									break;
 								}
-							
+
 							}
 							drawnCards.remove(drawnCards.size() - 1);
 							drawnCardList.setText(drawnCards.toString());
@@ -1496,9 +1517,9 @@ public class GameScreen implements Screen {
 									whiteTrain.setDisabled(false);
 									wildTrain.setTouchable(Touchable.enabled);
 									wildTrain.setDisabled(false);
-									
+
 								}
-							}else {
+							} else {
 								if (drawnCards.size() < 2) {
 									redTrain.setTouchable(Touchable.enabled);
 									redTrain.setDisabled(false);
@@ -1518,7 +1539,7 @@ public class GameScreen implements Screen {
 									whiteTrain.setDisabled(false);
 									wildTrain.setTouchable(Touchable.enabled);
 									wildTrain.setDisabled(false);
-								}	
+								}
 							}
 
 						}
@@ -1543,7 +1564,6 @@ public class GameScreen implements Screen {
 					}
 				});
 
-				
 				TextButton invis = new TextButton("", TTRAdvisorApp.skin, "small");
 				invis.setVisible(false);
 				table.bottom();
@@ -1566,7 +1586,7 @@ public class GameScreen implements Screen {
 				table.setFillParent(true);
 
 //              table.setDebug(true); // turn on all debug lines (table, cell, and widget)
-				drawnCardList.setPosition(Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()/2+20);
+				drawnCardList.setPosition(Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 2 + 20);
 				guiStage.addActor(table);
 				guiStage.addActor(drawnCardList);
 			}
@@ -1579,7 +1599,7 @@ public class GameScreen implements Screen {
 
 		guiStage.addActor(TCButton);
 		// guiStage.addActor(trainCardHand);
-		if (errorMessage.getText().length() !=0) {
+		if (errorMessage.getText().length() != 0) {
 			guiStage.addActor(errorMessage);
 		}
 	}
@@ -1605,8 +1625,9 @@ public class GameScreen implements Screen {
 		demoSelectedRoute.setVisible(false);
 		guiStage.addActor(demoSelectedRoute);
 
+
 		claimRouteButton.addListener(new InputListener() {
-			
+
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				demoSelectedCity.setVisible(true);
@@ -1614,10 +1635,11 @@ public class GameScreen implements Screen {
 				mapTappingDisabled = false;
 				claimRouteTooltip.setVisible(true);
 				helperDisableUIForActionInput();
-				
+
 				cancelClaimRoute = new TextButton("Cancel", TTRAdvisorApp.skin, "small");
-				cancelClaimRoute.setPosition(prevTurn.getX() + prevTurn.getWidth()*2, Gdx.graphics.getHeight() - cancelClaimRoute.getHeight());
-				
+				cancelClaimRoute.setPosition(prevTurn.getX() + prevTurn.getWidth() * 2,
+						Gdx.graphics.getHeight() - cancelClaimRoute.getHeight());
+
 				cancelClaimRoute.addListener(new InputListener() {
 					public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 						mapTappingDisabled = true;
@@ -1630,10 +1652,10 @@ public class GameScreen implements Screen {
 						return true;
 					}
 				});
-				
+
 				guiStage.addActor(cancelClaimRoute);
 			}
-			
+
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				return true;
 			}
@@ -1641,19 +1663,20 @@ public class GameScreen implements Screen {
 		guiStage.addActor(claimRouteTooltip);
 		guiStage.addActor(claimRouteButton);
 	}
-	
+
 	private void setupHandDisplayButton() {
 
 		handDisplay = new Table(TTRAdvisorApp.skin);
 		handDisplayLabels = new Label[Colors.route.values().length];
-		for (int i=0; i<handDisplayLabels.length; i++) {
+		for (int i = 0; i < handDisplayLabels.length; i++) {
 			handDisplayLabels[i] = new Label("0", TTRAdvisorApp.skin, "handDisplaySmall");
 		}
 		refreshHandDisplay();
-		
-		String[] hardcodedStuff = {"tcAny", "tcBlack", "tcBlue", "tcGreen", "tcOrange", "tcPink", "tcRed", "tcWhite", "tcYellow"};
-		
-		for (int i=0; i<Colors.route.values().length; i++) {
+
+		String[] hardcodedStuff = { "tcAny", "tcBlack", "tcBlue", "tcGreen", "tcOrange", "tcPink", "tcRed", "tcWhite",
+				"tcYellow" };
+
+		for (int i = 0; i < Colors.route.values().length; i++) {
 			handDisplay.add(handDisplayLabels[i]).padRight(15f).height(35f);
 			ImageTextButton train = new ImageTextButton("", TTRAdvisorApp.skin, hardcodedStuff[i]);
 			handDisplay.add(train).width(75f).height(45f);
@@ -1664,7 +1687,8 @@ public class GameScreen implements Screen {
 		handDisplay.setVisible(false);
 
 		handDisplayButton = new TextButton("Show My Hand", TTRAdvisorApp.skin, "small");
-		handDisplayButton.setPosition(Gdx.graphics.getWidth() - handDisplayButton.getWidth(), Gdx.graphics.getHeight() - nextTurn.getHeight() - 5 - handDisplayButton.getHeight());
+		handDisplayButton.setPosition(Gdx.graphics.getWidth() - handDisplayButton.getWidth(),
+				Gdx.graphics.getHeight() - nextTurn.getHeight() - 5 - handDisplayButton.getHeight());
 		handDisplayButton.addListener(new InputListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
@@ -1677,7 +1701,7 @@ public class GameScreen implements Screen {
 					handDisplayButton.setText("Hide My Hand");
 				}
 			}
-			
+
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				return true;
@@ -1685,22 +1709,21 @@ public class GameScreen implements Screen {
 
 		});
 
-		
 		guiStage.addActor(handDisplayButton);
 		guiStage.addActor(handDisplay);
-		
+
 	}
-	
+
 	/**
 	 * Helper - refresh the counts of each card in the displayed hand.
 	 */
 	private void refreshHandDisplay() {
 		Player user = mainApp.gameState.getUserPlayer();
-		for (int i=0; i<Colors.route.values().length; i++) {
+		for (int i = 0; i < Colors.route.values().length; i++) {
 			handDisplayLabels[i].setText("" + user.getNumberOfColor(Colors.route.values()[i]));
 		}
 	}
-	
+
 	private void setupTurnView() {
 		prevTurn = new TextButton("View \n Previous Turn", TTRAdvisorApp.skin, "small");
 		prevTurn.setPosition(0, Gdx.graphics.getHeight() - prevTurn.getHeight());
@@ -1708,26 +1731,27 @@ public class GameScreen implements Screen {
 		nextTurn.setPosition(Gdx.graphics.getWidth() - nextTurn.getWidth(),
 				Gdx.graphics.getHeight() - nextTurn.getHeight());
 		quit = new TextButton("Quit Game", TTRAdvisorApp.skin, "small");
-		
-		quit.setPosition(nextTurn.getX() - nextTurn.getWidth()*2, Gdx.graphics.getHeight() - quit.getHeight());
+
+		quit.setPosition(nextTurn.getX() - nextTurn.getWidth() * 2, Gdx.graphics.getHeight() - quit.getHeight());
 		turnNumber = new Label(Integer.toString(mainApp.hist.getTurnIndex()), TTRAdvisorApp.skin, "big-black");
 		turnNumber.setPosition(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() - turnNumber.getHeight());
 		prevTurn.addListener(new InputListener() {
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				if (mainApp.hist.previousTurn()) {
-					mainApp.gameState.currentPlayer = mainApp.hist.getGameState().getPlayers().get(mainApp.hist.getTurnIndexView());
+					mainApp.gameState.currentPlayer = mainApp.hist.getGameState().getPlayers()
+							.get(mainApp.hist.getTurnIndexView());
 					mainApp.gameState.setBoard(mainApp.hist.getGameState().getBoard());
 					// trainCardHand.setText(mainApp.hist.getGameState().getPlayers().get(mainApp.hist.getTurnIndexView())
-							// .getTCS().toString());
+					// .getTCS().toString());
 					turnNumber.setText(Integer.toString(mainApp.hist.getTurnIndex()));
 //					demoCurrPlayer.setText("Current player: " + mainApp.hist.getGameState().getPlayers().get(mainApp.hist.getTurnIndexView()).getColor());
-					if(mainApp.hist.getTurnIndex() < mainApp.gameState.getCurrentTurnCounter()-1) {
+					if (mainApp.hist.getTurnIndex() < mainApp.gameState.getCurrentTurnCounter() - 1) {
 						helperDisableUIForHistoryLook();
 					}
 					calcAllScore();
 					playerIconUpdate(mainApp.gameState.currentPlayer);
 					Player user = mainApp.hist.getGameState().getUserPlayer();
-					for (int i=0; i<Colors.route.values().length; i++) {
+					for (int i = 0; i < Colors.route.values().length; i++) {
 						handDisplayLabels[i].setText("" + user.getNumberOfColor(Colors.route.values()[i]));
 					}
 				}
@@ -1740,19 +1764,20 @@ public class GameScreen implements Screen {
 		nextTurn.addListener(new InputListener() {
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				if (mainApp.hist.nextTurn()) {
-					mainApp.gameState.currentPlayer = mainApp.hist.getGameState().getPlayers().get(mainApp.hist.getTurnIndexView());
+					mainApp.gameState.currentPlayer = mainApp.hist.getGameState().getPlayers()
+							.get(mainApp.hist.getTurnIndexView());
 					mainApp.gameState.setBoard(mainApp.hist.getGameState().getBoard());
 					// trainCardHand.setText(mainApp.hist.getGameState().getPlayers().get(mainApp.hist.getTurnIndexView())
-						// 	.getTCS().toString());
+					// .getTCS().toString());
 					turnNumber.setText(Integer.toString(mainApp.hist.getTurnIndex()));
 //					demoCurrPlayer.setText("Current player: " + mainApp.hist.getGameState().getPlayers().get(mainApp.hist.getTurnIndexView()).getColor());
 					calcAllScore();
 					playerIconUpdate(mainApp.gameState.currentPlayer);
 					Player user = mainApp.hist.getGameState().getUserPlayer();
-					for (int i=0; i<Colors.route.values().length; i++) {
+					for (int i = 0; i < Colors.route.values().length; i++) {
 						handDisplayLabels[i].setText("" + user.getNumberOfColor(Colors.route.values()[i]));
 					}
-					if(mainApp.hist.getTurnIndex() >= mainApp.gameState.getCurrentTurnCounter()-1) {
+					if (mainApp.hist.getTurnIndex() >= mainApp.gameState.getCurrentTurnCounter() - 1) {
 						helperReenableUIForHistoryLook();
 					}
 				}
@@ -1764,19 +1789,18 @@ public class GameScreen implements Screen {
 		});
 		quit.addListener(new InputListener() {
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				
-				
+
 				helperDisableUIForActionInput();
 				// trainCardHand.setVisible(false);
 				recommendationsButton.setVisible(false);
-				
+
 				final TextButton confirmYes = new TextButton("Yes, quit", TTRAdvisorApp.skin, "small");
 				final TextButton confirmNo = new TextButton("No, return to game", TTRAdvisorApp.skin, "small");
-				
-				confirmYes.setPosition(Gdx.graphics.getWidth()/2- confirmYes.getWidth(), Gdx.graphics.getHeight()/2);
-				confirmNo.setPosition(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
 
-				
+				confirmYes.setPosition(Gdx.graphics.getWidth() / 2 - confirmYes.getWidth(),
+						Gdx.graphics.getHeight() / 2);
+				confirmNo.setPosition(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
+
 				confirmYes.addListener(new InputListener() {
 					public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 						mainApp.gameState = new GameState(null, new ArrayList<Player>(), new Board("cities.txt"),
@@ -1784,9 +1808,9 @@ public class GameScreen implements Screen {
 						mainApp.turnInput = new InputTurnController(mainApp.gameState);
 						mainApp.hist = new HistoryController(mainApp.gameState);
 						mainApp.setScreen(new TitleScreen(mainApp));
-						
-						
+
 					}
+
 					public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 						return true;
 					}
@@ -1799,27 +1823,27 @@ public class GameScreen implements Screen {
 						confirmNo.setVisible(false);
 						recommendationsButton.setVisible(true);
 					}
+
 					public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 						return true;
 					}
 				});
-				
+
 				guiStage.addActor(confirmYes);
 				guiStage.addActor(confirmNo);
-				
-				
+
 //				mainApp.gameState = new GameState(null, new ArrayList<Player>(), new Board("cities.txt"),
 //						new DestinationTicketList("destinations.txt"), new ArrayList<Turn>());
 //				mainApp.turnInput = new InputTurnController(mainApp.gameState);
 //				mainApp.hist = new HistoryController(mainApp.gameState);
 //				mainApp.setScreen(new TitleScreen(mainApp));
-				
+
 			}
 
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				return true;
 			}
-			
+
 		});
 		guiStage.addActor(turnNumber);
 		guiStage.addActor(prevTurn);
@@ -1858,7 +1882,7 @@ public class GameScreen implements Screen {
 
 			@Override
 			public void tap(InputEvent event, float x, float y, int count, int button) {
-				
+
 				if (mapTappingDisabled) {
 					// stop processing the tap if it is not allowed right now
 					// Gdx.app.log("City Event", "Tapped on background.");
@@ -1867,7 +1891,7 @@ public class GameScreen implements Screen {
 					super.tap(event, x, y, count, button);
 					return;
 				}
-				
+
 				// unproject the world coordinates of tap
 				Vector3 tapPos = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 				for (CityLocation loc : cityLocs.getCityLocations()) {
@@ -1957,7 +1981,7 @@ public class GameScreen implements Screen {
 	 * @param routeOptions the options we've narrowed down to
 	 */
 	private void setupHelperChooseRoute(final LinkedList<Route> routeOptions) {
-		
+
 		mapTappingDisabled = true;
 		claimRouteTooltip.setVisible(false);
 		cancelClaimRoute.setVisible(false);
@@ -2024,57 +2048,60 @@ public class GameScreen implements Screen {
 	 */
 	private void setupHelperChooseCards(final Route route) {
 		selectedRoute = "Selected: " + route;
-		
+
 		mapTappingDisabled = true;
 		claimRouteTooltip.setVisible(false);
 		cancelClaimRoute.setVisible(false);
-		
+
 		if (mainApp.gameState.currentPlayer.getColor() != mainApp.userColor) {
 
-			RouteAction routeAction = new RouteAction(mainApp.gameState.currentPlayer, new ArrayList<TrainCard>(), route);
+			RouteAction routeAction = new RouteAction(mainApp.gameState.currentPlayer, new ArrayList<TrainCard>(),
+					route);
 
 			boolean isInitial = mainApp.turnInput.isInitialTurn();
-			
-			if(mainApp.hist.getTurnIndex() == mainApp.gameState.getCurrentTurnCounter()-1) {
+
+			if (mainApp.hist.getTurnIndex() == mainApp.gameState.getCurrentTurnCounter() - 1) {
 				if (mainApp.turnInput.makeCorrection(routeAction)) {
-					if(mainApp.hist.getTurnIndex() == 0) {
+					if (mainApp.hist.getTurnIndex() == 0) {
 						isInitial = true;
 					}
 					advanceTurn(isInitial, routeAction);
 				} else {
-					TextButton errorMessageTemp = new TextButton(mainApp.gameState.getError(), TTRAdvisorApp.skin, "error");
+					TextButton errorMessageTemp = new TextButton(mainApp.gameState.getError(), TTRAdvisorApp.skin,
+							"error");
 					errorMessage.setText(mainApp.gameState.getError());
 					errorMessage.setWidth(errorMessageTemp.getWidth());
-					errorMessage.setPosition(Gdx.graphics.getWidth()/2 - errorMessage.getWidth()/2, Gdx.graphics.getHeight()/8);
+					errorMessage.setPosition(Gdx.graphics.getWidth() / 2 - errorMessage.getWidth() / 2,
+							Gdx.graphics.getHeight() / 8);
 					errorMessage.setVisible(true);
-					if (errorMessage.getText().length() !=0) {
+					if (errorMessage.getText().length() != 0) {
 						guiStage.addActor(errorMessage);
-					}else {
+					} else {
 						errorMessage.setVisible(false);
 					}
 				}
-			}
-			else if (mainApp.turnInput.takeAction(routeAction)) {
+			} else if (mainApp.turnInput.takeAction(routeAction)) {
 				advanceTurn(isInitial, routeAction);
 			} else {
 				TextButton errorMessageTemp = new TextButton(mainApp.gameState.getError(), TTRAdvisorApp.skin, "error");
 				errorMessage.setText(mainApp.gameState.getError());
 				errorMessage.setWidth(errorMessageTemp.getWidth());
-				errorMessage.setPosition(Gdx.graphics.getWidth()/2 - errorMessage.getWidth()/2, Gdx.graphics.getHeight()/8);
+				errorMessage.setPosition(Gdx.graphics.getWidth() / 2 - errorMessage.getWidth() / 2,
+						Gdx.graphics.getHeight() / 8);
 				errorMessage.setVisible(true);
-				if (errorMessage.getText().length() !=0) {
+				if (errorMessage.getText().length() != 0) {
 					guiStage.addActor(errorMessage);
-				}else {
+				} else {
 					errorMessage.setVisible(false);
 				}
 			}
-	
+
 			selectedCity = DEFAULT_CITY_LABEL;
 			selectedRoute = DEFAULT_ROUTE_LABEL;
-	
+
 			// trainCardHand.setText(mainApp.gameState.currentPlayer.getTCS().toString());
 			helperReenableUIForActionInput();
-			// trainCardHand.setVisible(true);		
+			// trainCardHand.setVisible(true);
 			return;
 		}
 
@@ -2084,9 +2111,8 @@ public class GameScreen implements Screen {
 		final ArrayList<TrainCard> drawnCards = new ArrayList<>();
 		final Label drawnCardList = new Label(drawnCards.toString(), TTRAdvisorApp.skin);
 		drawnCardList.setWidth((Gdx.graphics.getWidth() / 5) * 2);
-		drawnCardList.setPosition(Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()/2+20);
-		
-		
+		drawnCardList.setPosition(Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 2 + 20);
+
 		int anyCount = 0;
 		int blackCount = 0;
 		int blueCount = 0;
@@ -2096,40 +2122,43 @@ public class GameScreen implements Screen {
 		int redCount = 0;
 		int whiteCount = 0;
 		int yellowCount = 0;
-		
+
 		int userIndex = mainApp.gameState.getPlayers().indexOf(mainApp.gameState.getUserPlayer());
-		
-		for (TrainCard tc: mainApp.gameState.getTurns().get(mainApp.hist.getTurnIndex()-1).getPlayerSnapshots().get(userIndex).getTCS()) {
-			switch (tc.getColor()) {
-			case ANY:
-						anyCount++;
-				break;
-			case BLACK:
-						blackCount++;
-				break;
-			case BLUE:
-						blueCount++;
-				break;
-			case GREEN:
-						greenCount++;
-				break;
-			case ORANGE:
-						orangeCount++;
-				break;
-			case PINK:
-						pinkCount++;
-				break;
-			case RED:
-						redCount++;
-				break;
-			case WHITE:
-						whiteCount++;
-				break;
-			case YELLOW:
-						yellowCount++;
-				break;
-			default:
-				break;
+
+		if (mainApp.hist.getTurnIndex() >= 1) {
+			for (TrainCard tc : mainApp.gameState.getTurns().get(mainApp.hist.getTurnIndex() - 1).getPlayerSnapshots()
+					.get(userIndex).getTCS()) {
+				switch (tc.getColor()) {
+				case ANY:
+					anyCount++;
+					break;
+				case BLACK:
+					blackCount++;
+					break;
+				case BLUE:
+					blueCount++;
+					break;
+				case GREEN:
+					greenCount++;
+					break;
+				case ORANGE:
+					orangeCount++;
+					break;
+				case PINK:
+					pinkCount++;
+					break;
+				case RED:
+					redCount++;
+					break;
+				case WHITE:
+					whiteCount++;
+					break;
+				case YELLOW:
+					yellowCount++;
+					break;
+				default:
+					break;
+				}
 			}
 		}
 		final int anyCountF = anyCount;
@@ -2141,13 +2170,13 @@ public class GameScreen implements Screen {
 		final int redCountF = redCount;
 		final int whiteCountF = whiteCount;
 		final int yellowCountF = yellowCount;
-		
+
 		final ImageTextButton redTrain = new ImageTextButton("", TTRAdvisorApp.skin, "tcRed");
 		if (redCountF == 0) {
 			redTrain.setText("");
 			redTrain.setTouchable(Touchable.disabled);
 			redTrain.setDisabled(true);
-		}else {
+		} else {
 			redTrain.setText(Integer.toString(redCount));
 		}
 		redTrain.addListener(new InputListener() {
@@ -2155,20 +2184,21 @@ public class GameScreen implements Screen {
 				drawnCards.add(new TrainCard(Colors.route.RED));
 				drawnCardList.setText(drawnCards.toString());
 				int handCount = 0;
-				for (TrainCard tc: drawnCards) {
-					if (tc.getColor().equals(Colors.route.RED)){
+				for (TrainCard tc : drawnCards) {
+					if (tc.getColor().equals(Colors.route.RED)) {
 						handCount++;
 					}
 				}
-				handCount =  redCountF - handCount;
+				handCount = redCountF - handCount;
 				if (handCount <= 0) {
 					redTrain.setText("");
 					redTrain.setTouchable(Touchable.disabled);
 					redTrain.setDisabled(true);
-				}else {
+				} else {
 					redTrain.setText(Integer.toString(handCount));
 				}
 			}
+
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				return true;
 			}
@@ -2179,7 +2209,7 @@ public class GameScreen implements Screen {
 			orangeTrain.setText("");
 			orangeTrain.setTouchable(Touchable.disabled);
 			orangeTrain.setDisabled(true);
-		}else {
+		} else {
 			orangeTrain.setText(Integer.toString(orangeCount));
 		}
 		orangeTrain.addListener(new InputListener() {
@@ -2187,17 +2217,17 @@ public class GameScreen implements Screen {
 				drawnCards.add(new TrainCard(Colors.route.ORANGE));
 				drawnCardList.setText(drawnCards.toString());
 				int handCount = 0;
-				for (TrainCard tc: drawnCards) {
-					if (tc.getColor().equals(Colors.route.ORANGE)){
+				for (TrainCard tc : drawnCards) {
+					if (tc.getColor().equals(Colors.route.ORANGE)) {
 						handCount++;
 					}
 				}
-				handCount =  orangeCountF - handCount;
+				handCount = orangeCountF - handCount;
 				if (handCount <= 0) {
 					orangeTrain.setText("");
 					orangeTrain.setTouchable(Touchable.disabled);
 					orangeTrain.setDisabled(true);
-				}else {
+				} else {
 					orangeTrain.setText(Integer.toString(handCount));
 				}
 			}
@@ -2212,7 +2242,7 @@ public class GameScreen implements Screen {
 			yellowTrain.setText("");
 			yellowTrain.setTouchable(Touchable.disabled);
 			yellowTrain.setDisabled(true);
-		}else {
+		} else {
 			yellowTrain.setText(Integer.toString(yellowCount));
 		}
 		yellowTrain.addListener(new InputListener() {
@@ -2220,17 +2250,17 @@ public class GameScreen implements Screen {
 				drawnCards.add(new TrainCard(Colors.route.YELLOW));
 				drawnCardList.setText(drawnCards.toString());
 				int handCount = 0;
-				for (TrainCard tc: drawnCards) {
-					if (tc.getColor().equals(Colors.route.YELLOW)){
+				for (TrainCard tc : drawnCards) {
+					if (tc.getColor().equals(Colors.route.YELLOW)) {
 						handCount++;
 					}
 				}
-				handCount =  yellowCountF - handCount;
+				handCount = yellowCountF - handCount;
 				if (handCount <= 0) {
 					yellowTrain.setText("");
 					yellowTrain.setTouchable(Touchable.disabled);
 					yellowTrain.setDisabled(true);
-				}else {
+				} else {
 					yellowTrain.setText(Integer.toString(handCount));
 				}
 			}
@@ -2245,7 +2275,7 @@ public class GameScreen implements Screen {
 			greenTrain.setText("");
 			greenTrain.setTouchable(Touchable.disabled);
 			greenTrain.setDisabled(true);
-		}else {
+		} else {
 			greenTrain.setText(Integer.toString(greenCount));
 		}
 		greenTrain.addListener(new InputListener() {
@@ -2253,17 +2283,17 @@ public class GameScreen implements Screen {
 				drawnCards.add(new TrainCard(Colors.route.GREEN));
 				drawnCardList.setText(drawnCards.toString());
 				int handCount = 0;
-				for (TrainCard tc: drawnCards) {
-					if (tc.getColor().equals(Colors.route.GREEN)){
+				for (TrainCard tc : drawnCards) {
+					if (tc.getColor().equals(Colors.route.GREEN)) {
 						handCount++;
 					}
 				}
-				handCount =  greenCountF - handCount;
+				handCount = greenCountF - handCount;
 				if (handCount <= 0) {
 					greenTrain.setText("");
 					greenTrain.setTouchable(Touchable.disabled);
 					greenTrain.setDisabled(true);
-				}else {
+				} else {
 					greenTrain.setText(Integer.toString(handCount));
 				}
 			}
@@ -2278,7 +2308,7 @@ public class GameScreen implements Screen {
 			blueTrain.setText("");
 			blueTrain.setTouchable(Touchable.disabled);
 			blueTrain.setDisabled(true);
-		}else {
+		} else {
 			blueTrain.setText(Integer.toString(blueCount));
 		}
 		blueTrain.addListener(new InputListener() {
@@ -2286,17 +2316,17 @@ public class GameScreen implements Screen {
 				drawnCards.add(new TrainCard(Colors.route.BLUE));
 				drawnCardList.setText(drawnCards.toString());
 				int handCount = 0;
-				for (TrainCard tc: drawnCards) {
-					if (tc.getColor().equals(Colors.route.BLUE)){
+				for (TrainCard tc : drawnCards) {
+					if (tc.getColor().equals(Colors.route.BLUE)) {
 						handCount++;
 					}
 				}
-				handCount =  blueCountF - handCount;
+				handCount = blueCountF - handCount;
 				if (handCount <= 0) {
 					blueTrain.setText("");
 					blueTrain.setTouchable(Touchable.disabled);
 					blueTrain.setDisabled(true);
-				}else {
+				} else {
 					blueTrain.setText(Integer.toString(handCount));
 				}
 			}
@@ -2311,7 +2341,7 @@ public class GameScreen implements Screen {
 			pinkTrain.setText("");
 			pinkTrain.setTouchable(Touchable.disabled);
 			pinkTrain.setDisabled(true);
-		}else {
+		} else {
 			pinkTrain.setText(Integer.toString(pinkCount));
 		}
 		pinkTrain.addListener(new InputListener() {
@@ -2319,17 +2349,17 @@ public class GameScreen implements Screen {
 				drawnCards.add(new TrainCard(Colors.route.PINK));
 				drawnCardList.setText(drawnCards.toString());
 				int handCount = 0;
-				for (TrainCard tc: drawnCards) {
-					if (tc.getColor().equals(Colors.route.PINK)){
+				for (TrainCard tc : drawnCards) {
+					if (tc.getColor().equals(Colors.route.PINK)) {
 						handCount++;
 					}
 				}
-				handCount =  pinkCountF - handCount;
+				handCount = pinkCountF - handCount;
 				if (handCount <= 0) {
 					pinkTrain.setText("");
 					pinkTrain.setTouchable(Touchable.disabled);
 					pinkTrain.setDisabled(true);
-				}else {
+				} else {
 					pinkTrain.setText(Integer.toString(handCount));
 				}
 			}
@@ -2344,7 +2374,7 @@ public class GameScreen implements Screen {
 			blackTrain.setText("");
 			blackTrain.setTouchable(Touchable.disabled);
 			blackTrain.setDisabled(true);
-		}else {
+		} else {
 			blackTrain.setText(Integer.toString(blackCount));
 		}
 		blackTrain.addListener(new InputListener() {
@@ -2352,17 +2382,17 @@ public class GameScreen implements Screen {
 				drawnCards.add(new TrainCard(Colors.route.BLACK));
 				drawnCardList.setText(drawnCards.toString());
 				int handCount = 0;
-				for (TrainCard tc: drawnCards) {
-					if (tc.getColor().equals(Colors.route.BLACK)){
+				for (TrainCard tc : drawnCards) {
+					if (tc.getColor().equals(Colors.route.BLACK)) {
 						handCount++;
 					}
 				}
-				handCount =  blackCountF - handCount;
+				handCount = blackCountF - handCount;
 				if (handCount <= 0) {
 					blackTrain.setText("");
 					blackTrain.setTouchable(Touchable.disabled);
 					blackTrain.setDisabled(true);
-				}else {
+				} else {
 					blackTrain.setText(Integer.toString(handCount));
 				}
 			}
@@ -2377,7 +2407,7 @@ public class GameScreen implements Screen {
 			whiteTrain.setText("");
 			whiteTrain.setTouchable(Touchable.disabled);
 			whiteTrain.setDisabled(true);
-		}else {
+		} else {
 			whiteTrain.setText(Integer.toString(whiteCount));
 		}
 		whiteTrain.addListener(new InputListener() {
@@ -2385,17 +2415,17 @@ public class GameScreen implements Screen {
 				drawnCards.add(new TrainCard(Colors.route.WHITE));
 				drawnCardList.setText(drawnCards.toString());
 				int handCount = 0;
-				for (TrainCard tc: drawnCards) {
-					if (tc.getColor().equals(Colors.route.WHITE)){
+				for (TrainCard tc : drawnCards) {
+					if (tc.getColor().equals(Colors.route.WHITE)) {
 						handCount++;
 					}
 				}
-				handCount =  whiteCountF - handCount;
+				handCount = whiteCountF - handCount;
 				if (handCount <= 0) {
 					whiteTrain.setText("");
 					whiteTrain.setTouchable(Touchable.disabled);
 					whiteTrain.setDisabled(true);
-				}else {
+				} else {
 					whiteTrain.setText(Integer.toString(handCount));
 				}
 			}
@@ -2410,7 +2440,7 @@ public class GameScreen implements Screen {
 			wildTrain.setText("");
 			wildTrain.setTouchable(Touchable.disabled);
 			wildTrain.setDisabled(true);
-		}else {
+		} else {
 			wildTrain.setText(Integer.toString(anyCount));
 		}
 		wildTrain.addListener(new InputListener() {
@@ -2418,17 +2448,17 @@ public class GameScreen implements Screen {
 				drawnCards.add(new TrainCard(Colors.route.ANY));
 				drawnCardList.setText(drawnCards.toString());
 				int handCount = 0;
-				for (TrainCard tc: drawnCards) {
-					if (tc.getColor().equals(Colors.route.ANY)){
+				for (TrainCard tc : drawnCards) {
+					if (tc.getColor().equals(Colors.route.ANY)) {
 						handCount++;
 					}
 				}
-				handCount =  anyCountF - handCount;
+				handCount = anyCountF - handCount;
 				if (handCount <= 0) {
 					wildTrain.setText("");
 					wildTrain.setTouchable(Touchable.disabled);
 					wildTrain.setDisabled(true);
-				}else {
+				} else {
 					wildTrain.setText(Integer.toString(handCount));
 				}
 			}
@@ -2445,41 +2475,43 @@ public class GameScreen implements Screen {
 				RouteAction routeAction = new RouteAction(mainApp.gameState.currentPlayer, drawnCards, route);
 
 				boolean isInitial = mainApp.turnInput.isInitialTurn();
-				
-				if(mainApp.hist.getTurnIndex() == mainApp.gameState.getCurrentTurnCounter()-1) {
+
+				if (mainApp.hist.getTurnIndex() == mainApp.gameState.getCurrentTurnCounter() - 1) {
 					if (mainApp.turnInput.makeCorrection(routeAction)) {
-						if(mainApp.hist.getTurnIndex() == 0) {
+						if (mainApp.hist.getTurnIndex() == 0) {
 							isInitial = true;
 						}
 						advanceTurn(isInitial, routeAction);
-					} else {	
-						TextButton errorMessageTemp = new TextButton(mainApp.gameState.getError(), TTRAdvisorApp.skin, "error");
+					} else {
+						TextButton errorMessageTemp = new TextButton(mainApp.gameState.getError(), TTRAdvisorApp.skin,
+								"error");
 						errorMessage.setText(mainApp.gameState.getError());
 						errorMessage.setWidth(errorMessageTemp.getWidth());
-						errorMessage.setPosition(Gdx.graphics.getWidth()/2 - errorMessage.getWidth()/2, Gdx.graphics.getHeight()/8);
+						errorMessage.setPosition(Gdx.graphics.getWidth() / 2 - errorMessage.getWidth() / 2,
+								Gdx.graphics.getHeight() / 8);
 						errorMessage.setVisible(true);
-						if (errorMessage.getText().length() !=0) {
+						if (errorMessage.getText().length() != 0) {
 							guiStage.addActor(errorMessage);
-						}else {
+						} else {
 							errorMessage.setVisible(false);
 						}
 					}
-				}
-				else if (mainApp.turnInput.takeAction(routeAction)) {
+				} else if (mainApp.turnInput.takeAction(routeAction)) {
 					advanceTurn(isInitial, routeAction);
-				} else {	
-					TextButton errorMessageTemp = new TextButton(mainApp.gameState.getError(), TTRAdvisorApp.skin, "error");
+				} else {
+					TextButton errorMessageTemp = new TextButton(mainApp.gameState.getError(), TTRAdvisorApp.skin,
+							"error");
 					errorMessage.setText(mainApp.gameState.getError());
 					errorMessage.setWidth(errorMessageTemp.getWidth());
-					errorMessage.setPosition(Gdx.graphics.getWidth()/2 - errorMessage.getWidth()/2, Gdx.graphics.getHeight()/8);
+					errorMessage.setPosition(Gdx.graphics.getWidth() / 2 - errorMessage.getWidth() / 2,
+							Gdx.graphics.getHeight() / 8);
 					errorMessage.setVisible(true);
-					if (errorMessage.getText().length() !=0) {
+					if (errorMessage.getText().length() != 0) {
 						guiStage.addActor(errorMessage);
-					}else {
+					} else {
 						errorMessage.setVisible(false);
 					}
 				}
-				
 
 				selectedCity = DEFAULT_CITY_LABEL;
 				selectedRoute = DEFAULT_ROUTE_LABEL;
@@ -2501,13 +2533,13 @@ public class GameScreen implements Screen {
 				if (!drawnCards.isEmpty()) {
 
 					int drawCount = 0;
-					int index= 0;
-					if (drawnCards.size()-1 >= 0) {
-						index = drawnCards.size()-1;
+					int index = 0;
+					if (drawnCards.size() - 1 >= 0) {
+						index = drawnCards.size() - 1;
 						switch (drawnCards.get(index).getColor()) {
 						case ANY:
-							for (TrainCard tc: drawnCards) {
-								if (tc.getColor().equals(Colors.route.ANY)){
+							for (TrainCard tc : drawnCards) {
+								if (tc.getColor().equals(Colors.route.ANY)) {
 									drawCount++;
 								}
 							}
@@ -2516,15 +2548,15 @@ public class GameScreen implements Screen {
 							if (drawCount <= 0) {
 								wildTrain.setText("");
 								wildTrain.setTouchable(Touchable.disabled);
-							}else {
+							} else {
 								wildTrain.setText(Integer.toString(drawCount));
 								wildTrain.setTouchable(Touchable.enabled);
 								wildTrain.setDisabled(false);
 							}
 							break;
 						case BLACK:
-							for (TrainCard tc: drawnCards) {
-								if (tc.getColor().equals(Colors.route.BLACK)){
+							for (TrainCard tc : drawnCards) {
+								if (tc.getColor().equals(Colors.route.BLACK)) {
 									drawCount++;
 								}
 							}
@@ -2533,15 +2565,15 @@ public class GameScreen implements Screen {
 							if (drawCount <= 0) {
 								blackTrain.setText("");
 								blackTrain.setTouchable(Touchable.disabled);
-							}else {
+							} else {
 								blackTrain.setText(Integer.toString(drawCount));
 								blackTrain.setTouchable(Touchable.enabled);
 								blackTrain.setDisabled(false);
 							}
 							break;
 						case BLUE:
-							for (TrainCard tc: drawnCards) {
-								if (tc.getColor().equals(Colors.route.BLUE)){
+							for (TrainCard tc : drawnCards) {
+								if (tc.getColor().equals(Colors.route.BLUE)) {
 									drawCount++;
 								}
 							}
@@ -2550,15 +2582,15 @@ public class GameScreen implements Screen {
 							if (drawCount <= 0) {
 								blueTrain.setText("");
 								blueTrain.setTouchable(Touchable.disabled);
-							}else {
+							} else {
 								blueTrain.setText(Integer.toString(drawCount));
 								blueTrain.setTouchable(Touchable.enabled);
 								blueTrain.setDisabled(false);
 							}
 							break;
 						case GREEN:
-							for (TrainCard tc: drawnCards) {
-								if (tc.getColor().equals(Colors.route.GREEN)){
+							for (TrainCard tc : drawnCards) {
+								if (tc.getColor().equals(Colors.route.GREEN)) {
 									drawCount++;
 								}
 							}
@@ -2567,15 +2599,15 @@ public class GameScreen implements Screen {
 							if (drawCount <= 0) {
 								greenTrain.setText("");
 								greenTrain.setTouchable(Touchable.disabled);
-							}else {
+							} else {
 								greenTrain.setText(Integer.toString(drawCount));
 								greenTrain.setTouchable(Touchable.enabled);
 								greenTrain.setDisabled(false);
 							}
 							break;
 						case ORANGE:
-							for (TrainCard tc: drawnCards) {
-								if (tc.getColor().equals(Colors.route.ORANGE)){
+							for (TrainCard tc : drawnCards) {
+								if (tc.getColor().equals(Colors.route.ORANGE)) {
 									drawCount++;
 								}
 							}
@@ -2584,15 +2616,15 @@ public class GameScreen implements Screen {
 							if (drawCount <= 0) {
 								orangeTrain.setText("");
 								orangeTrain.setTouchable(Touchable.disabled);
-							}else {
+							} else {
 								orangeTrain.setText(Integer.toString(drawCount));
 								orangeTrain.setTouchable(Touchable.enabled);
 								orangeTrain.setDisabled(false);
 							}
 							break;
 						case PINK:
-							for (TrainCard tc: drawnCards) {
-								if (tc.getColor().equals(Colors.route.PINK)){
+							for (TrainCard tc : drawnCards) {
+								if (tc.getColor().equals(Colors.route.PINK)) {
 									drawCount++;
 								}
 							}
@@ -2601,15 +2633,15 @@ public class GameScreen implements Screen {
 							if (drawCount <= 0) {
 								pinkTrain.setText("");
 								pinkTrain.setTouchable(Touchable.disabled);
-							}else {
+							} else {
 								pinkTrain.setText(Integer.toString(drawCount));
 								pinkTrain.setTouchable(Touchable.enabled);
 								pinkTrain.setDisabled(false);
 							}
 							break;
 						case RED:
-							for (TrainCard tc: drawnCards) {
-								if (tc.getColor().equals(Colors.route.RED)){
+							for (TrainCard tc : drawnCards) {
+								if (tc.getColor().equals(Colors.route.RED)) {
 									drawCount++;
 								}
 							}
@@ -2618,15 +2650,15 @@ public class GameScreen implements Screen {
 							if (drawCount <= 0) {
 								redTrain.setText("");
 								redTrain.setTouchable(Touchable.disabled);
-							}else {
+							} else {
 								redTrain.setText(Integer.toString(drawCount));
 								redTrain.setTouchable(Touchable.enabled);
 								redTrain.setDisabled(false);
 							}
 							break;
 						case WHITE:
-							for (TrainCard tc: drawnCards) {
-								if (tc.getColor().equals(Colors.route.WHITE)){
+							for (TrainCard tc : drawnCards) {
+								if (tc.getColor().equals(Colors.route.WHITE)) {
 									drawCount++;
 								}
 							}
@@ -2635,15 +2667,15 @@ public class GameScreen implements Screen {
 							if (drawCount <= 0) {
 								whiteTrain.setText("");
 								whiteTrain.setTouchable(Touchable.disabled);
-							}else {
+							} else {
 								whiteTrain.setText(Integer.toString(drawCount));
 								whiteTrain.setTouchable(Touchable.enabled);
 								whiteTrain.setDisabled(false);
 							}
 							break;
 						case YELLOW:
-							for (TrainCard tc: drawnCards) {
-								if (tc.getColor().equals(Colors.route.YELLOW)){
+							for (TrainCard tc : drawnCards) {
+								if (tc.getColor().equals(Colors.route.YELLOW)) {
 									drawCount++;
 								}
 							}
@@ -2652,7 +2684,7 @@ public class GameScreen implements Screen {
 							if (drawCount <= 0) {
 								yellowTrain.setText("");
 								yellowTrain.setTouchable(Touchable.disabled);
-							}else {
+							} else {
 								yellowTrain.setText(Integer.toString(drawCount));
 								yellowTrain.setTouchable(Touchable.enabled);
 								yellowTrain.setDisabled(false);
@@ -2661,7 +2693,7 @@ public class GameScreen implements Screen {
 						default:
 							break;
 						}
-					
+
 					}
 					drawnCards.remove(drawnCards.size() - 1);
 					drawnCardList.setText(drawnCards.toString());
@@ -2675,10 +2707,10 @@ public class GameScreen implements Screen {
 		TextButton back = new TextButton("Back", TTRAdvisorApp.skin, "small");
 		back.addListener(new InputListener() {
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				
+
 				selectedCity = DEFAULT_CITY_LABEL;
 				selectedRoute = DEFAULT_ROUTE_LABEL;
-				
+
 				drawnCards.removeAll(drawnCards);
 				helperReenableUIForActionInput();
 				// trainCardHand.setVisible(true);
@@ -2714,7 +2746,7 @@ public class GameScreen implements Screen {
 //      table.setDebug(true); // turn on all debug lines (table, cell, and widget)
 		guiStage.addActor(table);
 		guiStage.addActor(drawnCardList);
-		if (errorMessage.getText().length() !=0) {
+		if (errorMessage.getText().length() != 0) {
 			guiStage.addActor(errorMessage);
 		}
 	}
@@ -2736,7 +2768,7 @@ public class GameScreen implements Screen {
 				mainApp.gameState.currentPlayer = mainApp.gameState.getPlayers().get(0);
 			}
 		}
-		
+
 		ArrayList<Player> deepCopyPlayers = new ArrayList<Player>();
 		for (Player p : mainApp.gameState.getPlayers()) {
 			deepCopyPlayers.add(p.getDeepCopy());
@@ -2753,7 +2785,7 @@ public class GameScreen implements Screen {
 			rec2.setText(recs.get(1));
 			rec3.setText(recs.get(2));
 		}
-		
+
 		destTickets = new List<DestinationTicket>(TTRAdvisorApp.skin);
 		ticketArray = new DestinationTicket[dtList.getList().size()];
 		for (int i = 0; i < dtList.getList().size(); i++) {
@@ -2764,8 +2796,7 @@ public class GameScreen implements Screen {
 		ticketSelection.setMultiple(true);
 		destTickets.setSelection(ticketSelection);
 //		demoCurrPlayer.setText("Current player: " + mainApp.gameState.currentPlayer.getColor());
-		
-		
+
 		calcAllScore();
 		playerIconUpdate(mainApp.gameState.currentPlayer);
 		refreshHandDisplay();
@@ -2782,10 +2813,10 @@ public class GameScreen implements Screen {
 		claimRouteButton.setVisible(false);
 		errorMessage.setVisible(false);
 	}
-	
+
 	/**
-	 * Disable all the Action input features AND the history buttons
-	 * (while inputting an action using either the train card menu or DT menu)
+	 * Disable all the Action input features AND the history buttons (while
+	 * inputting an action using either the train card menu or DT menu)
 	 */
 	private void helperDisableUIForActionInput() {
 		destButton.setVisible(false);
@@ -2796,14 +2827,14 @@ public class GameScreen implements Screen {
 		quit.setVisible(false);
 		errorMessage.setVisible(false);
 	}
-	
+
 	private void helperReenableUIForHistoryLook() {
 		destButton.setVisible(true);
 		TCButton.setVisible(true);
 		claimRouteButton.setVisible(true);
 		errorMessage.setVisible(false);
 	}
-	
+
 	private void helperReenableUIForActionInput() {
 		demoSelectedCity.setVisible(false);
 		demoSelectedRoute.setVisible(false);
@@ -2814,7 +2845,7 @@ public class GameScreen implements Screen {
 		nextTurn.setVisible(true);
 		quit.setVisible(true);
 	}
-	
+
 	private void clampCamera() {
 
 		camera.zoom = MathUtils.clamp(camera.zoom,
@@ -2833,7 +2864,6 @@ public class GameScreen implements Screen {
 		// camera.position.y);
 	}
 
-	
 	private void calcAllScore() {
 		int longestRoute = 0;
 		int longestBounus = 10;
@@ -2841,19 +2871,19 @@ public class GameScreen implements Screen {
 				mainApp.gameState.getCurrentTurnCounter(), mainApp.gameState.getPlayers().size());
 
 		if (mainApp.gameState.getLastTurn()) {
-			//find longest route
+			// find longest route
 			for (Player p : mainApp.gameState.getPlayers()) {
 				if (longestRoute < rec.longestRoute(p.getColor())) {
 					longestRoute = rec.longestRoute(p.getColor());
-				}		
+				}
 			}
 		}
-		
-		//add score 
+
+		// add score
 		for (Player p : mainApp.gameState.getPlayers()) {
 			int score = 0;
-			
-			//claimed routes
+
+			// claimed routes
 			for (Route r : mainApp.gameState.getBoard().getAllRoutesOfPlayer(p.getColor())) {
 				switch (r.getCost()) {
 				case 1:
@@ -2869,7 +2899,8 @@ public class GameScreen implements Screen {
 					score = score + 7;
 					break;
 				case 5:
-					score = score + 10;;
+					score = score + 10;
+					;
 					break;
 				case 6:
 					score = score + 15;
@@ -2879,39 +2910,32 @@ public class GameScreen implements Screen {
 					break;
 				}
 			}
-			score = score/2;
-			
-			
+			score = score / 2;
+
 			if (mainApp.gameState.getLastTurn()) {
-				//completed destination cards
-				for (DestinationTicket ticket: p.getDTS()) {
+				// completed destination cards
+				for (DestinationTicket ticket : p.getDTS()) {
 					if (ticket.getCompleted()) {
 						score = score + ticket.getValue();
 					}
 				}
-				
-				//longest route bonus
+
+				// longest route bonus
 				if (longestRoute == rec.longestRoute(p.getColor())) {
-					score =  score + longestBounus;
+					score = score + longestBounus;
 				}
 			}
-			
-			
-			
+
 			p.setScore(score);
-		}	
-		
-		
-		
-		
-		
+		}
+
 	}
 
 	/**
 	 * Call every render cycle instead of mapStage.draw()
 	 */
 	private void drawMapStageManually() {
-		
+
 		mapStage.getCamera().update();
 
 		if (!mapStage.getRoot().isVisible())
@@ -2924,7 +2948,7 @@ public class GameScreen implements Screen {
 		mapStage.getRoot().draw(mapStage.getBatch(), 1);
 
 		for (Player p : mainApp.gameState.getPlayers()) {
-			if(p.getColor().equals(Colors.player.BLACK)) {
+			if (p.getColor().equals(Colors.player.BLACK)) {
 				trainImage = textureAtlas.createSprite("BlackTrain");
 			}
 			if (p.getColor().equals(Colors.player.BLUE)) {
@@ -2940,15 +2964,20 @@ public class GameScreen implements Screen {
 				trainImage = textureAtlas.createSprite("YellowTrain");
 			}
 			for (Route r : mainApp.gameState.getBoard().getAllRoutesOfPlayer(p.getColor())) {
-				if (r.getColor().equals(Colors.route.ANY) && mainApp.gameState.getBoard().getAllRoutes(r.getBegin(), r.getEnd()).size() == 2) {
-					if (mainApp.gameState.getBoard().getAllRoutes(r.getBegin(), r.getEnd()).get(0).getOwner().equals(p.getColor())) {
-						if (null != routeLocations.getRouteLocation(r.getBegin(), r.getEnd(), r.getColor().toString())) {
-							for (TrainLocation t: routeLocations.getRouteLocation(r.getBegin(), r.getEnd(), r.getColor().toString()).trains){
+				if (r.getColor().equals(Colors.route.ANY)
+						&& mainApp.gameState.getBoard().getAllRoutes(r.getBegin(), r.getEnd()).size() == 2) {
+					if (mainApp.gameState.getBoard().getAllRoutes(r.getBegin(), r.getEnd()).get(0).getOwner()
+							.equals(p.getColor())) {
+						if (null != routeLocations.getRouteLocation(r.getBegin(), r.getEnd(),
+								r.getColor().toString())) {
+							for (TrainLocation t : routeLocations.getRouteLocation(r.getBegin(), r.getEnd(),
+									r.getColor().toString()).trains) {
 								mapStage.getBatch().draw(trainImage, t.x - 33, t.y - 15, 33, 15, 66, 30, 1, 1, t.r);
 							}
 						}
 					} else {
-						if (-1 != routeLocations.getList().indexOf(routeLocations.getRouteLocation(r.getBegin(), r.getEnd(), r.getColor().toString()))) {
+						if (-1 != routeLocations.getList().indexOf(
+								routeLocations.getRouteLocation(r.getBegin(), r.getEnd(), r.getColor().toString()))) {
 							int secondANYIndex = 1 + routeLocations.getList().indexOf(
 									routeLocations.getRouteLocation(r.getBegin(), r.getEnd(), r.getColor().toString()));
 							RouteLocation rL = routeLocations.getList().get(secondANYIndex);
@@ -2959,10 +2988,10 @@ public class GameScreen implements Screen {
 							}
 						}
 					}
-				}
-				else {
+				} else {
 					if (null != routeLocations.getRouteLocation(r.getBegin(), r.getEnd(), r.getColor().toString())) {
-						for (TrainLocation t: routeLocations.getRouteLocation(r.getBegin(), r.getEnd(), r.getColor().toString()).trains){
+						for (TrainLocation t : routeLocations.getRouteLocation(r.getBegin(), r.getEnd(),
+								r.getColor().toString()).trains) {
 							mapStage.getBatch().draw(trainImage, t.x - 33, t.y - 15, 33, 15, 66, 30, 1, 1, t.r);
 						}
 					}
@@ -2971,7 +3000,6 @@ public class GameScreen implements Screen {
 			}
 		}
 		mapStage.getBatch().end();
-	
 
 	}
 
