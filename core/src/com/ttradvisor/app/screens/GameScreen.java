@@ -1675,12 +1675,16 @@ public class GameScreen implements Screen {
 		String[] hardcodedStuff = { "tcAny", "tcBlack", "tcBlue", "tcGreen", "tcOrange", "tcPink", "tcRed", "tcWhite",
 				"tcYellow" };
 
+		// a hack to move the table down a little
+		handDisplay.add(new Label("", TTRAdvisorApp.skin)); handDisplay.add(new Label("", TTRAdvisorApp.skin)); handDisplay.row();		
+		handDisplay.add(new Label("", TTRAdvisorApp.skin)); handDisplay.add(new Label("", TTRAdvisorApp.skin)); handDisplay.row();
+
 		for (int i = 0; i < Colors.route.values().length; i++) {
 			handDisplay.add(handDisplayLabels[i]).padRight(15f).height(35f);
 			ImageTextButton train = new ImageTextButton("", TTRAdvisorApp.skin, hardcodedStuff[i]);
 			// different sizes on different resolutions
 			// reminder - 200 by 125 is the card graphics aspect ratio
-			handDisplay.add(train).width(Gdx.graphics.getWidth() * 0.07f).height(Gdx.graphics.getHeight() * 0.07f);
+			handDisplay.add(train).padTop(3f).width(Gdx.graphics.getWidth() * 0.07f).height(Gdx.graphics.getWidth() * 0.07f * (125f/200f));
 			handDisplay.row();
 		}
 		handDisplay.right();
