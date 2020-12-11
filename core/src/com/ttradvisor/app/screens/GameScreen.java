@@ -117,7 +117,6 @@ public class GameScreen implements Screen {
 
 	private ScrollPane handDisplayPane;
 	private List<DestinationTicket> handDisplayTicketList;
-	private TextButton handDisplayDTsButton;
 
 	// for multiple selection
 	private Array<DestinationTicket> prevSelection;
@@ -1605,9 +1604,6 @@ public class GameScreen implements Screen {
 	}
 
 	private void setupClaimRouteButton() {
-		
-		int flag;
-		
 		claimRouteButton = new TextButton("Claim A Route", TTRAdvisorApp.skin, "small");
 		claimRouteButton.setPosition(prevTurn.getX() + prevTurn.getWidth()*2, Gdx.graphics.getHeight() - claimRouteButton.getHeight());
 		
@@ -1665,6 +1661,9 @@ public class GameScreen implements Screen {
 	}
 
 	private void setupHandDisplayButton() {
+		
+		// train card list
+		int flag;
 
 		handDisplay = new Table(TTRAdvisorApp.skin);
 		handDisplayLabels = new Label[Colors.route.values().length];
@@ -1679,12 +1678,16 @@ public class GameScreen implements Screen {
 		for (int i = 0; i < Colors.route.values().length; i++) {
 			handDisplay.add(handDisplayLabels[i]).padRight(15f).height(35f);
 			ImageTextButton train = new ImageTextButton("", TTRAdvisorApp.skin, hardcodedStuff[i]);
-			handDisplay.add(train).width(75f).height(45f);
+			// different sizes on different resolutions
+			// reminder - 200 by 125 is the card graphics aspect ratio
+			handDisplay.add(train).width(Gdx.graphics.getWidth() * 0.07f).height(Gdx.graphics.getHeight() * 0.07f);
 			handDisplay.row();
 		}
 		handDisplay.right();
 		handDisplay.setFillParent(true);
 		handDisplay.setVisible(false);
+		
+		// destination ticket list
 
 		handDisplayButton = new TextButton("Show My Hand", TTRAdvisorApp.skin, "small");
 		handDisplayButton.setPosition(Gdx.graphics.getWidth() - handDisplayButton.getWidth(),
