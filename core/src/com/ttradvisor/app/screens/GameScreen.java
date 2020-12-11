@@ -717,6 +717,8 @@ public class GameScreen implements Screen {
 
 				helperDisableUIForActionInput();
 				// trainCardHand.setVisible(false);
+				
+				
 
 				final ArrayList<TrainCard> drawnCards = new ArrayList<>();
 				final Label drawnCardList = new Label(drawnCards.toString(), TTRAdvisorApp.skin);
@@ -1309,6 +1311,71 @@ public class GameScreen implements Screen {
 						return true;
 					}
 				});
+				// Button to input non-user DestinationAction
+				TextButton nonUser = new TextButton("Non-User", TTRAdvisorApp.skin, "small");
+				nonUser.addListener(new InputListener() {
+					public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+						// Adds sample DTs since user can't see what they draw
+						drawnCards.add(new TrainCard(Colors.route.ANY));
+						drawnCards.add(new TrainCard(Colors.route.ANY));
+
+						boolean isInitial = mainApp.turnInput.isInitialTurn();
+
+						if (mainApp.hist.getTurnIndex() == mainApp.gameState.getCurrentTurnCounter() - 1) {
+							if (mainApp.turnInput.makeCorrection(
+									new TrainCardAction(mainApp.gameState.currentPlayer, drawnCards))) {
+								if (mainApp.hist.getTurnIndex() == 0) {
+									isInitial = true;
+								}
+								advanceTurn(isInitial,
+										new TrainCardAction(mainApp.gameState.currentPlayer, drawnCards));
+							} else {
+								TextButton errorMessageTemp = new TextButton(mainApp.gameState.getError(),
+										TTRAdvisorApp.skin, "error");
+								errorMessage.setText(mainApp.gameState.getError());
+								errorMessage.setWidth(errorMessageTemp.getWidth());
+								errorMessage.setPosition(Gdx.graphics.getWidth() / 2 - errorMessage.getWidth() / 2,
+										Gdx.graphics.getHeight() / 8);
+								errorMessage.setVisible(true);
+								if (errorMessage.getText().length() != 0) {
+									guiStage.addActor(errorMessage);
+								} else {
+									errorMessage.setVisible(false);
+								}
+							}
+						}
+
+						else if (mainApp.turnInput
+								.takeAction(new TrainCardAction(mainApp.gameState.currentPlayer, drawnCards))) {
+							advanceTurn(isInitial,
+									new TrainCardAction(mainApp.gameState.currentPlayer, drawnCards));
+						} else {
+							TextButton errorMessageTemp = new TextButton(mainApp.gameState.getError(),
+									TTRAdvisorApp.skin, "error");
+							errorMessage.setText(mainApp.gameState.getError());
+							errorMessage.setWidth(errorMessageTemp.getWidth());
+							errorMessage.setPosition(Gdx.graphics.getWidth() / 2 - errorMessage.getWidth() / 2,
+									Gdx.graphics.getHeight() / 8);
+							errorMessage.setVisible(true);
+							if (errorMessage.getText().length() != 0) {
+								guiStage.addActor(errorMessage);
+							} else {
+								errorMessage.setVisible(false);
+							}
+						}
+
+						guiStage.setScrollFocus(null);
+
+						helperReenableUIForActionInput();
+						// trainCardHand.setVisible(true);
+						listPane.setVisible(false);
+						table.setVisible(false);
+					}
+
+					public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+						return true;
+					}
+				});
 				TextButton done = new TextButton("Done", TTRAdvisorApp.skin, "small");
 				done.addListener(new InputListener() {
 					public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
@@ -1581,7 +1648,11 @@ public class GameScreen implements Screen {
 				table.add(orangeTrain);
 				table.add(yellowTrain);
 				table.row();
-				table.add(invis);
+				if (!mainApp.gameState.currentPlayer.equals(mainApp.gameState.getUserPlayer())) {
+					table.add(nonUser);
+				} else {
+					table.add(invis);
+				}
 				table.add(greenTrain);
 				table.add(blueTrain);
 				table.add(pinkTrain);
