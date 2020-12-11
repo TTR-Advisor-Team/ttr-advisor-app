@@ -239,6 +239,9 @@ public class GameScreen implements Screen {
 					rec1.setVisible(true);
 					rec2.setVisible(true);
 					rec3.setVisible(true);
+					rec1.setWidth(rec1.getPrefWidth());
+					rec2.setWidth(rec2.getPrefWidth());
+					rec3.setWidth(rec3.getPrefWidth());
 					recommendationsButton.setText("HideRecommendations");
 					showHide = false;
 					return;
@@ -307,7 +310,7 @@ public class GameScreen implements Screen {
 		itbYellow = new ImageTextButton("", TTRAdvisorApp.skin, "playerYellow");
 		itbCurrent = new ImageTextButton("", TTRAdvisorApp.skin, "playerCurrent");
 
-		itbCurrent.setSize(60, 60);
+		itbCurrent.setSize(Gdx.graphics.getWidth() * .06f, Gdx.graphics.getWidth() * .06f);
 
 		for (Player p : mainApp.gameState.getPlayers()) {
 			switch (p.getColor()) {
@@ -315,7 +318,7 @@ public class GameScreen implements Screen {
 				itbBlack.setText(Integer.toString(p.getScore()));
 				itbBlack.setPosition(Align.left, Gdx.graphics.getHeight() * 4 / 5
 						- mainApp.gameState.getPlayers().indexOf(p) * itbCurrent.getHeight());
-				itbBlack.setSize(50, 50);
+				itbBlack.setSize(Gdx.graphics.getWidth() * .05f, Gdx.graphics.getWidth() * .05f);
 				if (mainApp.gameState.currentPlayer.equals(p)) {
 					itbCurrent.setPosition(itbBlack.getX() - (itbCurrent.getWidth() - itbBlack.getWidth()) / 2,
 							itbBlack.getY() - ((itbCurrent.getHeight() - itbBlack.getHeight()) / 2));
@@ -327,7 +330,7 @@ public class GameScreen implements Screen {
 				itbBlue.setText(Integer.toString(p.getScore()));
 				itbBlue.setPosition(Align.left, Gdx.graphics.getHeight() * 4 / 5
 						- mainApp.gameState.getPlayers().indexOf(p) * itbCurrent.getHeight());
-				itbBlue.setSize(50, 50);
+				itbBlue.setSize(Gdx.graphics.getWidth() * .05f, Gdx.graphics.getWidth() * .05f);
 //				itbBlue.setBackground(itbBackground.getBackground());
 				if (mainApp.gameState.currentPlayer.equals(p)) {
 					itbCurrent.setPosition(itbBlue.getX() - ((itbCurrent.getWidth() - itbBlue.getWidth()) / 2),
@@ -341,7 +344,7 @@ public class GameScreen implements Screen {
 				itbGreen.setText(Integer.toString(p.getScore()));
 				itbGreen.setPosition(Align.left, Gdx.graphics.getHeight() * 4 / 5
 						- mainApp.gameState.getPlayers().indexOf(p) * itbCurrent.getHeight());
-				itbGreen.setSize(50, 50);
+				itbGreen.setSize(Gdx.graphics.getWidth() * .05f, Gdx.graphics.getWidth() * .05f);
 				if (mainApp.gameState.currentPlayer.equals(p)) {
 					itbCurrent.setPosition(itbGreen.getX() - ((itbCurrent.getWidth() - itbGreen.getWidth()) / 2),
 							itbGreen.getY() - ((itbCurrent.getHeight() - itbGreen.getHeight()) / 2));
@@ -360,7 +363,7 @@ public class GameScreen implements Screen {
 				itbRed.setText(Integer.toString(p.getScore()));
 				itbRed.setPosition(Align.left, Gdx.graphics.getHeight() * 4 / 5
 						- mainApp.gameState.getPlayers().indexOf(p) * itbCurrent.getHeight());
-				itbRed.setSize(50, 50);
+				itbRed.setSize(Gdx.graphics.getWidth() * .05f, Gdx.graphics.getWidth() * .05f);
 //				button4.setSi
 				if (mainApp.gameState.currentPlayer.equals(p)) {
 					itbCurrent.setPosition(itbRed.getX() - ((itbCurrent.getWidth() - itbRed.getWidth()) / 2),
@@ -374,7 +377,7 @@ public class GameScreen implements Screen {
 				itbYellow.setText(Integer.toString(p.getScore()));
 				itbYellow.setPosition(Align.left, Gdx.graphics.getHeight() * 4 / 5
 						- mainApp.gameState.getPlayers().indexOf(p) * itbCurrent.getHeight());
-				itbYellow.setSize(50, 50);
+				itbYellow.setSize(Gdx.graphics.getWidth() * .05f, Gdx.graphics.getWidth() * .05f);
 				if (mainApp.gameState.currentPlayer.equals(p)) {
 					itbCurrent.setPosition(itbYellow.getX() - ((itbCurrent.getWidth() - itbYellow.getWidth()) / 2),
 							itbYellow.getY() - ((itbCurrent.getHeight() - itbYellow.getHeight()) / 2));
