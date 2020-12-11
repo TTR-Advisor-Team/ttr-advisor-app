@@ -1585,25 +1585,26 @@ public class GameScreen implements Screen {
 	}
 
 	private void setupClaimRouteButton() {
-		demoSelectedCity = new Label("", TTRAdvisorApp.skin, "handDisplaySmall");
-		demoSelectedCity.setColor(0, 0, 0, 1);
-		demoSelectedCity.setSize(100, 30);
-		demoSelectedCity.setPosition(50, 300);
+		
+		int flag;
+		
+		claimRouteButton = new TextButton("Claim A Route", TTRAdvisorApp.skin, "small");
+		claimRouteButton.setPosition(prevTurn.getX() + prevTurn.getWidth()*2, Gdx.graphics.getHeight() - claimRouteButton.getHeight());
+		
+		claimRouteTooltip = new Label("Click on two cities to select a route between them!", TTRAdvisorApp.skin, "handDisplaySmall");
+		claimRouteTooltip.setPosition(prevTurn.getX() + prevTurn.getWidth()*2, Gdx.graphics.getHeight() - claimRouteButton.getHeight() - claimRouteTooltip.getHeight() - 10);
+		claimRouteTooltip.setVisible(false);
+		
+		demoSelectedCity = new Label(DEFAULT_CITY_LABEL, TTRAdvisorApp.skin, "handDisplaySmall");
+		demoSelectedCity.setPosition(claimRouteTooltip.getX(), Gdx.graphics.getHeight() - claimRouteButton.getHeight() - claimRouteTooltip.getHeight() - demoSelectedCity.getHeight() - 10);
 		demoSelectedCity.setVisible(false);
 		guiStage.addActor(demoSelectedCity);
 
-		demoSelectedRoute = new Label("", TTRAdvisorApp.skin, "handDisplaySmall");
-		demoSelectedRoute.setColor(0, 0, 0, 1);
-		demoSelectedRoute.setSize(100, 30);
-		demoSelectedRoute.setPosition(50, 260);
+		demoSelectedRoute = new Label(DEFAULT_ROUTE_LABEL, TTRAdvisorApp.skin, "handDisplaySmall");
+		demoSelectedRoute.setPosition(claimRouteTooltip.getX(), Gdx.graphics.getHeight() - claimRouteButton.getHeight() - claimRouteTooltip.getHeight() - demoSelectedCity.getHeight() - demoSelectedRoute.getHeight() - 10);
 		demoSelectedRoute.setVisible(false);
 		guiStage.addActor(demoSelectedRoute);
-		
-		claimRouteTooltip = new Label("", TTRAdvisorApp.skin);
-		claimRouteButton = new TextButton("Claim A Route", TTRAdvisorApp.skin, "small");
-		claimRouteTooltip.setColor(Color.BLACK);
 
-		claimRouteButton.setPosition(prevTurn.getX() + prevTurn.getWidth()*2, Gdx.graphics.getHeight() - claimRouteButton.getHeight());
 		claimRouteButton.addListener(new InputListener() {
 			
 			@Override
@@ -1611,8 +1612,7 @@ public class GameScreen implements Screen {
 				demoSelectedCity.setVisible(true);
 				demoSelectedRoute.setVisible(true);
 				mapTappingDisabled = false;
-				claimRouteTooltip.setText("Click on two cities to select a route between them!");
-				claimRouteTooltip.setPosition(prevTurn.getX() + prevTurn.getWidth()*2, Gdx.graphics.getHeight() - claimRouteButton.getHeight() - claimRouteTooltip.getHeight() - 10);
+				claimRouteTooltip.setVisible(true);
 				helperDisableUIForActionInput();
 				
 				cancelClaimRoute = new TextButton("Cancel", TTRAdvisorApp.skin, "small");
@@ -1621,7 +1621,7 @@ public class GameScreen implements Screen {
 				cancelClaimRoute.addListener(new InputListener() {
 					public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 						mapTappingDisabled = true;
-						claimRouteTooltip.setText("");
+						claimRouteTooltip.setVisible(false);
 						cancelClaimRoute.setVisible(false);
 						helperReenableUIForActionInput();
 					}
@@ -1862,8 +1862,8 @@ public class GameScreen implements Screen {
 				if (mapTappingDisabled) {
 					// stop processing the tap if it is not allowed right now
 					// Gdx.app.log("City Event", "Tapped on background.");
-					selectedCity = DEFAULT_CITY_LABEL;
-					selectedRoute = DEFAULT_ROUTE_LABEL;
+					// selectedCity = DEFAULT_CITY_LABEL;
+					// selectedRoute = DEFAULT_ROUTE_LABEL;
 					super.tap(event, x, y, count, button);
 					return;
 				}
@@ -1889,7 +1889,7 @@ public class GameScreen implements Screen {
 								selectedCity = DEFAULT_CITY_LABEL;
 								selectedRoute = DEFAULT_ROUTE_LABEL;
 								mapTappingDisabled = true;
-								claimRouteTooltip.setText("");
+								claimRouteTooltip.setVisible(false);
 								helperReenableUIForActionInput();
 								cancelClaimRoute.setVisible(false);
 								super.tap(event, x, y, count, button);
@@ -1959,7 +1959,7 @@ public class GameScreen implements Screen {
 	private void setupHelperChooseRoute(final LinkedList<Route> routeOptions) {
 		
 		mapTappingDisabled = true;
-		claimRouteTooltip.setText("");
+		claimRouteTooltip.setVisible(false);
 		cancelClaimRoute.setVisible(false);
 
 		if (routeOptions.get(0).getColor() == routeOptions.get(1).getColor()) {
@@ -2000,7 +2000,7 @@ public class GameScreen implements Screen {
 				selectedCity = DEFAULT_CITY_LABEL;
 				selectedRoute = DEFAULT_ROUTE_LABEL;
 				mapTappingDisabled = true;
-				claimRouteTooltip.setText("");
+				claimRouteTooltip.setVisible(false);
 				cancelClaimRoute.setVisible(false);
 				helperReenableUIForActionInput();
 				table.setVisible(false);
@@ -2026,7 +2026,7 @@ public class GameScreen implements Screen {
 		selectedRoute = "Selected: " + route;
 		
 		mapTappingDisabled = true;
-		claimRouteTooltip.setText("");
+		claimRouteTooltip.setVisible(false);
 		cancelClaimRoute.setVisible(false);
 		
 		if (mainApp.gameState.currentPlayer.getColor() != mainApp.userColor) {
@@ -2985,7 +2985,9 @@ public class GameScreen implements Screen {
 	@Override
 	public void render(float delta) {
 		demoSelectedCity.setText(selectedCity);
+		demoSelectedCity.setWidth(demoSelectedCity.getPrefWidth());
 		demoSelectedRoute.setText(selectedRoute);
+		demoSelectedRoute.setWidth(demoSelectedRoute.getPrefWidth());
 		Gdx.gl.glClearColor(.58f, .71f, .78f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
