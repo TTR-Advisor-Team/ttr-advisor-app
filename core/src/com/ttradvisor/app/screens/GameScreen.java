@@ -125,6 +125,7 @@ public class GameScreen implements Screen {
 	private TextButton prevTurn;
 	private TextButton nextTurn;
 	private Label turnNumber;
+	private Label finalTurn;
 
 	private TextButton quit;
 
@@ -1771,6 +1772,11 @@ public class GameScreen implements Screen {
 		quit.setPosition(nextTurn.getX() - nextTurn.getWidth() * 2, Gdx.graphics.getHeight() - quit.getHeight());
 		turnNumber = new Label(Integer.toString(mainApp.hist.getTurnIndex()), TTRAdvisorApp.skin, "big-black");
 		turnNumber.setPosition(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() - turnNumber.getHeight());
+		finalTurn = new Label("Final turns!!", TTRAdvisorApp.skin);
+		finalTurn.setPosition(turnNumber.getX() - finalTurn.getWidth()/2, turnNumber.getY() - finalTurn.getHeight());
+		finalTurn.setColor(Color.BLACK);
+		finalTurn.setVisible(mainApp.gameState.getLastTurn());
+		
 		prevTurn.addListener(new InputListener() {
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				if (mainApp.hist.previousTurn()) {
@@ -1885,6 +1891,7 @@ public class GameScreen implements Screen {
 		guiStage.addActor(prevTurn);
 		guiStage.addActor(nextTurn);
 		guiStage.addActor(quit);
+		guiStage.addActor(finalTurn);
 	}
 
 	/**
