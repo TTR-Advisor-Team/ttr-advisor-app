@@ -69,14 +69,13 @@ public class Recommender {
 		}
 		for(Route r: dup) {
 			for(int i = 0; i < routes.size();) {
-				if(r.begin.equals(routes.get(i).begin) && r.end.equals(routes.get(i).end)) {
-					routes.set(i, null);
-					break;
+				if(routes.get(i) != null) {
+					if(r.begin.equals(routes.get(i).begin) && r.end.equals(routes.get(i).end)) {
+						routes.set(i, null);
+						break;
+					}
 				}
-				else {
-					i++;
-					
-				}
+				i++;
 			}
 		}
 		if (!routes.isEmpty()) {
