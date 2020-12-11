@@ -1777,9 +1777,9 @@ public class GameScreen implements Screen {
 		turnNumber = new Label(Integer.toString(mainApp.hist.getTurnIndex()), TTRAdvisorApp.skin, "big-black");
 		turnNumber.setPosition(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() - turnNumber.getHeight());
 		finalTurn = new Label("Final turns!!", TTRAdvisorApp.skin);
-		finalTurn.setPosition(turnNumber.getX() - finalTurn.getWidth()/2, turnNumber.getY() - finalTurn.getHeight());
-		finalTurn.setColor(Color.BLACK);
-		finalTurn.setVisible(mainApp.gameState.getLastTurn());
+		finalTurn.setPosition(turnNumber.getX() - finalTurn.getWidth()/3, turnNumber.getY() - finalTurn.getHeight());
+		finalTurn.setColor(Color.RED);
+		finalTurn.setVisible(false);
 		
 		prevTurn.addListener(new InputListener() {
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
@@ -2814,6 +2814,8 @@ public class GameScreen implements Screen {
 			} else {
 				mainApp.gameState.currentPlayer = mainApp.gameState.getPlayers().get(0);
 			}
+			if(mainApp.gameState.getLastTurn())
+				finalTurn.setVisible(true);
 		}
 
 		ArrayList<Player> deepCopyPlayers = new ArrayList<Player>();
