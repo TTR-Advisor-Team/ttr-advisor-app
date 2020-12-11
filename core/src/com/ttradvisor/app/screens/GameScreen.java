@@ -316,7 +316,7 @@ public class GameScreen implements Screen {
 			switch (p.getColor()) {
 			case BLACK:
 				itbBlack.setText(Integer.toString(p.getScore()));
-				itbBlack.setPosition(Align.left, Gdx.graphics.getHeight() * 4 / 5
+				itbBlack.setPosition(Align.left, Gdx.graphics.getHeight() * 3.5f / 5f
 						- mainApp.gameState.getPlayers().indexOf(p) * itbCurrent.getHeight());
 				itbBlack.setSize(Gdx.graphics.getWidth() * .05f, Gdx.graphics.getWidth() * .05f);
 				if (mainApp.gameState.currentPlayer.equals(p)) {
@@ -328,7 +328,7 @@ public class GameScreen implements Screen {
 				break;
 			case BLUE:
 				itbBlue.setText(Integer.toString(p.getScore()));
-				itbBlue.setPosition(Align.left, Gdx.graphics.getHeight() * 4 / 5
+				itbBlue.setPosition(Align.left, Gdx.graphics.getHeight() * 3.5f / 5f
 						- mainApp.gameState.getPlayers().indexOf(p) * itbCurrent.getHeight());
 				itbBlue.setSize(Gdx.graphics.getWidth() * .05f, Gdx.graphics.getWidth() * .05f);
 //				itbBlue.setBackground(itbBackground.getBackground());
@@ -342,7 +342,7 @@ public class GameScreen implements Screen {
 				break;
 			case GREEN:
 				itbGreen.setText(Integer.toString(p.getScore()));
-				itbGreen.setPosition(Align.left, Gdx.graphics.getHeight() * 4 / 5
+				itbGreen.setPosition(Align.left, Gdx.graphics.getHeight() * 3.5f / 5f
 						- mainApp.gameState.getPlayers().indexOf(p) * itbCurrent.getHeight());
 				itbGreen.setSize(Gdx.graphics.getWidth() * .05f, Gdx.graphics.getWidth() * .05f);
 				if (mainApp.gameState.currentPlayer.equals(p)) {
@@ -361,7 +361,7 @@ public class GameScreen implements Screen {
 				break;
 			case RED:
 				itbRed.setText(Integer.toString(p.getScore()));
-				itbRed.setPosition(Align.left, Gdx.graphics.getHeight() * 4 / 5
+				itbRed.setPosition(Align.left, Gdx.graphics.getHeight() * 3.5f / 5f
 						- mainApp.gameState.getPlayers().indexOf(p) * itbCurrent.getHeight());
 				itbRed.setSize(Gdx.graphics.getWidth() * .05f, Gdx.graphics.getWidth() * .05f);
 //				button4.setSi
@@ -375,7 +375,7 @@ public class GameScreen implements Screen {
 				break;
 			case YELLOW:
 				itbYellow.setText(Integer.toString(p.getScore()));
-				itbYellow.setPosition(Align.left, Gdx.graphics.getHeight() * 4 / 5
+				itbYellow.setPosition(Align.left, Gdx.graphics.getHeight() * 3.5f / 5f
 						- mainApp.gameState.getPlayers().indexOf(p) * itbCurrent.getHeight());
 				itbYellow.setSize(Gdx.graphics.getWidth() * .05f, Gdx.graphics.getWidth() * .05f);
 				if (mainApp.gameState.currentPlayer.equals(p)) {
@@ -479,7 +479,7 @@ public class GameScreen implements Screen {
 //		trainCardHand.setWidth(Gdx.graphics.getWidth() / 5);
 //		trainCardHand.setPosition(trainCardHand.getWidth(), trainCardHand.getHeight() / 8);
 		// Button to draw Destination tickets
-		destButton.setWidth(Gdx.graphics.getWidth() / 5);
+		// destButton.setWidth(Gdx.graphics.getWidth() / 5);
 		destButton.setPosition(Gdx.graphics.getWidth() - destButton.getWidth(), destButton.getHeight() / 8);
 		destButton.addListener(new InputListener() {
 			@Override
@@ -1686,10 +1686,10 @@ public class GameScreen implements Screen {
 
 	private void setupClaimRouteButton() {
 		claimRouteButton = new TextButton("Claim A Route", TTRAdvisorApp.skin, "small");
-		claimRouteButton.setPosition(prevTurn.getX() + prevTurn.getWidth()*2, Gdx.graphics.getHeight() - claimRouteButton.getHeight());
+		claimRouteButton.setPosition(prevTurn.getX() + prevTurn.getWidth()*1.5f, Gdx.graphics.getHeight() - claimRouteButton.getHeight());
 		
 		claimRouteTooltip = new Label("Click on two cities to select a route between them!", TTRAdvisorApp.skin, "handDisplaySmall");
-		claimRouteTooltip.setPosition(prevTurn.getX() + prevTurn.getWidth()*2, Gdx.graphics.getHeight() - claimRouteButton.getHeight() - claimRouteTooltip.getHeight() - 10);
+		claimRouteTooltip.setPosition(claimRouteButton.getX() - claimRouteButton.getWidth() * .5f, Gdx.graphics.getHeight() - claimRouteButton.getHeight() - claimRouteTooltip.getHeight() - 10);
 		claimRouteTooltip.setVisible(false);
 		
 		demoSelectedCity = new Label(DEFAULT_CITY_LABEL, TTRAdvisorApp.skin, "handDisplaySmall");
@@ -1714,7 +1714,7 @@ public class GameScreen implements Screen {
 				helperDisableUIForActionInput();
 
 				cancelClaimRoute = new TextButton("Cancel", TTRAdvisorApp.skin, "small");
-				cancelClaimRoute.setPosition(prevTurn.getX() + prevTurn.getWidth() * 2,
+				cancelClaimRoute.setPosition(prevTurn.getX() + prevTurn.getWidth() * 1.5f,
 						Gdx.graphics.getHeight() - cancelClaimRoute.getHeight());
 
 				cancelClaimRoute.addListener(new InputListener() {
@@ -1742,9 +1742,7 @@ public class GameScreen implements Screen {
 	}
 
 	private void setupHandDisplayButton() {
-		
-		int flag;
-		
+
 		organizer = new Table(TTRAdvisorApp.skin);
 		
 		handDisplayTicketList = new List<DestinationTicket>(TTRAdvisorApp.skin);
@@ -1765,7 +1763,7 @@ public class GameScreen implements Screen {
 			ImageTextButton train = new ImageTextButton("", TTRAdvisorApp.skin, hardcodedStuff[i]);
 			// different sizes on different resolutions
 			// reminder - 200 by 125 is the card graphics aspect ratio
-			handDisplay.add(train).padTop(3f).width(Gdx.graphics.getWidth() * 0.07f).height(Gdx.graphics.getWidth() * 0.07f * (125f/200f));
+			handDisplay.add(train).padTop(3f).width(Gdx.graphics.getWidth() * 0.065f).height(Gdx.graphics.getWidth() * 0.065f * (125f/200f));
 			handDisplay.row();
 		}
 		handDisplay.right();
